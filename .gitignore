@@ -1,0 +1,5 @@
+/build/
+/apps/macos/*.xcodeproj/
+DerivedData/
+.DS_Store
+xcuserdata/
