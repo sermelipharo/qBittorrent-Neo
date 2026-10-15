@@ -155,3 +155,7 @@ targets:
         SWIFT_INCLUDE_PATHS: $(SRCROOT)/../../core/include
         LIBRARY_SEARCH_PATHS: $(SRCROOT)/../../build/core
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
+      configs:
+        Release:
+          # Secure timestamp on the app's signature (notarization).
+          OTHER_CODE_SIGN_FLAGS: "--timestamp"

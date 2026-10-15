@@ -11,7 +11,11 @@ Usage: deploy-qt.py <App.app> <libqbtneocore.dylib> <codesign identity|->
   @executable_path/../Frameworks/...
 * Copies the Qt plug-ins the core needs (TLS backends, SQLite driver,
   network information) to Contents/PlugIns and writes Contents/Resources/qt.conf.
-* Signs everything it copied with the given identity, innermost first.
+* Removes absolute run paths (e.g. /opt/homebrew/opt/qt/lib) from the
+  copied binaries, so nothing can resolve to Homebrew at run time.
+* Signs everything it copied with the given identity, innermost first; for
+  the Release configuration with the hardened runtime and a secure
+  timestamp, as notarization requires.
 
 The Qt part is skipped when the sources did not change since the last run.
 """
@@ -21,13 +25,15 @@ import shutil
 import subprocess
 import sys
 
+# Only the OpenSSL TLS backend: it is Qt's default, and Qt loads every TLS
+# plug-in it finds when it first needs one.
 PLUGINS = [
     ("tls", "libqopensslbackend.dylib"),
-    ("tls", "libqsecuretransportbackend.dylib"),
-    ("tls", "libqcertonlybackend.dylib"),
     ("sqldrivers", "libqsqlite.dylib"),
     ("networkinformation", "libqapplenetworkinformation.dylib"),
 ]
+RELEASE = os.environ.get("CONFIGURATION") == "Release"
+SIGN_FLAGS = ["--options", "runtime", "--timestamp"] if RELEASE else ["--timestamp=none"]
 SYSTEM_PREFIXES = ("/System/", "/usr/lib/")
 
 
@@ -54,6 +60,15 @@ def dependencies(binary):
         path = line.strip().split(" (compatibility")[0]
         deps.append(path)
     return deps
+
+
+def strip_absolute_rpaths(binary):
+    lines = run("otool", "-l", binary).splitlines()
+    for index, line in enumerate(lines):
+        if line.strip() == "cmd LC_RPATH" and index + 2 < len(lines):
+            path = lines[index + 2].strip().split(" (offset")[0].replace("path ", "", 1)
+            if path.startswith("/"):
+                run("install_name_tool", "-delete_rpath", path, binary, check=False)
 
 
 def is_external(path):
@@ -144,7 +159,7 @@ class Deployer:
             run("install_name_tool", "-change", dep, reference, binary, check=False)
 
     def sign(self, path):
-        subprocess.run(["codesign", "--force", "--sign", self.identity, "--timestamp=none", path],
+        subprocess.run(["codesign", "--force", "--sign", self.identity] + SIGN_FLAGS + [path],
                        check=True, capture_output=True)
 
 
@@ -168,7 +183,8 @@ def main():
     stamp_dir = os.environ.get("DERIVED_FILE_DIR") or os.path.dirname(os.path.abspath(app))
     os.makedirs(stamp_dir, exist_ok=True)
     stamp_path = os.path.join(stamp_dir, "qt-deploy-stamp-" + hashlib.sha1(app.encode()).hexdigest()[:8])
-    stamp = digest(plugin_sources + [os.path.realpath(d) for d in dependencies(core) if is_external(d)]) + identity
+    stamp = (digest(plugin_sources + [os.path.realpath(d) for d in dependencies(core) if is_external(d)])
+             + identity + " ".join(SIGN_FLAGS) + " ".join(n for _, n in PLUGINS))
     qt_done = os.path.exists(stamp_path) and open(stamp_path).read() == stamp
 
     # The core library: refreshed on every build.
@@ -176,6 +192,7 @@ def main():
     copy(core, core_dest)
     os.chmod(core_dest, 0o755)
     run("install_name_tool", "-id", "@rpath/libqbtneocore.dylib", core_dest, check=False)
+    strip_absolute_rpaths(core_dest)
 
     if qt_done:
         # Only rewrite the references of the fresh core library.
@@ -190,6 +207,8 @@ def main():
         deployer.sign(core_dest)
         return
 
+    if os.path.isdir(deployer.plugins):
+        shutil.rmtree(deployer.plugins)  # drops plug-ins no longer deployed
     deployer.process(core_dest)
     for source in plugin_sources:
         category = os.path.basename(os.path.dirname(source))
@@ -204,7 +223,10 @@ def main():
     with open(os.path.join(deployer.resources, "qt.conf"), "w") as conf:
         conf.write("[Paths]\nPlugins = PlugIns\n")
 
+    for dest, _ in deployer.copied.values():
+        strip_absolute_rpaths(dest)
     for path in deployer.to_sign:
+        strip_absolute_rpaths(path)
         deployer.sign(path)
     for path in dict.fromkeys(deployer.framework_dirs):
         deployer.sign(path)
