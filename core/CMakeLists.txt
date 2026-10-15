@@ -92,6 +92,8 @@ add_library(qbtneocore SHARED
     src/api_transfer.cpp
     src/maindata.h
     src/maindata.cpp
+    src/params.h
+    src/params.cpp
 
     # Unmodified helpers from qBittorrent's application layer.
     "${QBT_ROOT}/src/app/filelogger.h"

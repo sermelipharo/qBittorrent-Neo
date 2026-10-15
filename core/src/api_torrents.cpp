@@ -47,6 +47,7 @@
 #include "corehost.h"
 #include "jsonutil.h"
 #include "maindata.h"
+#include "params.h"
 #include "registry.h"
 
 using namespace Neo;
@@ -95,15 +96,6 @@ namespace
         if (name == u"maximum")
             return BitTorrent::DownloadPriority::Maximum;
         return BitTorrent::DownloadPriority::Normal;
-    }
-
-    BitTorrent::TorrentContentLayout parseContentLayout(const QString &name)
-    {
-        if (name == u"subfolder")
-            return BitTorrent::TorrentContentLayout::Subfolder;
-        if (name == u"noSubfolder")
-            return BitTorrent::TorrentContentLayout::NoSubfolder;
-        return BitTorrent::TorrentContentLayout::Original;
     }
 
     QString trackerStatusName(const BitTorrent::TrackerEndpointState state)
