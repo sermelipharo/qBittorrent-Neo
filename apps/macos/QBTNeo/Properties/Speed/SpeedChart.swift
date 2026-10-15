@@ -2,24 +2,27 @@ import Charts
 import SwiftUI
 
 /// Line chart of the enabled speed series; upload blue, download green,
-/// qBittorrent's dash patterns per series family.
+/// qBittorrent's dash patterns per series family. Reads the points itself, so
+/// a refresh re-evaluates only the chart (not the tab's pickers).
 struct SpeedChart: View {
-    let points: [SpeedPoint]
+    let properties: PropertiesModel
     let series: Set<SpeedGraphSeries>
 
     var body: some View {
+        let points = properties.speedPoints
         let enabled = SpeedGraphSeries.allCases.filter(series.contains)
+        let titles = enabled.map(\.title)
         let entries = SpeedChartEntry.entries(points, series: enabled)
         Chart(entries) { entry in
             LineMark(
                 x: .value("Time", entry.date),
                 y: .value("Speed", entry.value),
-                series: .value("Series", entry.series.title)
+                series: .value("Series", entry.title)
             )
-            .foregroundStyle(by: .value("Series", entry.series.title))
+            .foregroundStyle(by: .value("Series", entry.title))
             .lineStyle(StrokeStyle(lineWidth: 1.5, dash: entry.series.dash))
         }
-        .chartForegroundStyleScale(domain: enabled.map(\.title), range: enabled.map(\.color))
+        .chartForegroundStyleScale(domain: titles, range: enabled.map(\.color))
         .chartLegend(position: .top, alignment: .leading)
         .chartYAxis {
             AxisMarks(position: .leading, values: .automatic(desiredCount: 5)) { value in

@@ -22,7 +22,7 @@ struct SpeedTab: View {
                     SpeedSeriesMenu(selection: $gui.speedGraphSeries)
                 }
                 .controlSize(.small)
-                SpeedChart(points: model.properties.speedPoints, series: gui.speedGraphSeries)
+                SpeedChart(properties: model.properties, series: gui.speedGraphSeries)
             }
             .padding(Design.Spacing.medium)
         } else {
