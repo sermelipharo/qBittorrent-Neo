@@ -1,0 +1,42 @@
+qBittorrent Neo
+===============
+
+qBittorrent Neo is a fork of qBittorrent 5.2.4 (https://www.qbittorrent.org,
+https://github.com/qbittorrent/qBittorrent, tag release-5.2.4) whose Qt
+Widgets graphical interface is replaced by a native SwiftUI macOS interface.
+
+* qbittorrent/ contains the unmodified qBittorrent sources, imported with
+  their full history (git subtree; the `upstream` branch points at
+  release-5.2.4). qBittorrent is Copyright (C) 2006-2026 The qBittorrent
+  project and contributors and is licensed under the GNU General Public
+  License version 2 or (at your option) any later version, with the OpenSSL
+  linking exception described in qbittorrent/COPYING. Its license files
+  (qbittorrent/COPYING, COPYING.GPLv2, COPYING.GPLv3) are kept unchanged.
+
+* core/ hosts qBittorrent's application core (src/base, src/webui) inside
+  the app. core/src/neoapplication.cpp and core/src/addmanager.cpp contain
+  code adapted from qBittorrent's src/app/application.cpp and
+  src/base/addtorrentmanager.cpp (Copyright (C) 2015-2024 Vladimir Golovnev,
+  Copyright (C) 2006 Christophe Dumez), GPL-2.0-or-later. The other files
+  of core/ are Copyright (C) 2026 Lex Fradski, GPL-2.0-or-later.
+
+* apps/macos/ is the SwiftUI application, Copyright (C) 2026 Lex Fradski,
+  GPL-3.0-or-later. It was taken from the author's sibling project
+  qBit NeoRS (a Rust reimplementation) and adapted to this core.
+
+The combined work (the macOS application with the embedded core) is
+distributed under the GNU General Public License version 3 or later; see
+COPYING.
+
+Third-party components linked into the application:
+
+* libtorrent-rasterbar 2.0 (https://www.libtorrent.org), BSD 3-Clause License.
+* Qt 6 (https://www.qt.io), GNU Lesser General Public License version 3
+  (the Qt frameworks are bundled as separate, replaceable libraries).
+* Boost (https://www.boost.org), Boost Software License 1.0.
+* OpenSSL 3 (https://www.openssl.org), Apache License 2.0.
+* ICU, GLib, PCRE2, zstd, Brotli, double-conversion, libb2 (dependencies of
+  the Homebrew Qt build), under their respective open-source licenses.
+* The free IP to Country Lite database by DB-IP (https://db-ip.com),
+  Creative Commons Attribution 4.0 International License, downloaded at run
+  time by qBittorrent's GeoIP manager.
