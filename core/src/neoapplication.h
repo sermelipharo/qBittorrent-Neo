@@ -58,6 +58,9 @@ namespace Neo
         // remaining components (like Application::exec() before the loop).
         void startComponents();
         void cleanup();
+        // The IP geolocation database (~8 MB in memory, downloaded monthly)
+        // is loaded on first use: peer lists of the app, or the WebUI.
+        static void ensureGeoIP();
 
         bool isComponentsReady() const;
         const StartupConfig &config() const;

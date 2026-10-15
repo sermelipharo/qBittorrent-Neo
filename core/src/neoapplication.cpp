@@ -198,7 +198,16 @@ namespace Neo
 
             m_addTorrentManager = new NeoAddTorrentManager(this, btSession, this);
 
-            Net::GeoIPManager::initInstance();
+            // qBittorrent creates the geolocation manager here; it is created
+            // on first use instead (peer lists), or now if the WebUI, whose
+            // peer lists need it too, is enabled.
+            const auto updateGeoIP = []
+            {
+                if (Preferences::instance()->isWebUIEnabled())
+                    ensureGeoIP();
+            };
+            updateGeoIP();
+            connect(Preferences::instance(), &Preferences::changed, this, updateGeoIP);
             Net::ReverseResolution::initInstance();
             TorrentFilesWatcher::initInstance();
 
@@ -217,6 +226,12 @@ namespace Neo
             m_componentsReady = true;
             emit componentsReady();
         });
+    }
+
+    void NeoApplication::ensureGeoIP()
+    {
+        if (!Net::GeoIPManager::instance())
+            Net::GeoIPManager::initInstance();
     }
 
     void NeoApplication::cleanup()

@@ -47,6 +47,7 @@
 #include "corehost.h"
 #include "jsonutil.h"
 #include "maindata.h"
+#include "neoapplication.h"
 #include "params.h"
 #include "registry.h"
 
@@ -808,6 +809,8 @@ void Neo::registerTorrentsApi(Registry &registry)
                 const auto *pref = Preferences::instance();
                 const bool resolveHostNames = pref->resolvePeerHostNames();
                 const bool resolveCountries = pref->resolvePeerCountries();
+                if (resolveCountries)
+                    NeoApplication::ensureGeoIP();
                 QJsonArray result;
                 for (const BitTorrent::PeerInfo &peer : peers)
                 {
