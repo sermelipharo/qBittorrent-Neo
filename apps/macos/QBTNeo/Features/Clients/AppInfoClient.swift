@@ -20,4 +20,7 @@ protocol AppInfoClient: AnyObject, Sendable {
     /// Raw favicon bytes (at most 64 KiB) of a tracker, fetched by the core
     /// through its HTTP client (general-purpose proxy applies).
     func fetchTrackerFavicon(trackerUrl: String) async throws -> Data
+    /// "Test Port": whether `port` is reachable from the internet, checked by
+    /// portcheck.transmissionbt.com (sends the public IP and the port there).
+    func checkPort(port: Int64) async throws -> Bool
 }

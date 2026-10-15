@@ -11,11 +11,7 @@ enum FeatureSnapshotCatalog {
     }
 
     static var entries: [Entry] {
-        preferencePages + [
-            Entry(name: "settingssearch", title: "Settings", size: CGSize(width: 900, height: 700)) { _ in
-                let query = ProcessInfo.processInfo.environment["QBT_SETTINGS_QUERY"] ?? "proxy"
-                return AnyView(PreferencesWindow(initialQuery: query))
-            },
+        [
             Entry(name: "sidebar", title: "Sidebar", size: CGSize(width: 260, height: 760)) { _ in
                 AnyView(SidebarView().environment(\.isSnapshotRendering, true))
             },
@@ -47,14 +43,5 @@ enum FeatureSnapshotCatalog {
                 AnyView(CookiesWindow())
             },
         ]
-    }
-
-    private static var preferencePages: [Entry] {
-        PreferencesPage.allCases.map { page in
-            let height = page == .advanced ? 2_900.0 : (page == .behavior || page == .downloads || page == .webUI ? 1_900 : 1_200)
-            return Entry(name: "settings-\(page.title.lowercased())", title: page.title, size: CGSize(width: 900, height: height)) { _ in
-                AnyView(PreferencesWindow(pinnedPage: page))
-            }
-        }
     }
 }

@@ -4,8 +4,6 @@ import SwiftUI
 /// Creator, Statistics, About, Cookies), complementing `Design`.
 enum FeatureDesign {
     enum Window {
-        static let preferencesDefault = CGSize(width: 860, height: 660)
-        static let preferencesMin = CGSize(width: 720, height: 460)
         static let statisticsMin = CGSize(width: 380, height: 470)
         static let aboutSize = CGSize(width: 560, height: 520)
         static let cookiesMin = CGSize(width: 680, height: 360)

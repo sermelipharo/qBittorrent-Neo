@@ -28,6 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let directory = model.launch.snapshotDirectory {
+            SettingsSnapshot.appModel = model
             Task {
                 await SnapshotRenderer(directory: directory, launch: model.launch).run()
                 NSApp.terminate(nil)

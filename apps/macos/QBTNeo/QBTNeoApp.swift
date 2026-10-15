@@ -31,13 +31,13 @@ struct QBTNeoApp: SwiftUI.App {
         AuxiliaryWindows(model: model)
 
         Settings {
-            PreferencesWindow()
+            PreferencesWindow(navigator: model.launch.isSnapshot ? SettingsSnapshot.navigator : nil)
                 .lockGated()
                 .environment(model)
                 .environment(model.gui)
         }
-        .defaultSize(FeatureDesign.Window.preferencesDefault)
-        .windowResizability(.contentMinSize)
+        // The window takes each pane's size (HIG: settings windows aren't resizable).
+        .windowResizability(.contentSize)
 
         MenuBarExtra(isInserted: Bindable(model.gui).showMenuBarIcon) {
             MenuBarContent()

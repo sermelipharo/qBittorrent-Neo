@@ -56,6 +56,11 @@ extension DemoClient: AppInfoClient {
         stored == "demo:" + DemoRandom.hex(password, length: 32)
     }
 
+    func checkPort(port: Int64) async throws -> Bool {
+        try await Task.sleep(for: .seconds(1))
+        return true
+    }
+
     func fetchTrackerFavicon(trackerUrl: String) async throws -> Data {
         throw QbtError.Network(message: "favicons are not available in demo mode")
     }

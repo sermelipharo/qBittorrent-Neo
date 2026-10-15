@@ -25,6 +25,9 @@ struct FeatureSnapshots {
             }
         }
         model.stopRefreshing()
+        if let appModel = SettingsSnapshot.appModel {
+            await SettingsWindowSnapshots(directory: directory, isWanted: isWanted).run(model: appModel)
+        }
     }
 
     /// `--snapshot-only` was given: render only the matching feature windows.

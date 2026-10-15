@@ -1,74 +1,60 @@
 import SwiftUI
 
-/// The Settings window (features.md / preferences.md): a sidebar of pages with
-/// search, each page a grouped form. Changes apply automatically.
+/// The Settings window (docs/design/settings-ia.md §4): a non-customizable
+/// toolbar of panes, the pane's centered column form, and a search field at
+/// the trailing end of the toolbar (⌘F) whose results replace the pane while
+/// it has text. The window takes each pane's height and the pane's name as
+/// its title; changes apply immediately.
 struct PreferencesWindow: View {
     @Environment(AppModel.self) private var app
     @State private var model = PreferencesModel()
-    @AppStorage("OptionsDialog/LastViewedPage") private var page = PreferencesPage.behavior
-    @State private var query: String
-    @State private var target: SettingTarget?
-    /// Fixed page for snapshots.
-    var pinnedPage: PreferencesPage?
+    @State private var navigator: SettingsNavigator
+    @State private var searchFocusRequest = 0
 
-    init(pinnedPage: PreferencesPage? = nil, initialQuery: String = "") {
-        self.pinnedPage = pinnedPage
-        _query = State(initialValue: initialQuery)
+    init(navigator: SettingsNavigator? = nil) {
+        _navigator = State(initialValue: navigator ?? SettingsNavigator())
     }
 
     var body: some View {
-        // The page list is the window's navigation, so it can't be hidden.
-        NavigationSplitView(columnVisibility: .constant(.all)) {
-            sidebar
-                .navigationSplitViewColumnWidth(min: 200, ideal: 215, max: 260)
-                .toolbar(removing: .sidebarToggle)
-        } detail: {
-            PreferencesPageView(page: pinnedPage ?? page, model: model, target: target)
-                .navigationTitle((pinnedPage ?? page).title)
+        @Bindable var navigator = navigator
+        let isSearching = !navigator.query.trimmingCharacters(in: .whitespaces).isEmpty
+        TabView(selection: $navigator.pane) {
+            ForEach(SettingsPane.allCases) { pane in
+                Group {
+                    if isSearching {
+                        SettingsSearchResults(query: navigator.query, open: open)
+                    } else {
+                        SettingsPaneContent(pane: pane, model: model)
+                    }
+                }
+                .tabItem { Label(pane.title, systemImage: pane.symbol) }
+                .tag(pane)
+            }
         }
-        .frame(minWidth: FeatureDesign.Window.preferencesMin.width, minHeight: FeatureDesign.Window.preferencesMin.height)
-        .task(id: app.phase) { await model.attach(app.client) }
+        .background {
+            SettingsToolbarSearch(text: $navigator.query, focusRequest: searchFocusRequest) {
+                if let first = SettingsSearch.search(navigator.query).first { open(first) }
+            }
+            .frame(width: 0, height: 0)
+            Button("Search") { searchFocusRequest += 1 }
+                .keyboardShortcut("f", modifiers: .command)
+                .hidden()
+        }
+        .environment(navigator)
+        .background {
+            if app.launch.isSnapshot { SettingsWindowHider() }
+        }
+        .task(id: app.phase) {
+            #if DEBUG
+            SettingsCatalogCheck.verify()
+            #endif
+            await model.attach(app.client)
+        }
         .onChange(of: app.corePreferences) { model.coreDidChange(app.corePreferences) }
     }
 
-    @ViewBuilder private var sidebar: some View {
-        let results = PreferencesIndex.search(query)
-        let isSearching = !query.trimmingCharacters(in: .whitespaces).isEmpty
-        List(selection: $page) {
-            if isSearching {
-                ForEach(results) { result in
-                    PreferencesSearchRow(result: result)
-                        .tag(result.page)
-                        .simultaneousGesture(TapGesture().onEnded { reveal(result) })
-                }
-            } else {
-                ForEach(PreferencesPage.allCases) { page in
-                    PreferencesPageLabel(page: page)
-                }
-            }
-        }
-        .overlay {
-            if isSearching, results.isEmpty { ContentUnavailableView.search(text: query) }
-        }
-        .searchable(text: $query, placement: .sidebar, prompt: Text("Search"))
-        .onChange(of: query) { _, _ in
-            // Typing re-targets the best hit; the page opens when a result is clicked.
-            target = nil
-        }
-        .onChange(of: page) { _, newPage in
-            if isSearching, let result = results.first(where: { $0.page == newPage }) { reveal(result) }
-        }
-        .task {
-            // Snapshot/launch with a query: open the first hit right away.
-            if isSearching, let first = results.first { page = first.page; reveal(first) }
-        }
-    }
-
-    private func reveal(_ result: PreferencesIndex.Result) {
-        guard let anchor = result.anchor else {
-            target = nil
-            return
-        }
-        target = SettingTarget(page: result.page, anchor: anchor)
+    private func open(_ result: SettingsSearch.Result) {
+        navigator.query = ""
+        navigator.reveal(result.spec)
     }
 }

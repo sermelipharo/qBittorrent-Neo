@@ -42,6 +42,10 @@ extension QtCoreClient: AppInfoClient {
     func fetchTrackerFavicon(trackerUrl: String) async throws -> Data {
         try await bridge.callAsync("fetchTrackerFavicon", ["trackerUrl": trackerUrl])
     }
+
+    func checkPort(port: Int64) async throws -> Bool {
+        try await bridge.callAsync("checkPort", ["port": port])
+    }
 }
 
 extension QtCoreClient: RSSClient {
