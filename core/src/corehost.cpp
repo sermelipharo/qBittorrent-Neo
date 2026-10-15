@@ -10,7 +10,6 @@
 #include <algorithm>
 
 #include <QDateTime>
-#include <QTimer>
 
 #include "base/bittorrent/session.h"
 #include "base/bittorrent/sessionstatus.h"
@@ -34,30 +33,42 @@ namespace Neo
 {
     void SpeedHistory::record(const qint64 timestampMs, const std::array<quint32, VALUE_COUNT> &values)
     {
-        if (m_fine.size() >= FINE_CAPACITY)
+        const qint64 oldestFineMs = timestampMs - (FINE_SPAN_SECS * 1000);
+        while (!m_fine.isEmpty() && ((m_fine.size() >= FINE_CAPACITY) || (m_fine.first().timestampMs < oldestFineMs)))
             m_fine.removeFirst();
         m_fine.append({timestampMs, values});
 
+        const qint64 bucket = timestampMs / (COARSE_STEP_SECS * 1000);
+        if (bucket != m_coarseBucket)
+        {
+            flushCoarse();
+            m_coarseBucket = bucket;
+        }
         for (int i = 0; i < VALUE_COUNT; ++i)
             m_coarseSum[i] += values[i];
-        if (++m_coarseCount >= COARSE_STEP)
-        {
-            Sample average {timestampMs, {}};
-            for (int i = 0; i < VALUE_COUNT; ++i)
-                average.values[i] = static_cast<quint32>(m_coarseSum[i] / m_coarseCount);
-            if (m_coarse.size() >= COARSE_CAPACITY)
-                m_coarse.removeFirst();
-            m_coarse.append(average);
-            m_coarseSum = {};
-            m_coarseCount = 0;
-        }
+        ++m_coarseCount;
+        m_coarseLastMs = timestampMs;
+    }
+
+    void SpeedHistory::flushCoarse()
+    {
+        if (m_coarseCount == 0)
+            return;
+        Sample average {m_coarseLastMs, {}};
+        for (int i = 0; i < VALUE_COUNT; ++i)
+            average.values[i] = static_cast<quint32>(m_coarseSum[i] / m_coarseCount);
+        if (m_coarse.size() >= COARSE_CAPACITY)
+            m_coarse.removeFirst();
+        m_coarse.append(average);
+        m_coarseSum = {};
+        m_coarseCount = 0;
     }
 
     QJsonArray SpeedHistory::history(const int seconds) const
     {
-        const bool useFine = (seconds <= FINE_CAPACITY);
+        const bool useFine = (seconds <= FINE_SPAN_SECS) || m_coarse.isEmpty();
         const QList<Sample> &source = useFine ? m_fine : m_coarse;
-        const qint64 resolution = useFine ? 1 : COARSE_STEP;
+        const qint64 resolution = useFine ? 1 : COARSE_STEP_SECS;
         // Bucket width in seconds: ~600 points at most.
         qint64 bucket = std::max<qint64>(resolution, (seconds + 599) / 600);
         bucket = ((bucket + resolution - 1) / resolution) * resolution;
@@ -119,7 +130,6 @@ namespace Neo
         , m_app {app}
         , m_events {events}
         , m_mainData {new MainDataTracker(this)}
-        , m_speedTimer {new QTimer(this)}
     {
         g_instance = this;
 
@@ -139,9 +149,8 @@ namespace Neo
         m_events->attachSession();
         m_mainData->attachSession();
 
-        m_speedTimer->setInterval(1000);
-        connect(m_speedTimer, &QTimer::timeout, this, &CoreHost::sampleSpeed);
-        m_speedTimer->start();
+        // Sampled when the session publishes new statistics (no timer of its own).
+        connect(BitTorrent::Session::instance(), &BitTorrent::Session::statsUpdated, this, &CoreHost::sampleSpeed);
     }
 
     CoreHost::~CoreHost()

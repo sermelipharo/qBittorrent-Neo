@@ -18,8 +18,6 @@
 
 #include "registry.h"
 
-class QTimer;
-
 namespace Neo
 {
     class EventHub;
@@ -27,8 +25,10 @@ namespace Neo
     class NeoAddTorrentManager;
     class NeoApplication;
 
-    // Session-wide speed samples for the "Speed" tab: 1 s resolution for the
-    // last 30 minutes and 30 s averages for the last 24 hours (~230 KB).
+    // Session-wide speed samples for the "Speed" tab, taken whenever the
+    // session publishes new statistics (every refresh interval, 1.5 s by
+    // default, like qBittorrent's speed graph): every sample of the last 30
+    // minutes and 30 s averages for the last 24 hours (~230 KB).
     class SpeedHistory
     {
     public:
@@ -44,14 +44,20 @@ namespace Neo
         QJsonArray history(int seconds) const;
 
     private:
-        static constexpr qsizetype FINE_CAPACITY = 30 * 60;
-        static constexpr qsizetype COARSE_STEP = 30;
-        static constexpr qsizetype COARSE_CAPACITY = 24 * 60 * 60 / COARSE_STEP;
+        static constexpr qint64 FINE_SPAN_SECS = 30 * 60;
+        // Bounds memory for very short refresh intervals (30 min at >= 250 ms).
+        static constexpr qsizetype FINE_CAPACITY = 4 * FINE_SPAN_SECS;
+        static constexpr qint64 COARSE_STEP_SECS = 30;
+        static constexpr qsizetype COARSE_CAPACITY = 24 * 60 * 60 / COARSE_STEP_SECS;
+
+        void flushCoarse();
 
         QList<Sample> m_fine;
         QList<Sample> m_coarse;
         std::array<quint64, VALUE_COUNT> m_coarseSum {};
         int m_coarseCount = 0;
+        qint64 m_coarseBucket = -1;
+        qint64 m_coarseLastMs = 0;
     };
 
     class CoreHost final : public QObject
@@ -94,7 +100,6 @@ namespace Neo
         Registry m_registry;
         QHash<quint64, Reply> m_pending;
         QList<std::function<void ()>> m_readyQueue;
-        QTimer *m_speedTimer = nullptr;
         SpeedHistory m_speedHistory;
         qint64 m_logClearedId = -1;
     };
