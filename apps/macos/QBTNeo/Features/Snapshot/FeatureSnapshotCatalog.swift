@@ -10,6 +10,8 @@ enum FeatureSnapshotCatalog {
         let view: @MainActor (AppModel) -> AnyView
     }
 
+    private static let paletteSize = CGSize(width: 1_100, height: 680)
+
     static var entries: [Entry] {
         [
             Entry(name: "sidebar", title: "Sidebar", size: CGSize(width: 260, height: 760)) { _ in
@@ -39,11 +41,23 @@ enum FeatureSnapshotCatalog {
             Entry(name: "log", title: AppWindowID.log.title, size: CGSize(width: 860, height: 520)) { _ in
                 AnyView(ExecutionLogWindow())
             },
+            Entry(name: "about-credits", title: AppWindowID.about.title, size: FeatureDesign.Window.aboutSize) { _ in
+                AnyView(AboutWindow(initialTab: .credits))
+            },
             Entry(name: "about", title: AppWindowID.about.title, size: FeatureDesign.Window.aboutSize) { _ in
                 AnyView(AboutWindow())
             },
             Entry(name: "cookies", title: AppWindowID.cookies.title, size: CGSize(width: 760, height: 420)) { _ in
                 AnyView(CookiesWindow())
+            },
+            Entry(name: "palette-empty", title: AppWindowID.main.title, size: paletteSize) { model in
+                AnyView(PaletteSnapshot(model: model, query: ""))
+            },
+            Entry(name: "palette-query", title: AppWindowID.main.title, size: paletteSize) { model in
+                AnyView(PaletteSnapshot(model: model, query: PaletteSnapshot.sampleQuery))
+            },
+            Entry(name: "palette-torrent", title: AppWindowID.main.title, size: paletteSize) { model in
+                AnyView(PaletteSnapshot(model: model, query: "sintel", drillIn: true))
             },
         ]
     }
