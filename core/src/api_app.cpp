@@ -1,6 +1,6 @@
 /*
  * qBittorrent Neo — application-level calls (version, paths, cookies,
- * network interfaces, WebUI state, passwords, tracker favicons).
+ * network interfaces, WebUI state, passwords, tracker favicons, port test).
  *
  * Copyright (C) 2026 Lex Fradski
  * SPDX-License-Identifier: GPL-2.0-or-later
@@ -13,6 +13,7 @@
 #include <QNetworkInterface>
 #include <QPointer>
 #include <QSysInfo>
+#include <QTimer>
 #include <QUrl>
 
 #include <libtorrent/version.hpp>
@@ -38,6 +39,13 @@ using namespace Neo;
 namespace
 {
     const qint64 MAX_FAVICON_SIZE = 64 * 1024;
+
+    // "Test Port" (Settings > Network): Transmission's port checker connects
+    // back to the caller's address on <port> and answers "1" (reachable) or
+    // "0". It runs only when the user clicks the button; see docs/SECURITY.md.
+    const QString PORT_CHECK_URL = u"https://portcheck.transmissionbt.com/"_s;
+    const qint64 MAX_PORT_CHECK_SIZE = 16;
+    const auto PORT_CHECK_TIMEOUT = std::chrono::seconds(20);
 
     // Same derivation as qBittorrent's tracker filter: the tracker's http(s)
     // scheme (plain http otherwise) and the IP address or last two labels of
@@ -254,5 +262,36 @@ void Neo::registerAppApi(Registry &registry)
         if (urls.isEmpty())
             throwInvalid(u"tracker URL has no host"_s);
         fetchFavicon(urls, reply, CoreHost::instance());
+    });
+
+    registry.addAsync(u"checkPort"_s, [](const QJsonObject &args, const Reply &reply)
+    {
+        const qint64 port = argInt(args, u"port"_s);
+        if ((port < 1) || (port > 65535))
+            throwInvalid(u"invalid port"_s);
+
+        QObject *context = CoreHost::instance();
+        QTimer::singleShot(PORT_CHECK_TIMEOUT, context, [reply]
+        {
+            if (!reply.isDone())
+                reply.fail(ErrorKind::Network, u"The connection to the port checker timed out"_s);
+        });
+        Net::DownloadManager::instance()->download(
+                Net::DownloadRequest(PORT_CHECK_URL + QString::number(port)).limit(MAX_PORT_CHECK_SIZE)
+                , Preferences::instance()->useProxyForGeneralPurposes(), context
+                , [reply](const Net::DownloadResult &result)
+        {
+            if (reply.isDone())
+                return;
+            if (result.status != Net::DownloadStatus::Success)
+                return reply.fail(ErrorKind::Network, result.errorString);
+            const QByteArray answer = result.data.trimmed();
+            if (answer == "1")
+                reply.ok(true);
+            else if (answer == "0")
+                reply.ok(false);
+            else
+                reply.fail(ErrorKind::Network, u"The port checker sent an unexpected answer"_s);
+        });
     });
 }

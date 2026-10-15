@@ -29,6 +29,23 @@ upstream's security properties and fixes.
   setting, TLS validation as configured), with a 64 KiB size limit;
   responses that look like HTML are rejected. Bytes are returned unparsed;
   the app decodes them with `NSImage`.
+* `checkPort` (Settings › Network › **Test Port**): `GET
+  https://portcheck.transmissionbt.com/<port>`, the service Transmission
+  uses; it connects back to the caller's address and answers `1` (reachable)
+  or `0`. Verified 2026-10-15: https works and the body is a single digit;
+  the Transmission project publishes no privacy policy for the service.
+  * Privacy: it sends the public IP address and the listening port to a
+    third party, so it runs only when the user clicks the button (never on
+    launch, on a timer or when settings change), and the footnote next to
+    the button names the service.
+  * The URL is a constant with https (certificates validated as
+    configured); only the port is appended, validated as 1–65535 in the
+    bridge.
+  * `Net::DownloadManager` with the general-purpose proxy setting (the
+    service then tests the proxy's address); response limit 16 bytes; the
+    reply fails after 20 s even if Qt's transfer timeout hasn't fired.
+  * Anything but a successful download whose trimmed body is `0` or `1` is
+    an error; the body is never shown or logged.
 * `addTorrent(...cookie:)`: the cookie is stored in the download manager's
   cookie jar for that URL only, as qBittorrent's WebAPI `torrents/add` does.
 * `searchDownloadTorrent`: uses the plugin's own `download_torrent`
