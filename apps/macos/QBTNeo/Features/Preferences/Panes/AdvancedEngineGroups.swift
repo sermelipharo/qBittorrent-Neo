@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Advanced › Disk & Memory (expert): libtorrent's disk settings.
+/// Advanced › Disk & Memory (expert).
 struct AdvancedEngineGroups: View {
     @Bindable var model: PreferencesModel
 
