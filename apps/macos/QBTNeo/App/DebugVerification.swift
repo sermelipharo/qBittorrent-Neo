@@ -13,6 +13,8 @@ import AppKit
 ///   `=disable`: switch DHT, PeX and LSD off for them instead.
 /// * `QBT_VERIFY_ACCEPT_ADD=1`: press "Add" in "Add new torrent" dialogs as
 ///   soon as their metadata is ready.
+/// * `QBT_VERIFY_WINDOWS=rss,search,settings,...`: open these windows
+///   (`AppWindowID` raw values, or `settings`) one after another, 8 s apart.
 /// * `QBT_VERIFY_TABS=<seconds>`: select the first torrent and show each
 ///   properties tab in turn for that many seconds.
 @MainActor
@@ -24,6 +26,9 @@ enum DebugVerification {
                 try? await Task.sleep(for: .seconds(6))
                 model.openWindow?(id: AppWindowID.search.rawValue)
             }
+        }
+        if let windows = environment["QBT_VERIFY_WINDOWS"] {
+            Task { await openWindows(windows.split(separator: ",").map(String.init), model: model) }
         }
         if environment["QBT_VERIFY_ACCEPT_ADD"] == "1" {
             Task { await acceptAddDialogs(model: model) }
@@ -46,6 +51,22 @@ enum DebugVerification {
                 }
                 if model.mainWindow?.isVisible == true { model.isMainWindowVisible = true }
             }
+        }
+    }
+
+    private static func openWindows(_ ids: [String], model: AppModel) async {
+        try? await Task.sleep(for: .seconds(6))
+        for id in ids {
+            if id == "settings" {
+                // The app menu's "Settings…" item (Command-,).
+                if let appMenu = NSApp.mainMenu?.items.first?.submenu,
+                   let index = appMenu.items.firstIndex(where: { $0.keyEquivalent == "," }) {
+                    appMenu.performActionForItem(at: index)
+                }
+            } else {
+                model.openWindow?(id: id)
+            }
+            try? await Task.sleep(for: .seconds(8))
         }
     }
 
