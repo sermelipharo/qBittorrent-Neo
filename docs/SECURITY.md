@@ -72,10 +72,18 @@ upstream's security properties and fixes.
   argument splitting with per-argument placeholder substitution and no
   shell, so torrent names cannot inject commands.
 * The app's default profile is separate from qBittorrent's
-  (`~/Library/Application Support/mk.lex.qbittorrentneo`).
+  (`~/Library/Application Support/mk.lex.qbittorrentneo`). With
+  `--profile` the GUI settings (including the UI-lock password hash) are
+  kept in that profile, not in the app's regular `UserDefaults`.
+* The IP geolocation database is loaded, and downloaded from db-ip.com when
+  missing or older than a month (qBittorrent's GeoIPManager), only when a
+  peer list is first shown or the WebUI is enabled, not at every start.
 * Hardened runtime stays on; `disable-library-validation` is set so the
   embedded Qt frameworks load in ad-hoc builds (all embedded code is signed
-  with the app's identity by `scripts/deploy-qt.py`).
+  with the app's identity by `scripts/deploy-qt.py`). Release builds sign
+  every embedded binary with the hardened runtime and a secure timestamp,
+  ship only the OpenSSL TLS plug-in and carry no absolute run paths, so no
+  library outside the bundle (e.g. Homebrew's) can be loaded instead.
 
 ## Residual risks / follow-ups
 

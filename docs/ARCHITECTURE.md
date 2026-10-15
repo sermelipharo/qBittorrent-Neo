@@ -155,9 +155,11 @@ keys and enum case names instead of WebAPI strings/integers:
   changes.
 * `preferences` / `setPreferences` — 224 fields in 8 groups; writing applies
   only fields that changed (see `api_preferences.cpp`).
-* Speed graph — sampled once a second from `SessionStatus`: 1 s resolution
-  for 30 minutes and 30 s averages for 24 hours (~230 KB); replies are
-  averaged to at most ~600 points (the app buckets by timestamp).
+* Speed graph — sampled from `SessionStatus` whenever the session publishes
+  statistics (`statsUpdated`, every refresh interval; no timer of its own):
+  every sample of the last 30 minutes and 30 s averages for 24 hours
+  (~230 KB); replies are averaged to at most ~600 points (the app buckets
+  by timestamp).
 
 ## Profiles and paths
 
@@ -167,6 +169,12 @@ keys and enum case names instead of WebAPI strings/integers:
 * Without it the app uses `~/Library/Application Support/mk.lex.qbittorrentneo`
   as profile root (never qBittorrent's own profile) and sets the default save
   path to the user's Downloads folder on first run.
+* GUI-only settings: `UserDefaults` of the app, or with `--profile` the
+  file `<dir>/qBittorrent/config/gui-preferences.plist`; saved search tabs:
+  `<root>/qBittorrent/data/SearchUI` (as qBittorrent).
+* The IP geolocation database (~8 MB in memory) is loaded on first use (a
+  peer list) instead of at start-up, or at start-up when the WebUI is
+  enabled (its peer lists use it too).
 
 ## Packaging
 
@@ -174,11 +182,13 @@ keys and enum case names instead of WebAPI strings/integers:
 `libqbtneocore.dylib` into `Contents/Frameworks` (install name
 `@rpath/...`), recursively copies its non-system dependencies (Qt
 frameworks, OpenSSL, ICU, GLib, ...) rewriting references to
-`@executable_path/../Frameworks`, copies the TLS, SQLite and
+`@executable_path/../Frameworks`, copies the OpenSSL TLS backend (Qt loads
+every TLS plug-in it finds; the others are unused), SQLite and
 network-information Qt plug-ins to `Contents/PlugIns`, writes
-`Contents/Resources/qt.conf` and signs everything with the build's identity
-(`Signing.xcconfig` / gitignored `Local.xcconfig`). The Qt part is skipped
-while its inputs are unchanged.
+`Contents/Resources/qt.conf`, removes absolute run paths and signs
+everything with the build's identity (`Signing.xcconfig` / gitignored
+`Local.xcconfig`; Release: hardened runtime and secure timestamp). The Qt
+part is skipped while its inputs are unchanged.
 
 ## Test runs
 
@@ -190,3 +200,45 @@ transparent and click-through; `scripts/capture.sh <pid> <prefix> <dir>`
 makes them opaque for the moment of a capture (`QBT_UI_DIR=<dir>`).
 Launch with `open -g -n`, never activate, quit with
 `osascript -e 'tell application id "mk.lex.qbittorrentneo" to quit'`.
+
+### Scripted UI scenarios
+
+`QBT_UI_SCRIPT=<scenario>` (Debug) runs a scenario of `App/UIScenarios*.swift`
+through the real UI: `UIDriver` finds controls in the app's own
+accessibility tree and drives them with synthesized `NSEvent`s (no
+Accessibility permission, the app is never activated, windows stay at
+alpha 0.01 and click-through). `scripts/ui-scenario.sh <app> <profile>
+<ui-dir> <scenario> [VAR=value...]` starts the app with `open -g -n`,
+captures the app's windows whenever the scenario asks for a shot
+(`shot-<name>.req` -> `window-shot.swift` -> `.ack`), waits for the app to
+quit and prints the `UIDRIVER: PASS/FAIL` lines. Scenarios: `options-set` /
+`options-verify` (Torrent Options DHT/PeX/LSD switches, relaunch; needs
+`QBT_UI_TORRENT=<public.torrent>:<private.torrent>` named
+`uiverify-public.bin` / `uiverify-private.bin`), `lock-quit` (UI lock, quit
+with a wrong and then the right password), `search-live` /
+`search-restore` (needs an installed search plugin; `QBT_UI_QUERY`),
+`bunny` (real download of a magnet, `QBT_UI_MAGNET`), `ubuntu`,
+`remove-probe`, `palette`, `idle` (does nothing; for measurements).
+
+With `--profile <dir>` the GUI settings live in
+`<dir>/qBittorrent/config/gui-preferences.plist`, so test runs never change
+the regular settings.
+
+### Measurements
+
+`scripts/measure-idle.sh <app> <profile> [settle] [window] [app args]`
+reports the physical footprint after `settle` seconds and CPU ms/s and
+interrupt wake-ups/s over `window` seconds (`scripts/rusage.swift`).
+`--assume-visible` makes a window started in the background refresh like a
+visible one.
+
+## Release build
+
+`xcodebuild -configuration Release` produces a self-contained bundle:
+`deploy-qt.py` embeds the core, Qt and the Homebrew libraries, removes
+absolute run paths and signs every binary with the build's identity, the
+hardened runtime and a secure timestamp; Xcode signs the app the same way.
+`codesign --verify --deep --strict` passes and `otool -L` shows no
+`/opt/homebrew` reference. `scripts/notarize.sh <app> <keychain-profile>`
+notarizes and staples a build signed with a Developer ID Application
+certificate (not run here; needs the owner's Apple ID).
