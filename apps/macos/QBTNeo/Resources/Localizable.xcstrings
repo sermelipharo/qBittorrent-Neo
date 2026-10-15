@@ -3367,6 +3367,34 @@
         }
       }
     },
+    "%lld advanced settings on this pane are changed.": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld advanced setting on this pane is changed."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld advanced settings on this pane are changed."
+                }
+              }
+            }
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменено дополнительных настроек на этой панели: %lld."
+          }
+        }
+      }
+    },
     "%lld min": {
       "localizations": {
         "ru": {
@@ -6909,6 +6937,16 @@
         }
       }
     },
+    ".torrent Files": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы .torrent"
+          }
+        }
+      }
+    },
     ".torrent file size limit": {
       "localizations": {
         "ar": {
@@ -7185,6 +7223,26 @@
           "stringUnit": {
             "state": "translated",
             "value": ".torrent 檔案大小限制"
+          }
+        }
+      }
+    },
+    ".torrent files": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы .torrent"
+          }
+        }
+      }
+    },
+    ".torrent files saved into these folders are added automatically.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы .torrent, сохраненные в эти папки, добавляются автоматически."
           }
         }
       }
@@ -12646,6 +12704,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "О программе qBittorrent Neo"
+          }
+        }
+      }
+    },
+    "Accept SSL torrents on port:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Принимать SSL-торренты на порту:"
+          }
+        }
+      }
+    },
+    "Access Rules": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правила доступа"
           }
         }
       }
@@ -21936,6 +22014,16 @@
         }
       }
     },
+    "Adding": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавление"
+          }
+        }
+      }
+    },
     "Adding entry failed": {
       "localizations": {
         "ar": {
@@ -22234,6 +22322,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Адрес"
+          }
+        }
+      }
+    },
+    "Adds advanced sections to every pane and shows libtorrent tuning below. Hidden settings keep working.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавляет дополнительные разделы на все панели и показывает ниже настройки libtorrent. Скрытые настройки продолжают действовать."
           }
         }
       }
@@ -27256,6 +27354,16 @@
         }
       }
     },
+    "Allow control from a web browser": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешить управление через веб-браузер"
+          }
+        }
+      }
+    },
     "Allow encryption": {
       "localizations": {
         "ar": {
@@ -28930,6 +29038,16 @@
         }
       }
     },
+    "Also when a torrent is added": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Также при добавлении торрента"
+          }
+        }
+      }
+    },
     "Also when addition is cancelled": {
       "localizations": {
         "ar": {
@@ -29886,6 +30004,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "替補速率限制"
+          }
+        }
+      }
+    },
+    "Alternative Web UI": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Альтернативный веб-интерфейс"
+          }
+        }
+      }
+    },
+    "Alternative limits": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особые ограничения"
           }
         }
       }
@@ -31904,6 +32042,7 @@
         }
       }
     },
+    "An advanced BitTorrent client: qBittorrent's own core with a native SwiftUI interface.": {},
     "An error occurred during search...": {
       "localizations": {
         "ar": {
@@ -33200,12 +33339,42 @@
         }
       }
     },
+    "Anyone on these networks gets full control without a password.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Любой в этих сетях получает полный доступ без пароля."
+          }
+        }
+      }
+    },
     "Apache License 2.0": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Лицензия Apache 2.0"
+          }
+        }
+      }
+    },
+    "App Lock": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Блокировка приложения"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оформление"
           }
         }
       }
@@ -38460,6 +38629,56 @@
         }
       }
     },
+    "Ask before deleting torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спрашивать перед удалением торрентов"
+          }
+        }
+      }
+    },
+    "Ask before quitting while torrents are active": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спрашивать перед выходом, если есть активные торренты"
+          }
+        }
+      }
+    },
+    "Ask before rechecking torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спрашивать перед повторной проверкой торрентов"
+          }
+        }
+      }
+    },
+    "Ask before removing a tracker from all torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спрашивать перед удалением трекера из всех торрентов"
+          }
+        }
+      }
+    },
+    "Ask before removing all tags": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спрашивать перед удалением всех меток"
+          }
+        }
+      }
+    },
     "Ask to merge trackers for manually added torrent": {
       "localizations": {
         "az-Latn": {
@@ -38944,6 +39163,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "異步 I/O 執行緒"
+          }
+        }
+      }
+    },
+    "At startup, show window:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окно при запуске:"
           }
         }
       }
@@ -42264,6 +42493,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "自動：各種 torrent 屬性（如儲存路徑）將由相關分類來決定\n手動：各種 torrent 屬性（如儲存路徑）必須手動分配"
+          }
+        }
+      }
+    },
+    "Automatic: the category decides the save location.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматический: место сохранения определяет категория."
           }
         }
       }
@@ -47001,6 +47240,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "行為"
+          }
+        }
+      }
+    },
+    "Bind to address": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привязка к адресу"
           }
         }
       }
@@ -53263,6 +53512,16 @@
         }
       }
     },
+    "Categories & Automatic Mode": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Категории и автоматический режим"
+          }
+        }
+      }
+    },
     "Category": {
       "localizations": {
         "ar": {
@@ -55223,6 +55482,16 @@
         }
       }
     },
+    "Changes take effect after relaunch.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменения вступят в силу после перезапуска."
+          }
+        }
+      }
+    },
     "Changing Interface settings requires application restart": {
       "localizations": {
         "ar": {
@@ -56221,6 +56490,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "檢查更新"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Автоматически проверять обновления"
           }
         }
       }
@@ -62647,6 +62926,16 @@
         }
       }
     },
+    "Color torrents by state": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окрашивать торренты по состоянию"
+          }
+        }
+      }
+    },
     "Comma-separated tags:": {
       "localizations": {
         "ar": {
@@ -67129,6 +67418,16 @@
         }
       }
     },
+    "Confirmations": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтверждения"
+          }
+        }
+      }
+    },
     "Conflict": {
       "localizations": {
         "ru": {
@@ -67445,6 +67744,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "已連線的下載者："
+          }
+        }
+      }
+    },
+    "Connected — peers can reach you": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключено — пиры могут подключиться к вам"
           }
         }
       }
@@ -67821,6 +68130,334 @@
           "stringUnit": {
             "state": "translated",
             "value": "Состояние соединения: в сети"
+          }
+        }
+      }
+    },
+    "Connection status": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حالة الاتصال"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bağlantının vəziyyəti"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стан злучэння"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Състояние на връзката"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status veze"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estat de la connexió"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stav připojení"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forbindelsesstatus"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbindungsstatus"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Κατάσταση σύνδεσης"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection status"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connection status"
+          }
+        },
+        "eo": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konekta stato"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado de la conexión"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ühenduse olek"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elkarketa egoera"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وضعیت اتصال"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yhteyden tila"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Statut de la connexion"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado da conexión"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מעמד חיבור"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संपर्क स्थिति"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status veze"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapcsolat állapota"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Միացման վիճակը՝"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status koneksi"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stato connessione"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "接続状態"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Შეერთების სტატუსი"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "연결 상태"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prisijungimo būsena"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Škārsteikla salaiduma statuss"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Savienojuma stāvoklis"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status sambungan"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilkoblingsstatus"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbindingsstatus"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estatut de la connexion"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stan połączenia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status da conexão"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado da ligação"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stare conexiune"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Состояние подключения"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stav spojenia"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stanje povezave"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус конекције"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status konekcije"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anslutningsstatus"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "สถานะการเชื่อมต่อ"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bağlantı durumu"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус з'єднання"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trạng thái kết nối"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連接狀態："
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接状态："
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "連線狀態："
           }
         }
       }
@@ -76103,6 +76740,16 @@
         }
       }
     },
+    "DHT": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DHT"
+          }
+        }
+      }
+    },
     "DHT Download": {
       "localizations": {
         "ar": {
@@ -77527,6 +78174,16 @@
         }
       }
     },
+    "Data & Recovery": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные и восстановление"
+          }
+        }
+      }
+    },
     "Date:": {
       "localizations": {
         "ar": {
@@ -78231,6 +78888,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "預設"
+          }
+        }
+      }
+    },
+    "Default App": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приложение по умолчанию"
           }
         }
       }
@@ -80025,6 +80692,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "只保存備份記錄："
+          }
+        }
+      }
+    },
+    "Delete files by default when removing torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По умолчанию удалять файлы вместе с торрентом"
           }
         }
       }
@@ -84419,6 +85096,16 @@
         }
       }
     },
+    "Disk & Memory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Диск и память"
+          }
+        }
+      }
+    },
     "Disk IO read mode": {
       "localizations": {
         "ar": {
@@ -87861,6 +88548,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "不做任何事(D)"
+          }
+        }
+      }
+    },
+    "Dock & Menu Bar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dock и строка меню"
           }
         }
       }
@@ -96577,6 +97274,16 @@
         }
       }
     },
+    "Downloaded Files": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загруженные файлы"
+          }
+        }
+      }
+    },
     "Downloaded episodes: %@": {
       "localizations": {
         "ru": {
@@ -98261,6 +98968,16 @@
         }
       }
     },
+    "Downloads each tracker website's icon.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружает значок с сайта каждого трекера."
+          }
+        }
+      }
+    },
     "Drag and drop a file or folder here": {
       "localizations": {
         "ru": {
@@ -98277,6 +98994,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Перетащить содержимое из qBittorrent Neo"
+          }
+        }
+      }
+    },
+    "Drag files from the Content tab to Finder": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перетаскивать файлы из вкладки «Содержимое» в Finder"
+          }
+        }
+      }
+    },
+    "Dynamic DNS": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Динамический DNS"
           }
         }
       }
@@ -100807,6 +101544,16 @@
         }
       }
     },
+    "Edit excluded file names": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменить исключенные имена файлов"
+          }
+        }
+      }
+    },
     "Edit trackers": {
       "localizations": {
         "ar": {
@@ -101770,6 +102517,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "下載完成時使用電子郵件通知 (U)"
+          }
+        }
+      }
+    },
+    "Embedded Tracker": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Встроенный трекер"
           }
         }
       }
@@ -103318,6 +104075,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "啟用主機檔頭驗證"
+          }
+        }
+      }
+    },
+    "Enable I2P": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить I2P"
           }
         }
       }
@@ -109258,6 +110025,16 @@
         }
       }
     },
+    "Encryption & Anonymity": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шифрование и анонимность"
+          }
+        }
+      }
+    },
     "Encryption mode:": {
       "localizations": {
         "ar": {
@@ -109582,6 +110359,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "加密模式："
+          }
+        }
+      }
+    },
+    "Encryption: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шифрование: %@"
           }
         }
       }
@@ -116200,6 +116987,16 @@
         }
       }
     },
+    "Extra Trackers": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополнительные трекеры"
+          }
+        }
+      }
+    },
     "Failed to import the selected rules file. Reason: %@": {
       "localizations": {
         "ar": {
@@ -120906,6 +121703,16 @@
         }
       }
     },
+    "Files on Disk": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы на диске"
+          }
+        }
+      }
+    },
     "Files opened through file association are deleted as well.": {
       "localizations": {
         "ru": {
@@ -123244,6 +124051,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "在 DHT 網路上尋找 peer"
+          }
+        }
+      }
+    },
+    "Finding Peers": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиск пиров"
+          }
+        }
+      }
+    },
+    "Finished downloads move to the save location.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершенные загрузки перемещаются в место сохранения."
+          }
+        }
+      }
+    },
+    "Firewalled — only outgoing connections work": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За брандмауэром — работают только исходящие соединения"
           }
         }
       }
@@ -130827,6 +131664,16 @@
         }
       }
     },
+    "HTTPS": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTTPS"
+          }
+        }
+      }
+    },
     "Hashing threads": {
       "localizations": {
         "ar": {
@@ -131399,6 +132246,16 @@
         }
       }
     },
+    "Helps tell several copies of the app apart.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помогает различать несколько копий приложения."
+          }
+        }
+      }
+    },
     "Hide Details": {
       "localizations": {
         "ru": {
@@ -131415,6 +132272,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Скрыть строку состояния"
+          }
+        }
+      }
+    },
+    "Hide empty status filters": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрывать пустые фильтры состояния"
           }
         }
       }
@@ -131735,6 +132602,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "隱藏零或無限大的值。"
+          }
+        }
+      }
+    },
+    "Hides client details from peers and trackers. Use with a proxy or VPN.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрывает сведения о клиенте от пиров и трекеров. Используйте с прокси или VPN."
           }
         }
       }
@@ -133331,6 +134208,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "主機："
+          }
+        }
+      }
+    },
+    "How often lists and speeds refresh. Lower values use more CPU.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как часто обновляются списки и скорости. Меньшие значения сильнее нагружают процессор."
           }
         }
       }
@@ -136775,6 +137662,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "IP 位置："
+          }
+        }
+      }
+    },
+    "IP filter: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IP-фильтр: %@"
           }
         }
       }
@@ -146173,6 +147070,364 @@
         }
       }
     },
+    "Invalid password": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلمة سرّ خاطئة"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Səhv şifrə"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Памылковы пароль"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Невалидна парола"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nevažeća lozinka"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrasenya no vàlida"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neplatné heslo"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ugyldig adgangskode"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ungültiges Passwort"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μη έγκυρος κωδικός πρόσβασης"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid password"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid password"
+          }
+        },
+        "eo": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Malvalida pasvorto"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contraseña no válida"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobimatu parool"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sarhitz baliogabea"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رمز عبور نامعتبر"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Virheellinen salasana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mot de passe invalide"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrasinal incorrecto"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "סיסמה בלתי תקפה"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अमान्य कूटशब्द"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neispravna lozinka"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Érvénytelen jelszó"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Անվավեր գաղտնաբառ"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sandi tidak valid"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password non valida"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無効なパスワード"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "არასწორი პაროლი"
+          }
+        },
+        "kk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жарамсыз құпиясөз"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "잘못된 암호"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neteisingas slaptažodis"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadereiga paroļs"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nederīga parole"
+          }
+        },
+        "mn-MN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Буруу нууц үг"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kata laluan tidak sah"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ugyldig passord"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अमान्य पासवर्ड"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongeldig wachtwoord"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senhal invalid"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieprawidłowe hasło"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Senha inválida"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Palavra-passe inválida"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parolă nevalidă"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недопустимый пароль"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neplatné heslo"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neveljavno geslo"
+          }
+        },
+        "sq": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fjalëkalim i pavlefshëm"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Погрешна лозинка"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pogrešna lozinka"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogiltigt lösenord"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "รหัสผ่านไม่ถูกต้อง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçersiz parola"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неправильний пароль"
+          }
+        },
+        "uz-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parol noto‘g‘ri"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mật khẩu không hợp lệ"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無效密碼"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无效密码"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無效的密碼"
+          }
+        }
+      }
+    },
     "Invalid regular expression": {
       "localizations": {
         "ru": {
@@ -146457,6 +147712,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "其控制內部狀態更新間隔，進而影響使用者介面更新"
+          }
+        }
+      }
+    },
+    "Keep Mac awake while downloading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не давать Mac уснуть во время загрузки"
+          }
+        }
+      }
+    },
+    "Keep Mac awake while seeding": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не давать Mac уснуть во время раздачи"
+          }
+        }
+      }
+    },
+    "Keep incomplete downloads in:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хранить незавершенные загрузки в:"
           }
         }
       }
@@ -147740,6 +149025,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "KiB/s"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык"
           }
         }
       }
@@ -149742,6 +151037,16 @@
         }
       }
     },
+    "Leave empty to detect automatically.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оставьте пустым для автоматического определения."
+          }
+        }
+      }
+    },
     "Leechers": {
       "localizations": {
         "ar": {
@@ -150386,6 +151691,16 @@
         }
       }
     },
+    "Lets peers reach you through your router.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позволяет пирам подключаться к вам через роутер."
+          }
+        }
+      }
+    },
     "License": {
       "localizations": {
         "ar": {
@@ -150978,6 +152293,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "淺色"
+          }
+        }
+      }
+    },
+    "Limit": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ограничение"
+          }
+        }
+      }
+    },
+    "Limit the number of active torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ограничивать число активных торрентов"
           }
         }
       }
@@ -152600,6 +153935,32 @@
         }
       }
     },
+    "Listening port: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порт прослушивания: %@"
+          }
+        }
+      }
+    },
+    "Listening port: %@ · External IP: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Listening port: %1$@ · External IP: %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порт прослушивания: %1$@ · Внешний IP: %2$@"
+          }
+        }
+      }
+    },
     "Loading": {
       "localizations": {
         "ru": {
@@ -153594,6 +154955,16 @@
         }
       }
     },
+    "Lock password:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пароль блокировки:"
+          }
+        }
+      }
+    },
     "Lock qBittorrent Neo": {
       "localizations": {
         "ru": {
@@ -154436,6 +155807,16 @@
         }
       }
     },
+    "Logs & Diagnostics": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Журнал и диагностика"
+          }
+        }
+      }
+    },
     "Look for peers on your local network": {
       "localizations": {
         "ar": {
@@ -154748,6 +156129,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "在本地網路找尋下載者"
+          }
+        }
+      }
+    },
+    "Looks up every peer's name; adds network traffic.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Определяет имя каждого пира; увеличивает сетевой трафик."
           }
         }
       }
@@ -155468,12 +156859,22 @@
         }
       }
     },
+    "Magnet links": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Magnet-ссылки"
+          }
+        }
+      }
+    },
     "Make Default": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сделать по умолчанию"
+            "value": "Сделать основным"
           }
         }
       }
@@ -165809,6 +167210,16 @@
         }
       }
     },
+    "More confirmations": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Другие подтверждения"
+          }
+        }
+      }
+    },
     "More information": {
       "localizations": {
         "ru": {
@@ -171653,6 +173064,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "國籍："
+          }
+        }
+      }
+    },
+    "Network": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сеть"
+          }
+        }
+      }
+    },
+    "Network Tuning": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тонкая настройка сети"
           }
         }
       }
@@ -181327,12 +182758,42 @@
         }
       }
     },
+    "Nothing downloads or uploads until you resume.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничего не загружается и не раздается, пока вы не возобновите работу."
+          }
+        }
+      }
+    },
     "Nothing to Add": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Нечего добавлять"
+          }
+        }
+      }
+    },
+    "Notification Settings…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки уведомлений…"
+          }
+        }
+      }
+    },
+    "Notifications": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления"
           }
         }
       }
@@ -181353,6 +182814,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "OK"
+          }
+        }
+      }
+    },
+    "Offer to add .torrent files found inside downloads": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предлагать добавить файлы .torrent, найденные в загрузках"
+          }
+        }
+      }
+    },
+    "Offline": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не в сети"
           }
         }
       }
@@ -184857,6 +186338,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не удалось открыть"
+          }
+        }
+      }
+    },
+    "Open in Browser": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть в браузере"
           }
         }
       }
@@ -196147,6 +197638,26 @@
         }
       }
     },
+    "Peers & Uploading": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пиры и отдача"
+          }
+        }
+      }
+    },
+    "Peers List": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Список пиров"
+          }
+        }
+      }
+    },
     "Peers:": {
       "localizations": {
         "ar": {
@@ -197700,6 +199211,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "PiB"
+          }
+        }
+      }
+    },
+    "Pick your VPN's interface so transfers stop if the VPN disconnects.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите интерфейс VPN, чтобы передачи останавливались при отключении VPN."
           }
         }
       }
@@ -202714,6 +204235,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "埠"
+          }
+        }
+      }
+    },
+    "Port %@ is closed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порт %@ закрыт"
+          }
+        }
+      }
+    },
+    "Port %@ is open": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порт %@ открыт"
           }
         }
       }
@@ -207952,6 +209493,16 @@
         }
       }
     },
+    "Private torrents never use these.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приватные торренты никогда их не используют."
+          }
+        }
+      }
+    },
     "Private:": {
       "localizations": {
         "ar": {
@@ -208888,6 +210439,26 @@
         }
       }
     },
+    "Protection": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Защита"
+          }
+        }
+      }
+    },
+    "Protocol & Limits": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Протокол и ограничения"
+          }
+        }
+      }
+    },
     "Proxy Server": {
       "localizations": {
         "ar": {
@@ -209218,6 +210789,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "代理伺服器"
+          }
+        }
+      }
+    },
+    "Proxy: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прокси: %@"
           }
         }
       }
@@ -209692,6 +211273,16 @@
         }
       }
     },
+    "Python executable:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исполняемый файл Python:"
+          }
+        }
+      }
+    },
     "Python is required to use the search engine but it does not seem to be installed.": {
       "localizations": {
         "ar": {
@@ -210020,6 +211611,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Python:"
+          }
+        }
+      }
+    },
+    "Qt:": {},
+    "Quarantine downloaded files": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помещать загруженные файлы в карантин"
           }
         }
       }
@@ -215338,6 +216940,16 @@
         }
       }
     },
+    "Ratio = uploaded ÷ downloaded. 1.0 means you shared as much as you took.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рейтинг = отдано ÷ загружено. 1,0 означает, что вы отдали столько же, сколько получили."
+          }
+        }
+      }
+    },
     "Ratio Limit": {
       "localizations": {
         "ar": {
@@ -220440,6 +222052,7 @@
         }
       }
     },
+    "Regex mode: use regular expressions (Perl-compatible syntax, as in qBittorrent). Matching is case-insensitive.": {},
     "Regex mode: use regular expressions (Rust \"regex\" syntax: no look-around or back-references). Matching is case-insensitive.": {
       "localizations": {
         "ru": {
@@ -223318,6 +224931,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "記住最後一次使用的儲存路徑"
+          }
+        }
+      }
+    },
+    "Remember recent save locations:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запоминать недавние места сохранения:"
+          }
+        }
+      }
+    },
+    "Remote": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удаленный доступ"
           }
         }
       }
@@ -228272,6 +229905,16 @@
         }
       }
     },
+    "Removing Torrents": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удаление торрентов"
+          }
+        }
+      }
+    },
     "Rename": {
       "localizations": {
         "ar": {
@@ -230228,6 +231871,16 @@
         }
       }
     },
+    "Reopen search tabs at launch": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Восстанавливать вкладки поиска при запуске"
+          }
+        }
+      }
+    },
     "Replaces multi-selection (hold Option key to invert)": {
       "localizations": {
         "ru": {
@@ -230556,6 +232209,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "要求加密"
+          }
+        }
+      }
+    },
+    "Require: connect only to peers that encrypt traffic. Fewer peers.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Требовать»: подключаться только к пирам с шифрованием. Пиров будет меньше."
           }
         }
       }
@@ -234124,6 +235787,16 @@
         }
       }
     },
+    "Run a Program": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запуск программы"
+          }
+        }
+      }
+    },
     "Run external program": {
       "localizations": {
         "ar": {
@@ -235518,6 +237191,16 @@
         }
       }
     },
+    "Safety Limits": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Защитные ограничения"
+          }
+        }
+      }
+    },
     "Same host request delay:": {
       "localizations": {
         "az-Latn": {
@@ -235744,6 +237427,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сохранить"
+          }
+        }
+      }
+    },
+    "Save Location": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Место сохранения"
           }
         }
       }
@@ -237498,6 +239191,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "儲存至："
+          }
+        }
+      }
+    },
+    "Save downloads to:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранять загрузки в:"
           }
         }
       }
@@ -239326,6 +241029,16 @@
         }
       }
     },
+    "Schedule": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расписание"
+          }
+        }
+      }
+    },
     "Schedule the use of alternative rate limits": {
       "localizations": {
         "ar": {
@@ -239990,6 +241703,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "搜尋"
+          }
+        }
+      }
+    },
+    "Search & RSS": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиск и RSS"
           }
         }
       }
@@ -243780,6 +245503,16 @@
         }
       }
     },
+    "Search settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиск в настройках"
+          }
+        }
+      }
+    },
     "Searching...": {
       "localizations": {
         "ar": {
@@ -245118,6 +246851,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "正在做種"
+          }
+        }
+      }
+    },
+    "Seeding & Queue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раздача и очередь"
           }
         }
       }
@@ -250160,6 +251903,16 @@
         }
       }
     },
+    "Send an email when a download finishes": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправлять письмо по завершении загрузки"
+          }
+        }
+      }
+    },
     "Send buffer low watermark": {
       "localizations": {
         "ar": {
@@ -251956,6 +253709,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "傳送者"
+          }
+        }
+      }
+    },
+    "Sends your IP address and listening port to portcheck.transmissionbt.com, which tries to connect back. Nothing is sent until you click.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправляет ваш IP-адрес и порт прослушивания на portcheck.transmissionbt.com, который пробует подключиться в ответ. Пока вы не нажмете кнопку, ничего не отправляется."
           }
         }
       }
@@ -256768,6 +258531,370 @@
         }
       }
     },
+    "Show": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أظهر"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Göstərmək"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Паказаць"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покажи"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prikaži"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostra"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ukázat"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vis"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anzeigen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Εμφάνιση"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        },
+        "eo": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Montru"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Näita"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erakutsi"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نمایش دادن"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Näytä"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הראה"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिखाएँ"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prikaži"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mutat"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ցուցադրել"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tampilkan"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sýna"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visualizza"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ჩვენება"
+          }
+        },
+        "kk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Көрсету"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "표시"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rodyti"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruodeit"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rādīt"
+          }
+        },
+        "mn-MN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Харуулах"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tunjuk"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vis"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "देखाउनुहोस्"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergeven"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afichar"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pokaż"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arată"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zobraziť"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pokaži"
+          }
+        },
+        "sq": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shfaq"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикажи"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prikaži"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visa"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "แสดง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Göster"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показати"
+          }
+        },
+        "uz-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ko‘rsatish"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiển Thị"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "顯示"
+          }
+        }
+      }
+    },
     "Show All Torrents": {
       "localizations": {
         "ru": {
@@ -256814,6 +258941,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Показывать свободное место на диске"
+          }
+        }
+      }
+    },
+    "Show RSS reader": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать RSS-ленты"
+          }
+        }
+      }
+    },
+    "Show a countdown before quitting when downloads finish": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать обратный отсчет перед выходом по завершении загрузок"
+          }
+        }
+      }
+    },
+    "Show advanced settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать дополнительные настройки"
+          }
+        }
+      }
+    },
+    "Show external IP address": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать внешний IP-адрес"
           }
         }
       }
@@ -257020,6 +259187,16 @@
         }
       }
     },
+    "Show free disk space": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать свободное место на диске"
+          }
+        }
+      }
+    },
     "Show free disk space in status bar": {
       "localizations": {
         "az-Latn": {
@@ -257210,6 +259387,36 @@
         }
       }
     },
+    "Show options when adding a torrent": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать параметры при добавлении торрента"
+          }
+        }
+      }
+    },
+    "Show peer countries": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать страны пиров"
+          }
+        }
+      }
+    },
+    "Show peer host names": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать имена узлов пиров"
+          }
+        }
+      }
+    },
     "Show qBittorrent Neo": {
       "localizations": {
         "ru": {
@@ -257226,6 +259433,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Показывать qBittorrent Neo в строке меню"
+          }
+        }
+      }
+    },
+    "Show search engine": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать поисковик"
+          }
+        }
+      }
+    },
+    "Show speed graphs": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать графики скорости"
           }
         }
       }
@@ -257380,6 +259607,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "在 Dock 中顯示速度"
+          }
+        }
+      }
+    },
+    "Show tracker icons": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать значки трекеров"
           }
         }
       }
@@ -258768,6 +261005,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "確認關機"
+          }
+        }
+      }
+    },
+    "Sidebar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Боковая панель"
+          }
+        }
+      }
+    },
+    "Sign-In": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вход"
           }
         }
       }
@@ -264106,6 +266363,16 @@
         }
       }
     },
+    "Speed in the last minute": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скорость за последнюю минуту"
+          }
+        }
+      }
+    },
     "Speed limits": {
       "localizations": {
         "ar": {
@@ -265720,6 +267987,16 @@
         }
       }
     },
+    "Start downloads automatically": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начинать загрузку автоматически"
+          }
+        }
+      }
+    },
     "Start seeding immediately": {
       "localizations": {
         "ar": {
@@ -267080,6 +269357,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "啟動 torrent："
+          }
+        }
+      }
+    },
+    "Start with all transfers paused": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускать с приостановленными передачами"
+          }
+        }
+      }
+    },
+    "Startup": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запуск"
           }
         }
       }
@@ -271448,6 +273745,16 @@
         }
       }
     },
+    "Supported parameters": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поддерживаемые параметры"
+          }
+        }
+      }
+    },
     "Supported parameters (case sensitive):\n    %N: Torrent name\n    %L: Category\n    %G: Tags (separated by comma)\n    %F: Content path (same as root path for multifile torrent)\n    %R: Root path (first torrent subdirectory path)\n    %D: Save path\n    %C: Number of files\n    %Z: Torrent size (bytes)\n    %T: Current tracker\n    %I: Info hash v1 (or '-' if unavailable)\n    %J: Info hash v2 (or '-' if unavailable)\n    %K: Torrent ID (either sha-1 info hash for v1 torrent or truncated sha-256 info hash for v2/hybrid torrent)\n    %M: Comment\nTip: Encapsulate parameter with quotation marks to avoid text being cut off at whitespace (e.g., \"%N\")": {
       "localizations": {
         "ru": {
@@ -273276,6 +275583,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Системный"
+          }
+        }
+      }
+    },
+    "System follows your Mac's appearance.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Системная» следует оформлению Mac."
           }
         }
       }
@@ -275920,6 +278237,16 @@
         }
       }
     },
+    "Test Port": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить порт"
+          }
+        }
+      }
+    },
     "The BitTorrent engine is a modified fork of rqbit (librqbit), Copyright 2021 Igor Katson, licensed under the Apache License, Version 2.0.": {
       "localizations": {
         "ru": {
@@ -277592,6 +279919,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "電腦將關機。"
+          }
+        }
+      }
+    },
+    "The core is qBittorrent 5.2.4, Copyright 2006-2026 The qBittorrent project, licensed under the GNU General Public License version 2 or later. It uses libtorrent (BSD 3-Clause License), Qt (GNU Lesser General Public License version 3), Boost (Boost Software License) and OpenSSL (Apache License 2.0).": {},
+    "The display can still sleep.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дисплей по-прежнему может засыпать."
           }
         }
       }
@@ -288847,6 +291185,16 @@
         }
       }
     },
+    "Torrent Details": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сведения о торренте"
+          }
+        }
+      }
+    },
     "Torrent ID": {
       "localizations": {
         "ar": {
@@ -289123,6 +291471,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Torrent ID(I)"
+          }
+        }
+      }
+    },
+    "Torrent List": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Список торрентов"
           }
         }
       }
@@ -300643,6 +303001,16 @@
         }
       }
     },
+    "Trackers & Announcing": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Трекеры и анонсы"
+          }
+        }
+      }
+    },
     "Trackers cannot be merged because it is a private torrent.": {
       "localizations": {
         "ar": {
@@ -302553,6 +304921,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "受信任的代理伺服器清單："
+          }
+        }
+      }
+    },
+    "Tunnel settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Параметры туннелей"
+          }
+        }
+      }
+    },
+    "Turn on with the tortoise button in the toolbar or status bar, or on a schedule.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включаются кнопкой с черепахой на панели инструментов или в строке состояния либо по расписанию."
           }
         }
       }
@@ -306941,6 +309329,16 @@
         }
       }
     },
+    "Unsafe: accepts forged certificates for RSS, updates and downloads.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Небезопасно: принимает поддельные сертификаты для RSS, обновлений и загрузок."
+          }
+        }
+      }
+    },
     "Untagged": {
       "localizations": {
         "ar": {
@@ -308939,6 +311337,16 @@
         }
       }
     },
+    "Update interval:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Интервал обновления:"
+          }
+        }
+      }
+    },
     "Update my dynamic domain name": {
       "localizations": {
         "ar": {
@@ -309227,6 +311635,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "更新我的動態網域名稱 (T)"
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновления"
           }
         }
       }
@@ -315211,6 +317629,16 @@
         }
       }
     },
+    "Use alternative limits on a schedule": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включать особые ограничения по расписанию"
+          }
+        }
+      }
+    },
     "Use alternative speed limits": {
       "localizations": {
         "ru": {
@@ -316027,6 +318455,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "根據 torrent 狀態使用不同的文字色彩"
+          }
+        }
+      }
+    },
+    "Use only this network interface:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовать только сетевой интерфейс:"
           }
         }
       }
@@ -318731,6 +321169,36 @@
         }
       }
     },
+    "Uses a free IP-to-country database downloaded monthly.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использует бесплатную базу IP-адресов по странам, загружаемую ежемесячно."
+          }
+        }
+      }
+    },
+    "VPN Protection": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Защита VPN"
+          }
+        }
+      }
+    },
+    "VPN binding: %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привязка к VPN: %@"
+          }
+        }
+      }
+    },
     "Valid": {
       "localizations": {
         "ru": {
@@ -319403,6 +321871,16 @@
         }
       }
     },
+    "Verify files again when a download finishes": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перепроверять файлы по завершении загрузки"
+          }
+        }
+      }
+    },
     "Version": {
       "localizations": {
         "ar": {
@@ -319737,6 +322215,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Версия:"
+          }
+        }
+      }
+    },
+    "View › Lock hides the window until the password is entered.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«Вид › Заблокировать» скрывает окно до ввода пароля."
           }
         }
       }
@@ -321623,6 +324111,16 @@
         }
       }
     },
+    "Watched Folders": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Папки наблюдения"
+          }
+        }
+      }
+    },
     "Watched folder path cannot be empty.": {
       "localizations": {
         "ar": {
@@ -322495,6 +324993,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "監視資料夾："
+          }
+        }
+      }
+    },
+    "Web Interface": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Веб-интерфейс"
           }
         }
       }
@@ -326061,6 +328569,16 @@
         }
       }
     },
+    "When a download finishes or a file can't be written.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда загрузка завершена или файл не удается записать."
+          }
+        }
+      }
+    },
     "When a torrent is downloaded, offer to add torrents from any .torrent files found inside it": {
       "localizations": {
         "ar": {
@@ -327361,6 +329879,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "當分享率達到"
+          }
+        }
+      }
+    },
+    "When removing a torrent with its files:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "При удалении торрента с файлами:"
           }
         }
       }
@@ -328707,6 +331235,172 @@
         }
       }
     },
+    "Window": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Акно"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prozor"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finestra"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenster"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ventana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtre"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xanela"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prozor"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ablak"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finestra"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "창(W)"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "विन्डो (W)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venster"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Janela"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Janela"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Окно"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okno"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fönster"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "หน้าต่าง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pencere"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вікно"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cửa sổ"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "窗口(W)"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "視窗(W)"
+          }
+        }
+      }
+    },
     "Window state on start up:": {
       "localizations": {
         "ar": {
@@ -328953,6 +331647,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "啟動時的視窗狀態"
+          }
+        }
+      }
+    },
+    "Window title suffix:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополнение к заголовку окна:"
+          }
+        }
+      }
+    },
+    "Without a password, a temporary one is generated at each launch and written to the log.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без пароля при каждом запуске создается временный пароль, который записывается в журнал."
           }
         }
       }
@@ -332295,6 +335009,16 @@
         }
       }
     },
+    "allowed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "разрешено"
+          }
+        }
+      }
+    },
     "ban for:": {
       "localizations": {
         "ar": {
@@ -332969,6 +335693,16 @@
         }
       }
     },
+    "disabled": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "отключено"
+          }
+        }
+      }
+    },
     "https://": {
       "shouldTranslate": false
     },
@@ -332990,6 +335724,7 @@
     "https://www.qbittorrent.org": {
       "shouldTranslate": false
     },
+    "libtorrent": {},
     "libtorrent Section": {
       "localizations": {
         "ar": {
@@ -333332,6 +336067,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "libtorrent 小節"
+          }
+        }
+      }
+    },
+    "libtorrent settings": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки libtorrent"
+          }
+        }
+      }
+    },
+    "macOS checks apps from torrents before they first open.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS проверяет приложения из торрентов перед первым запуском."
           }
         }
       }
@@ -334037,6 +336792,27 @@
         }
       }
     },
+    "off": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выкл."
+          }
+        }
+      }
+    },
+    "on": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "вкл."
+          }
+        }
+      }
+    },
+    "qBittorrent": {},
     "qBittorrent Neo": {
       "shouldTranslate": false
     },
@@ -334050,6 +336826,7 @@
         }
       }
     },
+    "qBittorrent Neo is a fork of qBittorrent 5.2.4 whose Qt Widgets interface is replaced by a native macOS app.": {},
     "qBittorrent Neo is built on the work of the qBittorrent project and its contributors and translators.": {
       "localizations": {
         "ru": {
@@ -334456,6 +337233,27 @@
         }
       }
     },
+    "qBittorrent on GitHub": {},
+    "qBittorrent options": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Параметры qBittorrent"
+          }
+        }
+      }
+    },
+    "required": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "обязательно"
+          }
+        }
+      }
+    },
     "rqbit on GitHub": {
       "shouldTranslate": false
     },
@@ -334789,6 +337587,720 @@
           "stringUnit": {
             "state": "translated",
             "value": "秒"
+          }
+        }
+      }
+    },
+    "settings.pane.advanced": {
+      "comment": "Settings pane",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متقدم"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Əlavə"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пашыраныя"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разширени"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napredno"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avançat"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pokročilé"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avanceret"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erweitert"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Για προχωρημένους"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advanced"
+          }
+        },
+        "eo": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Altnivelaj"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avanzado"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edasijõudnutele"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aurreratua"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پیشرفته"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lisäasetukset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avancées"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avanzado"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתקדם"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उन्नत"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napredno"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speciális beállítások"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ընդլայնված"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tingkat Lanjut"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avanzate"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高度"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "დამატებით"
+          }
+        },
+        "kk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Қосымша"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "고급"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Išplėstinės"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Papyldvareibas"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Papildus"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lanjutan"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avansert"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उन्नत"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geavanceerd"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avançat"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaawansowane"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avançado"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avançado"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avansate"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополнения"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozšírené"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napredno"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напредно"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napredno"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avancerat"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ขั้นสูง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelişmiş"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додатково"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nâng cao"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "進階"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "高级"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "進階"
+          }
+        }
+      }
+    },
+    "settings.pane.general": {
+      "comment": "Settings pane",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عام"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Əsas"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Агульныя звесткі"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общи"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Općenito"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obecné"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generelt"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allgemein"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Γενικά"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "eo": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ĝenerala"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Üldine"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orokorra"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عمومی"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yleiset"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Général"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xeral"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "כללי"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सामान्य"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Općenito"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Általános"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ընդհանուր"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umum"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almennur"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generali"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全般"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ზოგადი"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "일반"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bendra"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyscaureigi"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vispārīgi"
+          }
+        },
+        "mn-MN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Үндсэн"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Am"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generelt"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साधारण"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algemeen"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "General"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Główny"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geral"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geral"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generale"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Основные"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Všeobecné"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Splošno"
+          }
+        },
+        "sq": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Të përgjithshme"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Опште"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opšte"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allmänt"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ทั่วไป"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genel"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загальні"
+          }
+        },
+        "uz-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Umumiy"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tổng quan"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一般"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通用"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一般"
           }
         }
       }
