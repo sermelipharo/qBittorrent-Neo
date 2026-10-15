@@ -44,6 +44,9 @@ enum FeatureSnapshotCatalog {
             Entry(name: "about-credits", title: AppWindowID.about.title, size: FeatureDesign.Window.aboutSize) { _ in
                 AnyView(AboutWindow(initialTab: .credits))
             },
+            Entry(name: "about-credits", title: AppWindowID.about.title, size: FeatureDesign.Window.aboutSize) { _ in
+                AnyView(AboutWindow(initialTab: .credits))
+            },
             Entry(name: "about", title: AppWindowID.about.title, size: FeatureDesign.Window.aboutSize) { _ in
                 AnyView(AboutWindow())
             },

@@ -38,3 +38,23 @@ Run with a separate profile: `open -n "qBittorrent Neo.app" --args --profile <di
 
 GPL-3.0-or-later for the combined application; qBittorrent's sources keep
 their GPL-2.0-or-later license. See `NOTICE` and `COPYING`.
+
+## Credits
+
+qBittorrent Neo is a fork of [qBittorrent](https://www.qbittorrent.org); the
+core, WebUI, search engine and translations are the work of that project.
+
+* **Original author:** Christophe Dumez.
+* **Current maintainer:** Sledgehammer999.
+* **Contributors:** Vladimir Golovnev, Stefanos Antaris, Mohammad Dib, Mirco
+  Chinelli, Ishan Arora, Arnaud Demaizière, Grigis Gaëtan, Christian Kandeler,
+  Silvan Scherrer, Nick Tiskov and everyone on the
+  [qBittorrent contributors page](https://github.com/qbittorrent/qBittorrent/graphs/contributors).
+* **Translators:** the volunteers who translated qBittorrent, mostly through
+  [Transifex](https://explore.transifex.com/sledgehammer999/qbittorrent/);
+  this app reuses their translations.
+* **Libraries:** libtorrent-rasterbar (Arvid Norberg and contributors, BSD),
+  Qt (LGPL), Boost, OpenSSL, zlib.
+* qBittorrent is licensed under GPL-2.0-or-later with the OpenSSL exception.
+
+The About window (Credits tab) shows the same credits.

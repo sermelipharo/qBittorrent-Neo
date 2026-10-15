@@ -5,7 +5,7 @@ import SwiftUI
 enum FeatureDesign {
     enum Window {
         static let statisticsMin = CGSize(width: 380, height: 470)
-        static let aboutSize = CGSize(width: 560, height: 520)
+        static let aboutSize = CGSize(width: 600, height: 640)
         static let cookiesMin = CGSize(width: 680, height: 360)
         static let logMin = CGSize(width: 640, height: 360)
         static let creatorMin = CGSize(width: 560, height: 640)

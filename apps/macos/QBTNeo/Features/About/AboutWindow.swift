@@ -4,8 +4,12 @@ import SwiftUI
 /// project description, authors, licenses and build information.
 struct AboutWindow: View {
     @Environment(AppModel.self) private var app
-    @State private var tab = AboutTab.about
+    @State private var tab: AboutTab
     @State private var buildInfo: BuildInfo?
+
+    init(initialTab: AboutTab = .about) {
+        _tab = State(initialValue: initialTab)
+    }
 
     var body: some View {
         VStack(spacing: Design.Spacing.large) {
@@ -14,8 +18,8 @@ struct AboutWindow: View {
                 Tab(AboutTab.about.title, systemImage: Symbol.infoCircle, value: AboutTab.about) {
                     AboutOverviewTab()
                 }
-                Tab(AboutTab.authors.title, systemImage: Symbol.person2, value: AboutTab.authors) {
-                    AboutAuthorsTab()
+                Tab(AboutTab.credits.title, systemImage: Symbol.person2, value: AboutTab.credits) {
+                    AboutCreditsTab()
                 }
                 Tab(AboutTab.license.title, systemImage: Symbol.docText, value: AboutTab.license) {
                     AboutLicenseTab()
