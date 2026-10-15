@@ -140,6 +140,11 @@ namespace Neo
             handleChangedDefaults(DefaultPreferencesMode::Legacy);
         }
 
+        // The core is built like qbittorrent-nox (DISABLE_GUI), whose WebUI
+        // is enabled by default; the GUI build's default is off.
+        if (!SettingsStorage::instance()->hasKey(u"Preferences/WebUI/Enabled"_s))
+            Preferences::instance()->setWebUIEnabled(false);
+
         initializeTranslation();
 
         connect(this, &QCoreApplication::aboutToQuit, this, &NeoApplication::cleanup);
