@@ -18,7 +18,7 @@ struct PathPicker: View {
                 .truncationMode(.head)
                 .frame(minWidth: 180)
             if !history.isEmpty {
-                Menu("History", systemImage: "clock.arrow.circlepath") {
+                Menu("History", systemImage: Symbol.clockArrowCirclepath) {
                     ForEach(history, id: \.self) { entry in
                         Button(entry) { path = entry }
                     }

@@ -26,7 +26,7 @@ struct SearchPluginsTable: View {
             let enabled = model.plugins.first { names.contains($0.name) }?.enabled ?? false
             Button(enabled ? "Disable" : "Enable") { model.setEnabled(names, !enabled) }
             Divider()
-            Button("Uninstall", systemImage: "minus.circle") { Task { await model.uninstall(names) } }
+            Button("Uninstall", systemImage: Symbol.minusCircle) { Task { await model.uninstall(names) } }
         } primaryAction: { names in
             for name in names { model.toggle(name) }
         }

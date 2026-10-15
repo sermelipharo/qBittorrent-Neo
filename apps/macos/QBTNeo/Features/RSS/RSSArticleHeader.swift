@@ -39,7 +39,7 @@ struct RSSArticleHeader: View {
                 }
                 Spacer()
                 if !item.article.torrentUrl.isEmpty {
-                    Button("Download torrent", systemImage: "arrow.down.circle", action: download)
+                    Button("Download torrent", systemImage: Symbol.arrowDownCircle, action: download)
                 }
             }
         }

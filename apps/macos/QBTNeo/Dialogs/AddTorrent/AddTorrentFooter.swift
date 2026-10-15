@@ -14,7 +14,7 @@ struct AddTorrentFooter: View {
             Spacer()
             if dialog.isMagnet {
                 if dialog.hasMetadata {
-                    Label("Metadata retrieval complete", systemImage: "checkmark.circle")
+                    Label("Metadata retrieval complete", systemImage: Symbol.checkmarkCircle)
                         .foregroundStyle(.secondary)
                 } else if dialog.phase == .retrievingMetadata {
                     ProgressView().controlSize(.small)

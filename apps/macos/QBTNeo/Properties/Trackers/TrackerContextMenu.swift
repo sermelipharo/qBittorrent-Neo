@@ -9,20 +9,20 @@ struct TrackerContextMenu: View {
     var body: some View {
         let urls = model.trackerURLs(rowIDs: ids)
         let running = !item.state.isStopped
-        Button("Add Trackers…", systemImage: "plus") { model.sheet = .addTrackers(id: item.id) }
+        Button("Add Trackers…", systemImage: Symbol.plus) { model.sheet = .addTrackers(id: item.id) }
         if !urls.isEmpty {
-            Button("Edit Tracker URL…", systemImage: "pencil") { model.requestEditTracker(hash: item.id, rowIDs: ids) }
-            Button("Remove Tracker", systemImage: "minus.circle") {
+            Button("Edit Tracker URL…", systemImage: Symbol.pencil) { model.requestEditTracker(hash: item.id, rowIDs: ids) }
+            Button("Remove Tracker", systemImage: Symbol.minusCircle) {
                 model.perform { try $0.removeTrackers(hash: item.id, urls: urls) }
             }
-            Button("Copy Tracker URL", systemImage: "doc.on.doc") { model.copyToPasteboard(urls.joined(separator: "\n")) }
+            Button("Copy Tracker URL", systemImage: Symbol.docOnDoc) { model.copyToPasteboard(urls.joined(separator: "\n")) }
             if running {
-                Button("Force Reannounce to Selected Trackers", systemImage: "arrow.clockwise") { model.reannounce([item.id]) }
+                Button("Force Reannounce to Selected Trackers", systemImage: Symbol.arrowClockwise) { model.reannounce([item.id]) }
             }
         }
         if running {
             Divider()
-            Button("Force Reannounce to All Trackers", systemImage: "arrow.clockwise.circle") { model.reannounce([item.id]) }
+            Button("Force Reannounce to All Trackers", systemImage: Symbol.arrowClockwiseCircle) { model.reannounce([item.id]) }
         }
     }
 }

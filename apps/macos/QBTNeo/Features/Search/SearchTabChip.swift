@@ -27,7 +27,7 @@ struct SearchTabChip: View {
             }
             .buttonStyle(.plain)
             .help(tab.status.text)
-            Button("Close tab", systemImage: "xmark", action: close)
+            Button("Close tab", systemImage: Symbol.xmark, action: close)
                 .labelStyle(.iconOnly)
                 .buttonStyle(.plain)
                 .foregroundStyle(.secondary)

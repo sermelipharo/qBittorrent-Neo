@@ -38,7 +38,7 @@ struct SpeedChart: View {
         .accessibilityLabel(Text("Speed graph"))
         .overlay {
             if points.isEmpty {
-                ContentUnavailableView("No Data Yet", systemImage: "chart.xyaxis.line")
+                ContentUnavailableView("No Data Yet", systemImage: Symbol.chartXyaxisLine)
             }
         }
     }

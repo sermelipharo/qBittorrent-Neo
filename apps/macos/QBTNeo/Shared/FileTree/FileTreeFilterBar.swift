@@ -13,12 +13,12 @@ struct FileTreeFilterBar: View {
             Button("Select None", action: onSelectNone)
             Spacer()
             HStack(spacing: Design.Spacing.tight) {
-                Image(systemName: "line.3.horizontal.decrease")
+                Image(systemName: Symbol.line3HorizontalDecrease)
                     .foregroundStyle(.secondary)
                     .accessibilityHidden(true)
                 TextField("Filter files…", text: $tree.filterText)
                     .textFieldStyle(.plain)
-                Menu("Pattern Format", systemImage: "ellipsis.circle") {
+                Menu("Pattern Format", systemImage: Symbol.ellipsisCircle) {
                     Picker("Pattern Format", selection: $tree.patternFormat) {
                         ForEach(FilterPatternFormat.allCases) { format in
                             Text(format.title).tag(format)

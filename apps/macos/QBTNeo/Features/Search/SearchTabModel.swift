@@ -22,12 +22,12 @@ final class SearchTabModel: Identifiable {
 
         var symbol: String {
             switch self {
-            case .ready: "magnifyingglass"
-            case .ongoing: "clock"
-            case .finished: "checkmark.circle"
-            case .noResults: "exclamationmark.triangle"
-            case .aborted: "xmark.circle"
-            case .error: "exclamationmark.octagon"
+            case .ready: Symbol.magnifyingglass
+            case .ongoing: Symbol.clock
+            case .finished: Symbol.checkmarkCircle
+            case .noResults: Symbol.exclamationmarkTriangle
+            case .aborted: Symbol.xmarkCircle
+            case .error: Symbol.exclamationmarkOctagon
             }
         }
     }

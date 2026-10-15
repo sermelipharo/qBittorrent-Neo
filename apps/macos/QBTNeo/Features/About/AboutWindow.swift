@@ -11,16 +11,16 @@ struct AboutWindow: View {
         VStack(spacing: Design.Spacing.large) {
             AboutHeader(version: buildInfo.map { "v\($0.app)" } ?? "", bitness: buildInfo?.bitness ?? 64)
             TabView(selection: $tab) {
-                Tab(AboutTab.about.title, systemImage: "info.circle", value: AboutTab.about) {
+                Tab(AboutTab.about.title, systemImage: Symbol.infoCircle, value: AboutTab.about) {
                     AboutOverviewTab()
                 }
-                Tab(AboutTab.authors.title, systemImage: "person.2", value: AboutTab.authors) {
+                Tab(AboutTab.authors.title, systemImage: Symbol.person2, value: AboutTab.authors) {
                     AboutAuthorsTab()
                 }
-                Tab(AboutTab.license.title, systemImage: "doc.text", value: AboutTab.license) {
+                Tab(AboutTab.license.title, systemImage: Symbol.docText, value: AboutTab.license) {
                     AboutLicenseTab()
                 }
-                Tab(AboutTab.software.title, systemImage: "shippingbox", value: AboutTab.software) {
+                Tab(AboutTab.software.title, systemImage: Symbol.shippingbox, value: AboutTab.software) {
                     AboutSoftwareTab(info: buildInfo)
                 }
             }

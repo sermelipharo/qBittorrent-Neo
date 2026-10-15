@@ -14,7 +14,7 @@ struct TrackerURLCell: View {
             Button {
                 properties.toggleTrackerExpansion(row.url)
             } label: {
-                Image(systemName: "chevron.right")
+                Image(systemName: Symbol.chevronRight)
                     .rotationEffect(.degrees(expanded ? 90 : 0))
                     .font(.caption.bold())
                     .foregroundStyle(.secondary)

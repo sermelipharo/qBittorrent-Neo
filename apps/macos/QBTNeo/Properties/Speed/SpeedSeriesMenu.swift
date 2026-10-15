@@ -5,7 +5,7 @@ struct SpeedSeriesMenu: View {
     @Binding var selection: Set<SpeedGraphSeries>
 
     var body: some View {
-        Menu("Select Graphs", systemImage: "chart.line.uptrend.xyaxis") {
+        Menu("Select Graphs", systemImage: Symbol.chartLineUptrendXyaxis) {
             ForEach(SpeedGraphSeries.allCases) { series in
                 Toggle(series.title, isOn: $selection[contains: series])
             }

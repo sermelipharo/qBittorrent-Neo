@@ -7,13 +7,13 @@ struct CategoryContextMenu: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        Button("Add Category…", systemImage: "plus") { model.requestNewCategory() }
+        Button("Add Category…", systemImage: Symbol.plus) { model.requestNewCategory() }
         if let category {
-            Button("Add Subcategory…", systemImage: "folder.badge.plus") { model.requestNewCategory(parent: category) }
-            Button("Edit Category…", systemImage: "pencil") { model.requestEditCategory(category) }
-            Button("Remove Category", systemImage: "minus.circle") { model.removeCategory(category) }
+            Button("Add Subcategory…", systemImage: Symbol.folderBadgePlus) { model.requestNewCategory(parent: category) }
+            Button("Edit Category…", systemImage: Symbol.pencil) { model.requestEditCategory(category) }
+            Button("Remove Category", systemImage: Symbol.minusCircle) { model.removeCategory(category) }
         }
-        Button("Remove Unused Categories", systemImage: "trash.slash") { model.removeUnusedCategories() }
+        Button("Remove Unused Categories", systemImage: Symbol.trashSlash) { model.removeUnusedCategories() }
         Divider()
         SidebarTorrentActions()
     }

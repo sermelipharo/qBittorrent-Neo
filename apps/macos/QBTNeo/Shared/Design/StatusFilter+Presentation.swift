@@ -37,20 +37,20 @@ extension StatusFilter: Identifiable {
 
     var systemImage: String {
         switch self {
-        case .all: "line.3.horizontal.decrease.circle"
-        case .downloading: "arrow.down.circle"
-        case .seeding: "arrow.up.circle"
-        case .completed: "checkmark.circle"
-        case .running: "play.circle"
-        case .stopped: "pause.circle"
-        case .active: "bolt.circle"
-        case .inactive: "moon.circle"
-        case .stalled: "exclamationmark.arrow.trianglehead.2.clockwise.rotate.90"
-        case .stalledUploading: "arrow.up.circle.dotted"
-        case .stalledDownloading: "arrow.down.circle.dotted"
-        case .checking: "arrow.trianglehead.2.clockwise.rotate.90"
-        case .moving: "folder"
-        case .errored: "exclamationmark.triangle"
+        case .all: Symbol.trayFull
+        case .downloading: Symbol.arrowDown
+        case .seeding: Symbol.arrowUp
+        case .completed: Symbol.checkmark
+        case .running: Symbol.playFill
+        case .stopped: Symbol.pauseFill
+        case .active: Symbol.boltFill
+        case .inactive: Symbol.moonFill
+        case .stalled: Symbol.exclamationmarkArrowTrianglehead2ClockwiseRotate90
+        case .stalledUploading: Symbol.arrowUpToLine
+        case .stalledDownloading: Symbol.arrowDownToLine
+        case .checking: Symbol.arrowTrianglehead2ClockwiseRotate90
+        case .moving: Symbol.folder
+        case .errored: Symbol.exclamationmarkTriangle
         }
     }
 

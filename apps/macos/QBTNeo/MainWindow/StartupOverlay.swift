@@ -12,7 +12,7 @@ struct StartupOverlay: View {
                 .background(.regularMaterial, in: .rect(cornerRadius: Design.Radius.large))
         case .failed(let message):
             ContentUnavailableView {
-                Label("qBittorrent Neo Could Not Start", systemImage: "exclamationmark.triangle")
+                Label("qBittorrent Neo Could Not Start", systemImage: Symbol.exclamationmarkTriangle)
             } description: {
                 Text(message)
             } actions: {

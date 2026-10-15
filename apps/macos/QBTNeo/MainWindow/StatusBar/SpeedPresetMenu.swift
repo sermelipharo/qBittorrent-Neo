@@ -8,7 +8,7 @@ struct SpeedPresetMenu: View {
     private static let presetsKiB: [Int64] = [100, 500, 1_024, 5_120, 10_240]
 
     var body: some View {
-        Button("Set Global Speed Limits…", systemImage: "speedometer") { model.sheet = .speedLimits }
+        Button("Set Global Speed Limits…", systemImage: Symbol.speedometer) { model.sheet = .speedLimits }
         Toggle("Alternative Speed Limits", isOn: Bindable(model).alternativeSpeedLimits)
         Divider()
         Button("Unlimited") { set(0) }

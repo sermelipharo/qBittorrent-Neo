@@ -34,7 +34,7 @@ struct TorrentTagsSheet: View {
             HStack {
                 TextField("Tag:", text: $newTag, prompt: Text("New tag"))
                     .onSubmit(addTag)
-                Button("Add Tag", systemImage: "plus", action: addTag)
+                Button("Add Tag", systemImage: Symbol.plus, action: addTag)
                     .labelStyle(.iconOnly)
                     .disabled(newTag.trimmingCharacters(in: .whitespaces).isEmpty)
             }

@@ -11,9 +11,9 @@ struct ViewCommands: View {
         Toggle("Filters Sidebar", isOn: $gui.filtersSidebarVisible)
         Toggle("Speed in Title Bar", isOn: $gui.speedInTitleBar)
         Divider()
-        Button("Search Engine", systemImage: "magnifyingglass") { openWindow(id: AppWindowID.search.rawValue) }
+        Button("Search Engine", systemImage: Symbol.magnifyingglass) { openWindow(id: AppWindowID.search.rawValue) }
             .keyboardShortcut("2", modifiers: .option)
-        Button("RSS Reader", systemImage: "dot.radiowaves.up.forward") { openWindow(id: AppWindowID.rss.rawValue) }
+        Button("RSS Reader", systemImage: Symbol.dotRadiowavesUpForward) { openWindow(id: AppWindowID.rss.rawValue) }
             .keyboardShortcut("3", modifiers: .option)
         Menu("Log") {
             Button("Show Execution Log") { openWindow(id: AppWindowID.log.rawValue) }
@@ -27,10 +27,10 @@ struct ViewCommands: View {
         Divider()
         LockCommands(model: model)
         Divider()
-        Button("Statistics", systemImage: "chart.bar") { openWindow(id: AppWindowID.statistics.rawValue) }
+        Button("Statistics", systemImage: Symbol.chartBar) { openWindow(id: AppWindowID.statistics.rawValue) }
             .keyboardShortcut("i")
         Divider()
-        Button("Global Speed Limits…", systemImage: "speedometer") { model.sheet = .speedLimits }
+        Button("Global Speed Limits…", systemImage: Symbol.speedometer) { model.sheet = .speedLimits }
         Toggle("Alternative Speed Limits", isOn: Bindable(model).alternativeSpeedLimits)
             .keyboardShortcut("t", modifiers: [.command, .shift])
     }

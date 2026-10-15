@@ -53,7 +53,7 @@ struct SearchWindow: View {
     @ViewBuilder private var content: some View {
         if let status = model.engineStatus, !status.pythonFound {
             ContentUnavailableView {
-                Label("Missing Python Runtime", systemImage: "exclamationmark.triangle")
+                Label("Missing Python Runtime", systemImage: Symbol.exclamationmarkTriangle)
             } description: {
                 Text("Python is required to use the search engine but it does not seem to be installed.")
                 Text(status.message)
@@ -61,12 +61,12 @@ struct SearchWindow: View {
             }
         } else if model.engineStatus != nil, model.plugins.isEmpty {
             ContentUnavailableView {
-                Label("No Search Plugins", systemImage: "puzzlepiece.extension")
+                Label("No Search Plugins", systemImage: Symbol.puzzlepieceExtension)
             } description: {
                 Text("There aren't any search plugins installed.\nClick the \"Search plugins...\" button at the bottom right of the window to install some.")
             }
         } else if model.tabs.isEmpty {
-            ContentUnavailableView("Search", systemImage: "magnifyingglass",
+            ContentUnavailableView("Search", systemImage: Symbol.magnifyingglass,
                                    description: Text("Type a phrase and press Return to search with the enabled plugins."))
         } else {
             SearchTabStrip(model: model)

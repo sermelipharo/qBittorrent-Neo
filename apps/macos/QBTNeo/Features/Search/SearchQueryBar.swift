@@ -43,9 +43,9 @@ struct SearchQueryBar: View {
             .labelsHidden()
             .fixedSize()
             if model.showsStop {
-                Button("Stop", systemImage: "stop.fill", action: model.stopCurrent)
+                Button("Stop", systemImage: Symbol.stopFill, action: model.stopCurrent)
             } else {
-                Button("Search", systemImage: "magnifyingglass", action: model.search)
+                Button("Search", systemImage: Symbol.magnifyingglass, action: model.search)
                     .keyboardShortcut(.defaultAction)
                     .disabled(model.plugins.isEmpty)
             }

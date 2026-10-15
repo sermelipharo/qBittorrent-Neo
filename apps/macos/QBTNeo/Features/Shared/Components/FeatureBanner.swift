@@ -9,7 +9,7 @@ struct FeatureBanner: View {
 
     var body: some View {
         HStack(spacing: Design.Spacing.regular) {
-            Image(systemName: "exclamationmark.triangle.fill")
+            Image(systemName: Symbol.exclamationmarkTriangleFill)
                 .foregroundStyle(.orange)
                 .accessibilityHidden(true)
             Text(text)

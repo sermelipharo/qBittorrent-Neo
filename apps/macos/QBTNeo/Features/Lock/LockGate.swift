@@ -7,7 +7,7 @@ struct LockGate: ViewModifier {
 
     func body(content: Content) -> some View {
         if model.lock.isLocked {
-            ContentUnavailableView("qBittorrent Neo is locked", systemImage: "lock.fill",
+            ContentUnavailableView("qBittorrent Neo is locked", systemImage: Symbol.lockFill,
                                    description: Text("Unlock it from the main window."))
                 .frame(minWidth: 320, minHeight: 200)
         } else {

@@ -22,7 +22,7 @@ struct AddTorrentWindow: View {
                     if phase == .duplicate { dismiss() }
                 }
             } else {
-                ContentUnavailableView("Nothing to Add", systemImage: "doc.badge.plus")
+                ContentUnavailableView("Nothing to Add", systemImage: Symbol.docBadgePlus)
                     .frame(width: 400, height: 240)
             }
         }

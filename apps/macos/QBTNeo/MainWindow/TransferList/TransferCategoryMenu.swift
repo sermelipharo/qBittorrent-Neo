@@ -6,9 +6,9 @@ struct TransferCategoryMenu: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        Menu("Category", systemImage: "folder") {
-            Button("New…", systemImage: "plus") { model.requestNewCategory(assignTo: selection.ids) }
-            Button("Reset", systemImage: "xmark") { model.setCategory(selection.ids, "") }
+        Menu("Category", systemImage: Symbol.folder) {
+            Button("New…", systemImage: Symbol.plus) { model.requestNewCategory(assignTo: selection.ids) }
+            Button("Reset", systemImage: Symbol.xmark) { model.setCategory(selection.ids, "") }
             Divider()
             Picker("Category", selection: selection.categoryBinding) {
                 ForEach(model.categories.sortedNames, id: \.self) { name in

@@ -17,7 +17,7 @@ struct AddPeersSheet: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
             if let error {
-                Label(error, systemImage: "exclamationmark.triangle.fill")
+                Label(error, systemImage: Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(TorrentState.error.color)
             }
         }

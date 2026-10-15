@@ -39,7 +39,7 @@ struct CategoryEditorSheet: View {
             .scrollDisabled(true)
             .fixedSize(horizontal: false, vertical: true)
             if let error {
-                Label(error, systemImage: "exclamationmark.triangle.fill")
+                Label(error, systemImage: Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(TorrentState.error.color)
                     .fixedSize(horizontal: false, vertical: true)
             }

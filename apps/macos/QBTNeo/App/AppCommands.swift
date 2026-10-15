@@ -17,9 +17,9 @@ struct AppCommands: Commands {
 
         CommandGroup(replacing: .newItem) {
             Group {
-                Button("Add Torrent File…", systemImage: "doc.badge.plus") { model.fileImport = .torrentFiles }
+                Button("Add Torrent File…", systemImage: Symbol.docBadgePlus) { model.fileImport = .torrentFiles }
                     .keyboardShortcut("o")
-                Button("Add Torrent Link…", systemImage: "link.badge.plus") {
+                Button("Add Torrent Link…", systemImage: Symbol.linkBadgePlus) {
                     model.sheet = .addLinks(initialText: AppModel.clipboardLinks())
                 }
                 .keyboardShortcut("o", modifiers: [.command, .shift])
@@ -39,11 +39,11 @@ struct AppCommands: Commands {
 
         CommandMenu("Tools") {
             Group {
-                Button("Torrent Creator", systemImage: "wand.and.stars") { openWindow(id: AppWindowID.creator.rawValue) }
+                Button("Torrent Creator", systemImage: Symbol.wandAndStars) { openWindow(id: AppWindowID.creator.rawValue) }
                     .keyboardShortcut("n")
                 Divider()
                 Button("Manage Cookies…") { openWindow(id: AppWindowID.cookies.rawValue) }
-                Button("Options…", systemImage: "gearshape") { openSettings() }
+                Button("Options…", systemImage: Symbol.gearshape) { openSettings() }
                     .keyboardShortcut("o", modifiers: .option)
                 Divider()
                 Picker("On Downloads Done", selection: Bindable(model.gui).completionAction) {

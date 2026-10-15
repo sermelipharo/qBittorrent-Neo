@@ -22,10 +22,10 @@ struct InlineMessage: View {
 
     private var symbol: String {
         switch style {
-        case .error: "xmark.octagon.fill"
-        case .warning: "exclamationmark.triangle.fill"
-        case .info: "info.circle"
-        case .success: "checkmark.circle.fill"
+        case .error: Symbol.xmarkOctagonFill
+        case .warning: Symbol.exclamationmarkTriangleFill
+        case .info: Symbol.infoCircle
+        case .success: Symbol.checkmarkCircleFill
         }
     }
 

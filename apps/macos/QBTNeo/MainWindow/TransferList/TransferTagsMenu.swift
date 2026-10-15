@@ -6,9 +6,9 @@ struct TransferTagsMenu: View {
     @Environment(AppModel.self) private var model
 
     var body: some View {
-        Menu("Tags", systemImage: "tag") {
-            Button("Add…", systemImage: "plus") { model.requestAddTags(selection.ids) }
-            Button("Remove All", systemImage: "xmark") { model.requestRemoveAllTags(selection.ids) }
+        Menu("Tags", systemImage: Symbol.tag) {
+            Button("Add…", systemImage: Symbol.plus) { model.requestAddTags(selection.ids) }
+            Button("Remove All", systemImage: Symbol.xmark) { model.requestRemoveAllTags(selection.ids) }
             Divider()
             ForEach(model.tags.sortedTags, id: \.self) { tag in
                 Toggle(tag, sources: selection.tagSources(tag), isOn: \.self)

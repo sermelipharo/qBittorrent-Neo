@@ -8,14 +8,14 @@ struct PeerContextMenu: View {
 
     var body: some View {
         let reason = model.addPeersDisabledReason(item)
-        Button("Add Peers…", systemImage: "person.badge.plus") { model.requestAddPeers(item) }
+        Button("Add Peers…", systemImage: Symbol.personBadgePlus) { model.requestAddPeers(item) }
             .disabled(reason != nil)
             .help(reason ?? "")
-        Button("Copy IP:port", systemImage: "doc.on.doc") { model.copyPeers(ids) }
+        Button("Copy IP:port", systemImage: Symbol.docOnDoc) { model.copyPeers(ids) }
             .disabled(ids.isEmpty)
             .help(ids.isEmpty ? "No peer was selected" : "")
         Divider()
-        Button("Ban Peer Permanently", systemImage: "nosign") { model.requestBanPeers(ids) }
+        Button("Ban Peer Permanently", systemImage: Symbol.nosign) { model.requestBanPeers(ids) }
             .disabled(ids.isEmpty)
             .help(ids.isEmpty ? "No peer was selected" : "")
     }

@@ -16,7 +16,7 @@ struct AboutSoftwareTab: View {
             Section {
                 HStack {
                     Spacer()
-                    Button("Copy to clipboard", systemImage: "doc.on.doc", action: copy)
+                    Button("Copy to clipboard", systemImage: Symbol.docOnDoc, action: copy)
                         .disabled(info == nil)
                 }
             }

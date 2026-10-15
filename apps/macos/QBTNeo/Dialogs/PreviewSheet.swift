@@ -26,7 +26,7 @@ struct PreviewSheet: View {
             .frame(height: 200)
             .overlay {
                 if loaded, files.isEmpty {
-                    ContentUnavailableView("Unable to preview", systemImage: "eye.slash",
+                    ContentUnavailableView("Unable to preview", systemImage: Symbol.eyeSlash,
                                            description: Text("The selected torrent \"\(name)\" does not contain previewable files"))
                 }
             }

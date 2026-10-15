@@ -11,7 +11,7 @@ struct RSSNodeIcon: View {
                 .controlSize(.small)
                 .accessibilityLabel("Loading")
         } else if node.kind == .feed, node.hasError {
-            Image(systemName: "exclamationmark.triangle.fill")
+            Image(systemName: Symbol.exclamationmarkTriangleFill)
                 .foregroundStyle(.orange)
                 .accessibilityLabel("Error")
         } else if node.kind == .feed, !node.iconPath.isEmpty, let image = NSImage(contentsOfFile: node.iconPath) {
@@ -28,9 +28,9 @@ struct RSSNodeIcon: View {
 
     private var symbol: String {
         switch node.kind {
-        case .unread: "tray"
-        case .folder: "folder"
-        case .feed: "dot.radiowaves.up.forward"
+        case .unread: Symbol.tray
+        case .folder: Symbol.folder
+        case .feed: Symbol.dotRadiowavesUpForward
         }
     }
 }

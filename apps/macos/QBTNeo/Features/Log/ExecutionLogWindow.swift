@@ -15,16 +15,16 @@ struct ExecutionLogWindow: View {
         .listStyle(.inset)
         .alternatingRowBackgrounds(gui.alternatingRowColors ? .enabled : .disabled)
         .contextMenu(forSelectionType: Int64.self) { ids in
-            Button("Copy", systemImage: "doc.on.doc", action: model.copySelection)
+            Button("Copy", systemImage: Symbol.docOnDoc, action: model.copySelection)
                 .disabled(ids.isEmpty)
-            Button("Clear", systemImage: "trash", action: clear)
+            Button("Clear", systemImage: Symbol.trash, action: clear)
         }
         .onCopyCommand(perform: copyItems)
         .overlay {
             if model.visibleLines.isEmpty {
                 ContentUnavailableView(
                     model.tab == .general ? "No Messages" : "No Blocked IPs",
-                    systemImage: model.tab == .general ? "text.alignleft" : "hand.raised",
+                    systemImage: model.tab == .general ? Symbol.textAlignleft : Symbol.handRaised,
                     description: Text(model.query.isEmpty ? "New entries appear here as they are logged." : "No messages match the search.")
                 )
             }

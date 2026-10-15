@@ -14,7 +14,7 @@ struct StatusBarInfoItems: View {
             Label {
                 Text("Free space: \(status.freeSpace >= 0 ? UnitFormatter.size(status.freeSpace) : String(localized: "N/A"))")
             } icon: {
-                Image(systemName: "internaldrive")
+                Image(systemName: Symbol.internaldrive)
             }
             .foregroundStyle(.secondary)
             .fixedSize()
@@ -23,7 +23,7 @@ struct StatusBarInfoItems: View {
             Label {
                 Text(externalIPText(status))
             } icon: {
-                Image(systemName: "network")
+                Image(systemName: Symbol.network)
             }
             .foregroundStyle(.secondary)
             .textSelection(.enabled)
@@ -33,7 +33,7 @@ struct StatusBarInfoItems: View {
             Label {
                 Text("DHT: \(status.dhtNodes) nodes")
             } icon: {
-                Image(systemName: "point.3.connected.trianglepath.dotted")
+                Image(systemName: Symbol.point3ConnectedTrianglepathDotted)
             }
             .foregroundStyle(.secondary)
             .fixedSize()

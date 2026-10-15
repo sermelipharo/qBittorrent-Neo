@@ -29,15 +29,15 @@ enum AppWindowID: String, CaseIterable, Sendable {
 
     var systemImage: String {
         switch self {
-        case .main: "arrow.down.circle"
-        case .addTorrent: "doc.badge.plus"
-        case .rss: "dot.radiowaves.up.forward"
-        case .search: "magnifyingglass"
-        case .log: "text.alignleft"
-        case .creator: "wand.and.stars"
-        case .statistics: "chart.bar"
-        case .cookies: "list.bullet.rectangle"
-        case .about: "info.circle"
+        case .main: Symbol.arrowDownCircle
+        case .addTorrent: Symbol.docBadgePlus
+        case .rss: Symbol.dotRadiowavesUpForward
+        case .search: Symbol.magnifyingglass
+        case .log: Symbol.textAlignleft
+        case .creator: Symbol.wandAndStars
+        case .statistics: Symbol.chartBar
+        case .cookies: Symbol.listBulletRectangle
+        case .about: Symbol.infoCircle
         }
     }
 }

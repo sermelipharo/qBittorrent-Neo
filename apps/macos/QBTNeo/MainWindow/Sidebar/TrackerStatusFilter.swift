@@ -19,9 +19,9 @@ enum TrackerStatusFilter: Int, CaseIterable, Hashable, Sendable {
 
     var systemImage: String {
         switch self {
-        case .all: "antenna.radiowaves.left.and.right"
-        case .warning: "exclamationmark.triangle"
-        case .trackerError, .otherError: "xmark.octagon"
+        case .all: Symbol.antennaRadiowavesLeftAndRight
+        case .warning: Symbol.exclamationmarkTriangle
+        case .trackerError, .otherError: Symbol.xmarkOctagon
         }
     }
 }

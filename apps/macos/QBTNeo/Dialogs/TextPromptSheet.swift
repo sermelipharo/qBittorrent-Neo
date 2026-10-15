@@ -20,7 +20,7 @@ struct TextPromptSheet: View {
                     .focused($focused)
                     .onSubmit(submit)
                 if let error {
-                    Label(error, systemImage: "exclamationmark.triangle.fill")
+                    Label(error, systemImage: Symbol.exclamationmarkTriangleFill)
                         .foregroundStyle(TorrentState.error.color)
                         .font(.callout)
                 }

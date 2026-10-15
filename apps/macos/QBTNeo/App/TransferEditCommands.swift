@@ -7,32 +7,32 @@ struct TransferEditCommands: View {
     var body: some View {
         let ids = model.list.selectedIDs
         Divider()
-        Button("Start", systemImage: "play.fill") { model.start(ids) }
+        Button("Start", systemImage: Symbol.playFill) { model.start(ids) }
             .keyboardShortcut("s")
             .disabled(ids.isEmpty)
-        Button("Stop", systemImage: "pause.fill") { model.stop(ids) }
+        Button("Stop", systemImage: Symbol.pauseFill) { model.stop(ids) }
             .keyboardShortcut("p")
             .disabled(ids.isEmpty)
-        Button("Force Start", systemImage: "forward.fill") { model.forceStart(ids) }
+        Button("Force Start", systemImage: Symbol.forwardFill) { model.forceStart(ids) }
             .disabled(ids.isEmpty)
-        Button("Remove", systemImage: "trash") { model.requestRemove(ids) }
+        Button("Remove", systemImage: Symbol.trash) { model.requestRemove(ids) }
             .keyboardShortcut(.delete)
             .disabled(ids.isEmpty)
-        Button("Force Recheck", systemImage: "arrow.trianglehead.2.clockwise.rotate.90") { model.requestRecheck(ids) }
+        Button("Force Recheck", systemImage: Symbol.arrowTrianglehead2ClockwiseRotate90) { model.requestRecheck(ids) }
             .keyboardShortcut("r")
             .disabled(ids.isEmpty)
         if model.queueingEnabled {
             Divider()
-            Button("Top of Queue", systemImage: "arrow.up.to.line") { model.queue(ids, .top) }
+            Button("Top of Queue", systemImage: Symbol.arrowUpToLine) { model.queue(ids, .top) }
                 .keyboardShortcut("+", modifiers: [.command, .shift])
                 .disabled(ids.isEmpty)
-            Button("Move Up Queue", systemImage: "chevron.up") { model.queue(ids, .up) }
+            Button("Move Up Queue", systemImage: Symbol.chevronUp) { model.queue(ids, .up) }
                 .keyboardShortcut("+")
                 .disabled(ids.isEmpty)
-            Button("Move Down Queue", systemImage: "chevron.down") { model.queue(ids, .down) }
+            Button("Move Down Queue", systemImage: Symbol.chevronDown) { model.queue(ids, .down) }
                 .keyboardShortcut("-")
                 .disabled(ids.isEmpty)
-            Button("Bottom of Queue", systemImage: "arrow.down.to.line") { model.queue(ids, .bottom) }
+            Button("Bottom of Queue", systemImage: Symbol.arrowDownToLine) { model.queue(ids, .bottom) }
                 .keyboardShortcut("-", modifiers: [.command, .shift])
                 .disabled(ids.isEmpty)
         }

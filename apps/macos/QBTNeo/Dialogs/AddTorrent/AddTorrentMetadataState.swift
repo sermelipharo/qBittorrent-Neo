@@ -9,7 +9,7 @@ struct AddTorrentMetadataState: View {
         switch dialog.phase {
         case .failed(let message):
             ContentUnavailableView {
-                Label("Cannot Read Torrent", systemImage: "exclamationmark.triangle")
+                Label("Cannot Read Torrent", systemImage: Symbol.exclamationmarkTriangle)
             } description: {
                 Text(message)
             }

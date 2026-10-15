@@ -17,13 +17,13 @@ struct HTTPSourcesTab: View {
             }
         }
         .contextMenu(forSelectionType: String.self) { ids in
-            Button("Add Web Seed…", systemImage: "plus") { model.requestAddWebSeed(item.id) }
+            Button("Add Web Seed…", systemImage: Symbol.plus) { model.requestAddWebSeed(item.id) }
             if !ids.isEmpty {
-                Button("Remove Web Seed", systemImage: "minus.circle") { model.removeWebSeeds(item.id, urls: Array(ids)) }
+                Button("Remove Web Seed", systemImage: Symbol.minusCircle) { model.removeWebSeeds(item.id, urls: Array(ids)) }
                 Divider()
-                Button("Copy Web Seed URL", systemImage: "doc.on.doc") { model.copyToPasteboard(ids.sorted().joined(separator: "\n")) }
+                Button("Copy Web Seed URL", systemImage: Symbol.docOnDoc) { model.copyToPasteboard(ids.sorted().joined(separator: "\n")) }
                 if ids.count == 1, let url = ids.first {
-                    Button("Edit Web Seed URL…", systemImage: "pencil") { model.requestEditWebSeed(item.id, url: url) }
+                    Button("Edit Web Seed URL…", systemImage: Symbol.pencil) { model.requestEditWebSeed(item.id, url: url) }
                 }
             }
         } primaryAction: { ids in
@@ -36,7 +36,7 @@ struct HTTPSourcesTab: View {
                     PropertiesFailureOverlay(tab: .httpSources, isEmpty: true)
                 } else {
                     ContentUnavailableView {
-                        Label("No HTTP Sources", systemImage: "globe")
+                        Label("No HTTP Sources", systemImage: Symbol.globe)
                     } description: {
                         Text("This torrent has no web seeds.")
                     } actions: {

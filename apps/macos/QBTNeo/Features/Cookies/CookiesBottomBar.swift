@@ -7,14 +7,14 @@ struct CookiesBottomBar: View {
     var body: some View {
         HStack(spacing: Design.Spacing.regular) {
             ControlGroup {
-                Button("Add Cookie", systemImage: "plus", action: model.add)
-                Button("Remove Selected Cookies", systemImage: "minus", action: model.removeSelected)
+                Button("Add Cookie", systemImage: Symbol.plus, action: model.add)
+                Button("Remove Selected Cookies", systemImage: Symbol.minus, action: model.removeSelected)
                     .disabled(model.selection.isEmpty)
             }
             .labelStyle(.iconOnly)
             .fixedSize()
             if let message = model.errorMessage {
-                Label(message, systemImage: "exclamationmark.triangle.fill")
+                Label(message, systemImage: Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(.red)
                     .lineLimit(2)
             }

@@ -7,7 +7,7 @@ struct RSSArticleRow: View {
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: Design.Spacing.regular) {
-            Image(systemName: item.article.isRead ? "circle" : "circle.fill")
+            Image(systemName: item.article.isRead ? Symbol.circle : Symbol.circleFill)
                 .font(.caption)
                 .foregroundStyle(item.article.isRead ? AnyShapeStyle(.tertiary) : AnyShapeStyle(.tint))
                 .accessibilityLabel(item.article.isRead ? "Read" : "Unread")

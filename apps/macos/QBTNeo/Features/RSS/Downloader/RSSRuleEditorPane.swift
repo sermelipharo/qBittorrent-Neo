@@ -44,7 +44,7 @@ struct RSSRuleEditorPane: View {
                     Form { RSSAffectedFeedsSection(model: model) }
                         .formStyle(.grouped)
                 } else {
-                    ContentUnavailableView("No Rule Selected", systemImage: "list.bullet.rectangle",
+                    ContentUnavailableView("No Rule Selected", systemImage: Symbol.listBulletRectangle,
                                            description: Text("Select a rule to edit it, or several to change their feeds."))
                 }
             }

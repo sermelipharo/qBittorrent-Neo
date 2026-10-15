@@ -24,7 +24,8 @@ struct SpeedStatusButton: View {
                 Text(text(rate: rate, limit: limit, total: total))
                     .monospacedDigit()
             } icon: {
-                Image(systemName: isDownload ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
+                Image(systemName: isDownload ? Symbol.arrowDown : Symbol.arrowUp)
+                    .fontWeight(.semibold)
                     .foregroundStyle(isDownload ? Design.Palette.download : Design.Palette.upload)
             }
             .fixedSize()

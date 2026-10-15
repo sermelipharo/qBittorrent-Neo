@@ -21,13 +21,13 @@ struct SpeedLimitsSheet: View {
                     SpeedLimitField(title: "Upload:", limit: $limits.upload, showsSlider: true)
                     SpeedLimitField(title: "Download:", limit: $limits.download, showsSlider: true)
                 } header: {
-                    Label("Speed limits", systemImage: "speedometer")
+                    Label("Speed limits", systemImage: Symbol.speedometer)
                 }
                 Section {
                     SpeedLimitField(title: "Upload:", limit: $limits.altUpload, showsSlider: true)
                     SpeedLimitField(title: "Download:", limit: $limits.altDownload, showsSlider: true)
                 } header: {
-                    Label("Alternative speed limits", systemImage: "tortoise")
+                    Label("Alternative speed limits", systemImage: Symbol.tortoise)
                 }
             }
             .formStyle(.grouped)

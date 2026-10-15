@@ -26,17 +26,17 @@ extension TorrentState {
 
     var systemImage: String {
         switch self {
-        case .unknown, .missingFiles, .error: "exclamationmark.triangle.fill"
-        case .forcedDownloading, .downloading: "arrow.down.circle.fill"
-        case .forcedDownloadingMetadata, .downloadingMetadata: "arrow.down.circle.dotted"
-        case .stalledDownloading: "arrow.down.circle"
-        case .forcedUploading, .uploading: "arrow.up.circle.fill"
-        case .stalledUploading: "arrow.up.circle"
-        case .checkingResumeData, .checkingUploading, .checkingDownloading: "arrow.trianglehead.2.clockwise.rotate.90.circle.fill"
-        case .queuedDownloading, .queuedUploading: "clock.fill"
-        case .stoppedDownloading: "pause.circle.fill"
-        case .stoppedUploading: "checkmark.circle.fill"
-        case .moving: "folder.circle.fill"
+        case .unknown, .missingFiles, .error: Symbol.exclamationmarkTriangleFill
+        case .forcedDownloading, .downloading: Symbol.arrowDownCircleFill
+        case .forcedDownloadingMetadata, .downloadingMetadata: Symbol.arrowDownCircleDotted
+        case .stalledDownloading: Symbol.arrowDownCircle
+        case .forcedUploading, .uploading: Symbol.arrowUpCircleFill
+        case .stalledUploading: Symbol.arrowUpCircle
+        case .checkingResumeData, .checkingUploading, .checkingDownloading: Symbol.arrowTrianglehead2ClockwiseRotate90CircleFill
+        case .queuedDownloading, .queuedUploading: Symbol.clockFill
+        case .stoppedDownloading: Symbol.pauseCircleFill
+        case .stoppedUploading: Symbol.checkmarkCircleFill
+        case .moving: Symbol.folderCircleFill
         }
     }
 

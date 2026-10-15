@@ -7,7 +7,7 @@ struct AltSpeedToggle: View {
     var body: some View {
         let enabled = model.status.altSpeedEnabled
         Toggle(isOn: Bindable(model).alternativeSpeedLimits) {
-            Label("Alternative Speed Limits", systemImage: "tortoise.fill")
+            Label("Alternative Speed Limits", systemImage: Symbol.tortoiseFill)
                 .labelStyle(.iconOnly)
         }
         .toggleStyle(.button)

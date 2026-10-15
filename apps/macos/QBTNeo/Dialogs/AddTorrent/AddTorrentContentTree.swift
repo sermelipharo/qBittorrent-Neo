@@ -37,7 +37,7 @@ struct AddTorrentContentTree: View {
             .contextMenu(forSelectionType: String.self) { ids in
                 let nodes = tree.rows.filter { ids.contains($0.id) }
                 if nodes.count == 1, let node = nodes.first {
-                    Button("Rename…", systemImage: "pencil") { beginRename(node) }
+                    Button("Rename…", systemImage: Symbol.pencil) { beginRename(node) }
                     Divider()
                 }
                 ForEach(FilePriorityChoice.selectable) { choice in

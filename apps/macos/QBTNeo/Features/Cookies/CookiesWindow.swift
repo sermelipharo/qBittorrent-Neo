@@ -38,7 +38,7 @@ struct CookiesWindow: View {
         .onDeleteCommand(perform: model.removeSelected)
         .overlay {
             if model.rows.isEmpty {
-                ContentUnavailableView("No Cookies", systemImage: "list.bullet.rectangle",
+                ContentUnavailableView("No Cookies", systemImage: Symbol.listBulletRectangle,
                                        description: Text("Click + to add a cookie for a tracker or website."))
             }
         }

@@ -10,15 +10,15 @@ struct CategorySidebarSection: View {
         @Bindable var gui = gui
         let counts = model.list.counts
         Section(isExpanded: $gui.categorySectionExpanded) {
-            SidebarRow(title: String(localized: "All"), systemImage: "folder", count: counts.total)
+            SidebarRow(title: String(localized: "All"), systemImage: Symbol.folder, count: counts.total)
                 .tag(SidebarItem.category(.all))
                 .contextMenu { CategoryContextMenu(category: nil) }
-            SidebarRow(title: String(localized: "Uncategorized"), systemImage: "folder.badge.questionmark", count: counts.uncategorized)
+            SidebarRow(title: String(localized: "Uncategorized"), systemImage: Symbol.folderBadgeQuestionmark, count: counts.uncategorized)
                 .tag(SidebarItem.category(.uncategorized))
                 .contextMenu { CategoryContextMenu(category: nil) }
                 .dropDestination(for: String.self) { items, _ in assign(items, to: "") }
             OutlineGroup(model.categories.tree, children: \.children) { node in
-                SidebarRow(title: node.name, systemImage: "folder.fill", count: counts.categories[node.id] ?? 0, tint: .accentColor)
+                SidebarRow(title: node.name, systemImage: Symbol.folderFill, count: counts.categories[node.id] ?? 0, tint: .accentColor)
                     .tag(SidebarItem.category(.category(node.id)))
                     .contextMenu { CategoryContextMenu(category: node.id) }
                     .dropDestination(for: String.self) { items, _ in assign(items, to: node.id) }

@@ -31,7 +31,7 @@ struct PropertiesTabBar: View {
                 if tab == .content { Spacer(minLength: Design.Spacing.medium) }
             }
             Button(gui.propertiesVisible ? "Hide Details" : "Show Details",
-                   systemImage: gui.propertiesVisible ? "chevron.down" : "chevron.up") {
+                   systemImage: gui.propertiesVisible ? Symbol.chevronDown : Symbol.chevronUp) {
                 withAnimation(Design.Animation.quick) { gui.propertiesVisible.toggle() }
             }
             .labelStyle(.iconOnly)

@@ -18,7 +18,7 @@ struct RSSMatchesPane: View {
                                 .help(title)
                         }
                     } header: {
-                        Label(feed.feedName, systemImage: "folder")
+                        Label(feed.feedName, systemImage: Symbol.folder)
                             .bold()
                             .help(feed.feedName)
                     }
@@ -26,7 +26,7 @@ struct RSSMatchesPane: View {
             }
             .overlay {
                 if matches.isEmpty {
-                    ContentUnavailableView("No Matches", systemImage: "line.3.horizontal.decrease.circle",
+                    ContentUnavailableView("No Matches", systemImage: Symbol.line3HorizontalDecreaseCircle,
                                            description: Text("Articles matched by the selected rules appear here."))
                 }
             }

@@ -9,7 +9,7 @@ struct TransferListEmptyView: View {
     var body: some View {
         if isFiltering {
             ContentUnavailableView {
-                Label("No Matching Torrents", systemImage: "line.3.horizontal.decrease.circle")
+                Label("No Matching Torrents", systemImage: Symbol.line3HorizontalDecreaseCircle)
             } description: {
                 Text("No torrents match the current filters.")
             } actions: {
@@ -17,7 +17,7 @@ struct TransferListEmptyView: View {
             }
         } else {
             ContentUnavailableView {
-                Label("No Torrents", systemImage: "arrow.down.circle")
+                Label("No Torrents", systemImage: Symbol.arrowDownCircle)
             } description: {
                 Text("Add a .torrent file or a magnet link, or drop them here.")
             } actions: {

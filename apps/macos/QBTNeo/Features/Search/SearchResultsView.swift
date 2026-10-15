@@ -37,12 +37,12 @@ struct SearchResultsView: View {
             }
             .contextMenu(forSelectionType: SearchResultRow.ID.self) { ids in
                 let rows = tab.rows.filter { ids.contains($0.id) }
-                Button("Open download window", systemImage: "arrow.down.doc") {
+                Button("Open download window", systemImage: Symbol.arrowDownDoc) {
                     model.download(rows, in: tab, app: app, skipDialog: false)
                 }
-                Button("Download", systemImage: "arrow.down.circle") { model.download(rows, in: tab, app: app, skipDialog: true) }
+                Button("Download", systemImage: Symbol.arrowDownCircle) { model.download(rows, in: tab, app: app, skipDialog: true) }
                 Divider()
-                Button("Open description page", systemImage: "safari") { model.openDescriptions(rows, app: app) }
+                Button("Open description page", systemImage: Symbol.safari) { model.openDescriptions(rows, app: app) }
                 Menu("Copy") {
                     Button("Name") { model.copy(rows, \.fileName) }
                     Button("Download link") { model.copy(rows, \.fileUrl) }

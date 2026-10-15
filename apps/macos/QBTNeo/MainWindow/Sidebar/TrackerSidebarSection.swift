@@ -10,31 +10,31 @@ struct TrackerSidebarSection: View {
         @Bindable var gui = gui
         let counts = model.list.counts
         Section(isExpanded: $gui.trackerSectionExpanded) {
-            SidebarRow(title: String(localized: "All"), systemImage: "antenna.radiowaves.left.and.right", count: counts.total)
+            SidebarRow(title: String(localized: "All"), systemImage: Symbol.antennaRadiowavesLeftAndRight, count: counts.total)
                 .tag(SidebarItem.tracker(.all))
                 .contextMenu { SidebarTorrentActions() }
-            SidebarRow(title: String(localized: "Trackerless"), systemImage: "antenna.radiowaves.left.and.right.slash", count: counts.trackerless)
+            SidebarRow(title: String(localized: "Trackerless"), systemImage: Symbol.antennaRadiowavesLeftAndRightSlash, count: counts.trackerless)
                 .tag(SidebarItem.tracker(.trackerless))
                 .contextMenu { SidebarTorrentActions() }
             if !gui.separateTrackerStatusFilter {
-                SidebarRow(title: String(localized: "Tracker error"), systemImage: "xmark.octagon", count: counts.trackerError,
+                SidebarRow(title: String(localized: "Tracker error"), systemImage: Symbol.xmarkOctagon, count: counts.trackerError,
                            tint: TorrentState.error.color)
                     .tag(SidebarItem.tracker(.trackerError))
                     .contextMenu { SidebarTorrentActions() }
-                SidebarRow(title: String(localized: "Other error"), systemImage: "xmark.octagon", count: counts.otherError,
+                SidebarRow(title: String(localized: "Other error"), systemImage: Symbol.xmarkOctagon, count: counts.otherError,
                            tint: TorrentState.error.color)
                     .tag(SidebarItem.tracker(.otherError))
                     .contextMenu { SidebarTorrentActions() }
-                SidebarRow(title: String(localized: "Warning"), systemImage: "exclamationmark.triangle", count: counts.warning, tint: .orange)
+                SidebarRow(title: String(localized: "Warning"), systemImage: Symbol.exclamationmarkTriangle, count: counts.warning, tint: .orange)
                     .tag(SidebarItem.tracker(.warning))
                     .contextMenu { SidebarTorrentActions() }
             }
             ForEach(model.trackers.sortedHosts, id: \.self) { host in
-                SidebarRow(title: host, systemImage: "server.rack", count: counts.hosts[host] ?? 0,
+                SidebarRow(title: host, systemImage: Symbol.serverRack, count: counts.hosts[host] ?? 0,
                            image: gui.downloadTrackerFavicon ? model.favicons.icon(for: host) : nil)
                     .tag(SidebarItem.tracker(.host(host)))
                     .contextMenu {
-                        Button("Remove Tracker", systemImage: "minus.circle") { model.requestRemoveTracker(host: host) }
+                        Button("Remove Tracker", systemImage: Symbol.minusCircle) { model.requestRemoveTracker(host: host) }
                         Divider()
                         SidebarTorrentActions()
                     }

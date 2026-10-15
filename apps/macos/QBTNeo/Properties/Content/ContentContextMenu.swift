@@ -10,9 +10,9 @@ struct ContentContextMenu: View {
     var body: some View {
         let tree = model.properties.files
         if nodes.count == 1, let node = nodes.first {
-            Button("Open", systemImage: "arrow.up.forward.app") { model.openContent(item, node) }
-            Button("Open Containing Folder", systemImage: "folder") { model.revealContent(item, node) }
-            Button("Rename…", systemImage: "pencil") { model.requestRenameContent(item, node) }
+            Button("Open", systemImage: Symbol.arrowUpForwardApp) { model.openContent(item, node) }
+            Button("Open Containing Folder", systemImage: Symbol.folder) { model.revealContent(item, node) }
+            Button("Rename…", systemImage: Symbol.pencil) { model.requestRenameContent(item, node) }
             Divider()
             Menu("Priority") {
                 ForEach(FilePriorityChoice.selectable) { choice in

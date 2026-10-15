@@ -25,7 +25,7 @@ struct TagsPickerSheet: View {
             HStack {
                 TextField("New tag", text: $newTag)
                     .onSubmit(add)
-                Button("Add", systemImage: "plus", action: add)
+                Button("Add", systemImage: Symbol.plus, action: add)
                     .disabled(newTag.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             if let error {

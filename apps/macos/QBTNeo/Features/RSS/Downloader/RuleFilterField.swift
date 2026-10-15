@@ -14,7 +14,7 @@ struct RuleFilterField: View {
                 CommitTextField(title: title, text: $text, prompt: prompt)
                     .labelsHidden()
                     .foregroundStyle(error.isEmpty ? Color.primary : Color.red)
-                Image(systemName: error.isEmpty ? "checkmark.circle" : "exclamationmark.triangle.fill")
+                Image(systemName: error.isEmpty ? Symbol.checkmarkCircle : Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(error.isEmpty ? Color.secondary : Color.orange)
                     .opacity(text.isEmpty ? 0 : 1)
                     .help(error.isEmpty ? String(localized: "Valid") : error)

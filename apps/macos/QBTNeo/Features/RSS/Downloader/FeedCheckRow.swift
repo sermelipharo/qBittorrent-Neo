@@ -29,9 +29,9 @@ struct FeedCheckRow: View {
 
     private var symbol: String {
         switch state {
-        case .off: "square"
-        case .on: "checkmark.square.fill"
-        case .mixed: "minus.square.fill"
+        case .off: Symbol.square
+        case .on: Symbol.checkmarkSquareFill
+        case .mixed: Symbol.minusSquareFill
         }
     }
 

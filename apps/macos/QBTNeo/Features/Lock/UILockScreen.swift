@@ -10,7 +10,7 @@ struct UILockScreen: View {
     var body: some View {
         let lock = model.lock
         VStack(spacing: Design.Spacing.large) {
-            Image(systemName: "lock.fill")
+            Image(systemName: Symbol.lockFill)
                 .font(.system(size: 44))
                 .foregroundStyle(.secondary)
             Text("qBittorrent Neo is locked")
@@ -25,7 +25,7 @@ struct UILockScreen: View {
                 .onSubmit(unlock)
                 .disabled(lock.isBusy)
             if let error = lock.unlockError {
-                Label(error, systemImage: "exclamationmark.triangle.fill")
+                Label(error, systemImage: Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(TorrentState.error.color)
                     .font(.callout)
             }

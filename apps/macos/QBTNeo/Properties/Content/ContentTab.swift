@@ -70,7 +70,7 @@ struct ContentTab: View {
             .overlay {
                 if tree.isEmpty {
                     if !item.hasMetadata {
-                        ContentUnavailableView("Waiting for Metadata", systemImage: "arrow.down.circle.dotted",
+                        ContentUnavailableView("Waiting for Metadata", systemImage: Symbol.arrowDownCircleDotted,
                                                description: Text("The file list appears once metadata has been received."))
                     } else {
                         PropertiesFailureOverlay(tab: .content, isEmpty: true)

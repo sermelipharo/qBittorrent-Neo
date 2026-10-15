@@ -19,9 +19,9 @@ struct ConnectionStatusIndicator: View {
 
     private func symbol(_ status: ConnectionStatus) -> String {
         switch status {
-        case .connected: "network"
-        case .firewalled: "network.badge.shield.half.filled"
-        case .disconnected: "network.slash"
+        case .connected: Symbol.network
+        case .firewalled: Symbol.networkBadgeShieldHalfFilled
+        case .disconnected: Symbol.networkSlash
         }
     }
 

@@ -26,7 +26,7 @@ struct RSSArticleView: View {
                 description = RSSDescriptionRenderer.render(item.article.description, link: item.article.link)
             }
         } else {
-            ContentUnavailableView("No Article Selected", systemImage: "doc.richtext")
+            ContentUnavailableView("No Article Selected", systemImage: Symbol.docRichtext)
         }
     }
 }

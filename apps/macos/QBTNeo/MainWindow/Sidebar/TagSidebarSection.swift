@@ -10,14 +10,14 @@ struct TagSidebarSection: View {
         @Bindable var gui = gui
         let counts = model.list.counts
         Section(isExpanded: $gui.tagSectionExpanded) {
-            SidebarRow(title: String(localized: "All"), systemImage: "tag", count: counts.total)
+            SidebarRow(title: String(localized: "All"), systemImage: Symbol.tag, count: counts.total)
                 .tag(SidebarItem.tag(.all))
                 .contextMenu { TagContextMenu(tag: nil) }
-            SidebarRow(title: String(localized: "Untagged"), systemImage: "tag.slash", count: counts.untagged)
+            SidebarRow(title: String(localized: "Untagged"), systemImage: Symbol.tagSlash, count: counts.untagged)
                 .tag(SidebarItem.tag(.untagged))
                 .contextMenu { TagContextMenu(tag: nil) }
             ForEach(model.tags.sortedTags, id: \.self) { tag in
-                SidebarRow(title: tag, systemImage: "tag.fill", count: counts.tags[tag] ?? 0, tint: .orange)
+                SidebarRow(title: tag, systemImage: Symbol.tagFill, count: counts.tags[tag] ?? 0, tint: .orange)
                     .tag(SidebarItem.tag(.tag(tag)))
                     .contextMenu { TagContextMenu(tag: tag) }
                     .dropDestination(for: String.self) { items, _ in

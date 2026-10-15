@@ -19,7 +19,7 @@ struct PropertiesPage: View {
                 case .speed: EmptyView()
                 }
             } else {
-                ContentUnavailableView("No Torrent Selected", systemImage: "cursorarrow.click.2",
+                ContentUnavailableView("No Torrent Selected", systemImage: Symbol.cursorarrowClick2,
                                        description: Text("Select a torrent to see its \(tab.title.lowercased()) details."))
             }
         }

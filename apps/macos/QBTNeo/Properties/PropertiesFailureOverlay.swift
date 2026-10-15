@@ -9,7 +9,7 @@ struct PropertiesFailureOverlay: View {
     var body: some View {
         if isEmpty, let failure = model.properties.failures[tab] {
             ContentUnavailableView {
-                Label("\(tab.title) Unavailable", systemImage: "exclamationmark.triangle")
+                Label("\(tab.title) Unavailable", systemImage: Symbol.exclamationmarkTriangle)
             } description: {
                 Text(failure)
             }

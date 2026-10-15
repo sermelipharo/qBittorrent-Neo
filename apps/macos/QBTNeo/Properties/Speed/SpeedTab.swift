@@ -26,7 +26,7 @@ struct SpeedTab: View {
             }
             .padding(Design.Spacing.medium)
         } else {
-            ContentUnavailableView("Speed graphs are disabled", systemImage: "chart.xyaxis.line",
+            ContentUnavailableView("Speed graphs are disabled", systemImage: Symbol.chartXyaxisLine,
                                    description: Text("You can enable it in Advanced Options"))
         }
     }

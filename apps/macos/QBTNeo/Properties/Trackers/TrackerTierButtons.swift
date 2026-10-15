@@ -10,9 +10,9 @@ struct TrackerTierButtons: View {
         let hasSelection = !model.selectedTrackerURLs().isEmpty
         VStack(spacing: Design.Spacing.small) {
             Spacer()
-            Button("Move Up", systemImage: "chevron.up") { model.shiftTrackerTiers(hash: item.id, by: -1) }
+            Button("Move Up", systemImage: Symbol.chevronUp) { model.shiftTrackerTiers(hash: item.id, by: -1) }
                 .help("Decrease the tier of the selected trackers")
-            Button("Move Down", systemImage: "chevron.down") { model.shiftTrackerTiers(hash: item.id, by: 1) }
+            Button("Move Down", systemImage: Symbol.chevronDown) { model.shiftTrackerTiers(hash: item.id, by: 1) }
                 .help("Increase the tier of the selected trackers")
             Spacer()
         }

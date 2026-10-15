@@ -20,7 +20,7 @@ struct RemoveTorrentsSheet: View {
             dismiss()
         } content: {
             HStack(alignment: .top, spacing: Design.Spacing.medium) {
-                Image(systemName: "exclamationmark.triangle.fill")
+                Image(systemName: Symbol.exclamationmarkTriangleFill)
                     .font(.largeTitle)
                     .foregroundStyle(.yellow)
                     .accessibilityHidden(true)
@@ -29,7 +29,7 @@ struct RemoveTorrentsSheet: View {
                         .fixedSize(horizontal: false, vertical: true)
                     HStack {
                         Toggle("Also remove the content files", isOn: $deleteFiles)
-                        Button("Remember choice", systemImage: "lock") { model.setDeleteFilesByDefault(deleteFiles) }
+                        Button("Remember choice", systemImage: Symbol.lock) { model.setDeleteFilesByDefault(deleteFiles) }
                             .labelStyle(.iconOnly)
                             .buttonStyle(.borderless)
                             .disabled(deleteFiles == stored)

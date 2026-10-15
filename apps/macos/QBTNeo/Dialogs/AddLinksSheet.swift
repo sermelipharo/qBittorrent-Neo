@@ -16,7 +16,7 @@ struct AddLinksSheet: View {
             TrackerListEditor(text: $text, minHeight: 180)
                 .accessibilityLabel(Text("Torrent links"))
             if showsEmptyWarning {
-                Label("Please type at least one URL.", systemImage: "exclamationmark.triangle.fill")
+                Label("Please type at least one URL.", systemImage: Symbol.exclamationmarkTriangleFill)
                     .foregroundStyle(TorrentState.error.color)
             }
         }

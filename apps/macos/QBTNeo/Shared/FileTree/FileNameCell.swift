@@ -12,7 +12,7 @@ struct FileNameCell: View {
             Button {
                 tree.toggleExpanded(node)
             } label: {
-                Image(systemName: "chevron.right")
+                Image(systemName: Symbol.chevronRight)
                     .font(.caption.bold())
                     .rotationEffect(.degrees(node.isExpanded || !tree.filterText.isEmpty ? 90 : 0))
                     .foregroundStyle(.secondary)
@@ -45,9 +45,9 @@ struct FileNameCell: View {
 
     private var checkSymbol: String {
         switch node.checkState {
-        case .checked: "checkmark.square.fill"
-        case .unchecked: "square"
-        case .partial: "minus.square.fill"
+        case .checked: Symbol.checkmarkSquareFill
+        case .unchecked: Symbol.square
+        case .partial: Symbol.minusSquareFill
         }
     }
 }

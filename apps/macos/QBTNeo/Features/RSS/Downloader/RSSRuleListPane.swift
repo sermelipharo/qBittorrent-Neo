@@ -15,10 +15,10 @@ struct RSSRuleListPane: View {
                     .font(.headline)
                 Spacer()
                 ControlGroup {
-                    Button("Add new rule…", systemImage: "plus") { prompt = .add }
-                    Button("Delete rule", systemImage: "minus") { pendingRemoval = model.selection }
+                    Button("Add new rule…", systemImage: Symbol.plus) { prompt = .add }
+                    Button("Delete rule", systemImage: Symbol.minus) { pendingRemoval = model.selection }
                         .disabled(model.selection.isEmpty)
-                    Button("Rename rule…", systemImage: "pencil", action: renameSelected)
+                    Button("Rename rule…", systemImage: Symbol.pencil, action: renameSelected)
                         .disabled(model.selection.count != 1)
                         .help("Rename selected rule. You can also use the F2 hotkey to rename.")
                 }

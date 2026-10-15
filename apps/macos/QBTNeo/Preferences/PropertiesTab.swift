@@ -24,12 +24,12 @@ enum PropertiesTab: Int, CaseIterable, Identifiable, Sendable {
 
     var systemImage: String {
         switch self {
-        case .general: "info.circle"
-        case .trackers: "antenna.radiowaves.left.and.right"
-        case .peers: "person.2"
-        case .httpSources: "globe"
-        case .content: "folder"
-        case .speed: "chart.xyaxis.line"
+        case .general: Symbol.info
+        case .trackers: Symbol.antennaRadiowavesLeftAndRight
+        case .peers: Symbol.person2
+        case .httpSources: Symbol.globe
+        case .content: Symbol.folder
+        case .speed: Symbol.chartXyaxisLine
         }
     }
 
