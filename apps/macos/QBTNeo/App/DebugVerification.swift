@@ -17,6 +17,9 @@ import AppKit
 ///   (`AppWindowID` raw values, or `settings`) one after another, 8 s apart.
 /// * `QBT_VERIFY_TABS=<seconds>`: select the first torrent and show each
 ///   properties tab in turn for that many seconds.
+/// * `QBT_UI_SCRIPT=<scenario>`: run a scripted scenario through the real UI
+///   with synthesized events (see `UIDriver` and `UIScenarios`;
+///   `scripts/ui-scenario.sh` runs one and captures the windows it asks for).
 @MainActor
 enum DebugVerification {
     static func install(model: AppModel) -> Timer? {
@@ -40,6 +43,18 @@ enum DebugVerification {
         }
         if let mode = environment["QBT_VERIFY_OPTIONS"] {
             Task { await runOptions(mode: mode, model: model) }
+        }
+        if let scenario = environment["QBT_UI_SCRIPT"] {
+            // Scripted runs must not disturb the user: windows stay practically invisible and click-through,
+            // and refreshing must not depend on window occlusion.
+            UIDriver.hidesWindows = true
+            Task { await UIScenarios.run(scenario, driver: UIDriver(model: model)) }
+            return Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
+                MainActor.assumeIsolated {
+                    UIDriver.applyHiding()
+                    if model.mainWindow?.isVisible == true { model.isMainWindowVisible = true }
+                }
+            }
         }
         let verifying = environment.keys.contains { $0.hasPrefix("QBT_VERIFY_") }
         guard verifying else { return nil }

@@ -11,6 +11,10 @@ final class NotificationManager {
     func requestAuthorization(log: (String) -> Void) async {
         guard !requested else { return }
         requested = true
+        #if DEBUG
+        // Scripted UI runs must not raise the system permission prompt over the user's work.
+        if ProcessInfo.processInfo.environment["QBT_UI_SCRIPT"] != nil { return }
+        #endif
         do {
             authorized = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
         } catch {
@@ -19,6 +23,12 @@ final class NotificationManager {
     }
 
     func post(title: String, body: String) {
+        #if DEBUG
+        if ProcessInfo.processInfo.environment["QBT_UI_SCRIPT"] != nil {
+            FileHandle.standardError.write(Data("UIDRIVER: NOTIFICATION '\(title)': \(body)\n".utf8))
+            return
+        }
+        #endif
         guard authorized else { return }
         let content = UNMutableNotificationContent()
         content.title = title
