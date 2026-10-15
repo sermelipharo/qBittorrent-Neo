@@ -7,17 +7,17 @@ struct BitTorrentPage: View {
     var body: some View {
         Form {
             Section("Privacy") {
-                Toggle("Enable DHT (decentralized network) to find more peers", isOn: $model.draft.bittorrent.dht)
+                Toggle("Enable DHT (decentralized network) to find more peers", isOn: $model.draft.bittorrent.dht).settingAnchor("bittorrent.2")
                     .help("Find peers on the DHT network")
-                Toggle("Enable Peer Exchange (PeX) to find more peers", isOn: $model.draft.bittorrent.pex)
+                Toggle("Enable Peer Exchange (PeX) to find more peers", isOn: $model.draft.bittorrent.pex).settingAnchor("bittorrent.3")
                     .help("Exchange peers with compatible Bittorrent clients (µTorrent, Vuze, ...)")
-                Toggle("Enable Local Peer Discovery to find more peers", isOn: $model.draft.bittorrent.lsd)
+                Toggle("Enable Local Peer Discovery to find more peers", isOn: $model.draft.bittorrent.lsd).settingAnchor("bittorrent.4")
                     .help("Look for peers on your local network")
                 Picker("Encryption mode:", selection: $model.draft.bittorrent.encryption) {
                     ForEach(PreferenceChoices.encryptionModes, id: \.self) { mode in
                         Text(PreferenceChoices.title(mode)).tag(mode)
                     }
-                }
+                }.settingAnchor("bittorrent.5")
                 .help("""
                     Allow encryption: Connect to peers regardless of setting
                     Require encryption: Only connect to peers with protocol encryption
@@ -26,10 +26,10 @@ struct BitTorrentPage: View {
                 LabeledContent {
                     Link("More information", destination: PreferenceLinks.anonymousMode)
                 } label: {
-                    Toggle("Enable anonymous mode", isOn: $model.draft.bittorrent.anonymousMode)
+                    Toggle("Enable anonymous mode", isOn: $model.draft.bittorrent.anonymousMode).settingAnchor("bittorrent.6")
                         .help("Enable when using a proxy or a VPN connection")
                 }
-            }
+            }.settingAnchor("bittorrent.1")
 
             Section {
                 SpinField(
@@ -46,12 +46,13 @@ struct BitTorrentPage: View {
                     title: "Automatically append these trackers to new downloads:", text: $model.draft.bittorrent.addTrackers,
                     minHeight: 96, prompt: String(localized: "One URL per line; an empty line starts a new tier.")
                 )
-            }
+            }.settingAnchor("bittorrent.7")
 
             CheckableSection(
                 title: "Automatically append trackers from URL to new downloads:", isOn: $model.draft.bittorrent.addTrackersFromUrlEnabled
             ) {
                 CommitTextField(title: "URL:", text: $model.draft.bittorrent.addTrackersUrl, prompt: "https://example.org/trackers.txt", trims: true)
+                    .settingAnchor("bittorrent.8")
                 LabeledContent("Fetched trackers") {
                     ScrollView {
                         Text(model.draft.bittorrent.addTrackersUrlList.isEmpty ? String(localized: "None") : model.draft.bittorrent.addTrackersUrlList)
@@ -61,7 +62,7 @@ struct BitTorrentPage: View {
                             .textSelection(.enabled)
                     }
                     .frame(maxHeight: 96)
-                }
+                }.settingAnchor("bittorrent.9")
             }
         }
     }

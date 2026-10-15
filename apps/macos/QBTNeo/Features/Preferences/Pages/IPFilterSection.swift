@@ -17,13 +17,13 @@ struct IPFilterSection: View {
                         kind: .files("dat", "p2p", "p2b"), panelMessage: String(localized: "Choose an IP filter file")
                     )
                     .disabled(!model.draft.connection.ipFilterEnabled)
-                    Button("Reload the filter", systemImage: "arrow.clockwise", action: reload)
+                    Button("Reload the filter", systemImage: Symbol.arrowClockwise, action: reload)
                         .labelStyle(.iconOnly)
                         .help("Reload the filter")
                         .disabled(isReloading || model.draft.connection.ipFilterPath.isEmpty)
                 }
             } label: {
-                Toggle("Filter path (.dat, .p2p, .p2b):", isOn: $model.draft.connection.ipFilterEnabled)
+                Toggle("Filter path (.dat, .p2p, .p2b):", isOn: $model.draft.connection.ipFilterEnabled).settingAnchor("connection.15")
             }
             if isReloading {
                 ProgressView("Reloading the filter…")
@@ -31,7 +31,7 @@ struct IPFilterSection: View {
             } else if let notice {
                 InlineMessage(text: notice.text, style: notice.isError ? .error : .success)
             }
-            Toggle("Apply to trackers", isOn: $model.draft.connection.ipFilterTrackers)
+            Toggle("Apply to trackers", isOn: $model.draft.connection.ipFilterTrackers).settingAnchor("connection.16")
                 .disabled(!model.draft.connection.ipFilterEnabled)
             LabeledContent {
                 Button("Manually banned IP addresses…") { isEditingBans = true }
@@ -39,7 +39,7 @@ struct IPFilterSection: View {
                 Text("^[\(model.draft.connection.bannedIps.count) banned address](inflect: true)")
                     .foregroundStyle(.secondary)
             }
-        }
+        }.settingAnchor("connection.14")
         .sheet(isPresented: $isEditingBans) {
             BannedIPsSheet(addresses: model.draft.connection.bannedIps) { list in
                 Task { await model.applyImmediately { $0.connection.bannedIps = list } }

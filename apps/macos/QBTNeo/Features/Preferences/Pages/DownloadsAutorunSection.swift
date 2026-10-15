@@ -14,7 +14,7 @@ struct DownloadsAutorunSection: View {
                 .labelsHidden()
                 .disabled(!model.draft.downloads.autorunOnTorrentAddedEnabled)
             } label: {
-                Toggle("Run on torrent added:", isOn: $model.draft.downloads.autorunOnTorrentAddedEnabled)
+                Toggle("Run on torrent added:", isOn: $model.draft.downloads.autorunOnTorrentAddedEnabled).settingAnchor("downloads.1")
             }
             LabeledContent {
                 CommitTextField(
@@ -24,7 +24,7 @@ struct DownloadsAutorunSection: View {
                 .labelsHidden()
                 .disabled(!model.draft.downloads.autorunEnabled)
             } label: {
-                Toggle("Run on torrent finished:", isOn: $model.draft.downloads.autorunEnabled)
+                Toggle("Run on torrent finished:", isOn: $model.draft.downloads.autorunEnabled).settingAnchor("downloads.2")
             }
         } header: {
             Text("Run external program")

@@ -13,16 +13,16 @@ struct WebUIDynDNSSection: View {
                         ForEach(PreferenceChoices.dynDNSServices, id: \.self) { service in
                             Text(PreferenceChoices.title(service)).tag(service)
                         }
-                    }
+                    }.settingAnchor("webUI.10")
                     .labelsHidden()
                     .fixedSize()
                     Button("Register", action: register)
                 }
-            }
-            CommitTextField(title: "Domain name:", text: $model.draft.webui.dyndnsDomain, trims: true)
-            CommitTextField(title: "Username:", text: $model.draft.webui.dyndnsUsername, trims: true)
-            CommitTextField(title: "Password:", text: $model.draft.webui.dyndnsPassword, isSecure: true)
-        }
+            }.settingAnchor("webUI.9")
+            CommitTextField(title: "Domain name:", text: $model.draft.webui.dyndnsDomain, trims: true).settingAnchor("webUI.11")
+            CommitTextField(title: "Username:", text: $model.draft.webui.dyndnsUsername, trims: true).settingAnchor("webUI.12")
+            CommitTextField(title: "Password:", text: $model.draft.webui.dyndnsPassword, isSecure: true).settingAnchor("webUI.13")
+        }.settingAnchor("webUI.8")
     }
 
     private func register() {

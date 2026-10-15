@@ -12,6 +12,13 @@ enum FeatureSnapshotCatalog {
 
     static var entries: [Entry] {
         preferencePages + [
+            Entry(name: "settingssearch", title: "Settings", size: CGSize(width: 900, height: 700)) { _ in
+                let query = ProcessInfo.processInfo.environment["QBT_SETTINGS_QUERY"] ?? "proxy"
+                return AnyView(PreferencesWindow(initialQuery: query))
+            },
+            Entry(name: "sidebar", title: "Sidebar", size: CGSize(width: 260, height: 760)) { _ in
+                AnyView(SidebarView().environment(\.isSnapshotRendering, true))
+            },
             Entry(name: "creator", title: AppWindowID.creator.title, size: CGSize(width: 640, height: 940)) { _ in
                 AnyView(TorrentCreatorWindow())
             },

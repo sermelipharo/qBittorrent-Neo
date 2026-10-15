@@ -14,7 +14,7 @@ struct WatchedFolderRow: View {
                     .truncationMode(.middle)
                     .help(folder.path)
             } icon: {
-                Image(systemName: "folder")
+                Image(systemName: Symbol.folder)
                     .foregroundStyle(.secondary)
             }
             if folder.recursive {
@@ -26,7 +26,7 @@ struct WatchedFolderRow: View {
             }
             Spacer()
             Button("Options…", action: options)
-            Button("Remove", systemImage: "minus.circle", role: .destructive, action: remove)
+            Button("Remove", systemImage: Symbol.minusCircle, role: .destructive, action: remove)
                 .labelStyle(.iconOnly)
                 .buttonStyle(.borderless)
                 .help("Remove")

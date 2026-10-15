@@ -30,15 +30,15 @@ enum PreferencesPage: Int, CaseIterable, Identifiable {
 
     var systemImage: String {
         switch self {
-        case .behavior: "macwindow"
-        case .downloads: "arrow.down"
-        case .connection: "network"
-        case .speed: "speedometer"
-        case .bittorrent: "point.3.connected.trianglepath.dotted"
-        case .search: "magnifyingglass"
-        case .rss: "dot.radiowaves.up.forward"
-        case .webUI: "globe"
-        case .advanced: "gearshape.2"
+        case .behavior: Symbol.macwindow
+        case .downloads: Symbol.arrowDown
+        case .connection: Symbol.network
+        case .speed: Symbol.speedometer
+        case .bittorrent: Symbol.point3ConnectedTrianglepathDotted
+        case .search: Symbol.magnifyingglass
+        case .rss: Symbol.dotRadiowavesUpForward
+        case .webUI: Symbol.globe
+        case .advanced: Symbol.gearshape2
         }
     }
 

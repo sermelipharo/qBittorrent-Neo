@@ -12,8 +12,8 @@ struct SearchSettingsPage: View {
     var body: some View {
         Form {
             Section("Search UI") {
-                Toggle("Store opened tabs", isOn: $storeTabs)
-                Toggle("Also store search results", isOn: $storeResults)
+                Toggle("Store opened tabs", isOn: $storeTabs).settingAnchor("search.2")
+                Toggle("Also store search results", isOn: $storeResults).settingAnchor("search.3")
                     .disabled(!storeTabs)
                     .padding(.leading, Design.Spacing.xLarge)
                 LabeledContent("History length") {
@@ -25,9 +25,9 @@ struct SearchSettingsPage: View {
                         Stepper("History length", value: $historyLength, in: 0...99)
                             .labelsHidden()
                     }
-                }
+                }.settingAnchor("search.4")
                 .onChange(of: historyLength) { historyLength = min(max(historyLength, 0), 99) }
-            }
+            }.settingAnchor("search.1")
             Section("Search engine") {
                 LabeledContent("Python:") {
                     if let status {
@@ -38,14 +38,14 @@ struct SearchSettingsPage: View {
                         ProgressView()
                             .controlSize(.small)
                     }
-                }
+                }.settingAnchor("search.6")
                 LabeledContent {
                     Button("Search plugins…") { openWindow(id: FeatureWindowID.searchPlugins.rawValue) }
                 } label: {
                     Text("The Python executable can be set on the Advanced page.")
                         .settingsFootnote()
                 }
-            }
+            }.settingAnchor("search.5")
         }
         .task(id: app.phase) {
             guard let client = app.client as? any SearchClient else { return }

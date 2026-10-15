@@ -9,7 +9,7 @@ struct DownloadsSavingSection: View {
             Picker("Default Torrent Management Mode:", selection: $model.draft.downloads.autoTmmEnabled) {
                 Text("Manual").tag(false)
                 Text("Automatic").tag(true)
-            }
+            }.settingAnchor("downloads.28")
             .help("""
                 Automatic: Various torrent properties (e.g. save path) will be decided by the associated category
                 Manual: Various torrent properties (e.g. save path) must be assigned manually
@@ -17,16 +17,16 @@ struct DownloadsSavingSection: View {
             Picker("When Torrent Category changed:", selection: $model.draft.downloads.torrentChangedTmmEnabled) {
                 Text("Relocate torrent").tag(true)
                 Text("Switch torrent to Manual Mode").tag(false)
-            }
+            }.settingAnchor("downloads.29")
             Picker("When Default Save/Incomplete Path changed:", selection: $model.draft.downloads.savePathChangedTmmEnabled) {
                 Text("Relocate affected torrents").tag(true)
                 Text("Switch affected torrents to Manual Mode").tag(false)
-            }
+            }.settingAnchor("downloads.30")
             Picker("When Category Save Path changed:", selection: $model.draft.downloads.categoryChangedTmmEnabled) {
                 Text("Relocate affected torrents").tag(true)
                 Text("Switch affected torrents to Manual Mode").tag(false)
-            }
-            Toggle("Use Category paths in Manual Mode", isOn: $model.draft.downloads.useCategoryPathsInManualMode)
+            }.settingAnchor("downloads.31")
+            Toggle("Use Category paths in Manual Mode", isOn: $model.draft.downloads.useCategoryPathsInManualMode).settingAnchor("downloads.32")
                 .help("Resolve relative Save Path against appropriate Category path instead of Default one")
             PathField(
                 title: "Default Save Path:", path: $model.draft.downloads.savePath,
@@ -39,7 +39,7 @@ struct DownloadsSavingSection: View {
                 )
                 .disabled(!model.draft.downloads.tempPathEnabled)
             } label: {
-                Toggle("Use another path for incomplete torrents:", isOn: $model.draft.downloads.tempPathEnabled)
+                Toggle("Use another path for incomplete torrents:", isOn: $model.draft.downloads.tempPathEnabled).settingAnchor("downloads.33")
             }
             LabeledContent {
                 PathControl(
@@ -48,7 +48,7 @@ struct DownloadsSavingSection: View {
                 )
                 .disabled(!model.exportDirectoryEnabled)
             } label: {
-                Toggle("Copy .torrent files to:", isOn: $model.exportDirectoryEnabled)
+                Toggle("Copy .torrent files to:", isOn: $model.exportDirectoryEnabled).settingAnchor("downloads.34")
             }
             LabeledContent {
                 PathControl(
@@ -57,8 +57,8 @@ struct DownloadsSavingSection: View {
                 )
                 .disabled(!model.finishedExportDirectoryEnabled)
             } label: {
-                Toggle("Copy .torrent files for finished downloads to:", isOn: $model.finishedExportDirectoryEnabled)
+                Toggle("Copy .torrent files for finished downloads to:", isOn: $model.finishedExportDirectoryEnabled).settingAnchor("downloads.35")
             }
-        }
+        }.settingAnchor("downloads.27")
     }
 }

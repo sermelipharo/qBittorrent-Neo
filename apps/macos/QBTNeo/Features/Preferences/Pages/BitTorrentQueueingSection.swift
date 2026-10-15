@@ -12,23 +12,23 @@ struct BitTorrentQueueingSection: View {
     var body: some View {
         CheckableSection(title: "Torrent Queueing", isOn: $model.draft.bittorrent.queueingEnabled) {
             SpinField(title: "Maximum active downloads:", value: $model.draft.bittorrent.maxActiveDownloads,
-                      range: -1...Int64(Int32.max), special: .infinity(at: -1))
+                      range: -1...Int64(Int32.max), special: .infinity(at: -1)).settingAnchor("bittorrent.11")
             SpinField(title: "Maximum active uploads:", value: $model.draft.bittorrent.maxActiveUploads,
-                      range: -1...Int64(Int32.max), special: .infinity(at: -1))
+                      range: -1...Int64(Int32.max), special: .infinity(at: -1)).settingAnchor("bittorrent.12")
             SpinField(title: "Maximum active torrents:", value: $model.draft.bittorrent.maxActiveTorrents,
-                      range: -1...Int64(Int32.max), special: .infinity(at: -1))
-            Toggle("Do not count slow torrents in these limits", isOn: $model.draft.bittorrent.dontCountSlowTorrents)
+                      range: -1...Int64(Int32.max), special: .infinity(at: -1)).settingAnchor("bittorrent.13")
+            Toggle("Do not count slow torrents in these limits", isOn: $model.draft.bittorrent.dontCountSlowTorrents).settingAnchor("bittorrent.14")
             Group {
                 SpinField(title: "Download rate threshold:", value: $model.draft.bittorrent.slowTorrentDlRateThreshold,
-                          range: 0...2_000_000, unit: UnitFormatter.kibPerSecond)
+                          range: 0...2_000_000, unit: UnitFormatter.kibPerSecond).settingAnchor("bittorrent.15")
                 SpinField(title: "Upload rate threshold:", value: $model.draft.bittorrent.slowTorrentUlRateThreshold,
-                          range: 0...2_000_000, unit: UnitFormatter.kibPerSecond)
+                          range: 0...2_000_000, unit: UnitFormatter.kibPerSecond).settingAnchor("bittorrent.16")
                 SpinField(title: "Torrent inactivity timer:", value: $model.draft.bittorrent.slowTorrentInactiveTimer,
-                          range: 1...999_999, unit: String(localized: "sec"))
+                          range: 1...999_999, unit: String(localized: "sec")).settingAnchor("bittorrent.17")
             }
             .help(Self.slowHelp)
             .disabled(!model.draft.bittorrent.dontCountSlowTorrents)
             .padding(.leading, Design.Spacing.xLarge)
-        }
+        }.settingAnchor("bittorrent.10")
     }
 }

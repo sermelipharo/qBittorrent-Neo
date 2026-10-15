@@ -10,7 +10,7 @@ struct FileAssociationRow: View {
     var body: some View {
         LabeledContent(title) {
             if isSet {
-                Label("Default", systemImage: "checkmark.circle.fill")
+                Label("Default", systemImage: Symbol.checkmarkCircleFill)
                     .foregroundStyle(.green)
             } else {
                 Button("Make Default", action: makeDefault)

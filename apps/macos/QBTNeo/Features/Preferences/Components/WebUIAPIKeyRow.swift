@@ -17,15 +17,15 @@ struct WebUIAPIKeyRow: View {
                     .lineLimit(1)
                     .accessibilityLabel(key.isEmpty ? "No API key" : "API key set")
                 ControlGroup {
-                    Button("Copy API key", systemImage: "doc.on.doc", action: copy)
+                    Button("Copy API key", systemImage: Symbol.docOnDoc, action: copy)
                         .disabled(key.isEmpty)
                         .help("Copy API key")
                     Button(key.isEmpty ? "Generate API key" : "Rotate API key",
-                           systemImage: key.isEmpty ? "key" : "arrow.triangle.2.circlepath") {
+                           systemImage: key.isEmpty ? Symbol.key : Symbol.arrowTriangle2Circlepath) {
                         pending = key.isEmpty ? .generate : .rotate
                     }
                     .help(key.isEmpty ? "Generate API key" : "Rotate API key")
-                    Button("Delete API key", systemImage: "trash") { pending = .delete }
+                    Button("Delete API key", systemImage: Symbol.trash) { pending = .delete }
                         .disabled(key.isEmpty)
                         .help("Delete API key")
                 }

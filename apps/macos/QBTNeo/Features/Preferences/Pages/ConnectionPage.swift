@@ -11,7 +11,7 @@ struct ConnectionPage: View {
                     ForEach(PreferenceChoices.protocols, id: \.self) { value in
                         Text(PreferenceChoices.title(value)).tag(value)
                     }
-                }
+                }.settingAnchor("connection.1")
             }
 
             Section("Listening Port") {
@@ -24,32 +24,32 @@ struct ConnectionPage: View {
                         .help("Set to 0 to let your system pick an unused port")
                         Button("Random", action: randomPort)
                     }
-                }
-                Toggle("Use UPnP / NAT-PMP port forwarding from my router", isOn: $model.draft.connection.upnp)
-            }
+                }.settingAnchor("connection.3")
+                Toggle("Use UPnP / NAT-PMP port forwarding from my router", isOn: $model.draft.connection.upnp).settingAnchor("connection.4")
+            }.settingAnchor("connection.2")
 
             Section("Connections Limits") {
                 LimitRow(title: "Global maximum number of connections:", isOn: $model.maxConnectionsEnabled,
-                         value: $model.maxConnections, range: 2...Int64(Int32.max))
+                         value: $model.maxConnections, range: 2...Int64(Int32.max)).settingAnchor("connection.6")
                 LimitRow(title: "Maximum number of connections per torrent:", isOn: $model.maxConnectionsPerTorrentEnabled,
-                         value: $model.maxConnectionsPerTorrent, range: 2...Int64(Int32.max))
+                         value: $model.maxConnectionsPerTorrent, range: 2...Int64(Int32.max)).settingAnchor("connection.7")
                 LimitRow(title: "Global maximum number of upload slots:", isOn: $model.maxUploadsEnabled,
-                         value: $model.maxUploads, range: 1...Int64(Int32.max))
+                         value: $model.maxUploads, range: 1...Int64(Int32.max)).settingAnchor("connection.8")
                 LimitRow(title: "Maximum number of upload slots per torrent:", isOn: $model.maxUploadsPerTorrentEnabled,
-                         value: $model.maxUploadsPerTorrent, range: 1...Int64(Int32.max))
-            }
+                         value: $model.maxUploadsPerTorrent, range: 1...Int64(Int32.max)).settingAnchor("connection.9")
+            }.settingAnchor("connection.5")
 
             CheckableSection(title: "I2P (experimental)", isOn: $model.draft.connection.i2pEnabled) {
-                CommitTextField(title: "Host:", text: $model.draft.connection.i2pAddress, trims: true)
-                SpinField(title: "Port:", value: $model.draft.connection.i2pPort, range: 1...65_535)
-                Toggle("Mixed mode", isOn: $model.draft.connection.i2pMixedMode)
+                CommitTextField(title: "Host:", text: $model.draft.connection.i2pAddress, trims: true).settingAnchor("connection.11")
+                SpinField(title: "Port:", value: $model.draft.connection.i2pPort, range: 1...65_535).settingAnchor("connection.12")
+                Toggle("Mixed mode", isOn: $model.draft.connection.i2pMixedMode).settingAnchor("connection.13")
                     .help("""
                         If "mixed mode" is enabled I2P torrents are allowed to also get peers from other sources than \
                         the tracker, and connect to regular IPs, not providing any anonymization. This may be useful \
                         if the user is not interested in the anonymization of I2P, but still wants to be able to \
                         connect to I2P peers.
                         """)
-            }
+            }.settingAnchor("connection.10")
 
             ProxySection(model: model)
             IPFilterSection(model: model)
