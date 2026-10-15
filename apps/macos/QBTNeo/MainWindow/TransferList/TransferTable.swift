@@ -33,7 +33,8 @@ struct TransferTable: View {
         } primaryAction: { ids in
             model.performDoubleClick(Array(ids))
         }
-        .alternatingRowBackgrounds(gui.alternatingRowColors ? .enabled : .disabled)
+        // No stripes behind the empty-state placeholder.
+        .alternatingRowBackgrounds(gui.alternatingRowColors && !list.visibleItems.isEmpty ? .enabled : .disabled)
         .onDeleteCommand { model.requestRemove(list.selectedIDs) }
         .onKeyPress(.delete, phases: .down) { press in
             guard press.modifiers.contains(.shift) else { return .ignored }
