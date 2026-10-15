@@ -1,0 +1,7 @@
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    add_subdirectory(mac)
+elseif (UNIX AND (NOT APPLE))
+    add_subdirectory(unix)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    add_subdirectory(windows)
+endif()
