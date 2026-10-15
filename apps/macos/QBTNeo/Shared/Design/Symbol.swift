@@ -36,6 +36,7 @@ enum Symbol {
     static let checkmarkCircleFill = "checkmark.circle.fill"
     static let checkmarkSquareFill = "checkmark.square.fill"
     static let chevronDown = "chevron.down"
+    static let chevronLeft = "chevron.left"
     static let chevronRight = "chevron.right"
     static let chevronUp = "chevron.up"
     static let circle = "circle"
@@ -43,6 +44,7 @@ enum Symbol {
     static let clock = "clock"
     static let clockArrowCirclepath = "clock.arrow.circlepath"
     static let clockFill = "clock.fill"
+    static let command = "command"
     static let cursorarrowClick2 = "cursorarrow.click.2"
     static let docBadgePlus = "doc.badge.plus"
     static let docOnDoc = "doc.on.doc"
@@ -80,6 +82,7 @@ enum Symbol {
     static let lockFill = "lock.fill"
     static let macwindow = "macwindow"
     static let magnifyingglass = "magnifyingglass"
+    static let menubarRectangle = "menubar.rectangle"
     static let minus = "minus"
     static let minusCircle = "minus.circle"
     static let minusSquareFill = "minus.square.fill"
@@ -98,9 +101,13 @@ enum Symbol {
     static let plus = "plus"
     static let point3ConnectedTrianglepathDotted = "point.3.connected.trianglepath.dotted"
     static let puzzlepieceExtension = "puzzlepiece.extension"
+    static let questionmarkCircle = "questionmark.circle"
+    static let rectangleBottomHalfInsetFilled = "rectangle.bottomhalf.inset.filled"
     static let safari = "safari"
+    static let scope = "scope"
     static let serverRack = "server.rack"
     static let shippingbox = "shippingbox"
+    static let sidebarLeft = "sidebar.left"
     static let sliderHorizontal3 = "slider.horizontal.3"
     static let speedometer = "speedometer"
     static let square = "square"
@@ -153,6 +160,7 @@ enum Symbol {
         checkmarkCircleFill,
         checkmarkSquareFill,
         chevronDown,
+        chevronLeft,
         chevronRight,
         chevronUp,
         circle,
@@ -160,6 +168,7 @@ enum Symbol {
         clock,
         clockArrowCirclepath,
         clockFill,
+        command,
         cursorarrowClick2,
         docBadgePlus,
         docOnDoc,
@@ -197,6 +206,7 @@ enum Symbol {
         lockFill,
         macwindow,
         magnifyingglass,
+        menubarRectangle,
         minus,
         minusCircle,
         minusSquareFill,
@@ -215,9 +225,13 @@ enum Symbol {
         plus,
         point3ConnectedTrianglepathDotted,
         puzzlepieceExtension,
+        questionmarkCircle,
+        rectangleBottomHalfInsetFilled,
         safari,
+        scope,
         serverRack,
         shippingbox,
+        sidebarLeft,
         sliderHorizontal3,
         speedometer,
         square,

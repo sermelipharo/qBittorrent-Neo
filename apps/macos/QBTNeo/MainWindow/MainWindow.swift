@@ -39,7 +39,10 @@ struct MainWindow: View {
         .background {
             WindowObserver(onVisibilityChange: { model.isMainWindowVisible = $0 }, onWindow: { model.mainWindow = $0 })
         }
-        .onAppear { model.openWindow = openWindow }
+        .onAppear {
+            model.openWindow = openWindow
+            model.openSettings = openSettings
+        }
         .onOpenURL { model.open([$0]) }
         .onChange(of: gui.filtersSidebarVisible) { _, visible in
             if !visible { model.list.resetSidebarFilters() }

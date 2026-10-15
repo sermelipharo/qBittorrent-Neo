@@ -4,11 +4,11 @@ import SwiftUI
 /// "Clear Password…" companions.
 struct LockCommands: View {
     let model: AppModel
+    let context: CommandContext
 
     var body: some View {
-        Button("Lock qBittorrent Neo", systemImage: Symbol.lock) { model.requestLock() }
-            .keyboardShortcut("l")
-        Button("Set Password…") { model.sheet = .lockPassword(lockAfterSaving: false) }
+        CommandMenuItem(.lock, context: context)
+        CommandMenuItem(.setLockPassword, context: context)
         Button("Clear Password…") { model.confirmation = .clearLockPassword }
             .disabled(!model.lock.hasPassword)
     }

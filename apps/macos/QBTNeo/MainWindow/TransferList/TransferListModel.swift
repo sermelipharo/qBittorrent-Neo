@@ -110,6 +110,22 @@ final class TransferListModel {
         trackerStatusFilter = .all
     }
 
+    /// Whether any filter (sidebar or text) hides torrents.
+    var isFiltering: Bool {
+        statusFilter != .all || categoryFilter != .all || tagFilter != .all || trackerFilter != .all
+            || trackerStatusFilter != .all || !searchText.isEmpty
+    }
+
+    /// Shows every torrent: resets the sidebar filters and the filter text, applied immediately.
+    func resetAllFilters() {
+        statusFilter = .all
+        resetSidebarFilters()
+        searchText = ""
+        searchTask?.cancel()
+        rebuildMatcher()
+        refilter()
+    }
+
     // MARK: Updates
 
     /// Called after each sync with the store's changes.

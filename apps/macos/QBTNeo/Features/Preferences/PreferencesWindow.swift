@@ -51,6 +51,15 @@ struct PreferencesWindow: View {
             await model.attach(app.client)
         }
         .onChange(of: app.corePreferences) { model.coreDidChange(app.corePreferences) }
+        .onChange(of: app.pendingSettingReveal, initial: true) { _, id in
+            // A Command Palette result: open its pane and highlight it.
+            guard let id else { return }
+            app.pendingSettingReveal = nil
+            if let spec = SettingsCatalog.all.first(where: { $0.id == id }) {
+                navigator.query = ""
+                navigator.reveal(spec)
+            }
+        }
     }
 
     private func open(_ result: SettingsSearch.Result) {

@@ -21,6 +21,7 @@ import AppKit
 enum DebugVerification {
     static func install(model: AppModel) -> Timer? {
         Symbol.verifyAll()
+        CommandRegistry.verify()
         let environment = ProcessInfo.processInfo.environment
         if environment["QBT_VERIFY_SEARCH"] == "1" {
             Task {

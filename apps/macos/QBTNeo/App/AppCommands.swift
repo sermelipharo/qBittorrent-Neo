@@ -4,7 +4,6 @@ import SwiftUI
 struct AppCommands: Commands {
     let model: AppModel
     @Environment(\.openWindow) private var openWindow
-    @Environment(\.openSettings) private var openSettings
     @Environment(\.openURL) private var openURL
 
     var body: some Commands {
@@ -16,13 +15,10 @@ struct AppCommands: Commands {
         }
 
         CommandGroup(replacing: .newItem) {
+            let context = CommandContext(model: model, ids: [])
             Group {
-                Button("Add Torrent File…", systemImage: Symbol.docBadgePlus) { model.fileImport = .torrentFiles }
-                    .keyboardShortcut("o")
-                Button("Add Torrent Link…", systemImage: Symbol.linkBadgePlus) {
-                    model.sheet = .addLinks(initialText: AppModel.clipboardLinks())
-                }
-                .keyboardShortcut("o", modifiers: [.command, .shift])
+                CommandMenuItem(.addTorrentFile, context: context)
+                CommandMenuItem(.addTorrentLink, context: context)
             }
             .disabled(model.lock.isLocked)
         }
@@ -38,13 +34,12 @@ struct AppCommands: Commands {
         }
 
         CommandMenu("Tools") {
+            let context = CommandContext(model: model, ids: [])
             Group {
-                Button("Torrent Creator", systemImage: Symbol.wandAndStars) { openWindow(id: AppWindowID.creator.rawValue) }
-                    .keyboardShortcut("n")
+                CommandMenuItem(.torrentCreator, context: context)
                 Divider()
-                Button("Manage Cookies…") { openWindow(id: AppWindowID.cookies.rawValue) }
-                Button("Options…", systemImage: Symbol.gearshape) { openSettings() }
-                    .keyboardShortcut("o", modifiers: .option)
+                CommandMenuItem(.manageCookies, context: context)
+                CommandMenuItem(.options, context: context)
                 Divider()
                 Picker("On Downloads Done", selection: Bindable(model.gui).completionAction) {
                     ForEach(CompletionAction.allCases) { action in
@@ -56,8 +51,7 @@ struct AppCommands: Commands {
         }
 
         CommandGroup(replacing: .help) {
-            Button("Documentation") { openURL(URL(string: "https://doc.qbittorrent.org")!) }
-                .keyboardShortcut("?")
+            CommandMenuItem(.documentation, context: CommandContext(model: model, ids: []))
             Divider()
             Button("Donate!") { openURL(URL(string: "https://www.qbittorrent.org/donate")!) }
         }

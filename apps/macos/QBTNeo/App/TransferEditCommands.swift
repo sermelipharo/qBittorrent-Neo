@@ -1,43 +1,24 @@
 import SwiftUI
 
-/// Edit menu: Start, Stop, Remove and the queue actions (when queueing is on).
+/// Edit menu: Start, Stop, Remove and the queue actions (when queueing is on),
+/// rendered from the command registry.
 struct TransferEditCommands: View {
     let model: AppModel
 
     var body: some View {
-        let ids = model.list.selectedIDs
+        let context = CommandContext(selectionOf: model)
         Divider()
-        Button("Start", systemImage: Symbol.playFill) { model.start(ids) }
-            .keyboardShortcut("s")
-            .disabled(ids.isEmpty)
-        Button("Stop", systemImage: Symbol.pauseFill) { model.stop(ids) }
-            .keyboardShortcut("p")
-            .disabled(ids.isEmpty)
-        Button("Force Start", systemImage: Symbol.forwardFill) { model.forceStart(ids) }
-            .disabled(ids.isEmpty)
-        Button("Remove", systemImage: Symbol.trash) { model.requestRemove(ids) }
-            .keyboardShortcut(.delete)
-            .disabled(ids.isEmpty)
-        Button("Force Recheck", systemImage: Symbol.arrowTrianglehead2ClockwiseRotate90) { model.requestRecheck(ids) }
-            .keyboardShortcut("r")
-            .disabled(ids.isEmpty)
+        ForEach([CommandID.start, .stop, .forceStart, .remove, .forceRecheck], id: \.self) { id in
+            CommandMenuItem(id, context: context)
+        }
         if model.queueingEnabled {
             Divider()
-            Button("Top of Queue", systemImage: Symbol.arrowUpToLine) { model.queue(ids, .top) }
-                .keyboardShortcut("+", modifiers: [.command, .shift])
-                .disabled(ids.isEmpty)
-            Button("Move Up Queue", systemImage: Symbol.chevronUp) { model.queue(ids, .up) }
-                .keyboardShortcut("+")
-                .disabled(ids.isEmpty)
-            Button("Move Down Queue", systemImage: Symbol.chevronDown) { model.queue(ids, .down) }
-                .keyboardShortcut("-")
-                .disabled(ids.isEmpty)
-            Button("Bottom of Queue", systemImage: Symbol.arrowDownToLine) { model.queue(ids, .bottom) }
-                .keyboardShortcut("-", modifiers: [.command, .shift])
-                .disabled(ids.isEmpty)
+            ForEach([CommandID.queueTop, .queueUp, .queueDown, .queueBottom], id: \.self) { id in
+                CommandMenuItem(id, context: context)
+            }
         }
         Divider()
-        Button("Start All Torrents") { model.startAll() }
-        Button("Stop All Torrents") { model.stopAll() }
+        CommandMenuItem(.startAll, context: context)
+        CommandMenuItem(.stopAll, context: context)
     }
 }

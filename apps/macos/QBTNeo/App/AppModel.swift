@@ -24,6 +24,7 @@ final class AppModel {
     let properties: PropertiesModel
     let lock = UILockModel()
     let favicons = TrackerFaviconStore()
+    let palette: CommandPaletteModel
 
     private(set) var phase: Phase = .starting
     @ObservationIgnored private(set) var client: (any CoreClient)?
@@ -35,6 +36,8 @@ final class AppModel {
     var alert: AppAlert?
     var confirmation: PendingConfirmation?
     var fileImport: FileImportRequest?
+    /// A setting the Settings window should reveal when it appears (Command Palette).
+    var pendingSettingReveal: String?
     var isMainWindowVisible = true {
         didSet { if isMainWindowVisible, !oldValue { restartRefreshLoop() } }
     }
@@ -46,6 +49,8 @@ final class AppModel {
         didSet { flushPendingWindows() }
     }
     @ObservationIgnored var pendingAddDialogs: [UUID] = []
+    /// Set by the main window so models can open Settings.
+    @ObservationIgnored var openSettings: OpenSettingsAction?
 
     /// The main window, once SwiftUI has created it.
     @ObservationIgnored weak var mainWindow: NSWindow?
@@ -60,8 +65,10 @@ final class AppModel {
         self.gui = gui
         list = TransferListModel(store: transfers, trackers: trackers, gui: gui)
         properties = PropertiesModel(patternFormat: gui.contentFilterPatternFormat)
+        palette = CommandPaletteModel(persistent: !launch.isSnapshot)
         lock.clientProvider = { [weak self] in self?.client as? any AppInfoClient }
         favicons.clientProvider = { [weak self] in self?.client as? any AppInfoClient }
+        palette.app = self
     }
 
     // MARK: Startup and shutdown
