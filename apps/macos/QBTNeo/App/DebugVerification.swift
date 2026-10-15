@@ -3,8 +3,11 @@ import AppKit
 
 /// Runtime verification aids for debug builds, driven by environment
 /// variables so a scripted run can exercise the real app:
-/// * `QBT_VERIFY_FLOAT=1`: keep every window above other apps (occluded
-///   windows stop refreshing, which hides what a screenshot should show).
+/// Whenever one of these runs, windows stay at the normal level but are kept
+/// practically invisible (alpha 0.01) and click-through so the user's work is
+/// never covered; they become opaque only while the file `capture-on` exists
+/// in `QBT_UI_DIR` (an external script creates it around a window capture).
+/// Refreshing is forced on, so it does not depend on window occlusion.
 /// * `QBT_VERIFY_SEARCH=1`: open the Search window shortly after launch.
 /// * `QBT_VERIFY_OPTIONS=1`: open Torrent Options for the loaded torrents;
 ///   `=disable`: switch DHT, PeX and LSD off for them instead.
@@ -31,13 +34,17 @@ enum DebugVerification {
         if let mode = environment["QBT_VERIFY_OPTIONS"] {
             Task { await runOptions(mode: mode, model: model) }
         }
-        guard environment["QBT_VERIFY_FLOAT"] == "1" else { return nil }
-        return Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+        let verifying = environment.keys.contains { $0.hasPrefix("QBT_VERIFY_") }
+        guard verifying else { return nil }
+        let captureFlag = (environment["QBT_UI_DIR"] ?? NSTemporaryDirectory()) + "/capture-on"
+        return Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { _ in
             MainActor.assumeIsolated {
+                let alpha: CGFloat = FileManager.default.fileExists(atPath: captureFlag) ? 1 : 0.01
                 for window in NSApp.windows where window.isVisible {
-                    window.level = .floating
-                    window.orderFrontRegardless()
+                    if window.alphaValue != alpha { window.alphaValue = alpha }
+                    if !window.ignoresMouseEvents { window.ignoresMouseEvents = true }
                 }
+                if model.mainWindow?.isVisible == true { model.isMainWindowVisible = true }
             }
         }
     }

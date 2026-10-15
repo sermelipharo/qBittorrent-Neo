@@ -12,7 +12,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var isTerminating = false
     private var isAskingPassword = false
     #if DEBUG
-    private var floatTimer: Timer?
+    private var verifyTimer: Timer?
     #endif
 
     override init() {
@@ -35,7 +35,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         #if DEBUG
-        floatTimer = DebugVerification.install(model: model)
+        verifyTimer = DebugVerification.install(model: model)
         #endif
         dockBadge = DockBadgeController(model: model)
         systemIntegration = SystemIntegration(app: model)
