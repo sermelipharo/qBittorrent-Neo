@@ -16,6 +16,9 @@ final class SessionStatus {
     var connectionStatus: ConnectionStatus = .disconnected
     var queueingEnabled = false
     var altSpeedEnabled = false
+    /// Torrents transferring data now / all torrents (kept current only while the menu bar item shows counts).
+    var activeTorrents = 0
+    var totalTorrents = 0
     var freeSpace: Int64 = -1
     var externalIPv4 = ""
     var externalIPv6 = ""
@@ -46,6 +49,11 @@ final class SessionStatus {
         allTimeUpload = state.alltimeUpload
         globalRatio = state.globalRatio
         peerConnections = state.totalPeerConnections
+    }
+
+    func applyCounts(active: Int, total: Int) {
+        if activeTorrents != active { activeTorrents = active }
+        if totalTorrents != total { totalTorrents = total }
     }
 
     /// Whether any torrent is transferring payload (exit confirmation rule).

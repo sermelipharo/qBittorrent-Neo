@@ -140,7 +140,7 @@ final class AppModel {
     /// state is polled (Dock badge, menu bar), and only if those are shown.
     func refresh() async {
         guard let client else { return }
-        if isMainWindowVisible || !hasSynced {
+        if isMainWindowVisible || !hasSynced || menuBarShowsCount {
             let update = await CoreCall.run { client.syncMainData() }
             hasSynced = true
             apply(update)
@@ -150,6 +150,9 @@ final class AppModel {
             status.apply(state)
         }
     }
+
+    /// The menu bar item shows torrent counts, which need the transfer list even while the window is hidden.
+    private var menuBarShowsCount: Bool { gui.showMenuBarIcon && gui.menuBarContentMode.showsCount }
 
     func refreshProperties() async {
         guard let client else { return }
@@ -170,6 +173,10 @@ final class AppModel {
             list.storeDidChange(changes)
         }
         status.apply(update.serverState)
+        if menuBarShowsCount {
+            let active = transfers.items.reduce(0) { $0 + ($1.dlSpeed > 0 || $1.upSpeed > 0 ? 1 : 0) }
+            status.applyCounts(active: active, total: transfers.count)
+        }
     }
 
     // MARK: Events

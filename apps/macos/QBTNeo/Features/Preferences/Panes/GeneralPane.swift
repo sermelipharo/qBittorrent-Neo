@@ -42,6 +42,7 @@ struct GeneralPane: View {
             } content: {
                 Toggle(SettingsCatalog.title("Preferences/Desktop/ShowMacOSMenuBarIcon"), isOn: $gui.showMenuBarIcon)
                     .setting("Preferences/Desktop/ShowMacOSMenuBarIcon")
+                MenuBarOptions(gui: gui)
             }
 
             NotificationsGroup(model: model)

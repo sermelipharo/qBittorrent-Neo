@@ -36,6 +36,11 @@ final class GUIPreferences {
     var confirmAutoExit: Bool { didSet { set(!confirmAutoExit, .dontConfirmAutoExit) } }
     var showSpeedInDock: Bool { didSet { set(showSpeedInDock, .showSpeedInDock) } }
     var showMenuBarIcon: Bool { didSet { set(showMenuBarIcon, .showMenuBarIcon) } }
+    var menuBarContentMode: MenuBarContentMode { didSet { set(menuBarContentMode.rawValue, .menuBarContentMode) } }
+    var menuBarShowsIcon: Bool { didSet { set(menuBarShowsIcon, .menuBarShowsIcon) } }
+    var menuBarSpeedDirection: MenuBarSpeedDirection { didSet { set(menuBarSpeedDirection.rawValue, .menuBarSpeedDirection) } }
+    var menuBarHidesZeroSpeed: Bool { didSet { set(menuBarHidesZeroSpeed, .menuBarHidesZeroSpeed) } }
+    var menuBarCountStyle: MenuBarCountStyle { didSet { set(menuBarCountStyle.rawValue, .menuBarCountStyle) } }
     var preventSuspendWhenDownloading: Bool { didSet { set(preventSuspendWhenDownloading, .preventSuspendWhenDownloading) } }
     var preventSuspendWhenSeeding: Bool { didSet { set(preventSuspendWhenSeeding, .preventSuspendWhenSeeding) } }
     var statusBarFreeDiskSpace: Bool { didSet { set(statusBarFreeDiskSpace, .statusBarFreeDiskSpace) } }
@@ -139,6 +144,11 @@ final class GUIPreferences {
         confirmAutoExit = !read.bool(.dontConfirmAutoExit, false)
         showSpeedInDock = read.bool(.showSpeedInDock, true)
         showMenuBarIcon = read.bool(.showMenuBarIcon, true)
+        menuBarContentMode = MenuBarContentMode(rawValue: read.int(.menuBarContentMode, 0)) ?? .iconOnly
+        menuBarShowsIcon = read.bool(.menuBarShowsIcon, true)
+        menuBarSpeedDirection = MenuBarSpeedDirection(rawValue: read.int(.menuBarSpeedDirection, 0)) ?? .both
+        menuBarHidesZeroSpeed = read.bool(.menuBarHidesZeroSpeed, false)
+        menuBarCountStyle = MenuBarCountStyle(rawValue: read.int(.menuBarCountStyle, 0)) ?? .activeOfTotal
         preventSuspendWhenDownloading = read.bool(.preventSuspendWhenDownloading, false)
         preventSuspendWhenSeeding = read.bool(.preventSuspendWhenSeeding, false)
         statusBarFreeDiskSpace = read.bool(.statusBarFreeDiskSpace, false)

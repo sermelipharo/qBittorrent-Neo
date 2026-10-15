@@ -43,7 +43,7 @@ struct QBTNeoApp: SwiftUI.App {
             MenuBarContent()
                 .environment(model)
         } label: {
-            Label("qBittorrent Neo", systemImage: Symbol.arrowUpArrowDownCircle)
+            MenuBarLabel(model: model)
         }
     }
 }

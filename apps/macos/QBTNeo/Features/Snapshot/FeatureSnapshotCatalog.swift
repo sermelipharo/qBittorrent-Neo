@@ -15,6 +15,9 @@ enum FeatureSnapshotCatalog {
             Entry(name: "sidebar", title: "Sidebar", size: CGSize(width: 260, height: 760)) { _ in
                 AnyView(SidebarView().environment(\.isSnapshotRendering, true))
             },
+            Entry(name: "menubar", title: "Menu bar item", size: CGSize(width: 420, height: 320)) { _ in
+                AnyView(MenuBarSnapshotView())
+            },
             Entry(name: "creator", title: AppWindowID.creator.title, size: CGSize(width: 640, height: 940)) { _ in
                 AnyView(TorrentCreatorWindow())
             },

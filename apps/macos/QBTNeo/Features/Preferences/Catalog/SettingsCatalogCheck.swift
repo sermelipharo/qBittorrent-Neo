@@ -60,6 +60,7 @@ enum SettingsCatalogCheck {
             .colorScheme, .alternatingRowColors, .useTorrentStatesColors, .progressBarFollowsTextColor, .hideZeroValues,
             .hideZeroComboValues, .doubleClickDownloading, .doubleClickCompleted, .hideZeroStatusFilters, .separateTrackerStatusFilter,
             .torrentContentDragEnabled, .startupWindowState, .confirmOnExit, .dontConfirmAutoExit, .showSpeedInDock, .showMenuBarIcon,
+            .menuBarContentMode, .menuBarShowsIcon, .menuBarSpeedDirection, .menuBarHidesZeroSpeed, .menuBarCountStyle,
             .preventSuspendWhenDownloading, .preventSuspendWhenSeeding, .statusBarFreeDiskSpace, .checkForUpdates,
             .addTorrentDialogEnabled, .addTorrentDialogTopLevel, .confirmMergeTrackers, .disableRecursiveDownload,
             .notificationsEnabled, .notifyTorrentAdded, .confirmRemoveAllTags, .confirmRemoveTrackerFromAllTorrents,

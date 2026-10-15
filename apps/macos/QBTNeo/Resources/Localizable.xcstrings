@@ -13284,6 +13284,16 @@
         }
       }
     },
+    "Active of total (3/12)": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активные из всех (3/12)"
+          }
+        }
+      }
+    },
     "Add": {
       "localizations": {
         "ar": {
@@ -93920,6 +93930,16 @@
         }
       }
     },
+    "Download and upload": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка и отдача"
+          }
+        }
+      }
+    },
     "Download completed": {
       "localizations": {
         "ar": {
@@ -95604,6 +95624,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "下載連結"
+          }
+        }
+      }
+    },
+    "Download only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только загрузка"
           }
         }
       }
@@ -132286,6 +132316,16 @@
         }
       }
     },
+    "Hide idle speeds in menu bar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрывать нулевую скорость в строке меню"
+          }
+        }
+      }
+    },
     "Hide in": {
       "localizations": {
         "ru": {
@@ -138214,6 +138254,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "IP/地址"
+          }
+        }
+      }
+    },
+    "Icon only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только значок"
           }
         }
       }
@@ -163293,6 +163343,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "記憶體對映檔案"
+          }
+        }
+      }
+    },
+    "Menu bar shows:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В строке меню:"
+          }
+        }
+      }
+    },
+    "Menu bar speed:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скорость в строке меню:"
+          }
+        }
+      }
+    },
+    "Menu bar torrent count:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Число торрентов в строке меню:"
           }
         }
       }
@@ -259387,6 +259467,16 @@
         }
       }
     },
+    "Show icon next to the text in menu bar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывать значок рядом с текстом в строке меню"
+          }
+        }
+      }
+    },
     "Show options when adding a torrent": {
       "localizations": {
         "ru": {
@@ -265759,6 +265849,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "速率限制"
+          }
+        }
+      }
+    },
+    "Speed and torrent count": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скорость и число торрентов"
           }
         }
       }
@@ -282046,6 +282146,26 @@
         }
       }
     },
+    "The icon always appears when there is no text.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если текста нет, значок показывается всегда."
+          }
+        }
+      }
+    },
+    "The item shrinks to its icon while nothing transfers.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет передачи, остаётся только значок."
+          }
+        }
+      }
+    },
     "The link doesn't seem to point to a search engine plugin.": {
       "localizations": {
         "ar": {
@@ -294471,6 +294591,16 @@
         }
       }
     },
+    "Torrent count": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Число торрентов"
+          }
+        }
+      }
+    },
     "Torrent created:\n%@": {
       "localizations": {
         "ru": {
@@ -297925,6 +298055,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Torrent：(雙擊以下載)"
+          }
+        }
+      }
+    },
+    "Total": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего"
           }
         }
       }
@@ -303949,6 +304089,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "傳輸清單"
+          }
+        }
+      }
+    },
+    "Transfer speed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скорость передачи"
           }
         }
       }
@@ -312969,6 +313119,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "是否上傳演算法"
+          }
+        }
+      }
+    },
+    "Upload only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только отдача"
           }
         }
       }
