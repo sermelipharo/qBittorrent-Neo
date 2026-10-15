@@ -20,6 +20,8 @@ struct SettingRow: ViewModifier {
             content
                 .padding(.leading, indented ? SettingsLayout.indent : 0)
                 .id(id)
+                .onAppear { navigator.rowAppeared(id) }
+                .onDisappear { navigator.rowDisappeared(id) }
                 .background {
                     RoundedRectangle(cornerRadius: SettingsLayout.highlightRadius)
                         .fill(Color.accentColor.opacity(highlighted == id ? 0.22 : 0))

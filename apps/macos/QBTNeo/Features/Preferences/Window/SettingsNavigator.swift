@@ -26,15 +26,34 @@ final class SettingsNavigator {
     private(set) var target: SettingTarget?
     var query = ""
 
+    /// Rows currently on screen (maintained by `SettingRow`), to find the row a search result stands for.
+    @ObservationIgnored private var presentRows: Set<String> = []
+
     @ObservationIgnored private let defaults: UserDefaults
     @ObservationIgnored private let isPersistent: Bool
 
     /// - Parameter persistent: false for snapshots (nothing is written to the user's defaults).
-    init(defaults: UserDefaults = AppDefaults.store, persistent: Bool = true, pane: SettingsPane? = nil) {
+    init(defaults: UserDefaults = .standard, persistent: Bool = true, pane: SettingsPane? = nil) {
         self.defaults = defaults
         self.isPersistent = persistent
         self.pane = pane ?? defaults.string(forKey: Self.lastPaneKey).flatMap(SettingsPane.init(rawValue:)) ?? .general
         self.showsAdvanced = defaults.bool(forKey: Self.showAdvancedKey)
+    }
+
+    func rowAppeared(_ id: String) {
+        presentRows.insert(id)
+    }
+
+    func rowDisappeared(_ id: String) {
+        presentRows.remove(id)
+    }
+
+    /// The row to scroll to and highlight for `anchor`. A setting that exists only while its parent control is
+    /// on (a proxy's host and port while the type is "None") has no row; its section's first shown row stands in.
+    func visibleAnchor(for anchor: String) -> String {
+        guard !presentRows.contains(anchor), let spec = SettingsCatalog.spec(anchor) else { return anchor }
+        let parent = SettingsCatalog.all.first { $0.section == spec.section && $0.tier == .basic && presentRows.contains($0.id) }
+        return parent?.id ?? anchor
     }
 
     func shows(_ section: SettingsSection) -> Bool {

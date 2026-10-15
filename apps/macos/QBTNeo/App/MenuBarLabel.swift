@@ -40,14 +40,14 @@ struct MenuBarLabelContent: View {
     let showsIcon: Bool
 
     var body: some View {
-        HStack(spacing: 4) {
-            if showsIcon || text.isEmpty {
+        Group {
+            if text.isEmpty {
                 Image(systemName: symbol)
-            }
-            if !text.isEmpty {
-                Text(text).monospacedDigit()
+            } else {
+                // One image: the menu bar item shows a single image (and a title), not a row of views.
+                Image(nsImage: MenuBarTextImage.make(text, symbol: showsIcon ? symbol : nil))
             }
         }
-        .accessibilityLabel("qBittorrent Neo")
+        .accessibilityLabel(text.isEmpty ? "qBittorrent Neo" : "qBittorrent Neo, \(text)")
     }
 }

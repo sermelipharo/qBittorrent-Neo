@@ -8,6 +8,10 @@ import SwiftUI
 /// this thin wrapper around the toolbar's delegate supplies one extra
 /// `NSSearchToolbarItem` and forwards everything else to SwiftUI.
 /// Return opens the first result, Escape clears, ⌘F focuses (`focusRequest`).
+/// SwiftUI rebuilds the whole toolbar whenever the query swaps the pane for the
+/// results, which removes the field from the window and ends the editing. So
+/// the text reaches SwiftUI only once typing pauses, and the field takes its
+/// focus and caret back when the toolbar has been rebuilt.
 struct SettingsToolbarSearch: NSViewRepresentable {
     @Binding var text: String
     var focusRequest: Int
@@ -22,7 +26,7 @@ struct SettingsToolbarSearch: NSViewRepresentable {
     func updateNSView(_ view: InstallerView, context: Context) {
         let coordinator = context.coordinator
         coordinator.parent = self
-        if coordinator.item.searchField.stringValue != text { coordinator.item.searchField.stringValue = text }
+        if !coordinator.isPushPending, coordinator.item.searchField.stringValue != text { coordinator.item.searchField.stringValue = text }
         if coordinator.focusRequest != focusRequest {
             coordinator.focusRequest = focusRequest
             view.window?.makeFirstResponder(coordinator.item.searchField)
@@ -54,15 +58,25 @@ struct SettingsToolbarSearch: NSViewRepresentable {
         /// Read by the Objective-C forwarding overrides, which AppKit calls on the main thread.
         nonisolated(unsafe) private weak var original: (any NSToolbarDelegate)?
         private var isInstalling = false
+        /// Typing pause before the query is handed to SwiftUI.
+        static let typingPause = Duration.milliseconds(400)
+        private var pushTask: Task<Void, Never>?
+        var isPushPending: Bool { pushTask != nil }
+        /// Caret of the field editor that the toolbar rebuild removed, to be put back with the focus.
+        private var restoredSelection: NSRange?
 
         init(parent: SettingsToolbarSearch) {
             self.parent = parent
             self.focusRequest = parent.focusRequest
             super.init()
             item.preferredWidthForSearchField = SettingsLayout.searchFieldWidth
+            // No caption under the field: the pane buttons carry labels, the search field doesn't need one.
+            item.label = ""
             item.searchField.placeholderString = String(localized: "Search")
             item.searchField.delegate = self
-            item.searchField.sendsSearchStringImmediately = true
+            item.searchField.sendsSearchStringImmediately = false
+            item.searchField.target = self
+            item.searchField.action = #selector(searchFieldAction(_:))
             item.searchField.setAccessibilityLabel(String(localized: "Search settings"))
         }
 
@@ -115,6 +129,25 @@ struct SettingsToolbarSearch: NSViewRepresentable {
 
         func toolbarWillAddItem(_ notification: Notification) {
             original?.toolbarWillAddItem?(notification)
+            if (notification.userInfo?["item"] as? NSToolbarItem) === item, restoredSelection != nil { restoreEditing() }
+        }
+
+        /// Gives the field the keyboard focus (and caret) it had before the toolbar rebuilt itself.
+        private func restoreEditing() {
+            Task { [weak self] in
+                for _ in 0..<40 {
+                    try? await Task.sleep(for: .milliseconds(5))
+                    guard let self, let selection = restoredSelection else { return }
+                    guard let window = item.searchField.window else { continue }
+                    restoredSelection = nil
+                    guard window.makeFirstResponder(item.searchField), let editor = item.searchField.currentEditor() else { return }
+                    let length = (editor.string as NSString).length
+                    let location = min(selection.location, length)
+                    editor.selectedRange = NSRange(location: location, length: min(selection.length, length - location))
+                    return
+                }
+                self?.restoredSelection = nil
+            }
         }
 
         /// SwiftUI rebuilds the pane items when the scene updates and drops
@@ -122,6 +155,7 @@ struct SettingsToolbarSearch: NSViewRepresentable {
         func toolbarDidRemoveItem(_ notification: Notification) {
             original?.toolbarDidRemoveItem?(notification)
             let removed = notification.userInfo?["item"] as? NSToolbarItem
+            if removed === item, let editor = item.searchField.currentEditor() { restoredSelection = editor.selectedRange }
             guard removed === item, let toolbar = notification.object as? NSToolbar else { return }
             Task { [weak self, weak toolbar] in
                 guard let self, let toolbar, toolbar.delegate === self else { return }
@@ -143,6 +177,23 @@ struct SettingsToolbarSearch: NSViewRepresentable {
         // MARK: NSSearchFieldDelegate
 
         func controlTextDidChange(_ notification: Notification) {
+            pushTask?.cancel()
+            pushTask = Task { [weak self] in
+                try? await Task.sleep(for: Self.typingPause)
+                guard !Task.isCancelled else { return }
+                self?.pushText()
+            }
+        }
+
+        /// The clear button and the field's delayed action.
+        @objc private func searchFieldAction(_ sender: NSSearchField) {
+            pushText()
+        }
+
+        /// Hands the field's text to SwiftUI now.
+        private func pushText() {
+            pushTask?.cancel()
+            pushTask = nil
             let value = item.searchField.stringValue
             if parent.text != value { parent.text = value }
         }
@@ -150,9 +201,12 @@ struct SettingsToolbarSearch: NSViewRepresentable {
         func control(_ control: NSControl, textView: NSTextView, doCommandBy selector: Selector) -> Bool {
             switch selector {
             case #selector(NSResponder.insertNewline(_:)):
+                pushText()
                 parent.onSubmit()
                 return true
             case #selector(NSResponder.cancelOperation(_:)):
+                pushTask?.cancel()
+                pushTask = nil
                 parent.text = ""
                 return false
             default:

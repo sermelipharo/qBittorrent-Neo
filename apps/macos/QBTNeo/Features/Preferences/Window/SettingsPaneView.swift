@@ -87,9 +87,10 @@ struct SettingsPaneView<Header: View, Content: View>: View {
     private func reveal(_ target: SettingTarget?, with proxy: ScrollViewProxy) async {
         guard let target, target.pane == pane else { return }
         try? await Task.sleep(for: .milliseconds(200))
-        withAnimation { proxy.scrollTo(target.anchor, anchor: .center) }
+        let anchor = navigator.visibleAnchor(for: target.anchor)
+        withAnimation { proxy.scrollTo(anchor, anchor: .center) }
         try? await Task.sleep(for: .milliseconds(120))
-        withAnimation { highlighted = target.anchor }
+        withAnimation { highlighted = anchor }
         try? await Task.sleep(for: .seconds(1))
         withAnimation { highlighted = nil }
     }

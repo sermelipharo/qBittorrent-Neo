@@ -5,17 +5,22 @@ enum MenuBarTitle {
     /// Rates for `direction`, or nil when `hidesZero` removes every shown rate.
     static func speed(download: Int64, upload: Int64, direction: MenuBarSpeedDirection, hidesZero: Bool) -> String? {
         var parts: [String] = []
-        if direction != .upload, !(hidesZero && download <= 0) { parts.append("↓" + rate(download)) }
-        if direction != .download, !(hidesZero && upload <= 0) { parts.append("↑" + rate(upload)) }
+        if direction != .upload, !(hidesZero && download <= 0) { parts.append("↓" + pad(rate(download), to: 4)) }
+        if direction != .download, !(hidesZero && upload <= 0) { parts.append("↑" + pad(rate(upload), to: 4)) }
         return parts.isEmpty ? nil : parts.joined(separator: " ")
     }
 
     static func count(active: Int, total: Int, style: MenuBarCountStyle) -> String {
         switch style {
-        case .activeOfTotal: "\(active)/\(total)"
+        case .activeOfTotal: pad(String(active), to: String(total).count) + "/\(total)"
         case .active: "\(active)"
         case .total: "\(total)"
         }
+    }
+
+    /// Figure spaces (as wide as a digit) in front, so a changing number does not change the item's width.
+    private static func pad(_ text: String, to width: Int) -> String {
+        String(repeating: "\u{2007}", count: max(0, width - text.count)) + text
     }
 
     /// One rate without a space or a "/s": "0", "340K", "1.2M", "12M".
