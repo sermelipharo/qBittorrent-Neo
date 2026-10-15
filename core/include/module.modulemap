@@ -1,0 +1,5 @@
+module QBTNeoCore {
+    header "qbtneo.h"
+    link "qbtneocore"
+    export *
+}
