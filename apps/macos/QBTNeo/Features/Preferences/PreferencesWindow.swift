@@ -10,11 +10,13 @@ struct PreferencesWindow: View {
     var pinnedPage: PreferencesPage?
 
     var body: some View {
-        NavigationSplitView {
+        // The page list is the window's navigation, so it can't be hidden.
+        NavigationSplitView(columnVisibility: .constant(.all)) {
             List(PreferencesPage.allCases, selection: $page) { page in
                 PreferencesPageLabel(page: page)
             }
             .navigationSplitViewColumnWidth(min: 170, ideal: FeatureDesign.Width.sidebar, max: 260)
+            .toolbar(removing: .sidebarToggle)
         } detail: {
             PreferencesPageView(page: pinnedPage ?? page, model: model)
                 .navigationTitle((pinnedPage ?? page).title)
