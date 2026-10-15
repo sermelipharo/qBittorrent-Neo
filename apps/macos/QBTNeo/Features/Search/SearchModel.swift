@@ -23,7 +23,7 @@ final class SearchModel {
     @ObservationIgnored private var isRestoring = false
 
     init() {
-        history = UserDefaults.standard.stringArray(forKey: FeatureDefaults.searchHistory) ?? []
+        history = AppDefaults.store.stringArray(forKey: FeatureDefaults.searchHistory) ?? []
     }
 
     /// `profileRoot` locates the saved tabs; nil (snapshots) disables storing.
@@ -123,8 +123,8 @@ final class SearchModel {
 
     // MARK: Stored session
 
-    private var storesTabs: Bool { UserDefaults.standard.bool(forKey: FeatureDefaults.storeSearchTabs) }
-    private var storesResults: Bool { storesTabs && UserDefaults.standard.bool(forKey: FeatureDefaults.storeSearchResults) }
+    private var storesTabs: Bool { AppDefaults.store.bool(forKey: FeatureDefaults.storeSearchTabs) }
+    private var storesResults: Bool { storesTabs && AppDefaults.store.bool(forKey: FeatureDefaults.storeSearchResults) }
 
     private func adopt(_ tab: SearchTabModel) {
         tab.didStop = { [weak self] tab in self?.storeResults(of: tab) }
@@ -197,7 +197,7 @@ final class SearchModel {
         history.removeAll { $0 == text }
         history.append(text)
         if history.count > limit { history.removeFirst(history.count - limit) }
-        UserDefaults.standard.set(history, forKey: FeatureDefaults.searchHistory)
+        AppDefaults.store.set(history, forKey: FeatureDefaults.searchHistory)
     }
 
     // MARK: Result actions

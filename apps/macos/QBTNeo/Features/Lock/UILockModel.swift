@@ -22,7 +22,7 @@ final class UILockModel {
     @ObservationIgnored private var failedAttempts = 0
     @ObservationIgnored private var lockedOutUntil = Date.distantPast
 
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = AppDefaults.store) {
         self.defaults = defaults
         let hasPassword = !(defaults.string(forKey: GUIPreferenceKey.lockPasswordHash.rawValue) ?? "").isEmpty
         self.hasPassword = hasPassword

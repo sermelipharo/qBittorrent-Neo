@@ -129,7 +129,7 @@ struct TorrentCreatorWindow: View {
         panel.title = String(localized: "Select where to save the new torrent")
         panel.allowedContentTypes = [.torrent]
         panel.nameFieldStringValue = model.defaultTorrentName
-        if let last = UserDefaults.standard.string(forKey: FeatureDefaults.creatorLastSavePath) {
+        if let last = AppDefaults.store.string(forKey: FeatureDefaults.creatorLastSavePath) {
             panel.directoryURL = URL(filePath: last)
         }
         guard panel.runModal() == .OK, let url = panel.url else { return }

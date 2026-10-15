@@ -11,7 +11,7 @@ struct PaletteRecents {
     private let isPersistent: Bool
     private(set) var ids: [String]
 
-    init(defaults: UserDefaults = .standard, persistent: Bool = true) {
+    init(defaults: UserDefaults = AppDefaults.store, persistent: Bool = true) {
         self.defaults = defaults
         self.isPersistent = persistent
         ids = persistent ? Array((defaults.stringArray(forKey: Self.key) ?? []).prefix(Self.limit)) : []

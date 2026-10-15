@@ -27,6 +27,6 @@ struct SettingCheck {
 
     /// A `UserDefaults` integer (settings kept outside `GUIPreferences`).
     static func defaults(_ key: String, _ defaultValue: Int) -> Self {
-        Self { _, _ in (UserDefaults.standard.object(forKey: key) as? Int ?? defaultValue) == defaultValue }
+        Self { _, _ in (AppDefaults.store.object(forKey: key) as? Int ?? defaultValue) == defaultValue }
     }
 }

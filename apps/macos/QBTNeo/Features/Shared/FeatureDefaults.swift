@@ -41,7 +41,7 @@ enum FeatureDefaults {
 
     /// History length clamped to 0…99 (default 50).
     static var searchHistoryLimit: Int {
-        let stored = UserDefaults.standard.object(forKey: searchHistoryLength) as? Int ?? 50
+        let stored = AppDefaults.store.object(forKey: searchHistoryLength) as? Int ?? 50
         return min(max(stored, 0), 99)
     }
 }

@@ -5,8 +5,8 @@ struct SearchWindow: View {
     @Environment(AppModel.self) private var app
     @Environment(\.openWindow) private var openWindow
     @State private var model = SearchModel()
-    @AppStorage(FeatureDefaults.storeSearchTabs) private var storesTabs = false
-    @AppStorage(FeatureDefaults.storeSearchResults) private var storesResults = false
+    @AppStorage(FeatureDefaults.storeSearchTabs, store: AppDefaults.store) private var storesTabs = false
+    @AppStorage(FeatureDefaults.storeSearchResults, store: AppDefaults.store) private var storesResults = false
     /// Snapshots: run this search on open.
     var initialPattern: String?
 

@@ -3,7 +3,7 @@ import SwiftUI
 /// "Filter search results…", the result count, "Search in:", Seeds and Size ranges.
 struct SearchFilterBar: View {
     @Bindable var tab: SearchTabModel
-    @AppStorage(FeatureDefaults.searchUsesRegex) private var usesRegex = false
+    @AppStorage(FeatureDefaults.searchUsesRegex, store: AppDefaults.store) private var usesRegex = false
 
     var body: some View {
         ViewThatFits(in: .horizontal) {

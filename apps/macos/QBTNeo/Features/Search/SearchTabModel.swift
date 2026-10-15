@@ -147,7 +147,7 @@ final class SearchTabModel: Identifiable {
 
     private func applyFilters() {
         let matcher = SearchFilter(
-            text: filterText, regex: UserDefaults.standard.bool(forKey: FeatureDefaults.searchUsesRegex),
+            text: filterText, regex: AppDefaults.store.bool(forKey: FeatureDefaults.searchUsesRegex),
             pattern: pattern, namesOnly: namesOnly
         )
         let minBytes = minSizeUnit.bytes(minSize)

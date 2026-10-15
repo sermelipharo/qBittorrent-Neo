@@ -123,7 +123,7 @@ final class GUIPreferences {
         NSApp?.appearance = colorScheme.appearance
     }
 
-    init(defaults: UserDefaults = .standard) {
+    init(defaults: UserDefaults = AppDefaults.store) {
         self.defaults = defaults
         let read = Reader(defaults: defaults)
         colorScheme = ColorSchemePreference(rawValue: read.int(.colorScheme, 0)) ?? .system

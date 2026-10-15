@@ -30,10 +30,10 @@ final class TorrentCreatorModel {
 
     @ObservationIgnored private var client: (any CreatorClient)?
     @ObservationIgnored private var taskID: String?
-    @ObservationIgnored private let defaults = UserDefaults.standard
+    @ObservationIgnored private let defaults = AppDefaults.store
 
     init() {
-        let read = UserDefaults.standard
+        let read = AppDefaults.store
         sourcePath = read.string(forKey: FeatureDefaults.creatorLastAddPath) ?? NSHomeDirectory()
         let formatIndex = read.object(forKey: FeatureDefaults.creatorFormat) as? Int ?? 1
         format = Self.formats.indices.contains(formatIndex) ? Self.formats[formatIndex] : .hybrid

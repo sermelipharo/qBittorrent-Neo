@@ -44,7 +44,7 @@ struct WatchedFoldersGroup: View {
     }
 
     private var lastDirectory: URL? {
-        guard let path = UserDefaults.standard.string(forKey: FeatureDefaults.watchedFolderLastPath) else { return nil }
+        guard let path = AppDefaults.store.string(forKey: FeatureDefaults.watchedFolderLastPath) else { return nil }
         return URL(filePath: path).deletingLastPathComponent()
     }
 
@@ -55,7 +55,7 @@ struct WatchedFoldersGroup: View {
             addError = error
             return
         }
-        UserDefaults.standard.set(path, forKey: FeatureDefaults.watchedFolderLastPath)
+        AppDefaults.store.set(path, forKey: FeatureDefaults.watchedFolderLastPath)
         editing = WatchedFolderEdit(index: nil, folder: WatchedFolder(path: path, recursive: false, params: .defaults))
     }
 

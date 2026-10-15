@@ -295,7 +295,7 @@ final class TransferListModel {
     private static let sortKey = GUIPreferenceKey.transferListSortOrder.rawValue
 
     private static func loadSortOrder() -> [TransferSort] {
-        guard let data = UserDefaults.standard.data(forKey: sortKey),
+        guard let data = AppDefaults.store.data(forKey: sortKey),
               let order = try? JSONDecoder().decode([TransferSort].self, from: data),
               !order.isEmpty
         else { return [TransferSort(.name)] }
@@ -306,7 +306,7 @@ final class TransferListModel {
         // Keep the primary and the previous (secondary) sort column, like qBittorrent.
         let trimmed = Array(sortOrder.prefix(2))
         if let data = try? JSONEncoder().encode(trimmed) {
-            UserDefaults.standard.set(data, forKey: Self.sortKey)
+            AppDefaults.store.set(data, forKey: Self.sortKey)
         }
     }
 }

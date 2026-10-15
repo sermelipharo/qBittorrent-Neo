@@ -6,9 +6,9 @@ struct TransfersSearchRSSSegment: View {
     @Environment(AppModel.self) private var app
     @Environment(GUIPreferences.self) private var gui
     @Environment(\.openWindow) private var openWindow
-    @AppStorage(FeatureDefaults.storeSearchTabs) private var storeTabs = false
-    @AppStorage(FeatureDefaults.storeSearchResults) private var storeResults = false
-    @AppStorage(FeatureDefaults.searchHistoryLength) private var historyLength = 50
+    @AppStorage(FeatureDefaults.storeSearchTabs, store: AppDefaults.store) private var storeTabs = false
+    @AppStorage(FeatureDefaults.storeSearchResults, store: AppDefaults.store) private var storeResults = false
+    @AppStorage(FeatureDefaults.searchHistoryLength, store: AppDefaults.store) private var historyLength = 50
     @State private var status: SearchEngineStatus?
 
     var body: some View {
