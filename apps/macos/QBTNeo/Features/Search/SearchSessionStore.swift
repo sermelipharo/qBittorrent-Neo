@@ -2,7 +2,7 @@ import Foundation
 
 /// Persistence of the open search tabs (features.md §5.8.1, qBittorrent's
 /// `SearchUI/Session.json` and per-tab result files) under
-/// `<profile>/data/SearchUI`. An actor, so writes happen off the main thread
+/// `<profile>/qBittorrent/data/SearchUI`. An actor, so writes happen off the main thread
 /// and in order. Files are untrusted on load: tab IDs must be UUIDs (they
 /// become file names), and file sizes and element counts are bounded.
 actor SearchSessionStore {
@@ -79,10 +79,11 @@ actor SearchSessionStore {
 
     /// `profileRoot` is the profile folder (empty = the default one).
     init(profileRoot: String) {
+        // The core's profile layout: `<root>/qBittorrent/data` (a qBittorrent custom profile).
         let root = profileRoot.isEmpty
-            ? URL.applicationSupportDirectory.appending(path: "qBittorrent Neo", directoryHint: .isDirectory)
+            ? URL.applicationSupportDirectory.appending(path: "mk.lex.qbittorrentneo", directoryHint: .isDirectory)
             : URL(filePath: profileRoot, directoryHint: .isDirectory)
-        directory = root.appending(path: "data/SearchUI", directoryHint: .isDirectory)
+        directory = root.appending(path: "qBittorrent/data/SearchUI", directoryHint: .isDirectory)
     }
 
     private var sessionURL: URL { directory.appending(path: "Session.json", directoryHint: .notDirectory) }
