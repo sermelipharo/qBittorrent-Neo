@@ -37,7 +37,7 @@ struct MainWindow: View {
         .modifier(MainPresentations())
         .overlay { StartupOverlay() }
         .background {
-            WindowObserver(onVisibilityChange: { model.isMainWindowVisible = $0 }, onWindow: { model.mainWindow = $0 })
+            WindowObserver(onVisibilityChange: { model.isMainWindowVisible = $0 || model.launch.assumesVisibleWindow }, onWindow: { model.mainWindow = $0 })
         }
         .onAppear {
             model.openWindow = openWindow

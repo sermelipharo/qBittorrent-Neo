@@ -5,11 +5,14 @@ import Foundation
 /// * `--demo-large`: demo with 2,000 torrents (performance testing).
 /// * `--snapshot <dir>`: render key windows to PNG files with demo data, then exit.
 /// * `--profile <dir>`: use another profile folder for the real core.
+/// * `--assume-visible`: refresh as if the main window were always visible
+///   (idle CPU measurements of a window started in the background).
 struct LaunchOptions: Sendable {
     var demo = false
     var demoLarge = false
     var snapshotDirectory: URL?
     var profileDirectory = ""
+    var assumesVisibleWindow = false
 
     static let current = Self(arguments: CommandLine.arguments)
 
@@ -23,6 +26,7 @@ struct LaunchOptions: Sendable {
                 if let path = iterator.next() { snapshotDirectory = URL(filePath: path, directoryHint: .isDirectory) }
             case "--profile":
                 profileDirectory = iterator.next() ?? ""
+            case "--assume-visible": assumesVisibleWindow = true
             default: break
             }
         }
