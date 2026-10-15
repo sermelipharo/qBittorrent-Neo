@@ -1,0 +1,157 @@
+name: QBTNeo
+options:
+  bundleIdPrefix: mk.lex
+  deploymentTarget:
+    macOS: "27.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "27.0"
+    ARCHS: arm64
+    ONLY_ACTIVE_ARCH: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    SWIFT_STRICT_CONCURRENCY: complete
+    DEAD_CODE_STRIPPING: YES
+targets:
+  QBTNeo:
+    type: application
+    platform: macOS
+    sources:
+      - path: QBTNeo
+      - path: Generated
+    dependencies:
+      - sdk: SystemConfiguration.framework
+      - sdk: Security.framework
+      - sdk: CoreFoundation.framework
+    configFiles:
+      Debug: Signing.xcconfig
+      Release: Signing.xcconfig
+    entitlements:
+      path: QBTNeo/QBTNeo.entitlements
+      properties:
+        com.apple.security.automation.apple-events: true
+        # The Qt frameworks and the core library are embedded and signed with
+        # the app's identity; ad-hoc builds have no team ID to match.
+        com.apple.security.cs.disable-library-validation: true
+    info:
+      path: QBTNeo/Info.plist
+      properties:
+        LSMinimumSystemVersion: "27.0"
+        NSPrincipalClass: NSApplication
+        CFBundleLocalizations:
+          - en
+          - ar
+          - az-Latn
+          - be
+          - bg
+          - bs
+          - ca
+          - cs
+          - da
+          - de
+          - el
+          - en-AU
+          - en-GB
+          - es
+          - et
+          - eu
+          - fi
+          - fr
+          - gl
+          - he
+          - hi-IN
+          - hr
+          - hu
+          - id
+          - it
+          - ja
+          - ka
+          - ko
+          - lt
+          - lv-LV
+          - ms-MY
+          - nb
+          - ne-NP
+          - nl
+          - pl
+          - pt-BR
+          - pt-PT
+          - ro
+          - ru
+          - sk
+          - sl
+          - sr
+          - sr-Latn
+          - sv
+          - th
+          - tr
+          - uk
+          - vi
+          - zh-HK
+          - zh-Hans
+          - zh-Hant
+        NSAppleEventsUsageDescription: qBittorrent Neo asks System Events to shut down or restart the Mac when you choose that action for finished downloads.
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: BitTorrent Document
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Default
+            LSItemContentTypes:
+              - org.bittorrent.torrent
+        UTImportedTypeDeclarations:
+          - UTTypeIdentifier: org.bittorrent.torrent
+            UTTypeDescription: BitTorrent Document
+            UTTypeConformsTo:
+              - public.data
+            UTTypeTagSpecification:
+              public.filename-extension:
+                - torrent
+              public.mime-type:
+                - application/x-bittorrent
+        CFBundleURLTypes:
+          - CFBundleURLName: Magnet Link
+            CFBundleURLSchemes:
+              - magnet
+    preBuildScripts:
+      - name: Build qBittorrent core
+        script: |
+          "$SRCROOT/../../scripts/build-core.sh"
+        basedOnDependencyAnalysis: false
+    postCompileScripts:
+      - name: SwiftLint
+        script: |
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          if command -v swiftlint >/dev/null; then
+            cd "$SRCROOT" && swiftlint lint --quiet --config .swiftlint.yml
+          else
+            echo "warning: SwiftLint not installed"
+          fi
+        basedOnDependencyAnalysis: false
+    postBuildScripts:
+      - name: Embed core and Qt
+        script: |
+          /usr/bin/python3 "$SRCROOT/../../scripts/deploy-qt.py" \
+            "$TARGET_BUILD_DIR/$WRAPPER_NAME" "$SRCROOT/../../build/core/libqbtneocore.dylib" \
+            "${EXPANDED_CODE_SIGN_IDENTITY:--}"
+        basedOnDependencyAnalysis: false
+    settings:
+      base:
+        PRODUCT_NAME: qBittorrent Neo
+        PRODUCT_MODULE_NAME: QBTNeo
+        PRODUCT_BUNDLE_IDENTIFIER: mk.lex.qbittorrentneo
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: qBittorrent Neo
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.utilities
+        INFOPLIST_KEY_NSHumanReadableCopyright: "GPL-3.0-or-later; qBittorrent core GPL-2.0-or-later"
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        CODE_SIGN_STYLE: Manual
+        ENABLE_HARDENED_RUNTIME: YES
+        OTHER_LDFLAGS: ["-lresolv"]
+        SWIFT_INCLUDE_PATHS: $(SRCROOT)/../../core/include
+        LIBRARY_SEARCH_PATHS: $(SRCROOT)/../../build/core
+        LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"

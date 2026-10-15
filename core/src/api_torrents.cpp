@@ -243,7 +243,6 @@ namespace
             piecesNum = info->piecesCount();
             isPrivate = info->isPrivate();
         }
-        Q_UNUSED(isPrivate);
 
         QJsonArray trackers;
         for (const BitTorrent::TrackerEntry &tracker : asConst(descriptor.trackers()))
@@ -267,7 +266,8 @@ namespace
             {u"files"_s, files},
             {u"trackers"_s, trackers},
             {u"urlSeeds"_s, urlSeeds},
-            {u"isDuplicate"_s, isDuplicate}
+            {u"isDuplicate"_s, isDuplicate},
+            {u"private"_s, isPrivate}
         };
     }
 
@@ -1132,6 +1132,7 @@ void Neo::registerTorrentsApi(Registry &registry)
         {
             result.append(QJsonObject {
                 {u"hash"_s, t->id().toString()},
+                {u"private"_s, t->isPrivate()},
                 {u"disableDht"_s, t->isDHTDisabled()},
                 {u"disablePex"_s, t->isPEXDisabled()},
                 {u"disableLsd"_s, t->isLSDDisabled()}

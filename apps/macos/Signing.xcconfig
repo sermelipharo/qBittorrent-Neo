@@ -1,0 +1,8 @@
+// Code signing. Ad-hoc by default; a machine-local Local.xcconfig (not
+// tracked) can set a stable identity so macOS privacy grants (e.g. access to
+// ~/Downloads) survive rebuilds instead of being asked for after every build:
+//
+//   CODE_SIGN_IDENTITY = <SHA-1 of an "Apple Development" certificate>
+//   DEVELOPMENT_TEAM = <team ID>
+CODE_SIGN_IDENTITY = -
+#include? "Local.xcconfig"

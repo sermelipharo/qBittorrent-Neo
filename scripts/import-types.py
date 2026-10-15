@@ -26,6 +26,14 @@ SIMPLE_DEFAULTS = {
 }
 
 
+KEYWORDS = {"private", "public", "internal", "default", "protocol", "class", "struct", "enum", "func",
+            "var", "let", "in", "for", "if", "else", "return", "switch", "case", "where", "is", "as", "self"}
+
+
+def esc(name):
+    return f"`{name}`" if name in KEYWORDS else name
+
+
 def block_end(lines, start):
     depth = 0
     for i in range(start, len(lines)):
@@ -65,7 +73,7 @@ def main():
             text = text.replace("public \nenum QbtError", "public enum QbtError")
             chunks.append(text)
             if m and m.group(1) == "struct":
-                fields = re.findall(r"^    public var (\w+): (.+)$", "\n".join(body), re.M)
+                fields = [(n.strip("`"), t) for n, t in re.findall(r"^    public var (`?\w+`?): (.+)$", "\n".join(body), re.M)]
                 records.append((m.group(2), fields))
             elif m:
                 cases = re.findall(r"^    case (`?\w+`?)(\(.*\))?$", text, re.M)
@@ -114,23 +122,25 @@ def main():
     for name, fields in records:
         outp.append(f"extension {name}: Codable {{")
         outp.append("    enum CodingKeys: String, CodingKey {")
-        outp.append("        case " + ", ".join(f"`{f}`" for f, _ in fields))
+        outp.append("        case " + ", ".join(esc(f) for f, _ in fields))
         outp.append("    }\n")
         outp.append(f"    static var neoEmpty: {name} {{")
         outp.append(f"        (try? JSONDecoder().decode({name}.self, from: Data(\"{{}}\".utf8)))!")
         outp.append("    }\n")
-        outp.append("    init(from decoder: any Decoder) throws {")
+        outp.append("    public init(from decoder: any Decoder) throws {")
         outp.append("        let c = try decoder.container(keyedBy: CodingKeys.self)")
         args = []
-        for f, t in fields:
+        for i, (f, t) in enumerate(fields):
             t = t.strip()
             d = default_for(t)
+            v = f"v{i}"
             if d is None:
-                args.append(f"{f}: try c.decodeIfPresent({t[:-1]}.self, forKey: .`{f}`)")
+                outp.append(f"        let {v}: {t} = try c.decodeIfPresent({t[:-1]}.self, forKey: .{esc(f)})")
             elif d == "REQUIRED":
-                args.append(f"{f}: try c.decode({t}.self, forKey: .`{f}`)")
+                outp.append(f"        let {v}: {t} = try c.decode({t}.self, forKey: .{esc(f)})")
             else:
-                args.append(f"{f}: try c.decodeIfPresent({t}.self, forKey: .`{f}`) ?? {d}")
+                outp.append(f"        let {v}: {t} = try c.decodeIfPresent({t}.self, forKey: .{esc(f)}) ?? {d}")
+            args.append(f"{f}: {v}")
         outp.append("        self.init(\n            " + ",\n            ".join(args) + "\n        )")
         outp.append("    }")
         outp.append("}\n")
@@ -139,7 +149,7 @@ def main():
     for name, cases in enums:
         if all(not params for _, params in cases):
             outp.append(f"extension {name}: Codable {{")
-            outp.append("    init(from decoder: any Decoder) throws {")
+            outp.append("    public init(from decoder: any Decoder) throws {")
             outp.append("        let value = try decoder.singleValueContainer().decode(String.self)")
             outp.append("        switch value {")
             for c, _ in cases:
@@ -147,7 +157,7 @@ def main():
             outp.append(f"        default: throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: \"Unknown {name} \\(value)\"))")
             outp.append("        }")
             outp.append("    }\n")
-            outp.append("    func encode(to encoder: any Encoder) throws {")
+            outp.append("    public func encode(to encoder: any Encoder) throws {")
             outp.append("        var c = encoder.singleValueContainer()")
             outp.append("        switch self {")
             for c, _ in cases:

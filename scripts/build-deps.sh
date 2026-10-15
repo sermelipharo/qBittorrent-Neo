@@ -31,7 +31,7 @@ cmake -S "$SRC" -B "$OBJ" \
     -DCMAKE_INSTALL_PREFIX="$PREFIX" \
     -DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3 \
     -DCMAKE_PREFIX_PATH="/opt/homebrew/opt/boost;/opt/homebrew/opt/openssl@3"
-cmake --build "$OBJ" -j"$(sysctl -n hw.ncpu)"
+nice -n 10 cmake --build "$OBJ" -j"${QBTNEO_JOBS:-4}"
 cmake --install "$OBJ"
 # Intermediate objects are not needed once installed.
 rm -rf "$OBJ"

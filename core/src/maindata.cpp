@@ -132,6 +132,7 @@ namespace Neo
             {u"infohashV2"_s, infoHash.v2().toString()},
             {u"name"_s, torrent.name()},
             {u"hasMetadata"_s, torrent.hasMetadata()},
+            {u"private"_s, torrent.hasMetadata() && torrent.isPrivate()},
             {u"createdBy"_s, torrent.creator()},
             {u"creationDate"_s, toSecs(torrent.creationDate())},
             {u"totalSize"_s, torrent.totalSize()},
