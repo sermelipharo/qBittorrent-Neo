@@ -34,6 +34,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             }
             return
         }
+        model.gui.applyAppearance()
         #if DEBUG
         verifyTimer = DebugVerification.install(model: model)
         #endif

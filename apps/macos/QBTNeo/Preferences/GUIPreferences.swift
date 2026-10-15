@@ -11,7 +11,12 @@ final class GUIPreferences {
 
     // MARK: Interface / transfer list
 
-    var colorScheme: ColorSchemePreference { didSet { set(colorScheme.rawValue, .colorScheme) } }
+    var colorScheme: ColorSchemePreference {
+        didSet {
+            set(colorScheme.rawValue, .colorScheme)
+            applyAppearance()
+        }
+    }
     var alternatingRowColors: Bool { didSet { set(alternatingRowColors, .alternatingRowColors) } }
     var useTorrentStatesColors: Bool { didSet { set(useTorrentStatesColors, .useTorrentStatesColors) } }
     var progressBarFollowsTextColor: Bool { didSet { set(progressBarFollowsTextColor, .progressBarFollowsTextColor) } }
@@ -106,6 +111,12 @@ final class GUIPreferences {
         didSet { set(addTorrentFilterPatternFormat.rawValue, .addTorrentFilterPatternFormat) }
     }
     var trackersListURL: String { didSet { set(trackersListURL, .trackersListURL) } }
+
+    /// Applies the theme to the whole app (every window, sheet, menu and alert),
+    /// not just one scene as `preferredColorScheme` would.
+    func applyAppearance() {
+        NSApp?.appearance = colorScheme.appearance
+    }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults

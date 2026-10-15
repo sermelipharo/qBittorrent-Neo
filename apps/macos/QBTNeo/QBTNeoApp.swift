@@ -10,7 +10,6 @@ struct QBTNeoApp: SwiftUI.App {
             MainWindow()
                 .environment(model)
                 .environment(model.gui)
-                .preferredColorScheme(model.gui.colorScheme.colorScheme)
         }
         .defaultSize(Design.Window.mainDefaultSize)
         .defaultLaunchBehavior(model.launch.isSnapshot ? .suppressed : .presented)
