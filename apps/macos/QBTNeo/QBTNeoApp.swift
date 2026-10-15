@@ -13,6 +13,10 @@ struct QBTNeoApp: SwiftUI.App {
         }
         .defaultSize(Design.Window.mainDefaultSize)
         .defaultLaunchBehavior(model.launch.isSnapshot ? .suppressed : .presented)
+        // AppDelegate ignores saved window state, so saving it is pure cost:
+        // a restorable window makes AppKit snapshot its pixels after launch
+        // into a window-sized malloc buffer (16 MB at 2x) that stays dirty.
+        .restorationBehavior(.disabled)
         .windowToolbarStyle(.unified)
         .commands {
             AppCommands(model: model)
@@ -38,6 +42,7 @@ struct QBTNeoApp: SwiftUI.App {
         }
         // The window takes each pane's size (HIG: settings windows aren't resizable).
         .windowResizability(.contentSize)
+        .restorationBehavior(.disabled)
 
         MenuBarExtra(isInserted: Bindable(model.gui).showMenuBarIcon) {
             MenuBarContent()
