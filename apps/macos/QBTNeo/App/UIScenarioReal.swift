@@ -275,7 +275,7 @@ extension UIScenarios {
         // 6. Pause and resume with the toolbar.
         try await selectOnlyTorrent(d)
         let ids = d.model.list.selectedIDs
-        try await clickToolbar(d, label: "Stop", tooltipPrefix: "Stop the selected") { d.model.stop(ids) }
+        try await clickToolbar(d, label: "Stop", tooltipPrefix: "Stop (") { d.model.stop(ids) }
         let stopped = await waitForState(d, timeout: 15) { $0.state.isStopped }
         d.check(stopped, "toolbar Stop paused the torrent (state \(stateName(d)))")
         await d.pause(3)
@@ -283,7 +283,7 @@ extension UIScenarios {
         d.check((current(d)?.dlSpeed ?? 1) == 0, "download speed is zero while paused")
         await d.shot("bbb-paused")
         let progressPaused = current(d)?.progress ?? 0
-        try await clickToolbar(d, label: "Start", tooltipPrefix: "Start the selected") { d.model.start(ids) }
+        try await clickToolbar(d, label: "Start", tooltipPrefix: "Start (") { d.model.start(ids) }
         let resumed = await waitForState(d, timeout: 30) { !$0.state.isStopped }
         d.check(resumed, "toolbar Start resumed the torrent (state \(stateName(d)))")
         let moving = await waitForState(d, timeout: 90) { $0.progress > progressPaused + 0.002 || $0.dlSpeed > 0 }
@@ -352,7 +352,7 @@ extension UIScenarios {
             d.model.sheet = nil
             await d.pause(2)
         }
-        try await clickToolbar(d, label: "Remove", tooltipPrefix: "Remove the selected") { d.model.requestRemove(ids) }
+        try await clickToolbar(d, label: "Remove", tooltipPrefix: "Remove (") { d.model.requestRemove(ids) }
         let toggle = try await d.require(role: "AXCheckBox", labelContains: "content files", timeout: 10)
         d.log("toggle value \(toggle.value)")
         await d.pause(1)
@@ -468,7 +468,7 @@ extension UIScenarios {
         d.log("before removal: savePath=\(savePath) contentPath=\(contentPath) entries=\(before)")
         try await selectOnlyTorrent(d)
         let ids = d.model.list.selectedIDs
-        try await clickToolbar(d, label: "Remove", tooltipPrefix: "Remove the selected") { d.model.requestRemove(ids) }
+        try await clickToolbar(d, label: "Remove", tooltipPrefix: "Remove (") { d.model.requestRemove(ids) }
         let toggle = try await d.require(role: "AXCheckBox", labelContains: "content files", timeout: 10)
         d.log("remove dialog toggle: \(toggle.description)")
         if toggle.value != "1" { await d.click(toggle) }

@@ -24,7 +24,7 @@ struct MainWindow: View {
                 } detail: {
                     TransferDetailView()
                 }
-                .toolbar { MainToolbar(model: model, openSettings: openSettings) }
+                .toolbar { MainToolbar(model: model) }
                 .searchable(text: $list.searchText, placement: .toolbar, prompt: Text("Filter torrents…"))
                 .searchScopes($list.searchScope) {
                     ForEach(TransferSearchScope.allCases, id: \.self) { scope in
