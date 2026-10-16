@@ -28,8 +28,7 @@ Widgets graphical interface is replaced by a native SwiftUI macOS interface.
   of core/ are Copyright (C) 2026 Lex Fradski, GPL-2.0-or-later.
 
 * apps/macos/ is the SwiftUI application, Copyright (C) 2026 Lex Fradski,
-  GPL-3.0-or-later. It was taken from the author's sibling project
-  qBit NeoRS (a Rust reimplementation) and adapted to this core.
+  GPL-3.0-or-later.
 
 The combined work (the macOS application with the embedded core) is
 distributed under the GNU General Public License version 3 or later; see
