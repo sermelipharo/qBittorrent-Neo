@@ -29,6 +29,9 @@ enum Design {
         /// Properties pane share of the detail column when the user has not resized it.
         static let propertiesDefaultFraction = 0.37
         static let propertiesTabBarHeight = 30.0
+        /// Height of the strip above the properties tab bar that resizes the panel. It has its own layout
+        /// space, so its hit area never overlaps the tab buttons or the transfer list.
+        static let propertiesResizeHandleHeight = 6.0
         static let statusBarHeight = 26.0
         static let pieceBarHeight = 16.0
         static let tableProgressBarHeight = 14.0

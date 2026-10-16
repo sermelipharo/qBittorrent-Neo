@@ -127,7 +127,7 @@ final class UIDriver {
         return "\(value)"
     }
 
-    private func frame(of object: NSObject) -> NSRect {
+    func frame(of object: NSObject) -> NSRect {
         guard object.responds(to: NSSelectorFromString("accessibilityFrame")), let value = object.value(forKey: "accessibilityFrame") as? NSValue
         else { return .zero }
         return value.rectValue
@@ -386,8 +386,8 @@ final class UIDriver {
         return eventNumber
     }
 
-    private func mouse(_ type: NSEvent.EventType, at point: NSPoint, in window: NSWindow, modifiers: NSEvent.ModifierFlags = [],
-                       clicks: Int = 1) -> NSEvent? {
+    func mouse(_ type: NSEvent.EventType, at point: NSPoint, in window: NSWindow, modifiers: NSEvent.ModifierFlags = [],
+               clicks: Int = 1) -> NSEvent? {
         NSEvent.mouseEvent(
             with: type, location: point, modifierFlags: modifiers, timestamp: ProcessInfo.processInfo.systemUptime,
             windowNumber: window.windowNumber, context: nil, eventNumber: nextNumber(), clickCount: clicks,
@@ -396,7 +396,7 @@ final class UIDriver {
     }
 
     /// Window-space point for the centre of `frame` (screen coordinates), nudged by `offset`.
-    private func point(in window: NSWindow, frame: NSRect, offset: NSPoint = .zero) -> NSPoint {
+    func point(in window: NSWindow, frame: NSRect, offset: NSPoint = .zero) -> NSPoint {
         window.convertPoint(fromScreen: NSPoint(x: frame.midX + offset.x, y: frame.midY + offset.y))
     }
 

@@ -1,13 +1,10 @@
 import SwiftUI
 
 /// The properties tab strip. Clicking the selected tab collapses the panel,
-/// clicking any tab while collapsed expands it; dragging resizes the panel.
+/// clicking any tab while collapsed expands it. Resizing happens on
+/// `PropertiesResizeHandle` above it, never on the tab buttons.
 struct PropertiesTabBar: View {
     @Environment(GUIPreferences.self) private var gui
-    @Binding var dragHeight: Double?
-    let baseHeight: Double
-    /// Detail column height, bounding how tall the panel can be dragged.
-    let maxHeight: Double
 
     var body: some View {
         HStack(spacing: Design.Spacing.tight) {
@@ -42,10 +39,7 @@ struct PropertiesTabBar: View {
         .padding(.horizontal, Design.Spacing.medium)
         .frame(height: Design.Size.propertiesTabBarHeight)
         .background(.bar)
-        .overlay(alignment: .top) { Divider() }
         .overlay(alignment: .bottom) { Divider().opacity(gui.propertiesVisible ? 1 : 0) }
-        .gesture(resizeGesture)
-        .pointerStyle(gui.propertiesVisible ? .rowResize : .default)
     }
 
     private func select(_ tab: PropertiesTab) {
@@ -57,19 +51,5 @@ struct PropertiesTabBar: View {
                 gui.propertiesVisible = true
             }
         }
-    }
-
-    private var resizeGesture: some Gesture {
-        DragGesture(minimumDistance: 2, coordinateSpace: .global)
-            .onChanged { value in
-                guard gui.propertiesVisible else { return }
-                let ceiling = maxHeight - Design.Size.transferListMinHeight - Design.Size.propertiesTabBarHeight
-                    - (gui.statusBarDisplayed ? Design.Size.statusBarHeight : 0)
-                dragHeight = min(max(baseHeight - value.translation.height, Design.Size.propertiesMinHeight), max(ceiling, Design.Size.propertiesMinHeight))
-            }
-            .onEnded { _ in
-                if let dragHeight { gui.propertiesHeight = dragHeight }
-                dragHeight = nil
-            }
     }
 }
