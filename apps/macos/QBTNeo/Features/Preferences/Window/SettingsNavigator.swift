@@ -33,7 +33,7 @@ final class SettingsNavigator {
     @ObservationIgnored private let isPersistent: Bool
 
     /// - Parameter persistent: false for snapshots (nothing is written to the user's defaults).
-    init(defaults: UserDefaults = .standard, persistent: Bool = true, pane: SettingsPane? = nil) {
+    init(defaults: UserDefaults = AppDefaults.store, persistent: Bool = true, pane: SettingsPane? = nil) {
         self.defaults = defaults
         self.isPersistent = persistent
         self.pane = pane ?? defaults.string(forKey: Self.lastPaneKey).flatMap(SettingsPane.init(rawValue:)) ?? .general
