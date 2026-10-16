@@ -7,7 +7,8 @@ import SwiftUI
 /// the same instance, so changes apply live everywhere.
 @Observable @MainActor
 final class GUIPreferences {
-    @ObservationIgnored private let defaults: UserDefaults
+    /// The store these settings live in (the profile's GUI settings).
+    @ObservationIgnored let defaults: UserDefaults
 
     // MARK: Interface / transfer list
 
@@ -18,8 +19,8 @@ final class GUIPreferences {
         }
     }
     var alternatingRowColors: Bool { didSet { set(alternatingRowColors, .alternatingRowColors) } }
-    var useTorrentStatesColors: Bool { didSet { set(useTorrentStatesColors, .useTorrentStatesColors) } }
-    var progressBarFollowsTextColor: Bool { didSet { set(progressBarFollowsTextColor, .progressBarFollowsTextColor) } }
+    /// "Color by state:" — which parts of a row take the torrent state's color.
+    var stateColorScope: StateColorScope { didSet { set(stateColorScope.rawValue, .stateColorScope) } }
     var hideZeroValues: Bool { didSet { set(hideZeroValues, .hideZeroValues) } }
     var hideZeroMode: HideZeroMode { didSet { set(hideZeroMode.rawValue, .hideZeroComboValues) } }
     var doubleClickDownloading: DoubleClickAction { didSet { set(doubleClickDownloading.rawValue, .doubleClickDownloading) } }
@@ -128,8 +129,7 @@ final class GUIPreferences {
         let read = Reader(defaults: defaults)
         colorScheme = ColorSchemePreference(rawValue: read.int(.colorScheme, 0)) ?? .system
         alternatingRowColors = read.bool(.alternatingRowColors, true)
-        useTorrentStatesColors = read.bool(.useTorrentStatesColors, true)
-        progressBarFollowsTextColor = read.bool(.progressBarFollowsTextColor, false)
+        stateColorScope = Self.loadStateColorScope(defaults)
         hideZeroValues = read.bool(.hideZeroValues, false)
         hideZeroMode = HideZeroMode(rawValue: read.int(.hideZeroComboValues, 0)) ?? .always
         doubleClickDownloading = DoubleClickAction(rawValue: read.int(.doubleClickDownloading, 0)) ?? .toggleStop
@@ -244,6 +244,19 @@ final class GUIPreferences {
         set(completionAction == .suspend, .autoSuspendOnCompletion)
         set(completionAction == .reboot, .autoRebootOnCompletion)
         set(completionAction == .shutdown, .autoShutdownOnCompletion)
+    }
+
+    /// Reads "Color by state:", migrating qBittorrent's two former settings on first use.
+    private static func loadStateColorScope(_ defaults: UserDefaults) -> StateColorScope {
+        let key = GUIPreferenceKey.stateColorScope.rawValue
+        if let raw = defaults.object(forKey: key) as? Int, let scope = StateColorScope(rawValue: raw) { return scope }
+        let legacy = [GUIPreferenceKey.legacyUseTorrentStatesColors, .legacyProgressBarFollowsTextColor].map(\.rawValue)
+        let scope = StateColorScope.migrated(
+            useStateColors: defaults.object(forKey: legacy[0]) as? Bool, progressBarFollows: defaults.object(forKey: legacy[1]) as? Bool
+        ) ?? .wholeRow
+        defaults.set(scope.rawValue, forKey: key)
+        legacy.forEach(defaults.removeObject(forKey:))
+        return scope
     }
 
     private static func loadCompletionAction(_ read: Reader) -> CompletionAction {

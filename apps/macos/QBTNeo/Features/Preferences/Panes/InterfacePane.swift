@@ -21,11 +21,11 @@ struct InterfacePane: View {
                 Toggle(SettingsCatalog.title("Preferences/General/AlternatingRowColors"), isOn: $gui.alternatingRowColors)
                     .setting("Preferences/General/AlternatingRowColors")
             } content: {
-                Toggle(SettingsCatalog.title("GUI/TransferList/UseTorrentStatesColors"), isOn: $gui.useTorrentStatesColors)
-                    .setting("GUI/TransferList/UseTorrentStatesColors")
-                Toggle(SettingsCatalog.title("GUI/TransferList/ProgressBarFollowsTextColor"), isOn: $gui.progressBarFollowsTextColor)
-                    .disabled(!gui.useTorrentStatesColors)
-                    .setting("GUI/TransferList/ProgressBarFollowsTextColor", indented: true)
+                Picker(SettingsCatalog.title("GUI/TransferList/StateColorScope"), selection: $gui.stateColorScope) {
+                    ForEach(StateColorScope.allCases) { Text($0.title).tag($0) }
+                }
+                .fixedSize()
+                .setting("GUI/TransferList/StateColorScope")
                 HStack(spacing: Design.Spacing.regular) {
                     Toggle(SettingsCatalog.title("Preferences/General/HideZeroValues"), isOn: $gui.hideZeroValues)
                     Picker(SettingsCatalog.title("Preferences/General/HideZeroValues"), selection: $gui.hideZeroMode) {

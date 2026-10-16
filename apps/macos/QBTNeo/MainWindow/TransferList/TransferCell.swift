@@ -15,7 +15,7 @@ struct TransferCell: View {
         case .name:
             Label {
                 Text(item.name)
-                    .foregroundStyle(textStyle)
+                    .foregroundStyle(textStyle(.name))
             } icon: {
                 Image(systemName: item.state.systemImage)
                     .foregroundStyle(prominence == .increased ? AnyShapeStyle(.primary) : AnyShapeStyle(item.state.color))
@@ -26,14 +26,14 @@ struct TransferCell: View {
         case .progress:
             ProgressBarView(
                 progress: item.progress,
-                tint: gui.useTorrentStatesColors && gui.progressBarFollowsTextColor ? item.state.color : .accentColor,
+                tint: gui.stateColorScope.colorsProgressBar ? item.state.color : .accentColor,
                 isDimmed: item.state.dimsProgressBar
             )
         default:
             let hideZero = gui.hidesZeroValues(isStoppedDownloading: item.state == .stoppedDownloading)
             let text = TransferCellText.text(column, item, hideZero: hideZero)
             Text(text)
-                .foregroundStyle(textStyle)
+                .foregroundStyle(textStyle(column))
                 .monospacedDigit()
                 .lineLimit(1)
                 .truncationMode(column == .savePath || column == .incompletePath ? .middle : .tail)
@@ -41,8 +41,8 @@ struct TransferCell: View {
         }
     }
 
-    private var textStyle: AnyShapeStyle {
-        guard gui.useTorrentStatesColors, prominence != .increased else { return AnyShapeStyle(.primary) }
+    private func textStyle(_ column: TransferColumn) -> AnyShapeStyle {
+        guard gui.stateColorScope.colorsText(of: column), prominence != .increased else { return AnyShapeStyle(.primary) }
         return AnyShapeStyle(item.state.color)
     }
 }

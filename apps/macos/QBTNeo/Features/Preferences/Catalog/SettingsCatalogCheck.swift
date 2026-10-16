@@ -57,7 +57,7 @@ enum SettingsCatalogCheck {
     /// GUI-only keys with a Settings control (settings-ia.md §8.2).
     static var guiKeys: [String] {
         let gui: [GUIPreferenceKey] = [
-            .colorScheme, .alternatingRowColors, .useTorrentStatesColors, .progressBarFollowsTextColor, .hideZeroValues,
+            .colorScheme, .alternatingRowColors, .stateColorScope, .hideZeroValues,
             .hideZeroComboValues, .doubleClickDownloading, .doubleClickCompleted, .hideZeroStatusFilters, .separateTrackerStatusFilter,
             .torrentContentDragEnabled, .startupWindowState, .confirmOnExit, .dontConfirmAutoExit, .showSpeedInDock, .showMenuBarIcon,
             .menuBarContentMode, .menuBarShowsIcon, .menuBarSpeedDirection, .menuBarHidesZeroSpeed, .menuBarCountStyle,

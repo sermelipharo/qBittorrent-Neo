@@ -449,8 +449,9 @@ look for appearance.
      ↳ *System follows your Mac's appearance.*
 2. **Torrent List**
    * Use alternating row colors `[B]`
-   * *Color torrents by state* `[B]`
-     * Make progress bars follow text colors `[R]`
+   * *Color by state:* None / Whole row / Name only / Progress bar only / Status only `[B]`
+     (one exclusive choice replacing qBittorrent's two dependent checkboxes; the old values
+     migrate once: colored text → Whole row, otherwise None)
    * Hide zero and infinity values `[B]`
      * scope: Always / Stopped torrents only `[R]`
 3. **Action on double-click**
@@ -1096,8 +1097,7 @@ Keys qBittorrent keeps outside the WebAPI that have a Settings control, plus the
 |---|---|---|---|---|---|
 | `Appearance/ColorScheme` | Color scheme: | Behavior › Interface | Interface › Appearance | B | kept |
 | `Preferences/General/AlternatingRowColors` | Use alternating row colors | Behavior › Transfer List | Interface › Torrent List | B | kept |
-| `GUI/TransferList/UseTorrentStatesColors` | Use different text colors by torrent states | Behavior › Transfer List | Interface › Torrent List | B | new: "Color torrents by state" |
-| `GUI/TransferList/ProgressBarFollowsTextColor` | Make progress bars follow text colors | Behavior › Transfer List | Interface › Torrent List | R | kept |
+| `GUI/TransferList/StateColorScope` | Use different text colors by torrent states + Make progress bars follow text colors | Behavior › Transfer List | Interface › Torrent List | B | new: "Color by state:" picker; migrated from `UseTorrentStatesColors` / `ProgressBarFollowsTextColor` |
 | `Preferences/General/HideZeroValues` | Hide zero and infinity values | Behavior › Transfer List | Interface › Torrent List | B | kept |
 | `Preferences/General/HideZeroComboValues` | (scope combo) | Behavior › Transfer List | Interface › Torrent List | R | kept |
 | `Preferences/Downloads/DblClOnTorDl` | Downloading torrents: | Behavior › Action on double-click | Interface › Action on double-click | B | kept |
@@ -1245,7 +1245,7 @@ translation, and their qBittorrent strings stay as a fallback until then.
 | `RemoveTrackerFromAllTorrents` | Confirm removal of tracker from all torrents | Ask before removing a tracker from all torrents | Спрашивать перед удалением трекера из всех торрентов |
 | `delete_torrent_content_files` | (none) | Delete files by default when removing torrents | По умолчанию удалять файлы вместе с торрентом |
 | `updateCheck` | Check for program updates | Check for updates automatically | Автоматически проверять обновления |
-| `UseTorrentStatesColors` | Use different text colors by torrent states | Color torrents by state | Окрашивать торренты по состоянию |
+| `StateColorScope` | Use different text colors by torrent states | Color by state: | Цвет по состоянию: |
 | `HideZeroStatusFilters` | Auto hide zero status filters | Hide empty status filters | Скрывать пустые фильтры состояния |
 | `DownloadTrackerFavicon` | Download tracker's favicon | Show tracker icons | Показывать значки трекеров |
 | `SpeedWidget/Enabled` | Enable speed graphs | Show speed graphs | Показывать графики скорости |

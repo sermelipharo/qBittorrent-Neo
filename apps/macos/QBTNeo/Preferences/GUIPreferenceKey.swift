@@ -7,8 +7,10 @@ enum GUIPreferenceKey: String, CaseIterable {
     // Behavior page — interface and transfer list
     case colorScheme = "Appearance/ColorScheme"
     case alternatingRowColors = "Preferences/General/AlternatingRowColors"
-    case useTorrentStatesColors = "GUI/TransferList/UseTorrentStatesColors"
-    case progressBarFollowsTextColor = "GUI/TransferList/ProgressBarFollowsTextColor"
+    case stateColorScope = "GUI/TransferList/StateColorScope"
+    /// Replaced by `stateColorScope`; read once to migrate, then removed.
+    case legacyUseTorrentStatesColors = "GUI/TransferList/UseTorrentStatesColors"
+    case legacyProgressBarFollowsTextColor = "GUI/TransferList/ProgressBarFollowsTextColor"
     case hideZeroValues = "Preferences/General/HideZeroValues"
     case hideZeroComboValues = "Preferences/General/HideZeroComboValues"
     case doubleClickDownloading = "Preferences/Downloads/DblClOnTorDl"

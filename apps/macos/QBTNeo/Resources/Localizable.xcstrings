@@ -48844,6 +48844,16 @@
         }
       }
     },
+    "Blue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Синий"
+          }
+        }
+      }
+    },
     "Bottom of Queue": {
       "localizations": {
         "ar": {
@@ -49478,6 +49488,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "以最上層顯示 torrent 對話方塊"
+          }
+        }
+      }
+    },
+    "Brown": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Коричневый"
           }
         }
       }
@@ -58166,6 +58186,16 @@
         }
       }
     },
+    "Choose an icon": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрать значок"
+          }
+        }
+      }
+    },
     "Choose export directory": {
       "localizations": {
         "ar": {
@@ -62772,6 +62802,16 @@
         }
       }
     },
+    "Color by state:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цвет по состоянию:"
+          }
+        }
+      }
+    },
     "Color scheme:": {
       "localizations": {
         "az-Latn": {
@@ -63010,12 +63050,12 @@
         }
       }
     },
-    "Color torrents by state": {
+    "Color:": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Окрашивать торренты по состоянию"
+            "value": "Цвет:"
           }
         }
       }
@@ -76606,6 +76646,26 @@
         }
       }
     },
+    "Custom Color": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свой цвет"
+          }
+        }
+      }
+    },
+    "Custom color %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свой цвет %@"
+          }
+        }
+      }
+    },
     "Customize application instance name": {
       "localizations": {
         "ar": {
@@ -76840,6 +76900,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "自訂應用程式實體名稱"
+          }
+        }
+      }
+    },
+    "Cyan": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голубой"
           }
         }
       }
@@ -79640,6 +79710,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "預設 torrent 管理模式："
+          }
+        }
+      }
+    },
+    "Default color": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цвет по умолчанию"
           }
         }
       }
@@ -82944,6 +83024,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Панель сведений"
+          }
+        }
+      }
+    },
+    "Details divider": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разделитель подробностей"
           }
         }
       }
@@ -100530,12 +100620,32 @@
         }
       }
     },
+    "Edit Tag": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правка метки"
+          }
+        }
+      }
+    },
     "Edit Tags…": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Изменить теги…"
+          }
+        }
+      }
+    },
+    "Edit Tag…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Править метку..."
           }
         }
       }
@@ -131470,6 +131580,26 @@
         }
       }
     },
+    "Gray": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серый"
+          }
+        }
+      }
+    },
+    "Green": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зелёный"
+          }
+        }
+      }
+    },
     "HTTP Sources": {
       "localizations": {
         "ar": {
@@ -138362,12 +138492,32 @@
         }
       }
     },
+    "Icon": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значок"
+          }
+        }
+      }
+    },
     "Icon only": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Только значок"
+          }
+        }
+      }
+    },
+    "Icon:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значок:"
           }
         }
       }
@@ -141460,6 +141610,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Повысить уровень выбранных трекеров"
+          }
+        }
+      }
+    },
+    "Indigo": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Индиго"
           }
         }
       }
@@ -157033,172 +157193,6 @@
         }
       }
     },
-    "Make progress bars follow text colors": {
-      "localizations": {
-        "az-Latn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "İrəliləmə zolağı mətn rəngini izləsin"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Neka trake napretka prate boje teksta"
-          }
-        },
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fs que les barres de progrés segueixin els colors del text."
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stav průběhu by měl odpovídat barvě textu"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fortschrittsbalken an Textfarben anpassen"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Make progress bars follow text colours"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hacer que las barras de progreso sigan los colores del texto"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Faire en sorte que les barres de progression suivent la couleur du texte"
-          }
-        },
-        "gl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Facer que as barras de progreso sigan as cores do texto"
-          }
-        },
-        "hr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Neka trake napretka prate boje teksta"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Folyamatjelző sávok kövessék a szöveg színeket"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fai in modo che le barre di avanzamento seguano i colori del testo"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "진행률 표시줄이 텍스트 색상을 따르도록 설정"
-          }
-        },
-        "ne-NP": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "प्रगति पट्टीहरूलाई पाठ रङहरू पछ्याउने बनाउनुहोस्"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voortgangsbalken de tekstkleuren laten volgen"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Spraw, aby paski postępu podążały za kolorami tekstu"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fazer barra de progresso seguir cores do texto"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fazer as barras de progresso seguir as cores do texto"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Использовать цвета текста для индикаторов прогресса"
-          }
-        },
-        "sk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zladiť farbu ukazovateľov priebehu s farbou textu"
-          }
-        },
-        "sl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vrstice napredka naj bodo enake barve kot besedilo"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Få framstegsindikatorer att följa textfärger"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "İlerleme çubuklarının metin renklerini takip etmesini sağla"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Застосувати кольори тексту до індикаторів прогресу"
-          }
-        },
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Làm cho thanh tiến trình theo màu chữ"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "让进度栏颜色和文本色一样"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "讓進度條與文字色彩一樣"
-          }
-        }
-      }
-    },
     "Manage Cookies": {
       "localizations": {
         "ar": {
@@ -166144,6 +166138,16 @@
         }
       }
     },
+    "Mint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мятный"
+          }
+        }
+      }
+    },
     "Missing Files": {
       "localizations": {
         "ar": {
@@ -172532,6 +172536,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "名稱"
+          }
+        }
+      }
+    },
+    "Name only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только имя"
           }
         }
       }
@@ -179022,6 +179036,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет результатов, подходящих под фильтры"
+          }
+        }
+      }
+    },
+    "No symbols match “%@”.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет символов по запросу «%@»."
           }
         }
       }
@@ -189492,6 +189516,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Параметры… (⌥O)"
+          }
+        }
+      }
+    },
+    "Orange": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оранжевый"
           }
         }
       }
@@ -200751,6 +200785,16 @@
         }
       }
     },
+    "Pink": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Розовый"
+          }
+        }
+      }
+    },
     "Plain text": {
       "localizations": {
         "az-Latn": {
@@ -210947,6 +210991,16 @@
         }
       }
     },
+    "Progress bar only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только индикатор прогресса"
+          }
+        }
+      }
+    },
     "Progress:": {
       "localizations": {
         "ar": {
@@ -211873,6 +211927,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "發佈於"
+          }
+        }
+      }
+    },
+    "Purple": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фиолетовый"
           }
         }
       }
@@ -221790,6 +221854,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "遞迴模式"
+          }
+        }
+      }
+    },
+    "Red": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Красный"
           }
         }
       }
@@ -246367,6 +246441,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Поиск в настройках"
+          }
+        }
+      }
+    },
+    "Search symbols": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиск символов"
           }
         }
       }
@@ -271301,6 +271385,16 @@
         }
       }
     },
+    "Status only": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только состояние"
+          }
+        }
+      }
+    },
     "Stop": {
       "localizations": {
         "ar": {
@@ -279111,6 +279205,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "標籤："
+          }
+        }
+      }
+    },
+    "Teal": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бирюзовый"
           }
         }
       }
@@ -316453,6 +316557,16 @@
         }
       }
     },
+    "Use Default": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как по умолчанию"
+          }
+        }
+      }
+    },
     "Use HTTPS instead of HTTP": {
       "localizations": {
         "ar": {
@@ -319235,184 +319349,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "使用其他路徑取得不完整的 torrents："
-          }
-        }
-      }
-    },
-    "Use different text colors by torrent states": {
-      "localizations": {
-        "az-Latn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Torrent vəziyyəti üçün müxtəlif mətn rənglərindən istifadə edin"
-          }
-        },
-        "be": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Колер тэксту згодна са станам торэнта"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Koristite boje teksta po stanju torrenta"
-          }
-        },
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usa colors de text diferents segons els estats del torrent."
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Použít rozdílné barvy podle stavu torrentů"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verwende verschiedene Textfarben je Torrent-Status"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use different text colours for torrent states"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use diferentes colores de texto según el estado del torrent"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utiliser des couleurs de texte différentes selon l'état du torrent"
-          }
-        },
-        "gl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usar diferentes cores de texto segundo os estados do torrent"
-          }
-        },
-        "hr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Koristite različite boje teksta prema državama torrenta"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Használjon különböző szövegszíneket a torrentállapotok alapján"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usa colori testo diversi in base allo stato del torrent"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "토렌트 상태별로 다른 텍스트 색상 사용"
-          }
-        },
-        "ne-NP": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "टोरेन्ट अवस्था अनुसार फरक पाठ रङहरू प्रयोग गर्नुहोस्"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verschillende tekstkleuren gebruiken op basis van torrent-statussen"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Użyj różnych kolorów tekstu w zależności od stanu torrenta"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Usar diferentes cores de texto para estados do torrent"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Utilizar cores de texto diferentes consoante o estado do torrent"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Использовать разные цвета текста на основе состояний торрента"
-          }
-        },
-        "sk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Použiť rozdielne farby textu podľa stavu torrentov"
-          }
-        },
-        "sl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Uporabi različne barve besedila glede na stanja torrentov"
-          }
-        },
-        "sr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Користи другачије боје текста у зависноти од статуса торента"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Använd olika textfärger efter torrentstatus"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Torrent durumlarına göre farklı metin renkleri kullan"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Використовувати різні кольори тексту за станами торрентів"
-          }
-        },
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sử dụng màu chữ khác nhau theo trạng thái torrent"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "根据种子状态使用不同的文本色"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "根據 torrent 狀態使用不同的文字色彩"
           }
         }
       }
@@ -331679,6 +331615,16 @@
         }
       }
     },
+    "Which parts of a row take the color of the torrent's state.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие части строки окрашиваются в цвет состояния торрента."
+          }
+        }
+      }
+    },
     "Whitelist for filtering HTTP Host header values.\nIn order to defend against DNS rebinding attack,\nyou should put in domain names used by WebUI server.\n\nUse ';' to split multiple entries. Can use wildcard '*'.": {
       "localizations": {
         "ar": {
@@ -331949,6 +331895,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "HTTP 主機檔頭值的過濾白名單。\n為了防禦 DNS 重新綁紮攻擊，\n您應該把 Web UI 伺服器使用的網域名稱放到白名單內。\n\n使用「;」來分隔多個項目。可以使用萬用字元「*」。"
+          }
+        }
+      }
+    },
+    "Whole row": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вся строка"
           }
         }
       }
@@ -333537,6 +333493,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "連續寫入"
+          }
+        }
+      }
+    },
+    "Yellow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жёлтый"
           }
         }
       }

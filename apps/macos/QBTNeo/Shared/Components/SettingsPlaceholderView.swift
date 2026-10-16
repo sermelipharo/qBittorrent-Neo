@@ -10,9 +10,9 @@ struct SettingsPlaceholderView: View {
         Form {
             Section("Transfer List") {
                 Toggle("Use alternating row colors", isOn: $gui.alternatingRowColors)
-                Toggle("Use different text colors by torrent states", isOn: $gui.useTorrentStatesColors)
-                Toggle("Make progress bars follow text colors", isOn: $gui.progressBarFollowsTextColor)
-                    .disabled(!gui.useTorrentStatesColors)
+                Picker("Color by state:", selection: $gui.stateColorScope) {
+                    ForEach(StateColorScope.allCases) { Text($0.title).tag($0) }
+                }
                 Toggle("Hide zero and infinity values", isOn: $gui.hideZeroValues)
                 Picker("Hide in", selection: $gui.hideZeroMode) {
                     ForEach(HideZeroMode.allCases) { Text($0.title).tag($0) }

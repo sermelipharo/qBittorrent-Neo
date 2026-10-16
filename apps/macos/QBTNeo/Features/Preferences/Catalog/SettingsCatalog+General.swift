@@ -85,10 +85,9 @@ extension SettingsCatalog {
 
             SettingSpec("Preferences/General/AlternatingRowColors", .torrentList, String(localized: "Use alternating row colors"),
                         keywords: ["stripes", "zebra"]),
-            SettingSpec("GUI/TransferList/UseTorrentStatesColors", .torrentList, String(localized: "Color torrents by state"),
-                        keywords: ["text colors"]),
-            SettingSpec("GUI/TransferList/ProgressBarFollowsTextColor", .torrentList, String(localized: "Make progress bars follow text colors"),
-                        .revealed),
+            SettingSpec("GUI/TransferList/StateColorScope", .torrentList, String(localized: "Color by state:"),
+                        help: String(localized: "Which parts of a row take the color of the torrent's state."),
+                        keywords: ["text colors", "progress bar color", "status color", "row color", "highlight"]),
             SettingSpec("Preferences/General/HideZeroValues", .torrentList, String(localized: "Hide zero and infinity values"),
                         keys: ["Preferences/General/HideZeroValues", "Preferences/General/HideZeroComboValues"]),
 
