@@ -14,6 +14,8 @@ struct SettingsWindowSnapshots {
         var segment = TransfersSegment.adding
         var showsAdvanced = false
         var query = ""
+        /// Changes the core's preferences while the state is shown (turns on the rows that depend on a switch).
+        var tweak: (@Sendable (inout Preferences) -> Void)?
     }
 
     private var states: [State] {
@@ -24,10 +26,34 @@ struct SettingsWindowSnapshots {
             State(name: "settings-privacy-advanced", pane: .privacy, showsAdvanced: true),
             State(name: "settings-network-advanced", pane: .network, showsAdvanced: true),
             State(name: "settings-general-advanced", pane: .general, showsAdvanced: true),
+            State(name: "settings-interface-advanced", pane: .interface, showsAdvanced: true),
+            State(name: "settings-speed-advanced", pane: .speed, showsAdvanced: true),
+            State(name: "settings-remote-advanced", pane: .remote, showsAdvanced: true),
+            State(name: "settings-transfers-adv-adding", pane: .transfers, showsAdvanced: true),
+            State(name: "settings-transfers-adv-files", pane: .transfers, segment: .files, showsAdvanced: true),
+            State(name: "settings-transfers-adv-seeding", pane: .transfers, segment: .seedingQueue, showsAdvanced: true),
+            State(name: "settings-transfers-adv-searchrss", pane: .transfers, segment: .searchRSS, showsAdvanced: true),
             State(name: "settings-advanced-on", pane: .advanced, showsAdvanced: true),
+            State(name: "settings-remote-on", pane: .remote, tweak: Self.webUIOn),
+            State(name: "settings-remote-on-advanced", pane: .remote, showsAdvanced: true, tweak: Self.webUIOn),
+            State(name: "settings-general-mail", pane: .general, tweak: {
+                $0.downloads.mailNotificationEnabled = true
+                $0.downloads.mailNotificationAuthEnabled = true
+            }),
+            State(name: "settings-privacy-proxy", pane: .privacy, showsAdvanced: true, tweak: {
+                $0.connection.proxyType = .socks5
+                $0.connection.proxyAuthEnabled = true
+                $0.connection.i2pEnabled = true
+            }),
             State(name: "settings-search-query", pane: .general,
                   query: ProcessInfo.processInfo.environment["QBT_SETTINGS_QUERY"] ?? "vpn"),
         ]
+    }
+
+    private static let webUIOn: @Sendable (inout Preferences) -> Void = {
+        $0.webui.webUiEnabled = true
+        $0.webui.useHttps = true
+        $0.webui.alternativeWebuiEnabled = true
     }
 
     func run(model: AppModel) async {
@@ -47,6 +73,18 @@ struct SettingsWindowSnapshots {
             navigator.segment = state.segment
             navigator.showsAdvanced = state.showsAdvanced
             navigator.query = state.query
+            let original = model.client?.preferences()
+            if let tweak = state.tweak, let client = model.client, var prefs = original {
+                tweak(&prefs)
+                try? client.setPreferences(prefs: prefs)
+                model.corePreferences = client.preferences()
+            }
+            defer {
+                if let original, state.tweak != nil, let client = model.client {
+                    try? client.setPreferences(prefs: original)
+                    model.corePreferences = client.preferences()
+                }
+            }
             for (suffix, appearance) in [("light", NSAppearance.Name.aqua), ("dark", .darkAqua)] {
                 // The scene's content follows the app's appearance (this snapshot process only).
                 NSApp.appearance = NSAppearance(named: appearance)

@@ -280,7 +280,11 @@ Our recommendation is in §7.
   `Form { … }.formStyle(.columns)` gives the label alignment natively. Where
   a row needs a custom label or a control next to it, a small `SettingsGrid`
   helper (§7) supplies the shared label column.
-* Fixed content width is 640 pt. The height is the pane's ideal height, so
+* The window is at least 720 pt wide. Each pane's column (header, form,
+  footer) is as wide as its content wants, up to the window minus two 20 pt
+  margins, and is centered, so the margins left and right of it are equal
+  (`SettingsColumn`). Checkbox titles wrap instead of being cut off. The
+  height is the pane's ideal height, so
   the window resizes on every pane switch, as in Safari and Transmission.
   Panes are designed so the **basic tier fits without scrolling** on a
   13-inch display (≤ 640 pt tall).
@@ -1437,10 +1441,11 @@ the two inverted settings, and the merge in §11.4 if Russian overflows.
   into a chevron menu even at 900 pt, so Search & RSS became the fourth
   Transfers segment (§11.4): **Adding · Files · Seeding & Queue · Search &
   RSS**. Its sections keep their tiers and catalog entries.
-* **Window width follows the toolbar.** The form column is 640 pt, but the
-  window is as wide as the localized pane labels plus the search field need
-  (`SettingsLayout.windowWidth`, measured once at launch: about 690 pt in
-  English, 910 pt in Russian), so the toolbar never hides the active pane.
+* **Window width follows the toolbar.** The window is at least 720 pt wide
+  (room for the longest English row), and as wide as the localized pane labels
+  plus the search field need
+  (`SettingsLayout.windowWidth`, measured once at launch: 720 pt in
+  English, about 910 pt in Russian), so the toolbar never hides the active pane.
 * **Search field.** On a `Settings` scene's `TabView`, `.searchable(placement:
   .toolbar)` blanks the pane while the field is idle and expanded, and any
   `.toolbar` item turns the pane buttons into a plain item group. The field is
