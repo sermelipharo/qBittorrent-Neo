@@ -22,6 +22,8 @@ struct SettingsSearchResults: View {
                         }
                     }
                     .padding(SettingsLayout.margin / 2)
+                    .frame(maxWidth: SettingsLayout.searchResultsWidth)
+                    .frame(maxWidth: .infinity)
                     .onGeometryChange(for: Double.self) { $0.size.height } action: { contentHeight = $0 }
                 }
                 .frame(height: min(max(contentHeight, SettingsLayout.minPaneHeight), SettingsLayout.maxPaneHeight))

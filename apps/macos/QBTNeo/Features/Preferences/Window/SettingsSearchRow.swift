@@ -14,7 +14,7 @@ struct SettingsSearchRow: View {
                     .frame(width: Design.Spacing.xLarge)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(result.title)
-                        .lineLimit(1)
+                        .lineLimit(2)
                     Text(result.path)
                         .font(.callout)
                         .foregroundStyle(.secondary)

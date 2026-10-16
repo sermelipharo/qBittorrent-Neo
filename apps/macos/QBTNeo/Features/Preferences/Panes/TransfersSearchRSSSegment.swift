@@ -63,11 +63,9 @@ struct TransfersSearchRSSSegment: View {
                         .setting("rss_max_articles_per_feed")
                 }
                 .disabled(!model.draft.rss.rssProcessingEnabled)
-                HStack(spacing: Design.Spacing.regular) {
-                    Toggle(SettingsCatalog.title("rss_auto_downloading_enabled"), isOn: $model.draft.rss.rssAutoDownloadingEnabled)
-                    Button("Edit auto downloading rules…") { openWindow(id: FeatureWindowID.rssDownloader.rawValue) }
-                }
-                .setting("rss_auto_downloading_enabled")
+                Toggle(SettingsCatalog.title("rss_auto_downloading_enabled"), isOn: $model.draft.rss.rssAutoDownloadingEnabled)
+                    .setting("rss_auto_downloading_enabled")
+                Button("Edit auto downloading rules…") { openWindow(id: FeatureWindowID.rssDownloader.rawValue) }
             }
 
             SettingsGroup(.smartEpisodeFilter) {

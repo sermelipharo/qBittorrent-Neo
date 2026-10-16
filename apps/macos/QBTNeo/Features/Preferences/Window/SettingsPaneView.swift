@@ -65,13 +65,16 @@ struct SettingsPaneView<Header: View, Content: View>: View {
 
     private var columns: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                header
-                Form {
-                    content
+            SettingsColumn(minWidth: SettingsLayout.minColumnWidth, maxWidth: SettingsLayout.columnWidth) {
+                VStack(spacing: 0) {
+                    header
+                    Form {
+                        content
+                    }
+                    .formStyle(.columns)
+                    .toggleStyle(WrappingCheckboxStyle())
+                    HiddenChangesFooter(pane: pane, model: model)
                 }
-                .formStyle(.columns)
-                HiddenChangesFooter(pane: pane, model: model)
             }
             .padding(.horizontal, SettingsLayout.margin)
             .padding(.top, SettingsLayout.margin - SettingsLayout.sectionSpacing)

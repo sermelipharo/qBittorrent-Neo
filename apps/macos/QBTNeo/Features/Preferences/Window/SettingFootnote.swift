@@ -15,6 +15,8 @@ struct SettingFootnote: View {
             .font(.callout)
             .foregroundStyle(style == .warning ? AnyShapeStyle(Color.red) : AnyShapeStyle(.secondary))
             .fixedSize(horizontal: false, vertical: true)
-            .frame(maxWidth: SettingsLayout.footnoteWidth, alignment: .leading)
+            // No ideal width: the explanation wraps within the controls column
+            // and never widens it, so the column is as wide as its controls.
+            .frame(idealWidth: 0, maxWidth: .infinity, alignment: .leading)
     }
 }

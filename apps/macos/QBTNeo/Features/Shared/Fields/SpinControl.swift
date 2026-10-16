@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// The field + stepper + unit part of `SpinField`, usable without a label
@@ -17,7 +18,7 @@ struct SpinControl: View {
                 .labelsHidden()
                 .multilineTextAlignment(.trailing)
                 .monospacedDigit()
-                .frame(width: width)
+                .frame(width: fieldWidth)
             Stepper(title, value: $value, in: range, step: Int64.Stride(step))
                 .labelsHidden()
             if let unit {
@@ -31,4 +32,16 @@ struct SpinControl: View {
         .accessibilityLabel(Text(title))
         .accessibilityValue(value == special?.value ? special?.text ?? "" : "\(value) \(unit ?? "")")
     }
+
+    /// The requested width, or wider when the special text ("-1 (unlimited)",
+    /// in any language) would otherwise be cut off.
+    private var fieldWidth: Double {
+        guard let text = special?.text else { return width }
+        let font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        let needed = (text as NSString).size(withAttributes: [.font: font]).width + Self.fieldPadding
+        return max(width, needed.rounded(.up))
+    }
+
+    /// Text field insets (both sides) and a little air.
+    private static let fieldPadding = 18.0
 }
