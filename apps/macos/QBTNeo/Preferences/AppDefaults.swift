@@ -4,11 +4,12 @@ import Foundation
 /// they live in that profile (`<dir>/qBittorrent/config/gui-preferences.plist`),
 /// like qBittorrent's custom profiles, which hold the GUI settings too; so a
 /// second instance on another profile never changes the regular settings.
+/// This holds for demo runs too (`--demo --profile <dir>`).
 enum AppDefaults {
     /// `UserDefaults` is thread-safe (documented), just not marked `Sendable`.
     nonisolated(unsafe) static let store: UserDefaults = {
         let launch = LaunchOptions.current
-        guard !launch.profileDirectory.isEmpty, !launch.usesDemoData else { return .standard }
+        guard !launch.profileDirectory.isEmpty else { return .standard }
         let config = URL(filePath: launch.profileDirectory, directoryHint: .isDirectory)
             .appending(path: "qBittorrent/config", directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: config, withIntermediateDirectories: true)
