@@ -38,12 +38,18 @@ struct TransferCell: View {
         default:
             let hideZero = gui.hidesZeroValues(isStoppedDownloading: item.state == .stoppedDownloading)
             let text = TransferCellText.text(column, item, hideZero: hideZero)
-            Text(text)
+            let label = Text(text)
                 .foregroundStyle(textStyle(column))
                 .monospacedDigit()
                 .lineLimit(1)
                 .truncationMode(column == .savePath || column == .incompletePath ? .middle : .tail)
-                .help(TransferCellText.hasTooltip(column) ? text : "")
+            // Each modifier costs memory in every cell's hosting view: only the columns whose text is
+            // long enough to be cut get a tooltip.
+            if TransferCellText.hasTooltip(column) {
+                label.help(text)
+            } else {
+                label
+            }
         }
     }
 
