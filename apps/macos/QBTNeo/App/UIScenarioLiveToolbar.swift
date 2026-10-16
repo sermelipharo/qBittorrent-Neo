@@ -56,6 +56,8 @@ extension UIScenarios {
         await d.shot("toolbar-remove-confirm")
         await d.pressEscape(window: sheetWindow(d))
         _ = await d.wait(timeout: 3) { sheetWindow(d) == nil }
+        // Removal would land on the next refresh, so give it time to show.
+        await d.pause(3)
         let afterCancel = d.model.transfers.items.count
         d.check(d.model.sheet == nil && afterCancel == count, "cancelled Remove kept every torrent (\(count) before, \(afterCancel) after)")
         await d.pause(1)
