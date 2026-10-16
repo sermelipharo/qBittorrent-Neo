@@ -9,6 +9,7 @@ enum UIScenarios {
         do {
             switch name {
             case "idle": try await waitRunning(driver)  // stays open (idle measurements)
+            case "live-toolbar": try await liveToolbar(driver)
             case "probe": try await probe(driver)
             case "options-set": try await optionsSet(driver)
             case "options-verify": try await optionsVerify(driver)
