@@ -171,7 +171,11 @@ keys and enum case names instead of WebAPI strings/integers:
   path to the user's Downloads folder on first run.
 * GUI-only settings: `UserDefaults` of the app, or with `--profile` the
   file `<dir>/qBittorrent/config/gui-preferences.plist`; saved search tabs:
-  `<root>/qBittorrent/data/SearchUI` (as qBittorrent).
+  `<root>/qBittorrent/data/SearchUI` (as qBittorrent). The icons and colors
+  of categories and tags are GUI settings too (`LabelAppearanceStore`, keyed
+  by name), so `categories.json` and the WebAPI stay unchanged; the SF Symbol
+  names searched by the icon picker are bundled in
+  `Resources/SFSymbolNames.txt` (`scripts/make-symbol-list.py`).
 * The IP geolocation database (~8 MB in memory) is loaded on first use (a
   peer list) instead of at start-up, or at start-up when the WebUI is
   enabled (its peer lists use it too).

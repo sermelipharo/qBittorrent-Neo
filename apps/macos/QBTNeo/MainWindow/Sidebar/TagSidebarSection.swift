@@ -17,7 +17,9 @@ struct TagSidebarSection: View {
                 .tag(SidebarItem.tag(.untagged))
                 .contextMenu { TagContextMenu(tag: nil) }
             ForEach(model.tags.sortedTags, id: \.self) { tag in
-                SidebarRow(title: tag, systemImage: Symbol.tagFill, count: counts.tags[tag] ?? 0, tint: .orange)
+                let appearance = model.labels.tag(tag)
+                SidebarRow(title: tag, systemImage: appearance.resolvedSymbol(.tag), count: counts.tags[tag] ?? 0,
+                           tint: appearance.resolvedColor(.tag))
                     .tag(SidebarItem.tag(.tag(tag)))
                     .contextMenu { TagContextMenu(tag: tag) }
                     .dropDestination(for: String.self) { items, _ in

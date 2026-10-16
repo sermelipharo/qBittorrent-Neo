@@ -17,6 +17,8 @@ final class AppModel {
     let transfers = TransferStore()
     let categories = CategoryStore()
     let tags = TagStore()
+    /// Icons and colors of categories and tags (GUI-only).
+    let labels: LabelAppearanceStore
     let trackers = TrackerStore()
     let status = SessionStatus()
     let log = LogStore()
@@ -63,6 +65,7 @@ final class AppModel {
     init(launch: LaunchOptions = .current, gui: GUIPreferences = GUIPreferences()) {
         self.launch = launch
         self.gui = gui
+        labels = LabelAppearanceStore(defaults: gui.defaults)
         list = TransferListModel(store: transfers, trackers: trackers, gui: gui)
         properties = PropertiesModel(patternFormat: gui.contentFilterPatternFormat)
         palette = CommandPaletteModel(persistent: !launch.isSnapshot)
@@ -172,6 +175,9 @@ final class AppModel {
         let changes = transfers.apply(torrents: update.torrents, removed: update.torrentsRemoved, fullUpdate: update.fullUpdate)
         categories.apply(changed: update.categories, removed: update.categoriesRemoved, fullUpdate: update.fullUpdate)
         tags.apply(added: update.tags, removed: update.tagsRemoved, fullUpdate: update.fullUpdate)
+        // Removed elsewhere too (WebUI): their icons and colors go with them.
+        if !update.categoriesRemoved.isEmpty { labels.removeCategories(update.categoriesRemoved) }
+        if !update.tagsRemoved.isEmpty { labels.removeTags(update.tagsRemoved) }
         let trackersChanged = update.fullUpdate || !update.trackers.isEmpty || !update.trackersRemoved.isEmpty
         if trackersChanged {
             trackers.apply(changed: update.trackers, removed: update.trackersRemoved, fullUpdate: update.fullUpdate)

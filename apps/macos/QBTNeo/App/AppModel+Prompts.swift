@@ -56,13 +56,6 @@ extension AppModel {
             perform { try $0.editWebSeed(hash: id, origUrl: url, newUrl: value) }
             return nil
 
-        case .addTag:
-            guard !value.isEmpty else { return nil }
-            guard TagStore.isValid(value) else { return String(localized: "Tag name '\(value)' is invalid") }
-            guard !tags.contains(value) else { return String(localized: "Tag name already exists.") }
-            perform { try $0.createTags(tags: [value]) }
-            return nil
-
         case .addTags(let ids):
             let parsed = TagStore.parseCommaSeparated(value)
             if let invalid = parsed.invalid { return String(localized: "Tag name: '\(invalid)' is invalid") }
@@ -72,10 +65,26 @@ extension AppModel {
         }
     }
 
+    /// Creates a tag or changes its icon and color. Returns an error message, or nil on success.
+    func saveTag(_ request: TagEditorRequest, name: String, appearance: LabelAppearance) -> String? {
+        switch request.mode {
+        case .new:
+            let value = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !value.isEmpty else { return nil }
+            guard TagStore.isValid(value) else { return String(localized: "Tag name '\(value)' is invalid") }
+            guard !tags.contains(value) else { return String(localized: "Tag name already exists.") }
+            perform { try $0.createTags(tags: [value]) }
+            labels.setTag(value, appearance)
+        case .edit(let tag):
+            labels.setTag(tag, appearance)
+        }
+        return nil
+    }
+
     /// Creates or edits a category. Returns an error message, or nil on success.
     func saveCategory(
         _ request: CategoryEditorRequest, name: String, savePath: String, downloadPath: CategoryDownloadPath,
-        shareLimits: ShareLimits = ShareLimits()
+        shareLimits: ShareLimits = ShareLimits(), appearance: LabelAppearance = LabelAppearance()
     ) -> String? {
         let category = Category(name: name, savePath: savePath, downloadPath: downloadPath, shareLimits: shareLimits)
         switch request.mode {
@@ -94,6 +103,7 @@ extension AppModel {
             do {
                 try client.createCategory(category: category)
                 if !request.assignTo.isEmpty { try client.setCategory(hashes: request.assignTo, category: name) }
+                labels.setCategory(name, appearance)
                 refreshSoon()
                 return nil
             } catch {
@@ -101,6 +111,7 @@ extension AppModel {
             }
         case .edit:
             perform { try $0.editCategory(category: category) }
+            labels.setCategory(name, appearance)
             return nil
         }
     }

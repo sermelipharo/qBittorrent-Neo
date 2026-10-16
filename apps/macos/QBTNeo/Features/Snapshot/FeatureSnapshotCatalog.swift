@@ -59,6 +59,6 @@ enum FeatureSnapshotCatalog {
             Entry(name: "palette-torrent", title: AppWindowID.main.title, size: paletteSize) { model in
                 AnyView(PaletteSnapshot(model: model, query: "sintel", drillIn: true))
             },
-        ]
+        ] + LabelSnapshots.entries
     }
 }

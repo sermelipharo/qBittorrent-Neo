@@ -13,7 +13,7 @@ struct TransferTable: View {
         Table(of: TorrentItem.self, selection: $list.selection, sortOrder: $list.sortOrder, columnCustomization: $columns) {
             TableColumnForEach(TransferColumn.allCases, id: \.self) { column in
                 TableColumn(column.title, sortUsing: TransferSort(column)) { item in
-                    TransferCell(item: item, column: column, gui: gui)
+                    TransferCell(item: item, column: column, gui: gui, labels: model.labels)
                 }
                 .width(min: column == .queuePosition ? 24 : 40, ideal: column.idealWidth)
                 .alignment(column.isNumeric ? .trailing : .leading)

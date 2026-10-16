@@ -364,6 +364,7 @@ extension AppModel {
 
     func removeCategory(_ name: String) {
         perform { try $0.removeCategories(names: [name]) }
+        labels.removeCategories([name])
         if case .category(let selected) = list.categoryFilter, selected == name || selected.hasPrefix(name + "/") {
             list.categoryFilter = .all
         }
@@ -373,16 +374,20 @@ extension AppModel {
         let unused = categories.sortedNames.filter { (list.counts.categories[$0] ?? 0) == 0 }
         guard !unused.isEmpty else { return }
         perform { try $0.removeCategories(names: unused) }
+        labels.removeCategories(unused)
     }
 
     func requestAddTag() {
-        sheet = .textPrompt(TextPromptRequest(
-            title: String(localized: "Add tag"), label: String(localized: "Tag:"), text: "", purpose: .addTag
-        ))
+        sheet = .tagEditor(TagEditorRequest(mode: .new))
+    }
+
+    func requestEditTag(_ tag: String) {
+        sheet = .tagEditor(TagEditorRequest(mode: .edit(tag)))
     }
 
     func removeTag(_ tag: String) {
         perform { try $0.deleteTags(tags: [tag]) }
+        labels.removeTags([tag])
         if list.tagFilter == .tag(tag) { list.tagFilter = .all }
     }
 
@@ -390,6 +395,7 @@ extension AppModel {
         let unused = tags.sortedTags.filter { (list.counts.tags[$0] ?? 0) == 0 }
         guard !unused.isEmpty else { return }
         perform { try $0.deleteTags(tags: unused) }
+        labels.removeTags(unused)
     }
 
     func requestRemoveTracker(host: String) {

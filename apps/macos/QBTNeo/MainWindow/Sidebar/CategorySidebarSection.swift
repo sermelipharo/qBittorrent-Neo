@@ -18,7 +18,9 @@ struct CategorySidebarSection: View {
                 .contextMenu { CategoryContextMenu(category: nil) }
                 .dropDestination(for: String.self) { items, _ in assign(items, to: "") }
             OutlineGroup(model.categories.tree, children: \.children) { node in
-                SidebarRow(title: node.name, systemImage: Symbol.folderFill, count: counts.categories[node.id] ?? 0, tint: .accentColor)
+                let appearance = model.labels.category(node.id)
+                SidebarRow(title: node.name, systemImage: appearance.resolvedSymbol(.category), count: counts.categories[node.id] ?? 0,
+                           tint: appearance.resolvedColor(.category))
                     .tag(SidebarItem.category(.category(node.id)))
                     .contextMenu { CategoryContextMenu(category: node.id) }
                     .dropDestination(for: String.self) { items, _ in assign(items, to: node.id) }

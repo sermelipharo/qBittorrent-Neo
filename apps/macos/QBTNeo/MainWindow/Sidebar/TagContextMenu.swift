@@ -9,6 +9,7 @@ struct TagContextMenu: View {
     var body: some View {
         Button("Add Tag…", systemImage: Symbol.plus) { model.requestAddTag() }
         if let tag {
+            Button("Edit Tag…", systemImage: Symbol.pencil) { model.requestEditTag(tag) }
             Button("Remove Tag", systemImage: Symbol.minusCircle) { model.removeTag(tag) }
         }
         Button("Remove Unused Tags", systemImage: Symbol.trashSlash) { model.removeUnusedTags() }

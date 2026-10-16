@@ -8,7 +8,6 @@ struct TextPromptRequest: Identifiable {
         case editTracker(id: String, url: String)
         case addWebSeed(id: String)
         case editWebSeed(id: String, url: String)
-        case addTag
         case addTags(ids: [String])
     }
 

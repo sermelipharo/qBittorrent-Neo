@@ -10,6 +10,7 @@ enum MainSheet: Identifiable {
     case addTrackers(id: String)
     case addPeers(ids: [String])
     case category(CategoryEditorRequest)
+    case tagEditor(TagEditorRequest)
     case textPrompt(TextPromptRequest)
     case preview(id: String)
     case lockPassword(lockAfterSaving: Bool)
@@ -24,6 +25,7 @@ enum MainSheet: Identifiable {
         case .addTrackers(let id): "addTrackers-\(id)"
         case .addPeers(let ids): "addPeers-\(ids.joined())"
         case .category(let request): "category-\(request.id)"
+        case .tagEditor(let request): "tag-\(request.id)"
         case .textPrompt(let request): "prompt-\(request.id)"
         case .preview(let id): "preview-\(id)"
         case .lockPassword: "lockPassword"

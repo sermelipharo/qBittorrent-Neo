@@ -1,7 +1,8 @@
 import SwiftUI
 
 /// "Torrent Category Properties" (features.md §3.21): name, save path and
-/// the incomplete-download path option.
+/// the incomplete-download path option, plus the category's icon and color
+/// (GUI-only, kept in `LabelAppearanceStore`).
 struct CategoryEditorSheet: View {
     let request: CategoryEditorRequest
     @Environment(AppModel.self) private var model
@@ -11,6 +12,7 @@ struct CategoryEditorSheet: View {
     @State private var downloadMode = 0
     @State private var downloadPath = ""
     @State private var shareLimits = ShareLimits()
+    @State private var appearance = LabelAppearance()
     @State private var error: String?
 
     var body: some View {
@@ -19,6 +21,7 @@ struct CategoryEditorSheet: View {
             Form {
                 TextField("Name:", text: $name)
                     .disabled(isEditing)
+                LabelAppearanceFields(kind: .category, appearance: $appearance)
                 LabeledContent("Save path:") {
                     PathPicker(title: "Save path", path: $savePath, placeholder: defaultSavePath)
                 }
@@ -65,6 +68,7 @@ struct CategoryEditorSheet: View {
             name += String(localized: "New Category")
         case .edit(let category):
             name = category.name
+            appearance = model.labels.ownCategory(category.name)
             savePath = category.savePath
             shareLimits = category.shareLimits
             switch category.downloadPath {
@@ -84,7 +88,7 @@ struct CategoryEditorSheet: View {
         default: .default
         }
         if let message = model.saveCategory(request, name: name.trimmingCharacters(in: .whitespaces), savePath: savePath,
-                                            downloadPath: option, shareLimits: shareLimits) {
+                                            downloadPath: option, shareLimits: shareLimits, appearance: appearance) {
             error = message
         } else {
             dismiss()
