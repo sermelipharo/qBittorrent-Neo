@@ -122,6 +122,14 @@ open "build/DerivedData/Build/Products/Release/qBittorrent Neo.app"
 The Xcode build also compiles qBittorrent's core and copies Qt and the other
 libraries into the app, so the result runs on Macs without Homebrew.
 
+## Alternative: qBit NeoRS
+
+[qBit NeoRS](https://github.com/sermelipharo/qBit-NeoRS) is a sibling project with
+the same interface on a different foundation: a core rewritten in Rust around the
+BitTorrent engine of [rqbit](https://github.com/ikatson/rqbit), with no libtorrent or
+Qt. It is smaller and uses less memory, but it is younger and less tested. qBittorrent
+Neo stays the choice if you want qBittorrent's own engine and behaviour exactly.
+
 ## Credits and license
 
 qBittorrent Neo is built on the work of the
