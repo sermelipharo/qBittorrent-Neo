@@ -75,13 +75,15 @@ struct SnapshotRenderer {
     /// Hosts `view` in an off-screen window of `size` (nil height = fitting
     /// height), captures the whole frame including the toolbar, writes a PNG.
     func render<V: View>(_ view: V, size: CGSize, name: String, appearance: SnapshotAppearance, fitHeight: Bool = false) async {
-        let controller = NSHostingController(rootView: view.environment(\.isSnapshotRendering, true))
-        controller.sceneBridgingOptions = [.toolbars, .title]
-        let window = SnapshotWindow(
-            contentRect: CGRect(origin: CGPoint(x: -20_000, y: -20_000), size: size),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false
+        let controller = NSHostingController(
+            rootView: view.environment(\.isSnapshotRendering, true).modifier(SnapshotKeyAppearance(isActive: launch.snapshotActive))
         )
+        controller.sceneBridgingOptions = [.toolbars, .title]
+        let frame = CGRect(origin: CGPoint(x: -20_000, y: -20_000), size: size)
+        let style: NSWindow.StyleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
+        let window = launch.snapshotActive
+            ? ActiveSnapshotWindow(contentRect: frame, styleMask: style, backing: .buffered, defer: false)
+            : SnapshotWindow(contentRect: frame, styleMask: style, backing: .buffered, defer: false)
         window.isReleasedWhenClosed = false
         window.appearance = NSAppearance(named: appearance.name)
         window.contentViewController = controller
@@ -94,9 +96,7 @@ struct SnapshotRenderer {
             try? await Task.sleep(for: .milliseconds(250))
         }
         window.displayIfNeeded()
-        if let frameView = window.contentView?.superview,
-           let rep = frameView.bitmapImageRepForCachingDisplay(in: frameView.bounds) {
-            frameView.cacheDisplay(in: frameView.bounds, to: rep)
+        if let frameView = window.contentView?.superview, let rep = SnapshotBitmap.capture(frameView) {
             let url = directory.appending(path: "\(name)-\(appearance.rawValue).png")
             try? rep.representation(using: .png, properties: [:])?.write(to: url)
             print("snapshot: \(url.path(percentEncoded: false))")

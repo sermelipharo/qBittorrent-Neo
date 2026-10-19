@@ -14,14 +14,17 @@ struct OffscreenWindowRenderer {
     ///   - name: file name stem (`<name>-light.png`, `<name>-dark.png`).
     ///   - settle: time for `.task` loads and layout before capturing.
     func render(
-        _ name: String, title: String, size: CGSize, settle: Duration = .milliseconds(900),
+        _ name: String, title: String, size: CGSize, settle: Duration = .milliseconds(900), active: Bool = false,
         @ViewBuilder content: () -> some View
     ) async {
         let view = content()
+        let active = active || LaunchOptions.current.snapshotActive
         for (suffix, appearance) in [("light", NSAppearance.Name.aqua), ("dark", .darkAqua)] {
-            let controller = NSHostingController(rootView: view.frame(width: size.width, height: size.height))
+            let controller = NSHostingController(
+                rootView: view.frame(width: size.width, height: size.height).modifier(SnapshotKeyAppearance(isActive: active))
+            )
             controller.sceneBridgingOptions = [.toolbars, .title]
-            let window = NSWindow(contentViewController: controller)
+            let window = active ? ActiveSnapshotWindow(contentViewController: controller) : NSWindow(contentViewController: controller)
             window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
             window.title = title
             window.appearance = NSAppearance(named: appearance)
@@ -40,8 +43,7 @@ struct OffscreenWindowRenderer {
     private func write(_ window: NSWindow, to url: URL) {
         guard let frameView = window.contentView?.superview else { return }
         frameView.layoutSubtreeIfNeeded()
-        guard let rep = frameView.bitmapImageRepForCachingDisplay(in: frameView.bounds) else { return }
-        frameView.cacheDisplay(in: frameView.bounds, to: rep)
+        guard let rep = SnapshotBitmap.capture(frameView) else { return }
         guard let data = rep.representation(using: .png, properties: [:]) else { return }
         try? data.write(to: url)
     }

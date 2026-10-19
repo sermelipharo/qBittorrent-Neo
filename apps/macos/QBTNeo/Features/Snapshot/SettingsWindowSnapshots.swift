@@ -118,8 +118,7 @@ struct SettingsWindowSnapshots {
     static func write(_ window: NSWindow, to url: URL) {
         guard let frameView = window.contentView?.superview else { return }
         frameView.layoutSubtreeIfNeeded()
-        guard let rep = frameView.bitmapImageRepForCachingDisplay(in: frameView.bounds) else { return }
-        frameView.cacheDisplay(in: frameView.bounds, to: rep)
+        guard let rep = SnapshotBitmap.capture(frameView) else { return }
         // The window background (a material) isn't part of the cached views:
         // composite the capture over the appearance's window background color.
         guard let image = rep.cgImage, let space = CGColorSpace(name: CGColorSpace.sRGB),
