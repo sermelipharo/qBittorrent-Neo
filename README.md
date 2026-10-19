@@ -7,6 +7,8 @@ qBittorrent Neo runs the engine of [qBittorrent](https://www.qbittorrent.org) 5.
 written in SwiftUI for macOS. It looks and behaves like a Mac app, and it keeps all of
 qBittorrent's features and settings.
 
+**Website:** [neo.lex.mk](https://neo.lex.mk) · Sibling project on a Rust core: [qBit NeoRS](https://neors.lex.mk)
+
 ![qBittorrent Neo main window](docs/screenshots/main-light.png)
 
 ## Features
