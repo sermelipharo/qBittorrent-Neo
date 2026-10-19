@@ -7,6 +7,9 @@ import Foundation
 /// * `--snapshot-scale <n>`: render snapshots at n pixels per point (default:
 ///   the screen's backing scale), e.g. 4 for close-ups on a web page.
 /// * `--snapshot-active`: draw every snapshot window as the active window.
+/// * `--snapshot-clear`: leave the window background transparent, so the
+///   areas that would show a material (sidebar, toolbar) can be composed over
+///   another background.
 /// * `--profile <dir>`: use another profile folder for the real core.
 /// * `--assume-visible`: refresh as if the main window were always visible
 ///   (idle CPU measurements of a window started in the background).
@@ -16,6 +19,7 @@ struct LaunchOptions: Sendable {
     var snapshotDirectory: URL?
     var snapshotScale: CGFloat?
     var snapshotActive = false
+    var snapshotClear = false
     var profileDirectory = ""
     var assumesVisibleWindow = false
 
@@ -32,6 +36,7 @@ struct LaunchOptions: Sendable {
             case "--snapshot-scale":
                 if let text = iterator.next(), let value = Double(text), (1...8).contains(value) { snapshotScale = value }
             case "--snapshot-active": snapshotActive = true
+            case "--snapshot-clear": snapshotClear = true
             case "--profile":
                 profileDirectory = iterator.next() ?? ""
             case "--assume-visible": assumesVisibleWindow = true

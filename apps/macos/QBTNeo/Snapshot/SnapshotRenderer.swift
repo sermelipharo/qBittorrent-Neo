@@ -85,6 +85,10 @@ struct SnapshotRenderer {
             ? ActiveSnapshotWindow(contentRect: frame, styleMask: style, backing: .buffered, defer: false)
             : SnapshotWindow(contentRect: frame, styleMask: style, backing: .buffered, defer: false)
         window.isReleasedWhenClosed = false
+        if launch.snapshotClear {
+            window.backgroundColor = .clear
+            window.isOpaque = false
+        }
         window.appearance = NSAppearance(named: appearance.name)
         window.contentViewController = controller
         window.setContentSize(size)

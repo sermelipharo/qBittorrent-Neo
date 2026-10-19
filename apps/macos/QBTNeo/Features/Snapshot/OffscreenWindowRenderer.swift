@@ -27,6 +27,10 @@ struct OffscreenWindowRenderer {
             let window = active ? ActiveSnapshotWindow(contentViewController: controller) : NSWindow(contentViewController: controller)
             window.styleMask = [.titled, .closable, .miniaturizable, .resizable]
             window.title = title
+            if LaunchOptions.current.snapshotClear {
+                window.backgroundColor = .clear
+                window.isOpaque = false
+            }
             window.appearance = NSAppearance(named: appearance)
             window.alphaValue = 0
             window.isReleasedWhenClosed = false
