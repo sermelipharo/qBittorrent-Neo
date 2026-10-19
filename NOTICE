@@ -5,7 +5,7 @@ qBittorrent Neo is a fork of qBittorrent 5.2.4 (https://www.qbittorrent.org,
 https://github.com/qbittorrent/qBittorrent, tag release-5.2.4) whose Qt
 Widgets graphical interface is replaced by a native SwiftUI macOS interface.
 
-* qbittorrent/ contains the unmodified qBittorrent sources, imported with
+* qbittorrent/ contains the qBittorrent sources, imported with
   their full history (git subtree; the `upstream` branch points at
   release-5.2.4). qBittorrent is Copyright (C) 2006-2026 The qBittorrent
   project and contributors and is licensed under the GNU General Public
@@ -19,6 +19,9 @@ Widgets graphical interface is replaced by a native SwiftUI macOS interface.
   https://github.com/qbittorrent/qBittorrent/graphs/contributors. The
   translations are imported from qBittorrent's, made by its volunteer
   translators (https://explore.transifex.com/sledgehammer999/qbittorrent/).
+  The only local change is the Web UI theme: the stylesheets in
+  qbittorrent/src/webui/www/private/css and public/css/login.css are
+  restyled (qBittorrent Neo theme); markup and scripts are unchanged.
 
 * core/ hosts qBittorrent's application core (src/base, src/webui) inside
   the app. core/src/neoapplication.cpp and core/src/addmanager.cpp contain

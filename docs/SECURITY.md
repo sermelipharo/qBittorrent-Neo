@@ -68,6 +68,13 @@ upstream's security properties and fixes.
 * WebUI: started in qBittorrent's GUI mode — disabled unless enabled in the
   preferences, and it refuses logins while no password is set (no temporary
   password is generated or printed).
+* WebUI theme (qBittorrent Neo restyle of `src/webui/www` CSS only): no
+  HTML or JavaScript changed, so no injection paths are touched; no external
+  requests (system font stack, no web fonts or CDNs); the new icons are
+  `data:` SVG URIs in CSS, which the server's CSP already allows
+  (`img-src 'self' data:`); no inline scripts added, so the CSP
+  (`default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'
+  'unsafe-inline'; …`) needs no change.
 * External programs run on torrent added/finished use qBittorrent's
   argument splitting with per-argument placeholder substitution and no
   shell, so torrent names cannot inject commands.
