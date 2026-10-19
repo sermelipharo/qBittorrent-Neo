@@ -2,7 +2,7 @@
 
 Core.css for Mocha UI
 
-Theme: Default
+Theme: Default (restyled as the qBittorrent Neo theme)
 
 Copyright:
 	Copyright (c) 2007-2009 Greg Houston, <http://greghoustondesign.com/>.
@@ -22,14 +22,13 @@ Required by:
     cursor: default; /* Fix for issue in IE7. IE7 wants to use the I-bar text cursor */
     height: 100%;
     min-height: 100%;
-    min-width: 400px; /* Helps keep header content from wrapping */
+    min-width: 0;
     overflow: hidden;
     position: relative;
 }
 
 #topNav {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     padding: 13px 10px 0 0;
     position: absolute;
     right: 0;
@@ -45,15 +44,25 @@ Required by:
     text-decoration: none;
 }
 
+/* Header: menu bar + toolbar on a translucent bar material */
+
+#desktopHeader {
+    backdrop-filter: var(--neo-blur);
+    background-color: var(--neo-bar);
+    border-bottom: 1px solid var(--color-border-default);
+    position: relative;
+    z-index: 2;
+}
+
 /* Navbar */
 
 #desktopNavbar {
-    background-color: var(--color-background-default);
     overflow: hidden; /* Remove this line if you want the menu to be backward compatible with Firefox 2 */
+    padding: 3px 6px 0;
 }
 
 #desktopNavbar ul {
-    font-size: 12px;
+    font-size: 13px;
     margin: 0;
     padding: 0;
     user-select: none;
@@ -67,15 +76,15 @@ Required by:
     display: block;
 }
 
-#desktopNavbar ul li a {
+#desktopNavbar > ul > li > a {
+    border-radius: 5px;
     color: var(--color-text-default);
-    font-weight: normal;
-    padding: 4px 10px;
+    font-weight: 500;
+    padding: 2px 9px;
 }
 
-#desktopNavbar ul li a:hover {
-    background-color: var(--color-background-hover);
-    color: var(--color-text-white);
+#desktopNavbar > ul > li:hover > a {
+    background-color: var(--neo-fill-strong);
 }
 
 #desktopNavbar a:hover img {
@@ -85,20 +94,25 @@ Required by:
 #desktopNavbar ul li a.arrow-right::after,
 #desktopNavbar ul li a:hover.arrow-right::after {
     border: solid currentcolor;
-    border-width: 0 2px 2px 0;
+    border-width: 0 1.5px 1.5px 0;
     content: "";
     display: inline-block;
-    padding: 2px;
+    padding: 2.5px;
     position: absolute;
-    right: 6px;
+    right: 8px;
     top: 50%;
     transform: rotate(-45deg) translateY(-50%);
 }
 
 #desktopNavbar li ul {
-    background-color: var(--color-background-default);
-    border: 1px solid var(--color-border-default);
+    backdrop-filter: var(--neo-blur);
+    background-color: var(--neo-material);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: var(--neo-shadow-popover);
     left: -999em;
+    margin-top: 2px;
+    padding: 5px;
     position: absolute;
     z-index: 8000;
 }
@@ -112,7 +126,7 @@ Required by:
 
 #desktopNavbar li ul ul {
     /* third-and-above-level lists */
-    margin: -22px 0 0 163px;
+    margin: -27px 0 0 168px;
 }
 
 #desktopNavbar li ul li .check {
@@ -128,10 +142,11 @@ Required by:
 
 #desktopNavbar li ul li a,
 #desktopNavbar li ul li div.anchor {
+    border-radius: 5px;
     color: var(--color-text-default);
     font-weight: normal;
-    min-width: 155px;
-    padding: 4px 10px 4px 23px;
+    min-width: 175px;
+    padding: 3px 12px 3px 30px;
     position: relative;
 }
 
@@ -139,6 +154,10 @@ Required by:
 #desktopNavbar li ul li div.anchor:hover {
     background-color: var(--color-background-hover);
     color: var(--color-text-white);
+}
+
+#desktopNavbar li ul li div.anchor:hover img {
+    filter: var(--color-icon-hover);
 }
 
 /* lists nested under hovered list items */
@@ -158,24 +177,26 @@ Required by:
 
 li.divider {
     border-top: 1px solid var(--color-border-default);
-    margin-top: 2px;
-    padding-top: 3px;
+    margin-top: 5px;
+    padding-top: 5px;
 }
 
 #pageWrapper {
     border-bottom: 1px solid var(--color-border-default);
-    border-top: 1px solid var(--color-border-default);
     overflow: hidden; /* This can be set to hidden or auto */
     position: relative;
 }
 
 #propertiesPanel_header {
-    height: 28px;
+    background-color: var(--neo-window);
+    border-top: 1px solid var(--color-border-default);
+    height: 32px;
 }
 
-/* Footer */
+/* Footer (status bar) */
 
 #desktopFooterWrapper {
+    background-color: var(--neo-bar);
     bottom: 0;
     height: 28px;
     left: 0;
@@ -185,10 +206,14 @@ li.divider {
 }
 
 #desktopFooter {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    color: var(--color-text-secondary);
     font-size: 11px;
     height: 28px;
-    padding: 2px;
+    padding: 3px 6px;
+}
+
+#desktopFooter img {
+    vertical-align: middle;
 }
 
 /* Panel Layout
@@ -200,6 +225,15 @@ li.divider {
     float: left;
     overflow: hidden; /* Required by IE6 */
     position: relative;
+}
+
+#filtersColumn {
+    backdrop-filter: var(--neo-blur);
+    background-color: var(--neo-sidebar);
+}
+
+#mainColumn {
+    background-color: var(--color-background-primary);
 }
 
 /* Panels */
@@ -230,29 +264,37 @@ li.divider {
 }
 
 .panel-headerContent {
-    padding-top: 2px;
+    padding-top: 3px;
 }
 
 .panel-header h2 {
     display: inline-block;
-    font-size: 12px;
-    height: 22px;
+    font-size: 13px;
+    height: 24px;
     overflow: hidden;
-    padding: 3px 8px 0;
+    padding: 3px 10px 0;
 }
 
-.panel-collapse {
-    background: url("../images/collapse.svg") center/16px no-repeat;
+.panel-collapse,
+.panel-expand {
+    background: url("../images/collapse.svg") center / 14px no-repeat;
+    border-radius: 6px;
+    opacity: 0.6;
+}
+
+.panel-collapse:hover,
+.panel-expand:hover {
+    background-color: var(--neo-fill-strong);
+    opacity: 1;
 }
 
 .panel-expand {
-    background: url("../images/collapse.svg") center/16px no-repeat;
     transform: rotate(180deg);
 }
 
 .icon16 {
     cursor: pointer;
-    margin: 4px 0 0 2px;
+    margin: 5px 4px 0 2px;
 }
 
 /* Column and Panel Handles */
@@ -269,22 +311,20 @@ li.divider {
 }
 
 .horizontalHandle .handleIcon {
-    background: url("../images/handle-icon-horizontal.svg") center center
-        no-repeat;
-    height: 6px;
+    background: transparent;
+    height: 4px;
     margin: 0 auto;
     overflow: hidden;
 }
 
 .columnHandle {
-    background: url("../images/handle-icon.svg") center center no-repeat;
-    border: 1px solid var(--color-border-default);
-    border-bottom: 0;
-    border-top: 0;
+    background: linear-gradient(var(--color-border-default), var(--color-border-default)) right / 1px 100% no-repeat;
+    border: 0;
+    cursor: col-resize;
     float: left;
     min-height: 10px;
     overflow: hidden;
-    width: 8px;
+    width: 4px;
 }
 
 /* Toolboxes */
@@ -300,7 +340,7 @@ li.divider {
 
 /* Have to specify div here for IE6's sake */
 div.toolbox.divider {
-    background: url("../images/toolbox-divider.svg") repeat-y;
+    border-left: 1px solid var(--color-border-default);
     padding-left: 8px;
 }
 
@@ -310,6 +350,7 @@ div.toolbox.divider {
 
 .iconWrapper {
     border: 1px solid transparent;
+    border-radius: 6px;
     display: inline-block;
     height: 22px;
     min-width: 22px;
@@ -328,8 +369,7 @@ div.toolbox.divider {
 }
 
 .iconWrapper:hover {
-    border: 1px solid #a0a0a0;
-    border-radius: 3px;
+    background-color: var(--neo-fill);
 }
 
 #spinner {
@@ -341,7 +381,7 @@ div.toolbox.divider {
 
 #desktopFooter td {
     text-align: left;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
 td.speedLabel {

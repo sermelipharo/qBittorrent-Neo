@@ -1,31 +1,67 @@
+/*
+ * qBittorrent Neo theme (Apple-style light/dark look over qBittorrent's WebUI).
+ * Colors are tokens on :root; `:root.dark` is toggled by color-scheme.js
+ * (follows prefers-color-scheme unless the user picked a scheme).
+ */
+
 /* Adaptive color palette */
 
-/* Default rules */
 :root {
-    --color-accent-blue: hsl(210deg 65% 55%);
-    --color-text-blue: hsl(210deg 100% 55%);
-    --color-text-orange: hsl(26deg 100% 45%);
-    --color-text-red: hsl(0deg 100% 65%);
-    --color-text-green: hsl(110deg 94% 27%);
+    --neo-font: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --neo-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --neo-radius-sheet: 14px;
+    --neo-radius-panel: 12px;
+    --neo-radius-control: 7px;
+    --neo-radius-row: 6px;
+    --neo-duration: 160ms;
+    --neo-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+    --neo-blur: blur(24px) saturate(180%);
+    --neo-icon-chevrons: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='12' viewBox='0 0 8 12'%3E%3Cpath d='M1 4.5 4 1.5l3 3M1 7.5l3 3 3-3' fill='none' stroke='%238e8e93' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --neo-icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3 5 8.6l4.4-5.2' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --neo-icon-dash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6h6' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+    --neo-icon-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Ccircle cx='6' cy='6' r='4.25' fill='none' stroke='%238e8e93' stroke-width='1.5'/%3E%3Cpath d='m9.2 9.2 3.3 3.3' stroke='%238e8e93' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+
+    /* light */
+    --color-accent-blue: hsl(216deg 100% 50%);
+    --color-text-blue: hsl(216deg 100% 44%);
+    --color-text-orange: hsl(30deg 100% 40%);
+    --color-text-red: hsl(357deg 85% 50%);
+    --color-text-green: hsl(135deg 60% 32%);
     --color-text-white: hsl(0deg 0% 100%);
-    --color-text-disabled: hsl(0deg 0% 60%);
-    --color-text-default: hsl(0deg 0% 33%);
+    --color-text-disabled: hsl(240deg 3% 62%);
+    --color-text-default: hsl(240deg 6% 12%);
+    --color-text-secondary: hsl(240deg 3% 44%);
     --color-background-primary: hsl(0deg 0% 100%);
-    --color-background-blue: hsl(210deg 65% 55%);
+    --color-background-blue: var(--color-accent-blue);
     --color-background-popup: hsl(0deg 0% 100%);
-    --color-background-default: hsl(0deg 0% 94%);
-    --color-background-hover: hsl(26deg 80% 60%);
-    --color-border-blue: hsl(210deg 42% 48%);
-    --color-border-default: hsl(0deg 0% 85%);
-    --color-icon-hover: brightness(0) invert(100%) sepia(100%) saturate(0%)
-        hue-rotate(108deg) brightness(104%) contrast(104%);
+    --color-background-default: hsl(240deg 10% 50% / 6%);
+    --color-background-hover: var(--color-accent-blue);
+    --color-border-blue: var(--color-accent-blue);
+    --color-border-default: hsl(240deg 6% 20% / 13%);
+    --color-icon-hover: brightness(0) invert(100%);
+    --neo-window: hsl(240deg 11% 96.5%);
+    --neo-bar: hsl(240deg 11% 97% / 78%);
+    --neo-sidebar: hsl(240deg 8% 91% / 62%);
+    --neo-material: hsl(0deg 0% 100% / 80%);
+    --neo-fill: hsl(240deg 6% 45% / 10%);
+    --neo-fill-strong: hsl(240deg 6% 45% / 17%);
+    --neo-row-hover: hsl(216deg 100% 50% / 7%);
+    --neo-selection-soft: hsl(216deg 100% 50% / 14%);
+    --neo-control: hsl(0deg 0% 100%);
+    --neo-control-border: hsl(240deg 6% 20% / 18%);
+    --neo-segment: hsl(0deg 0% 100%);
+    --neo-shadow-control: 0 0.5px 1.5px hsl(0deg 0% 0% / 10%);
+    --neo-shadow-popover: 0 0 0 0.5px hsl(0deg 0% 0% / 12%), 0 10px 30px hsl(0deg 0% 0% / 16%);
+    --neo-shadow-sheet: 0 0 0 0.5px hsl(0deg 0% 0% / 14%), 0 24px 60px hsl(0deg 0% 0% / 22%), 0 6px 16px hsl(0deg 0% 0% / 8%);
+    --neo-focus-ring: 0 0 0 3px hsl(216deg 100% 50% / 30%);
+    --neo-toolbar-icon: brightness(0) opacity(68%);
 
     & #torrentTrackersTableDiv tr {
         --color-tracker-disabled: hsl(240deg 4% 46%);
         --color-tracker-not-contacted: hsl(32deg 95% 44%);
-        --color-tracker-working: hsl(142deg 76% 36%);
-        --color-tracker-updating: hsl(210deg 100% 55%);
-        --color-tracker-not-working: hsl(0deg 100% 65%);
+        --color-tracker-working: hsl(142deg 76% 32%);
+        --color-tracker-updating: var(--color-text-blue);
+        --color-tracker-not-working: var(--color-text-red);
     }
 
     &:not(.dark) {
@@ -33,23 +69,39 @@
     }
 
     &.dark {
-        --color-accent-blue: hsl(210deg 42% 48%);
-        --color-text-blue: hsl(210deg 88.1% 73.5%);
-        --color-text-orange: hsl(26deg 65% 70%);
-        --color-text-default: hsl(0deg 0% 90%);
-        --color-background-primary: hsl(0deg 0% 7%);
-        --color-background-blue: hsl(210deg 42% 48%);
-        --color-background-popup: hsl(0deg 0% 20%);
-        --color-background-default: hsl(0deg 0% 25%);
-        --color-background-hover: hsl(26deg 50% 55%);
-        --color-border-default: hsl(0deg 0% 33%);
+        --color-accent-blue: hsl(216deg 100% 58%);
+        --color-text-blue: hsl(216deg 100% 72%);
+        --color-text-orange: hsl(30deg 100% 66%);
+        --color-text-red: hsl(0deg 90% 68%);
+        --color-text-green: hsl(135deg 55% 60%);
+        --color-text-default: hsl(0deg 0% 95%);
+        --color-text-secondary: hsl(240deg 4% 64%);
+        --color-text-disabled: hsl(240deg 3% 45%);
+        --color-background-primary: hsl(240deg 4% 11%);
+        --color-background-popup: hsl(240deg 3% 15%);
+        --color-background-default: hsl(0deg 0% 100% / 4.5%);
+        --color-border-default: hsl(0deg 0% 100% / 11%);
+        --neo-window: hsl(240deg 3% 13%);
+        --neo-bar: hsl(240deg 3% 15% / 78%);
+        --neo-sidebar: hsl(240deg 3% 19% / 62%);
+        --neo-material: hsl(240deg 3% 19% / 82%);
+        --neo-fill: hsl(0deg 0% 100% / 8%);
+        --neo-fill-strong: hsl(0deg 0% 100% / 14%);
+        --neo-row-hover: hsl(216deg 100% 65% / 10%);
+        --neo-selection-soft: hsl(216deg 100% 60% / 24%);
+        --neo-control: hsl(0deg 0% 100% / 8%);
+        --neo-control-border: hsl(0deg 0% 100% / 12%);
+        --neo-segment: hsl(0deg 0% 100% / 20%);
+        --neo-shadow-control: 0 0.5px 1px hsl(0deg 0% 0% / 30%);
+        --neo-shadow-popover: 0 0 0 0.5px hsl(0deg 0% 100% / 12%), 0 10px 30px hsl(0deg 0% 0% / 45%);
+        --neo-shadow-sheet: 0 0 0 0.5px hsl(0deg 0% 100% / 14%), 0 24px 60px hsl(0deg 0% 0% / 55%), 0 6px 16px hsl(0deg 0% 0% / 30%);
+        --neo-focus-ring: 0 0 0 3px hsl(216deg 100% 60% / 45%);
+        --neo-toolbar-icon: brightness(0) invert(100%) opacity(82%);
 
         & #torrentTrackersTableDiv tr {
             --color-tracker-disabled: hsl(240deg 6% 83%);
             --color-tracker-not-contacted: hsl(39deg 100% 72%);
             --color-tracker-working: hsl(142deg 69% 58%);
-            --color-tracker-updating: hsl(210deg 88.1% 73.5%);
-            --color-tracker-not-working: hsl(0deg 100% 71%);
         }
 
         color-scheme: dark;
@@ -57,8 +109,7 @@
         #rssButtonBar img,
         #startSearchButton img,
         #manageSearchPlugins img {
-            filter: brightness(0) saturate(100%) invert(100%) sepia(0%)
-                saturate(1%) hue-rotate(156deg) brightness(106%) contrast(101%);
+            filter: brightness(0) invert(100%);
         }
     }
 }
@@ -106,38 +157,145 @@ ol {
     }
 }
 
+:root {
+    scrollbar-color: hsl(240deg 4% 55% / 45%) transparent;
+}
+
 /* Forms */
 
 input[type="search"],
 input[type="text"],
 input[type="number"],
 input[type="password"],
+input[type="url"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
 input[type="button"],
+input[type="submit"],
 button,
 textarea,
 select {
-    border: 1px solid var(--color-border-default);
-    border-radius: 3px;
+    background-color: var(--neo-control);
+    border: 1px solid var(--neo-control-border);
+    border-radius: var(--neo-radius-control);
+    box-shadow: var(--neo-shadow-control);
     color: var(--color-text-default);
+    padding: 3px 7px;
+    transition:
+        border-color var(--neo-duration) var(--neo-ease),
+        box-shadow var(--neo-duration) var(--neo-ease),
+        background-color var(--neo-duration) var(--neo-ease);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--color-text-disabled);
+}
+
+input:is([type="search"], [type="text"], [type="number"], [type="password"], [type="url"], [type="email"]),
+textarea {
+    box-shadow: inset 0 0.5px 1px hsl(0deg 0% 0% / 6%);
+}
+
+select:not([multiple], [size]) {
+    appearance: none;
+    background-image: var(--neo-icon-chevrons);
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 8px 12px;
+    padding: 3px 24px 3px 8px;
+}
+
+select[multiple],
+select[size] {
     padding: 3px;
 }
 
-select {
-    padding: 4px;
+:is(input, textarea, select, button):focus-visible {
+    border-color: var(--color-accent-blue);
+    box-shadow: var(--neo-focus-ring);
+    outline: none;
+}
+
+:is(input, textarea, select, button):disabled {
+    opacity: 0.5;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
+    appearance: none;
+    background: var(--neo-control) center / 12px no-repeat;
+    border: 1px solid var(--neo-control-border);
+    border-radius: 4px;
+    box-shadow: var(--neo-shadow-control);
+    flex-shrink: 0;
+    height: 14px;
+    margin: 3px 4px;
+    vertical-align: middle;
+    width: 14px;
+    transition:
+        background-color var(--neo-duration) var(--neo-ease),
+        border-color var(--neo-duration) var(--neo-ease);
+}
+
+input[type="radio"] {
+    border-radius: 50%;
+}
+
+input[type="checkbox"]:checked,
+input[type="checkbox"]:indeterminate,
+input[type="radio"]:checked {
+    background-color: var(--color-accent-blue);
+    border-color: var(--color-accent-blue);
+}
+
+input[type="checkbox"]:checked {
+    background-image: var(--neo-icon-check);
+}
+
+input[type="checkbox"]:indeterminate {
+    background-image: var(--neo-icon-dash);
+}
+
+input[type="radio"]:checked {
+    background-image: radial-gradient(circle, hsl(0deg 0% 100%) 0 2.5px, transparent 3px);
+}
+
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+    box-shadow: var(--neo-focus-ring);
+}
+
+input[type="range"] {
     accent-color: var(--color-accent-blue);
-    margin: 3px 3px 3px 4px;
 }
 
 input[type="button"],
 input[type="submit"],
 button {
     cursor: pointer;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-weight: 500;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+:is(input[type="button"], button):not(:disabled):hover {
+    background-color: var(--neo-fill);
+}
+
+:is(input[type="button"], input[type="submit"], button):not(:disabled):active {
+    filter: brightness(0.94);
+}
+
+input[type="submit"] {
+    background-color: var(--color-accent-blue);
+    border-color: transparent;
+    color: var(--color-text-white);
+}
+
+input[type="submit"]:not(:disabled):hover {
+    filter: brightness(1.06);
 }
 
 button:disabled {
@@ -148,15 +306,22 @@ button:disabled {
     outline: none;
 }
 
+:focus-visible {
+    outline: 2px solid hsl(216deg 100% 50% / 55%);
+    outline-offset: 1px;
+}
+
 /* Structure */
 
 body {
-    background-color: var(--color-background-primary);
+    background-color: var(--neo-window);
     color: var(--color-text-default);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--neo-font);
     font-size: 12px;
     line-height: 1.5;
     text-align: left;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 :root.compact body {
@@ -184,20 +349,21 @@ h2,
 h3,
 h4 {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     padding: 0 0 5px;
 }
 
 h2 {
     color: var(--color-text-default);
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
 }
 
 #mochaPage h3 {
     border-bottom: 1px solid var(--color-border-default);
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     margin: 0 0 8px;
     padding: 6px 0;
 }
@@ -206,8 +372,8 @@ h2 {
 #rename_error {
     color: var(--color-text-red);
     float: left;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 h4 {
@@ -215,7 +381,7 @@ h4 {
 }
 
 a {
-    color: var(--color-text-orange);
+    color: var(--color-text-blue);
     cursor: pointer;
     text-decoration: none;
 }
@@ -231,19 +397,35 @@ p {
 /* List Elements */
 
 dt {
-    font-weight: bold;
+    font-weight: 600;
 }
 
 dd {
     padding: 0 0 9px;
 }
 
-/* Forms */
+/* Grouped boxes (fieldsets render like macOS Settings groups) */
 
 fieldset {
+    background-color: var(--color-background-default);
     border: 1px solid var(--color-border-default);
-    border-radius: 1px;
+    border-radius: var(--neo-radius-panel);
     margin: 0 2px;
+    min-width: 0;
+}
+
+fieldset > legend {
+    color: var(--color-text-default);
+    float: left;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    padding: 0;
+    width: 100%;
+}
+
+fieldset > legend + * {
+    clear: left;
 }
 
 /* Code */
@@ -251,9 +433,10 @@ fieldset {
 pre {
     background-color: var(--color-background-default);
     border: 1px solid var(--color-border-default);
+    border-radius: 8px;
     color: var(--color-text-green);
     display: block;
-    font-family: "Courier New", Courier, monospace;
+    font-family: var(--neo-mono);
     font-size: 11px;
     margin: 0 0 10px;
     max-height: 250px;
@@ -264,7 +447,7 @@ pre {
 /* Dividers */
 
 hr {
-    background-color: var(--color-background-default);
+    background-color: var(--color-border-default);
     border: 0;
     color: var(--color-text-default);
     height: 1px;
@@ -297,11 +480,12 @@ hr {
 }
 
 #properties {
-    background-color: var(--color-background-default);
+    background-color: var(--color-background-primary);
 }
 
 a.propButton {
-    border: 1px solid rgb(85 81 91);
+    border: 1px solid var(--neo-control-border);
+    border-radius: var(--neo-radius-control);
     margin-left: 3px;
     margin-right: 3px;
     padding: 2px;
@@ -323,17 +507,20 @@ a.propButton img {
     }
 }
 
-/* context menu specific */
+/* Context menus (popover material) */
 
 .contextMenu {
-    background-color: var(--color-background-default);
-    border: 1px solid var(--color-border-default);
+    backdrop-filter: var(--neo-blur);
+    background-color: var(--neo-material);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: var(--neo-shadow-popover);
     display: none;
     opacity: 0;
-    padding: 0;
+    padding: 5px;
     transition:
-        opacity 0.2s ease-in-out,
-        visibility 0.2s ease-in-out;
+        opacity var(--neo-duration) var(--neo-ease),
+        visibility var(--neo-duration) var(--neo-ease);
     visibility: hidden;
 }
 
@@ -344,10 +531,14 @@ a.propButton img {
 
 .contextMenu .separator {
     border-top: 1px solid var(--color-border-default);
+    margin-top: 5px;
+    padding-top: 5px;
 }
 
 .contextMenu .separatorBottom {
     border-bottom: 1px solid var(--color-border-default);
+    margin-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .contextMenu li {
@@ -358,7 +549,7 @@ a.propButton img {
 .contextMenu li.disabled {
     background-color: transparent;
     cursor: default;
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 .contextMenu li.disabled a {
@@ -367,10 +558,11 @@ a.propButton img {
 
 .contextMenu li a {
     align-items: center;
+    border-radius: 5px;
     color: var(--color-text-default);
     display: flex;
     gap: 2px;
-    padding: 5px 20px 5px 5px;
+    padding: 3px 24px 3px 8px;
     position: relative;
     text-decoration: none;
     white-space: nowrap;
@@ -386,11 +578,14 @@ a.propButton img {
 }
 
 .contextMenu li ul {
-    background: var(--color-background-default);
-    border: 1px solid var(--color-border-default);
+    backdrop-filter: var(--neo-blur);
+    background: var(--neo-material);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: var(--neo-shadow-popover);
     left: -999em;
-    margin: -29px 0 0 100%;
-    padding: 0;
+    margin: -29px 0 0 calc(100% - 4px);
+    padding: 5px;
     position: absolute;
     width: max-content;
     z-index: 8000;
@@ -402,12 +597,12 @@ a.propButton img {
 
 .contextMenu li:not(.disabled) .arrow-right::after {
     border: solid currentcolor;
-    border-width: 0 2px 2px 0;
+    border-width: 0 1.5px 1.5px 0;
     content: "";
     display: inline-block;
-    padding: 2px;
+    padding: 2.5px;
     position: absolute;
-    right: 6px;
+    right: 8px;
     top: 50%;
     transform: rotate(-45deg) translateY(-50%);
 }
@@ -425,7 +620,7 @@ a.propButton img {
 
 .contextMenu li input[type="checkbox"] {
     margin: 0 0.5em 0 0;
-    width: 16px;
+    width: 14px;
 }
 
 #contextCategoryList img {
@@ -435,14 +630,15 @@ a.propButton img {
 }
 
 #contextCategoryList img.highlightedCategoryIcon {
-    background-color: hsl(213deg 94% 86%);
+    background-color: var(--neo-selection-soft);
+    border-radius: 4px;
 }
 
 /* Sliders */
 
 .slider {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     margin: 4px;
     position: relative;
 }
@@ -451,25 +647,52 @@ a.propButton img {
     padding-bottom: 5px;
 }
 
-.mochaToolButton {
-    margin-right: 10px;
-}
-
-/* Mocha Customization */
+/* Toolbar */
 
 #mochaToolbar {
+    align-items: center;
+    column-gap: 2px;
+    display: flex;
+    flex-wrap: wrap;
     height: auto !important;
-    margin-top: 5px;
     overflow-y: hidden;
+    padding: 6px 10px;
     position: relative;
+    row-gap: 6px;
+}
+
+#mochaToolbar.invisible {
+    display: none;
+}
+
+#mochaToolbar > a,
+#mochaToolbar > div,
+#mochaToolbar > span,
+#queueingButtons > a {
+    align-items: center;
+    display: inline-flex;
 }
 
 #mochaToolbar .divider {
-    background-image: url("../images/toolbox-divider.svg");
-    background-position: left center;
-    background-repeat: no-repeat;
-    padding-left: 14px;
-    padding-top: 15px;
+    border-left: 1px solid var(--color-border-default);
+    margin-left: 6px;
+    padding-left: 8px;
+}
+
+.mochaToolButton {
+    border-radius: var(--neo-radius-control);
+    box-sizing: content-box;
+    filter: var(--neo-toolbar-icon);
+    height: 18px;
+    padding: 5px 7px;
+    transition: background-color var(--neo-duration) var(--neo-ease);
+    vertical-align: middle;
+    width: 18px;
+}
+
+#mochaToolbar a:hover .mochaToolButton,
+#uploadButton label:hover .mochaToolButton {
+    background-color: hsl(0deg 0% 50% / 22%);
 }
 
 .MyMenuIcon {
@@ -477,12 +700,19 @@ a.propButton img {
 }
 
 #mainWindowTabs {
-    float: right;
-    margin: 4px 5px 0 0;
+    margin: 0 0 0 auto;
+    order: 2;
+}
+
+#mainWindowTabs.invisible {
+    display: none;
 }
 
 #torrentsFilterToolbar {
-    display: inline-block;
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    margin-left: 10px;
     vertical-align: top;
 }
 
@@ -490,16 +720,20 @@ a.propButton img {
     display: none;
 }
 
-#torrentsFilterInput {
-    background-color: var(--color-background-default);
-    background-image: url("../images/edit-find.svg");
-    background-position: 2px;
-    background-repeat: no-repeat;
-    background-size: 1.5em;
-    border: 1px solid var(--color-border-default);
-    border-radius: 3px;
-    min-width: 170px;
-    padding: 2px 2px 2px 25px;
+#torrentsFilterInput,
+#torrentFilesFilterInput {
+    background: var(--neo-fill) var(--neo-icon-search) 8px center / 13px no-repeat;
+    border-color: transparent;
+    border-radius: var(--neo-radius-control);
+    box-shadow: none;
+    min-width: 190px;
+    padding: 3px 8px 3px 27px;
+}
+
+#torrentsFilterInput:focus-visible,
+#torrentFilesFilterInput:focus-visible {
+    background-color: var(--neo-control);
+    border-color: var(--color-accent-blue);
 }
 
 #torrentsFilterRegexBox {
@@ -507,63 +741,57 @@ a.propButton img {
 }
 
 #torrentsFilterRegexBox + label {
-    background-image: url("../images/regex.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 1.5em;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
+    background: url("../images/regex.svg") center / 16px no-repeat;
+    border: 1px solid transparent;
+    border-radius: var(--neo-radius-control);
     cursor: pointer;
     display: inline-block;
     height: 26px;
-    margin-bottom: -9px;
     width: 26px;
+}
+
+#torrentsFilterRegexBox + label:hover {
+    background-color: var(--neo-fill);
 }
 
 #torrentsFilterRegexBox:checked + label {
-    background-color: var(--color-background-default);
-    background-image: url("../images/regex.svg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 1.5em;
-    border: 1px solid var(--color-accent-blue);
-    border-radius: 4px;
-    display: inline-block;
-    height: 26px;
-    margin-bottom: -9px;
-    width: 26px;
+    background-color: var(--neo-selection-soft);
+    border-color: transparent;
 }
 
 #torrentsFilterSelect {
-    padding: 2px 4px;
+    padding-bottom: 2px;
+    padding-top: 2px;
 }
 
 #torrentFilesFilterToolbar {
     float: right;
-    margin-right: 5px;
+    margin-right: 6px;
+    margin-top: 1px;
 }
 
 #torrentFilesFilterInput {
-    background-image: url("../images/edit-find.svg");
-    background-position: 1px;
-    background-repeat: no-repeat;
-    background-size: 1.5em;
-    margin-top: -1px;
+    min-width: 0;
     padding-bottom: 1px;
-    padding-left: 2em;
     padding-top: 1px;
     width: 190px;
 }
 
 fieldset.settings {
     border: 1px solid var(--color-border-default);
-    padding: 4px 4px 6px 6px;
+    margin: 0 0 12px;
+    padding: 10px 14px 12px;
+}
+
+fieldset.settings fieldset.settings {
+    background-color: transparent;
+    margin: 6px 0;
 }
 
 fieldset.settings legend {
-    font-weight: bold;
-    margin-left: 8px;
-    padding: 4px;
+    font-weight: 600;
+    margin-left: 0;
+    padding: 0 0 4px;
 }
 
 fieldset.settings label {
@@ -579,22 +807,27 @@ div.formRow {
     display: block;
 }
 
+/* Sidebar filters */
+
 .filterTitle {
+    color: var(--color-text-secondary);
     cursor: pointer;
     display: flex;
-    font-weight: bold;
-    gap: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 2px;
     overflow: hidden;
-    padding: 4px 0 4px 6px;
+    padding: 12px 0 4px 12px;
     text-overflow: ellipsis;
-    text-transform: uppercase;
     user-select: none;
     white-space: nowrap;
 }
 
 .filterTitle img {
     height: 16px;
-    padding: 2px;
+    opacity: 0.55;
+    padding: 3px;
+    transition: transform var(--neo-duration) var(--neo-ease);
     width: 16px;
 }
 
@@ -609,27 +842,26 @@ div.formRow {
 
 ul.filterList {
     margin: 0;
-    padding-left: 0;
+    padding: 0 8px;
 }
 
-ul.filterList span.link:hover :is(img, button),
 ul.filterList .selectedFilter > .link :is(img, button) {
-    filter: var(--color-icon-hover);
+    filter: none;
 }
 
 ul.filterList span.link {
     align-items: center;
+    border-radius: var(--neo-radius-row);
     cursor: pointer;
     display: flex;
-    gap: 5px;
+    gap: 7px;
     overflow: hidden;
-    padding: 4px 6px;
+    padding: 3px 8px;
     white-space: nowrap;
 }
 
 ul.filterList span.link:hover {
-    background-color: var(--color-background-hover);
-    color: var(--color-text-white);
+    background-color: var(--neo-fill);
 }
 
 span.link :last-child {
@@ -643,9 +875,10 @@ span.link :is(img, button) {
     flex-shrink: 0;
 }
 
-.selectedFilter > span.link {
-    background-color: var(--color-background-blue);
-    color: var(--color-text-white);
+.selectedFilter > span.link,
+ul.filterList .selectedFilter > span.link:hover {
+    background-color: var(--neo-fill-strong);
+    font-weight: 600;
 }
 
 .subcategories,
@@ -663,15 +896,17 @@ span.link :is(img, button) {
     background: url("../images/go-down.svg") center center / 10px no-repeat
         transparent;
     border: none;
+    box-shadow: none;
     display: none;
     height: 16px;
     margin-right: -2px;
     padding: 2px;
-    transition: transform 0.3s;
+    transition: transform var(--neo-duration) var(--neo-ease);
     width: 16px;
 }
 
 td.generalLabel {
+    color: var(--color-text-secondary);
     text-align: right;
     vertical-align: top;
     white-space: nowrap;
@@ -712,16 +947,25 @@ td.noWrap {
 }
 
 #propGeneral {
-    padding: 2px;
+    padding: 8px 10px;
+
+    & fieldset {
+        margin: 0 0 10px;
+        padding: 10px 12px;
+    }
+
+    & hr {
+        display: none;
+    }
 }
 
 #propBarsWrapper {
     align-items: center;
     display: grid;
-    gap: 4px 8px;
+    gap: 6px 10px;
     grid-template-columns: auto 1fr auto;
     height: auto;
-    margin: 5px 2px;
+    margin: 2px 2px 12px;
 }
 
 #propAvailabilityWrapper {
@@ -729,7 +973,27 @@ td.noWrap {
 }
 
 .propBarLabel {
+    color: var(--color-text-secondary);
     text-align: right;
+}
+
+/* pieces bars drawn by piecesbar.js */
+#progress > div,
+#availability > div {
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* progressbar.js sets an inline 1px border on its host */
+progress-bar {
+    border: 0 !important;
+    border-radius: 6px;
+    box-shadow: inset 0 0 0 1px var(--color-border-default);
+    overflow: hidden;
+}
+
+tr.selected progress-bar {
+    box-shadow: 0 0 0 1px hsl(0deg 0% 100% / 70%);
 }
 
 #watched_folders_tab {
@@ -738,22 +1002,26 @@ td.noWrap {
 
 #watched_folders_tab td,
 #watched_folders_tab th {
-    border: 1px solid black;
+    border: 1px solid var(--color-border-default);
     padding: 2px 4px;
 }
 
 .select-watched-folder-editable {
-    border: 1px solid var(--color-border-default);
-    height: 22px;
+    border: 1px solid var(--neo-control-border);
+    border-radius: var(--neo-radius-control);
+    height: 24px;
+    overflow: hidden;
     position: relative;
     width: 160px;
 }
 
 .select-watched-folder-editable select {
     border: none;
+    border-radius: 0;
     bottom: 0;
+    box-shadow: none;
     left: 0;
-    padding: 0;
+    padding: 0 0 0 6px;
     position: absolute;
     top: 0;
     width: 158px;
@@ -761,11 +1029,13 @@ td.noWrap {
 
 .select-watched-folder-editable input {
     border: none;
+    border-radius: 0;
+    box-shadow: none;
     left: 0;
-    padding: 0;
+    padding: 0 0 0 6px;
     position: absolute;
     top: 0;
-    width: 140px;
+    width: 136px;
 }
 
 .select-watched-folder-editable select:focus,
@@ -781,27 +1051,25 @@ td.noWrap {
     margin-left: -1px;
 }
 
-.combo_priority {
+select.combo_priority {
     font-size: 1em;
-    height: 1.5em;
-    padding: 0 6px;
-    vertical-align: top;
+    height: 1.8em;
+    padding-bottom: 0;
+    padding-top: 0;
+    vertical-align: middle;
 }
 
 td.statusBarSeparator {
-    background-image: url("../images/toolbox-divider.svg");
-    background-position: center 1px;
-    background-repeat: no-repeat;
-    background-size: 2px 18px;
-    width: 24px;
+    background: linear-gradient(var(--color-border-default), var(--color-border-default)) center / 1px 14px no-repeat;
+    width: 21px;
 }
 
 /* Statistics window */
 #statisticsContent {
     & table {
         background-color: var(--color-background-default);
-        border-radius: 6px;
-        margin-bottom: 6px;
+        border-radius: 10px;
+        margin-bottom: 8px;
         padding: 6px 10px;
 
         & .statisticsValue {
@@ -810,7 +1078,7 @@ td.statusBarSeparator {
     }
 
     & h3 {
-        color: var(--color-text-default);
+        color: var(--color-text-secondary);
         margin-bottom: 1px;
         padding: 2px;
     }
@@ -848,8 +1116,7 @@ td.statusBarSeparator {
 
 #torrentFilesTableDiv .dynamicTable tr.nonAlt:hover,
 #addTorrentFilesTableDiv .dynamicTable tr.nonAlt:hover {
-    background-color: var(--color-background-hover);
-    color: var(--color-text-white);
+    background-color: var(--neo-row-hover);
 }
 
 /* Modals */
@@ -868,8 +1135,8 @@ td.statusBarSeparator {
 }
 
 #rememberBtn {
-    background: url("../images/object-locked.svg") center center / 24px
-        no-repeat var(--color-background-popup);
+    background: url("../images/object-locked.svg") center center / 22px
+        no-repeat var(--neo-control);
     height: 38px;
     padding: 4px 6px;
     width: 38px;
@@ -880,8 +1147,8 @@ td.statusBarSeparator {
 }
 
 #deleteFromDiskCB {
-    margin: 0 2px 0 0;
-    vertical-align: -1px;
+    margin: 0 4px 0 0;
+    vertical-align: -2px;
 }
 
 .dialogMessage {
@@ -908,11 +1175,81 @@ td.statusBarSeparator {
 
 .confirmWarning,
 .confirmDialogWarning {
-    background: url("../images/dialog-warning.svg") center center no-repeat;
+    background: url("../images/dialog-warning.svg") center center / 32px no-repeat;
     height: 38px;
     width: 38px;
 }
 
 .confirmWarning {
     background-image: url("../images/help-about.svg");
+}
+
+/* Touch screens and narrow windows: bigger tap targets */
+
+@media (pointer: coarse), (max-width: 760px) {
+    #mochaToolbar {
+        column-gap: 0;
+        padding: 4px 6px 6px;
+    }
+
+    .mochaToolButton {
+        height: 20px;
+        padding: 7px 5px;
+        width: 20px;
+    }
+
+    #mochaToolbar .divider {
+        margin-left: 2px;
+        padding-left: 2px;
+    }
+
+    #torrentsFilterToolbar {
+        flex: 1 1 100%;
+        margin-left: 0;
+    }
+
+    #torrentsFilterInput {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    label[for="torrentsFilterSelect"] {
+        display: none;
+    }
+
+    #mainWindowTabs {
+        margin: 0;
+    }
+
+    ul.filterList span.link {
+        padding-bottom: 8px;
+        padding-top: 8px;
+    }
+
+    .contextMenu li a {
+        padding-bottom: 9px;
+        padding-top: 9px;
+    }
+
+    input:is([type="search"], [type="text"], [type="number"], [type="password"], [type="url"], [type="email"]),
+    select,
+    textarea {
+        min-height: 32px;
+    }
+
+    input[type="checkbox"],
+    input[type="radio"] {
+        height: 18px;
+        width: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }

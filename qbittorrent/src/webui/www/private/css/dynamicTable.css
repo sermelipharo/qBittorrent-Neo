@@ -3,13 +3,16 @@
     Dynamic Table
     v 0.4
 
+    Restyled as the qBittorrent Neo theme: inset rounded accent
+    selection, quiet hover and macOS-like column headers.
+
 **************************************************************/
 .altRowColors tbody tr:nth-child(odd of :not(.invisible)) {
     background-color: var(--color-background-default);
 }
 
 #transferList .dynamicTable td {
-    padding: 2px;
+    padding: 3px 6px;
 }
 
 :root.compact .dynamicTable td {
@@ -23,14 +26,30 @@
     padding-top: 2px;
 }
 
+.dynamicTableDiv table.dynamicTable tbody tr:hover > td {
+    background-color: var(--neo-row-hover);
+}
+
 .dynamicTableDiv table.dynamicTable tbody tr.selected {
-    background-color: var(--color-background-blue);
+    background-color: transparent;
     color: var(--color-text-white);
 }
 
-.dynamicTableDiv table.dynamicTable tbody tr:hover {
-    background-color: var(--color-background-hover);
-    color: var(--color-text-white);
+.dynamicTableDiv table.dynamicTable tbody tr.selected > td {
+    background-color: var(--color-background-blue);
+}
+
+.dynamicTableDiv table.dynamicTable tbody tr.selected > td:first-child {
+    border-radius: var(--neo-radius-row) 0 0 var(--neo-radius-row);
+}
+
+.dynamicTableDiv table.dynamicTable tbody tr.selected > td:last-child {
+    border-radius: 0 var(--neo-radius-row) var(--neo-radius-row) 0;
+}
+
+/* adjacent selected rows read as one block */
+.dynamicTableDiv table.dynamicTable tbody tr.selected + tr.selected > td {
+    box-shadow: inset 0 1px 0 hsl(0deg 0% 100% / 18%);
 }
 
 #transferList .stateIcon,
@@ -108,8 +127,10 @@
 }
 
 .dynamicTable th {
-    border-right: 1px solid var(--color-border-default);
-    padding: 4px 2px;
+    background: linear-gradient(var(--color-border-default), var(--color-border-default)) right center / 1px 14px no-repeat;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    padding: 5px 6px;
     white-space: nowrap;
 }
 
@@ -117,12 +138,12 @@
     cursor: pointer;
 }
 
-.dynamicTable tr:is(:hover, .selected) img:not(.flags) {
+.dynamicTable tr.selected img:not(.flags) {
     filter: var(--color-icon-hover);
 }
 
 .dynamicTable td {
-    padding: 4px 2px;
+    padding: 4px 6px;
     white-space: nowrap;
 }
 
@@ -135,9 +156,10 @@
 
 .dynamicTable th.sorted {
     background-image: url("../images/go-up.svg");
-    background-position: right 3px center;
+    background-position: right 6px center;
     background-repeat: no-repeat;
-    background-size: 12px;
+    background-size: 10px;
+    color: var(--color-text-default);
 }
 
 .dynamicTable th.sorted.reverse {
@@ -157,6 +179,7 @@ div:has(> div.dynamicTableFixedHeaderDiv):not(.invisible) {
 }
 
 .dynamicTableFixedHeaderDiv {
+    background-color: var(--color-background-primary);
     flex-shrink: 0;
     overflow: hidden;
 }
@@ -169,6 +192,11 @@ div:has(> div.dynamicTableFixedHeaderDiv):not(.invisible) {
 .dynamicTableDiv {
     flex-grow: 1;
     overflow: auto;
+}
+
+#transferList .dynamicTableDiv,
+#transferList .dynamicTableFixedHeaderDiv {
+    font-size: 13px;
 }
 
 /* Trackers table */
@@ -191,5 +219,13 @@ div:has(> div.dynamicTableFixedHeaderDiv):not(.invisible) {
 
     & .trackerNotWorking {
         color: var(--color-tracker-not-working);
+    }
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+    #transferList .dynamicTable td,
+    .dynamicTable td {
+        padding-bottom: 8px;
+        padding-top: 8px;
     }
 }

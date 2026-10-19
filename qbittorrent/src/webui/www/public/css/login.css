@@ -1,54 +1,174 @@
+/*
+ * qBittorrent Neo theme: login page.
+ * Standalone (the public page does not load style.css); follows
+ * prefers-color-scheme.
+ */
+
+:root {
+    --accent: hsl(216deg 100% 50%);
+    --text: hsl(240deg 6% 12%);
+    --text-secondary: hsl(240deg 3% 44%);
+    --window: hsl(240deg 11% 96.5%);
+    --card: hsl(0deg 0% 100%);
+    --control: hsl(0deg 0% 100%);
+    --control-border: hsl(240deg 6% 20% / 18%);
+    --error: hsl(357deg 85% 50%);
+    --focus-ring: 0 0 0 3px hsl(216deg 100% 50% / 30%);
+    --card-shadow: 0 0 0 0.5px hsl(0deg 0% 0% / 8%), 0 12px 40px hsl(0deg 0% 0% / 10%);
+
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --accent: hsl(216deg 100% 58%);
+        --text: hsl(0deg 0% 95%);
+        --text-secondary: hsl(240deg 4% 64%);
+        --window: hsl(240deg 4% 9%);
+        --card: hsl(240deg 3% 15%);
+        --control: hsl(0deg 0% 100% / 7%);
+        --control-border: hsl(0deg 0% 100% / 12%);
+        --error: hsl(0deg 90% 68%);
+        --focus-ring: 0 0 0 3px hsl(216deg 100% 60% / 45%);
+        --card-shadow: 0 0 0 0.5px hsl(0deg 0% 100% / 10%), 0 12px 40px hsl(0deg 0% 0% / 50%);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    line-height: 18px;
+    background-color: var(--window);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
     margin: 0;
+    min-height: 100vh;
     text-align: left;
+    -webkit-font-smoothing: antialiased;
 }
 
 .col {
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
 }
 
 .row {
-    margin-bottom: 5px;
+    margin-bottom: 12px;
 }
 
 #main {
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 5em;
+    justify-content: center;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 24px 16px;
     text-align: center;
 }
 
-.login-input {
-    box-sizing: border-box;
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    width: 100%;
+#main h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 14px 0 20px;
+    order: 1;
 }
 
-#formplace {
-    padding: 10px;
-    text-align: left;
-}
-
-#error_msg {
-    color: #ff0000;
-    white-space: pre;
-}
-
-#loginButton {
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
+#logo {
+    order: 0;
 }
 
 #logo img {
-    height: 11em;
+    filter: drop-shadow(0 4px 10px hsl(216deg 60% 30% / 25%));
+    height: 72px;
+    width: 72px;
+}
+
+#formplace {
+    background-color: var(--card);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    max-width: 340px;
+    order: 2;
+    padding: 22px 22px 10px;
+    text-align: left;
+    width: 100%;
+}
+
+#formplace label {
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+#formplace br {
+    display: none;
+}
+
+.login-input {
+    background-color: var(--control);
+    border: 1px solid var(--control-border);
+    border-radius: 9px;
+    color: var(--text);
+    display: block;
+    font: inherit;
+    font-size: 15px;
+    margin: 5px 0 0;
+    padding: 8px 11px;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+    width: 100%;
+}
+
+.login-input:focus {
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
+#loginButton {
+    background-color: var(--accent);
+    border: 0;
+    border-radius: 9px;
+    color: hsl(0deg 0% 100%);
+    cursor: pointer;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 6px;
+    padding: 9px;
+    transition: filter 160ms ease;
+    width: 100%;
+}
+
+#loginButton:hover {
+    filter: brightness(1.06);
+}
+
+#loginButton:active {
+    filter: brightness(0.94);
+}
+
+#loginButton:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
+#error_msg {
+    color: var(--error);
+    font-size: 12px;
+    margin-top: 14px;
+    order: 3;
+    white-space: pre;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-input,
+    #loginButton {
+        transition: none;
+    }
 }

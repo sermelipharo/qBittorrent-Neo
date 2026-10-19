@@ -2,7 +2,7 @@
 
 Window.css for Mocha UI
 
-Theme: Default
+Theme: Default (restyled as the qBittorrent Neo theme: windows look like macOS sheets)
 
 Copyright:
 	Copyright (c) 2007-2009 Greg Houston, <http://greghoustondesign.com/>.
@@ -19,47 +19,37 @@ Required by:
 ---------------------------------------------------------------- */
 
 .mocha {
-    background-color: var(--color-background-default);
-    border-radius: 5px;
-    box-shadow: rgb(51 51 51) 0 1px 5px;
+    background-color: var(--color-background-popup);
+    border-radius: var(--neo-radius-sheet);
+    box-shadow: var(--neo-shadow-sheet);
     display: none;
     overflow: hidden;
 }
 
 .mochaOverlay {
-    background-color: var(--color-background-default);
-    border-radius: 5px;
+    background-color: var(--color-background-popup);
+    border-radius: var(--neo-radius-sheet);
     height: auto !important; /* also fixes out of block issue */
     left: 0;
     position: absolute; /* This is also set in theme.js in order to make theme transitions smoother */
     top: 0;
 }
 
-/*
-
-	We get a little creative here in order to define a gradient in the CSS using a query
-	string appended to a background image.
-
-	"from" is the top color of the gradient. "to" is the bottom color of the gradient.
-
-	Both must be hex values without the leading # sign.
-
-*/
-
 .mochaTitlebar {
-    background-color: var(--color-background-default);
-    border-radius: 5px;
+    background-color: var(--color-background-popup);
+    border-radius: var(--neo-radius-sheet) var(--neo-radius-sheet) 0 0;
     overflow: hidden;
     width: 100%;
 }
 
 .mochaTitlebar h3 {
     background-size: 16px !important; /* override mocha titlebar logo inline style */
-    font-size: 12px;
-    font-weight: bold;
-    line-height: 15px;
+    color: var(--color-text-default);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
     overflow: hidden;
-    padding: 5px 10px 4px 12px;
+    padding: 6px 40px 4px 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -78,14 +68,14 @@ div.mochaToolbarWrapper.bottom {
 }
 
 .mochaToolbar {
-    border-top: 1px solid var(--color-border-default);
+    border-top: 0;
     height: auto !important;
-    padding-top: 4px;
+    padding: 4px 10px 6px;
     width: 100%; /* For IE */
 }
 
 .mochaContentBorder {
-    border-bottom: 1px solid var(--color-border-default);
+    border-bottom: 0;
     border-top: 1px solid var(--color-border-default);
 }
 
@@ -97,11 +87,11 @@ div.mochaToolbarWrapper.bottom {
 }
 
 .mochaContent {
-    padding: 10px 12px;
+    padding: 12px 14px;
 }
 
 .mocha .handle {
-    background: #00ff00;
+    background: transparent;
     font-size: 1px; /* For IE6 */
     height: 3px;
     opacity: 0;
@@ -113,45 +103,47 @@ div.mochaToolbarWrapper.bottom {
 
 /* Corner resize handles */
 .mocha .corner {
-    background: #ff0000;
+    background: transparent;
     height: 10px;
     width: 10px;
 }
 
 /* Bottom right resize handle */
 .mocha .cornerSE {
-    background-color: var(--color-background-default);
+    background-color: transparent;
     height: 20px;
     width: 20px;
 }
 
 .mochaControls {
-    height: 14px;
+    height: 20px;
     position: absolute;
-    right: 6px;
-    top: 6px;
+    right: 8px;
+    top: 4px;
     width: 52px;
     z-index: 4;
 }
 
-/*
-	To use images for these buttons:
-	1. Set the useCanvasControls window option to false.
-	2. If you use a different button size you may need to reposition the controls.
-	   Modify the controlsOffset window option.
-	2. Replcac the background-color with a background-image for each button.
-
-*/
+/* Window controls: round buttons with a glyph, like macOS sheet close buttons */
 .mochaMinimizeButton,
 .mochaMaximizeButton,
 .mochaCloseButton {
+    background-color: var(--neo-fill);
+    border-radius: 50%;
     cursor: pointer;
     float: right;
-    height: 14px;
-    margin-left: 5px;
+    height: 20px;
+    margin-left: 6px;
     position: relative;
-    width: 14px;
+    transition: background-color var(--neo-duration) var(--neo-ease);
+    width: 20px;
     z-index: 4;
+}
+
+.mochaMinimizeButton:hover,
+.mochaMaximizeButton:hover,
+.mochaCloseButton:hover {
+    background-color: var(--neo-fill-strong);
 }
 
 .mochaMaximizeButton::before,
@@ -159,10 +151,10 @@ div.mochaToolbarWrapper.bottom {
 .mochaMinimizeButton::before,
 .mochaCloseButton::before,
 .mochaCloseButton::after {
-    background-color: var(--color-text-default);
+    background-color: var(--color-text-secondary);
     border-radius: 1px;
     content: "";
-    height: 2px;
+    height: 1.5px;
     left: 50%;
     position: absolute;
     top: 50%;
@@ -172,7 +164,7 @@ div.mochaToolbarWrapper.bottom {
 
 .mochaMaximizeButton::after {
     height: 9px;
-    width: 2px;
+    width: 1.5px;
 }
 
 .mochaCloseButton::before {
@@ -192,7 +184,7 @@ div.mochaToolbarWrapper.bottom {
     bottom: 7px;
     display: none;
     height: 16px;
-    left: 6px;
+    left: 8px;
     position: absolute;
     width: 16px;
 }
@@ -202,7 +194,7 @@ div.mochaToolbarWrapper.bottom {
     background-size: 16px;
     bottom: 7px;
     height: 16px;
-    left: 6px;
+    left: 8px;
     position: absolute;
     width: 16px;
 }
@@ -228,7 +220,7 @@ div.mochaToolbarWrapper.bottom {
 ---------------------------------------------------------------- */
 
 #modalOverlay {
-    background: hsl(0deg 0% 0% / 30%);
+    background: hsl(240deg 10% 10% / 28%);
     display: none;
     left: 0;
     opacity: 0;
@@ -252,7 +244,7 @@ div.mochaToolbarWrapper.bottom {
 /* Underlay */
 
 #windowUnderlay {
-    background: #ffffff;
+    background: var(--neo-window);
     left: 0;
     position: fixed;
     top: 0;
@@ -288,7 +280,7 @@ div.mochaToolbarWrapper.bottom {
 /* Modals */
 
 .modal2 {
-    border: 8px solid #ffffff;
+    border: 8px solid var(--color-background-popup);
 }
 
 .modal2 .mochaContentBorder {
@@ -298,12 +290,12 @@ div.mochaToolbarWrapper.bottom {
 /* Window Themes */
 
 .mocha.no-canvas {
-    background: #e5e5e5;
-    border: 1px solid #555555;
+    background: var(--color-background-popup);
+    border: 0;
 }
 
 .mocha.no-canvas .mochaTitlebar {
-    background: #e5e5e5;
+    background: var(--color-background-popup);
 }
 
 .mocha.transparent .mochaTitlebar h3 {
@@ -316,7 +308,7 @@ div.mochaToolbarWrapper.bottom {
 }
 
 .mocha.notification {
-    background: #cedff2;
+    background: var(--neo-material);
 }
 
 .mocha.notification .mochaTitlebar {
@@ -330,7 +322,7 @@ div.mochaToolbarWrapper.bottom {
 .mocha.notification .mochaContentWrapper {
     background: transparent;
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 600;
     text-align: center;
 }
 

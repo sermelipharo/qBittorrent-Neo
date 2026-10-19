@@ -1,3 +1,5 @@
+/* Restyled for the qBittorrent Neo theme (popover menu, control tokens). */
+
 .hidden-search {
     display: none !important;
 }
@@ -11,9 +13,12 @@ li[data-parent].open:not(.hidden-search) {
 }
 
 .vsb-menu {
+    backdrop-filter: var(--neo-blur);
     background-clip: padding-box;
-    background-color: var(--color-background-default);
-    border: 1px solid var(--color-border-default);
+    background-color: var(--neo-material);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: var(--neo-shadow-popover);
     cursor: pointer;
     display: block;
     font-size: 11px;
@@ -72,10 +77,11 @@ li.short {
 }
 
 .vsb-main button {
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
+    border: 1px solid var(--neo-control-border);
+    border-radius: var(--neo-radius-control);
+    font-weight: normal;
     min-width: 120px;
-    padding: 6px 12px;
+    padding: 3px 10px;
     text-align: left;
     width: 100%;
     z-index: 1;
@@ -96,8 +102,9 @@ li.short {
 }
 
 .vsb-menu li {
+    border-radius: 5px;
     font-size: 12px;
-    padding: 4px 26px;
+    padding: 3px 26px;
 }
 
 .vsb-menu li:hover {
@@ -178,7 +185,7 @@ li.short {
 }
 
 .vsb-menu .multi li.grouped-option:hover {
-    color: rgb(52 31 112);
+    color: var(--color-text-blue);
     font-weight: bold;
     text-decoration: underline;
 }

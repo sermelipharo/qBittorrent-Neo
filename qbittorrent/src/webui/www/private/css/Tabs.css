@@ -2,7 +2,7 @@
 
 Tabs.css for Mocha UI
 
-Theme: Default
+Theme: Default (restyled as the qBittorrent Neo theme: tabs are segmented controls)
 
 Copyright:
 	Copyright (c) 2007-2009 Greg Houston, <http://greghoustondesign.com/>.
@@ -23,46 +23,63 @@ Required by:
 }
 
 .tab-menu {
-    display: flex;
-    font-size: 11px;
+    background-color: var(--neo-fill);
+    border-radius: 8px;
+    display: inline-flex;
+    font-size: 12px;
+    gap: 1px;
     list-style-type: none;
+    max-width: 100%;
     overflow-x: auto;
-    padding: 0;
+    padding: 2px;
+    scrollbar-width: none;
+    vertical-align: top;
 }
 
 .tab-menu li {
     cursor: pointer;
     flex: 0 0 auto;
-    float: left;
-}
-
-.tab-menu .selected img,
-.tab-menu li:hover img {
-    filter: var(--color-icon-hover);
 }
 
 .tab-menu li a {
     align-items: center;
-    background-color: var(--color-background-default);
-    border-radius: 3px 3px 0 0;
+    border-radius: 6px;
     color: var(--color-text-default);
     display: flex;
     gap: 5px;
-    margin-left: 6px;
-    padding: 5px 7px 3px;
+    padding: 2px 10px;
     text-align: center;
+    transition: background-color var(--neo-duration) var(--neo-ease);
+    white-space: nowrap;
 }
 
-.tab-menu li:first-child a {
-    margin-left: 4px;
+.tab-menu li img {
+    height: 14px;
+    width: 14px;
 }
 
 .tab-menu li:hover a {
-    background-color: var(--color-background-hover);
-    color: var(--color-text-white);
+    background-color: var(--neo-fill);
 }
 
 .tab-menu li.selected a {
-    background-color: var(--color-background-blue);
-    color: var(--color-text-white);
+    background-color: var(--neo-segment);
+    box-shadow: 0 0.5px 2px hsl(0deg 0% 0% / 14%), 0 0 0 0.5px hsl(0deg 0% 0% / 4%);
+    font-weight: 500;
+}
+
+/* properties panel header and window toolbars host the segmented control */
+#propertiesTabs {
+    margin: 3px 0 0 8px;
+    max-width: calc(100% - 44px); /* leave room for the floated collapse button */
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+    .tab-menu li a {
+        padding: 4px 11px;
+    }
+
+    #propertiesTabs {
+        margin-top: 1px;
+    }
 }
