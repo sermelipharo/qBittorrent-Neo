@@ -148,6 +148,7 @@ search plugins and translations.
 * **[Qt](https://www.qt.io)** (LGPL), **[Boost](https://www.boost.org)**,
   **[OpenSSL](https://www.openssl.org)** and **[zlib](https://zlib.net)**.
 * IP geolocation data by [DB-IP](https://db-ip.com) (CC BY 4.0).
+* Some Web UI icons are based on [Lucide](https://lucide.dev) (ISC license).
 
 qBittorrent Neo is free software under the **GNU General Public License, version 3
 or later**; qBittorrent's own source code keeps its GPL-2.0-or-later license. See

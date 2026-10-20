@@ -77,7 +77,11 @@ upstream's security properties and fixes.
   `data:` SVG URIs in CSS, which the server's CSP already allows
   (`img-src 'self' data:`); no inline scripts added, so the CSP
   (`default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'
-  'unsafe-inline'; …`) needs no change.
+  'unsafe-inline'; …`) needs no change. The redrawn icons in
+  `private/images` are static SVGs loaded through `<img>` and CSS
+  backgrounds (where scripts never run): only paths, shapes and a `<style>`
+  block with colors, no scripts, event attributes, links, `<image>` or
+  `url()` references.
 * External programs run on torrent added/finished use qBittorrent's
   argument splitting with per-argument placeholder substitution and no
   shell, so torrent names cannot inject commands.

@@ -25,6 +25,8 @@ Widgets graphical interface is replaced by a native SwiftUI macOS interface.
   (private/scripts/progressbar.js) is redrawn as a thin bar with the
   percentage beside it, and the filters sidebar starts collapsed on
   phone-width screens (private/scripts/client.js); markup is unchanged.
+  Most icons in private/images are redrawn as a line set (same file names);
+  some of them are based on Lucide icons, see below.
 
 * core/ hosts qBittorrent's application core (src/base, src/webui) inside
   the app. core/src/neoapplication.cpp and core/src/addmanager.cpp contain
@@ -54,3 +56,29 @@ Third-party components linked into the application:
 * The free IP to Country Lite database by DB-IP (https://db-ip.com),
   Creative Commons Attribution 4.0 International License, downloaded at run
   time by qBittorrent's GeoIP manager.
+
+Third-party components of the Web UI:
+
+* Some icons in qbittorrent/src/webui/www/private/images are based on Lucide
+  0.460.0 (https://lucide.dev), restroked and recolored; each of these files
+  starts with a comment naming Lucide. Lucide is licensed under the ISC
+  License:
+
+  ISC License
+
+  Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as
+  part of Feather (MIT). All other copyright (c) for Lucide are held by
+  Lucide Contributors 2022.
+
+  Permission to use, copy, modify, and/or distribute this software for any
+  purpose with or without fee is hereby granted, provided that the above
+  copyright notice and this permission notice appear in all copies.
+
+  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
