@@ -591,8 +591,10 @@ window.addEventListener("DOMContentLoaded", async (event) => {
         document.getElementById("desktopFooterWrapper").classList.add("invisible");
     }
 
-    // Show Filters Sidebar is enabled by default
-    let showFiltersSidebar = (clientData.get("show_filters_sidebar") ?? true) === true;
+    // Show Filters Sidebar is enabled by default, except on phone-width screens where it starts
+    // collapsed for this page load (View > Filters Sidebar brings it back)
+    let showFiltersSidebar = ((clientData.get("show_filters_sidebar") ?? true) === true)
+        && !window.matchMedia("(max-width: 600px)").matches;
     if (!showFiltersSidebar) {
         document.getElementById("showFiltersSidebarLink").firstElementChild.style.opacity = "0";
         document.getElementById("filtersColumn").classList.add("invisible");
@@ -1502,7 +1504,6 @@ window.addEventListener("DOMContentLoaded", async (event) => {
     // main window tabs
 
     const showTransfersTab = () => {
-        const showFiltersSidebar = (clientData.get("show_filters_sidebar") ?? true) === true;
         if (showFiltersSidebar) {
             document.getElementById("filtersColumn").classList.remove("invisible");
             document.getElementById("filtersColumn_handle").classList.remove("invisible");
