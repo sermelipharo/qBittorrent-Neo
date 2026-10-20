@@ -38,56 +38,46 @@ window.qBittorrent.ProgressBar ??= (() => {
 
     class ProgressBar extends HTMLElement {
         static #progressBarUniqueId = 0;
-        static #styles = {
-            height: 12,
-            darkbg: "var(--color-background-blue)",
-            darkfg: "var(--color-text-white)",
-            lightbg: "var(--color-background-default)",
-            lightfg: "var(--color-text-default)",
-        };
 
         #value = 0;
 
         #id = ++ProgressBar.#progressBarUniqueId;
 
-        #light = document.createElement("div");
-        #dark = document.createElement("div");
+        #track = document.createElement("div");
+        #fill = document.createElement("div");
+        #label = document.createElement("span");
 
         constructor(value) {
             super();
 
-            this.#dark.style.width = "100%";
-            this.#dark.style.height = `${ProgressBar.#styles.height}px`;
-            this.#dark.style.background = ProgressBar.#styles.darkbg;
-            this.#dark.style.boxSizing = "content-box";
-            this.#dark.style.color = ProgressBar.#styles.darkfg;
-            this.#dark.style.position = "absolute";
-            this.#dark.style.textAlign = "center";
-            this.#dark.style.left = "0";
-            this.#dark.style.top = "0";
-            this.#dark.style.lineHeight = `${ProgressBar.#styles.height}px`;
+            // A thin bar with the percentage beside it, so the text never sits on the fill.
+            // Colors come from custom properties, which the page stylesheet can override.
+            this.#track.style.flex = "1 1 auto";
+            this.#track.style.minWidth = "16px";
+            this.#track.style.height = "var(--progress-bar-height, 5px)";
+            this.#track.style.borderRadius = "var(--progress-bar-height, 5px)";
+            this.#track.style.background = "var(--progress-bar-track, var(--color-border-default))";
+            this.#track.style.overflow = "hidden";
 
-            this.#light.style.width = "100%";
-            this.#light.style.height = `${ProgressBar.#styles.height}px`;
-            this.#light.style.background = ProgressBar.#styles.lightbg;
-            this.#light.style.boxSizing = "content-box";
-            this.#light.style.color = ProgressBar.#styles.lightfg;
-            this.#light.style.position = "absolute";
-            this.#light.style.textAlign = "center";
-            this.#light.style.left = "0";
-            this.#light.style.top = "0";
-            this.#light.style.lineHeight = `${ProgressBar.#styles.height}px`;
+            this.#fill.style.height = "100%";
+            this.#fill.style.background = "var(--progress-bar-fill, var(--color-background-blue))";
+
+            this.#label.style.flex = "0 0 auto";
+            this.#label.style.minWidth = "5.6ch";
+            this.#label.style.textAlign = "right";
+            this.#label.style.fontVariantNumeric = "tabular-nums";
+            this.#label.style.color = "var(--progress-bar-text, inherit)";
+
+            this.#track.appendChild(this.#fill);
 
             this.attachShadow({ mode: "open" });
             this.shadowRoot.host.id = this.#id;
-            this.shadowRoot.host.style.display = "block";
-            this.shadowRoot.host.style.border = "1px solid var(--color-border-default)";
-            this.shadowRoot.host.style.boxSizing = "content-box";
-            this.shadowRoot.host.style.height = `${ProgressBar.#styles.height}px`;
-            this.shadowRoot.host.style.position = "relative";
-            this.shadowRoot.host.style.margin = "0 auto";
-            this.shadowRoot.appendChild(this.#dark);
-            this.shadowRoot.appendChild(this.#light);
+            this.shadowRoot.host.style.display = "flex";
+            this.shadowRoot.host.style.alignItems = "center";
+            this.shadowRoot.host.style.gap = "6px";
+            this.shadowRoot.host.style.minWidth = "0";
+            this.shadowRoot.appendChild(this.#track);
+            this.shadowRoot.appendChild(this.#label);
 
             this.setValue(value);
         }
@@ -102,12 +92,8 @@ window.qBittorrent.ProgressBar ??= (() => {
                 value = 0;
             this.#value = Math.min(Math.max(value, 0), 100);
 
-            const displayedValue = `${window.qBittorrent.Misc.toFixedPointString(this.#value, 1)}%`;
-            this.#dark.textContent = displayedValue;
-            this.#light.textContent = displayedValue;
-
-            this.#dark.style.clipPath = `inset(0 ${100 - this.#value}% 0 0)`;
-            this.#light.style.clipPath = `inset(0 0 0 ${this.#value}%)`;
+            this.#label.textContent = `${window.qBittorrent.Misc.toFixedPointString(this.#value, 1)}%`;
+            this.#fill.style.width = `${this.#value}%`;
         }
     }
 

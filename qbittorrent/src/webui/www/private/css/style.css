@@ -984,16 +984,14 @@ td.noWrap {
     overflow: hidden;
 }
 
-/* progressbar.js sets an inline 1px border on its host */
+/* progressbar.js: thin track with the percentage beside it */
 progress-bar {
-    border: 0 !important;
-    border-radius: 6px;
-    box-shadow: inset 0 0 0 1px var(--color-border-default);
-    overflow: hidden;
+    --progress-bar-track: var(--neo-fill-strong);
 }
 
 tr.selected progress-bar {
-    box-shadow: 0 0 0 1px hsl(0deg 0% 100% / 70%);
+    --progress-bar-track: hsl(0deg 0% 100% / 32%);
+    --progress-bar-fill: var(--color-text-white);
 }
 
 #watched_folders_tab {
