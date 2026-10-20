@@ -21,7 +21,10 @@ Widgets graphical interface is replaced by a native SwiftUI macOS interface.
   translators (https://explore.transifex.com/sledgehammer999/qbittorrent/).
   The only local change is the Web UI theme: the stylesheets in
   qbittorrent/src/webui/www/private/css and public/css/login.css are
-  restyled (qBittorrent Neo theme); markup and scripts are unchanged.
+  restyled (qBittorrent Neo theme), the progress bar element
+  (private/scripts/progressbar.js) is redrawn as a thin bar with the
+  percentage beside it, and the filters sidebar starts collapsed on
+  phone-width screens (private/scripts/client.js); markup is unchanged.
 
 * core/ hosts qBittorrent's application core (src/base, src/webui) inside
   the app. core/src/neoapplication.cpp and core/src/addmanager.cpp contain
