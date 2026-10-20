@@ -342030,6 +342030,16 @@
         }
       }
     },
+    "Lucide contributors": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авторы Lucide"
+          }
+        }
+      }
+    },
     "DB-IP.com": {
       "localizations": {
         "ru": {

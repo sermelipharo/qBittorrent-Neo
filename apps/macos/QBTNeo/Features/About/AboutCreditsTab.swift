@@ -69,6 +69,11 @@ struct AboutCreditsTab: View {
                     author: "DB-IP.com",
                     license: "CC BY 4.0",
                     url: AboutLinks.dbip)
+                AboutComponentRow(
+                    name: "Lucide (Web UI icons)",
+                    author: "Lucide contributors",
+                    license: "ISC",
+                    url: AboutLinks.lucide)
             }
             Section("qBittorrent Neo") {
                 AboutPersonRow(role: "Author", name: "Lex Fradski")

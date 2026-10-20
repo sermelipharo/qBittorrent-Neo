@@ -16,6 +16,7 @@ enum AboutLinks {
     static let openssl = URL(string: "https://www.openssl.org")!
     static let zlib = URL(string: "https://zlib.net")!
     static let dbip = URL(string: "https://db-ip.com/")!
+    static let lucide = URL(string: "https://lucide.dev")!
     static let ccBy = URL(string: "https://creativecommons.org/licenses/by/4.0/")!
     // swiftlint:enable force_unwrapping
 }
