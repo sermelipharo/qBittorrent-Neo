@@ -61,6 +61,8 @@ final class AppModel {
     @ObservationIgnored private var eventObservers: [UUID: AsyncStream<CoreEvent>.Continuation] = [:]
     @ObservationIgnored private let notifications = NotificationManager()
     @ObservationIgnored private var hasSynced = false
+    /// In-app updates (Sparkle); inactive except in release downloads.
+    @ObservationIgnored let updater: AppUpdater
 
     init(launch: LaunchOptions = .current, gui: GUIPreferences = GUIPreferences()) {
         self.launch = launch
@@ -69,6 +71,7 @@ final class AppModel {
         list = TransferListModel(store: transfers, trackers: trackers, gui: gui)
         properties = PropertiesModel(patternFormat: gui.contentFilterPatternFormat)
         palette = CommandPaletteModel(persistent: !launch.isSnapshot)
+        updater = AppUpdater(launch: launch, gui: gui)
         lock.clientProvider = { [weak self] in self?.client as? any AppInfoClient }
         favicons.clientProvider = { [weak self] in self?.client as? any AppInfoClient }
         palette.app = self

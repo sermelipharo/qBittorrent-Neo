@@ -104,6 +104,12 @@
 	<string>qBittorrent Neo asks System Events to shut down or restart the Mac when you choose that action for finished downloads.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/sermelipharo/qBittorrent-Neo/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>44uop6ACgBRT45+hccc0DTR4AJlvP9aoyBxsbcl94HY=</string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

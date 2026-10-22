@@ -13,6 +13,7 @@ import Foundation
 /// * `--profile <dir>`: use another profile folder for the real core.
 /// * `--assume-visible`: refresh as if the main window were always visible
 ///   (idle CPU measurements of a window started in the background).
+/// * `--updates`: check for updates (Sparkle) with `--profile` too, for testing them.
 struct LaunchOptions: Sendable {
     var demo = false
     var demoLarge = false
@@ -22,6 +23,7 @@ struct LaunchOptions: Sendable {
     var snapshotClear = false
     var profileDirectory = ""
     var assumesVisibleWindow = false
+    var updatesRequested = false
 
     static let current = Self(arguments: CommandLine.arguments)
 
@@ -40,6 +42,7 @@ struct LaunchOptions: Sendable {
             case "--profile":
                 profileDirectory = iterator.next() ?? ""
             case "--assume-visible": assumesVisibleWindow = true
+            case "--updates": updatesRequested = true
             default: break
             }
         }

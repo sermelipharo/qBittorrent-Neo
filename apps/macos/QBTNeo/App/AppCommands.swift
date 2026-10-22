@@ -12,6 +12,9 @@ struct AppCommands: Commands {
 
         CommandGroup(replacing: .appInfo) {
             Button("About qBittorrent Neo") { openWindow(id: AppWindowID.about.rawValue) }
+            if model.updater.isAvailable {
+                Button("Check for Updates…") { model.updater.checkForUpdates() }
+            }
         }
 
         CommandGroup(replacing: .newItem) {

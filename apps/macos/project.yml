@@ -16,6 +16,11 @@ settings:
     LOCALIZATION_PREFERS_STRING_CATALOGS: YES
     SWIFT_STRICT_CONCURRENCY: complete
     DEAD_CODE_STRIPPING: YES
+packages:
+  # In-app updates from the GitHub releases (appcast signed with EdDSA).
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    exactVersion: 2.10.0
 targets:
   QBTNeo:
     type: application
@@ -24,6 +29,7 @@ targets:
       - path: QBTNeo
       - path: Generated
     dependencies:
+      - package: Sparkle
       - sdk: SystemConfiguration.framework
       - sdk: Security.framework
       - sdk: CoreFoundation.framework
@@ -42,6 +48,10 @@ targets:
       properties:
         LSMinimumSystemVersion: "27.0"
         NSPrincipalClass: NSApplication
+        SUFeedURL: https://github.com/sermelipharo/qBittorrent-Neo/releases/latest/download/appcast.xml
+        SUPublicEDKey: 44uop6ACgBRT45+hccc0DTR4AJlvP9aoyBxsbcl94HY=
+        # The app turns checks on from "Check for program updates" (AppUpdater).
+        SUEnableAutomaticChecks: false
         CFBundleLocalizations:
           - en
           - ar
