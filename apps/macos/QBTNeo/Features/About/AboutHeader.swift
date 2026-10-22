@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// App icon, name and version (`qBittorrent Neo v0.1.0 (64-bit)`).
+/// App icon, name and version (`qBittorrent Neo v0.1.1 (64-bit)`).
 struct AboutHeader: View {
     let version: String
     let bitness: Int32

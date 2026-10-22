@@ -307,7 +307,7 @@ struct DemoState: Sendable {
     }
 
     private mutating func appendInitialLog(now: Double) {
-        appendLog(.normal, "qBittorrent Neo v0.1.0 started. Process ID: \(ProcessInfo.processInfo.processIdentifier)")
+        appendLog(.normal, "qBittorrent Neo v0.1.1 started. Process ID: \(ProcessInfo.processInfo.processIdentifier)")
         appendLog(.normal, "Running in demo mode: sample data, no network activity.")
         appendLog(.info, "Trying to listen on the following list of IP addresses: \"0.0.0.0:51413,[::]:51413\"")
         appendLog(.info, "Successfully listening on IP. IP: \"0.0.0.0\". Port: \"TCP/51413\"")
