@@ -26,8 +26,24 @@ struct AddTorrentWindow: View {
                     .frame(width: 400, height: 240)
             }
         }
+        .background(WindowObserver(onVisibilityChange: { _ in }, onWindow: Self.bringToFront))
         .onDisappear {
             if let dialogID { model.closeAddDialog(dialogID) }
+        }
+    }
+
+    /// A magnet link or file opened from another app also brings the main
+    /// window forward as the app activates, sometimes after this window
+    /// appeared; once the app is active, this window goes back on top.
+    private static func bringToFront(_ window: NSWindow) {
+        Task { @MainActor [weak window] in
+            let deadline = ContinuousClock.now + .seconds(2)
+            while !NSApp.isActive, ContinuousClock.now < deadline {
+                try? await Task.sleep(for: .milliseconds(50))
+            }
+            try? await Task.sleep(for: .milliseconds(100))
+            guard let window, window.isVisible else { return }
+            window.makeKeyAndOrderFront(nil)
         }
     }
 }
