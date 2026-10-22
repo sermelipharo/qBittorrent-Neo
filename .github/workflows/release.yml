@@ -1,0 +1,87 @@
+name: Release
+
+# Pushing a tag vX.Y.Z builds the ad-hoc signed app and attaches it to a draft
+# release for that tag; scripts/sign-update.sh adds the update feed, and the
+# release is published by hand after review.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+
+jobs:
+  build:
+    name: Build and draft the release
+    runs-on: xcode-27
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: deps
+        run: .github/scripts/setup-deps.sh
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: build/deps
+          key: libtorrent-${{ hashFiles('scripts/build-deps.sh') }}-${{ steps.deps.outputs.deps-key }}
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.ccache
+          key: ccache-release-${{ github.run_id }}
+          restore-keys: ccache-
+      - name: Tag matches the app version
+        run: |
+          VERSION=$(sed -n 's/^ *MARKETING_VERSION: "\(.*\)"/\1/p' apps/macos/project.yml | sort -u)
+          if [ "v$VERSION" != "$TAG" ]; then
+            echo "::error::tag $TAG does not match MARKETING_VERSION $VERSION"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+      - name: Build
+        run: |
+          scripts/build-core.sh Release
+          cd apps/macos
+          xcodegen generate
+          xcodebuild build -project QBTNeo.xcodeproj -scheme QBTNeo -configuration Release \
+            -derivedDataPath "$RUNNER_TEMP/dd" \
+            CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO -quiet
+      - name: Check the bundle
+        run: |
+          APP="$RUNNER_TEMP/dd/Build/Products/Release/qBittorrent Neo.app"
+          test "$(defaults read "$APP/Contents/Info" CFBundleShortVersionString)" = "$VERSION"
+          codesign --verify --deep --strict "$APP"
+          codesign -dv "$APP" 2>&1 | grep -q '^Signature=adhoc$'
+          test -d "$APP/Contents/Frameworks/Sparkle.framework"
+          # No home folders but the runner's and the demo mode's made-up ones.
+          if find "$APP" -type f -print0 | xargs -0 strings -a | grep -oE '/Users/[^/ ]+' | sort -u | grep -vE '^/Users/(runner|demo)$' | grep .; then
+            echo "::error::a home folder path in the bundle"
+            exit 1
+          fi
+          echo "APP=$APP" >> "$GITHUB_ENV"
+      - name: Package
+        run: |
+          ZIP="qBittorrent-Neo-$VERSION-arm64.zip"
+          mkdir -p "$RUNNER_TEMP/out"
+          cd "$(dirname "$APP")"
+          ditto -c -k --keepParent "qBittorrent Neo.app" "$RUNNER_TEMP/out/$ZIP"
+          cd "$RUNNER_TEMP/out"
+          shasum -a 256 "$ZIP" > "$ZIP.sha256"
+          cat "$ZIP.sha256"
+      - name: Draft the release
+        run: |
+          cd "$RUNNER_TEMP/out"
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$TAG" -R "$GITHUB_REPOSITORY" --clobber ./*
+          else
+            gh release create "$TAG" -R "$GITHUB_REPOSITORY" --draft --verify-tag \
+              --title "qBittorrent Neo $VERSION" --notes "Release notes to follow." ./*
+          fi
