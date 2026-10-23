@@ -33,7 +33,8 @@ gh release download "$TAG" -R "$REPO" -p "$ZIP" -p "$ZIP.sha256"
 shasum -a 256 -c "$ZIP.sha256"
 
 # The bundle's own versions: Sparkle compares CFBundleVersion.
-PLIST=$(unzip -Z1 "$ZIP" | grep -m1 '\.app/Contents/Info\.plist$')
+# The app's own Info.plist, not one of Sparkle's helper apps inside it.
+PLIST=$(unzip -Z1 "$ZIP" | grep -E '^[^/]+\.app/Contents/Info\.plist$')
 unzip -p "$ZIP" "$PLIST" > Info.plist
 BUILD=$(plutil -extract CFBundleVersion raw Info.plist)
 SHORT=$(plutil -extract CFBundleShortVersionString raw Info.plist)
