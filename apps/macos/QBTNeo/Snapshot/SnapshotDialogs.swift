@@ -8,18 +8,7 @@ struct SnapshotDialogs {
     let client: DemoClient
 
     func renderAll() async {
-        // Add New Torrent with metadata, and a magnet still retrieving it.
-        let ready = AddTorrentModel(source: .file(path: "/tmp/Elephants Dream (2006) [1080p].torrent"), client: client, app: model)
-        ready.received(DemoState.sampleMetadata(for: .bytes(data: Data()), existing: [:]))
-        ready.tags = ["favorite"]
-        for appearance in SnapshotAppearance.allCases {
-            await renderer.render(addTorrent(ready), size: Design.Window.addTorrentDefaultSize, name: "add-torrent", appearance: appearance)
-        }
-        let magnet = AddTorrentModel(
-            source: .url(url: "magnet:?xt=urn:btih:\(DemoRandom.hex("magnet", length: 40))&dn=Tears+of+Steel+(2012)"),
-            client: client, app: model
-        )
-        await renderer.render(addTorrent(magnet), size: Design.Window.addTorrentDefaultSize, name: "add-torrent-magnet", appearance: .light)
+        await renderAddTorrent()
 
         let ids = model.list.selectedIDs
         let sheets: [(String, MainSheet)] = [
@@ -41,6 +30,24 @@ struct SnapshotDialogs {
                 .environment(model.gui)
             await renderer.render(view, size: CGSize(width: 620, height: 700), name: name, appearance: .light, fitHeight: true)
         }
+    }
+
+    /// Add New Torrent with metadata (light and dark), and a magnet still retrieving it.
+    func renderAddTorrent() async {
+        let ready = AddTorrentModel(source: .file(path: "/tmp/Elephants Dream (2006) [1080p].torrent"), client: client, app: model)
+        ready.received(DemoState.sampleMetadata(for: .bytes(data: Data()), existing: [:]))
+        ready.tags = ["favorite"]
+        for appearance in SnapshotAppearance.allCases {
+            await renderer.render(addTorrent(ready), size: Design.Window.addTorrentDefaultSize, name: "add-torrent", appearance: appearance)
+        }
+        model.gui.addTorrentMoreOptions = true
+        await renderer.render(addTorrent(ready), size: Design.Window.addTorrentDefaultSize, name: "add-torrent-more", appearance: .light)
+        model.gui.addTorrentMoreOptions = false
+        let magnet = AddTorrentModel(
+            source: .url(url: "magnet:?xt=urn:btih:\(DemoRandom.hex("magnet", length: 40))&dn=Tears+of+Steel+(2012)"),
+            client: client, app: model
+        )
+        await renderer.render(addTorrent(magnet), size: Design.Window.addTorrentDefaultSize, name: "add-torrent-magnet", appearance: .light)
     }
 
     private func addTorrent(_ dialog: AddTorrentModel) -> some View {

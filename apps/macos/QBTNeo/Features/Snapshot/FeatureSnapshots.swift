@@ -17,7 +17,7 @@ struct FeatureSnapshots {
         model.attach(DemoClient(large: false, animated: false))
         await model.refresh()
         let renderer = OffscreenWindowRenderer(directory: directory)
-        for entry in FeatureSnapshotCatalog.entries where isWanted(entry.name) {
+        for entry in FeatureSnapshotCatalog.entries where Self.isWanted(entry.name) {
             await renderer.render(entry.name, title: entry.title, size: entry.size) {
                 entry.view(model)
                     .environment(model)
@@ -26,7 +26,7 @@ struct FeatureSnapshots {
         }
         model.stopRefreshing()
         if let appModel = SettingsSnapshot.appModel {
-            await SettingsWindowSnapshots(directory: directory, isWanted: isWanted).run(model: appModel)
+            await SettingsWindowSnapshots(directory: directory, isWanted: Self.isWanted).run(model: appModel)
         }
     }
 
@@ -39,7 +39,7 @@ struct FeatureSnapshots {
         return arguments[index + 1].split(separator: ",")
     }
 
-    private func isWanted(_ name: String) -> Bool {
+    static func isWanted(_ name: String) -> Bool {
         guard let filter = Self.filter else { return true }
         return filter.contains { name.hasPrefix($0) }
     }
