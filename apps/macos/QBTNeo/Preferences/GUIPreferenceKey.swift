@@ -36,6 +36,7 @@ enum GUIPreferenceKey: String, CaseIterable {
     // Downloads page
     case addTorrentDialogEnabled = "AddNewTorrentDialog/Enabled"
     case addTorrentDialogTopLevel = "AddNewTorrentDialog/TopLevel"
+    case addTorrentMoreOptions = "AddNewTorrentDialog/MoreOptions"
     case confirmMergeTrackers = "GUI/ConfirmActions/MergeTrackers"
     case disableRecursiveDownload = "Preferences/Advanced/DisableRecursiveDownload"
 

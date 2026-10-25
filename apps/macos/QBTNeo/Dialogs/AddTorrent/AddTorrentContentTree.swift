@@ -11,7 +11,8 @@ struct AddTorrentContentTree: View {
     var body: some View {
         @Bindable var tree = dialog.tree
         VStack(spacing: 0) {
-            FileTreeFilterBar(tree: tree, onSelectAll: { tree.setAllChecked(true) }, onSelectNone: { tree.setAllChecked(false) })
+            FileTreeFilterBar(tree: tree, onSelectAll: { tree.setAllChecked(true) }, onSelectNone: { tree.setAllChecked(false) },
+                              summary: dialog.hasMetadata ? dialog.filesSummary : nil)
                 .padding(.horizontal, Design.Spacing.medium)
                 .padding(.vertical, Design.Spacing.small)
                 .disabled(!dialog.hasMetadata)
@@ -19,7 +20,7 @@ struct AddTorrentContentTree: View {
                 TableColumn("Name", sortUsing: FileSort(.name)) { node in
                     FileNameCell(node: node, tree: tree) { tree.toggleChecked([$0]) }
                 }
-                .width(min: 200, ideal: 340)
+                .width(min: 160, ideal: 270)
                 TableColumn("Total Size", sortUsing: FileSort(.size)) { node in
                     Text(UnitFormatter.size(node.size)).monospacedDigit()
                 }
@@ -28,7 +29,7 @@ struct AddTorrentContentTree: View {
                 TableColumn("Download Priority", sortUsing: FileSort(.priority)) { node in
                     FilePriorityMenu(node: node) { tree.setPriority($0, for: [node]) }
                 }
-                .width(min: 90, ideal: 130)
+                .width(min: 90, ideal: 110)
             } rows: {
                 ForEach(tree.rows) { node in
                     TableRow(node)

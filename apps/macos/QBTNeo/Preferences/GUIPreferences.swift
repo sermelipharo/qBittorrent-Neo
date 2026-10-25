@@ -51,6 +51,8 @@ final class GUIPreferences {
 
     var addTorrentDialogEnabled: Bool { didSet { set(addTorrentDialogEnabled, .addTorrentDialogEnabled) } }
     var addTorrentDialogTopLevel: Bool { didSet { set(addTorrentDialogTopLevel, .addTorrentDialogTopLevel) } }
+    /// The Add Torrent dialog's "More options" are expanded.
+    var addTorrentMoreOptions: Bool { didSet { set(addTorrentMoreOptions, .addTorrentMoreOptions) } }
     var confirmMergeTrackers: Bool { didSet { set(confirmMergeTrackers, .confirmMergeTrackers) } }
     var recursiveDownloadEnabled: Bool { didSet { set(!recursiveDownloadEnabled, .disableRecursiveDownload) } }
 
@@ -156,6 +158,7 @@ final class GUIPreferences {
 
         addTorrentDialogEnabled = read.bool(.addTorrentDialogEnabled, true)
         addTorrentDialogTopLevel = read.bool(.addTorrentDialogTopLevel, true)
+        addTorrentMoreOptions = read.bool(.addTorrentMoreOptions, false)
         confirmMergeTrackers = read.bool(.confirmMergeTrackers, true)
         recursiveDownloadEnabled = !read.bool(.disableRecursiveDownload, false)
 

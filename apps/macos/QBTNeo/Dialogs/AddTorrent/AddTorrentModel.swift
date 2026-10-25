@@ -281,6 +281,37 @@ final class AddTorrentModel {
         return String(localized: "\(UnitFormatter.size(tree.wantedSize)) (Free space on disk: \(free))")
     }
 
+    /// The header's line: the size to download (of the whole torrent when
+    /// files are skipped) and the free space where it is saved.
+    var sizeSummary: String {
+        let wanted = tree.wantedSize
+        let total = metadata?.totalSize ?? wanted
+        var parts = [wanted < total
+            ? String(localized: "\(UnitFormatter.size(wanted)) of \(UnitFormatter.size(total))")
+            : UnitFormatter.size(total)]
+        if freeSpace >= 0 { parts.append(String(localized: "\(UnitFormatter.size(freeSpace)) free")) }
+        return parts.joined(separator: " · ")
+    }
+
+    /// Above the file list: how many files, and the size of those selected.
+    var filesSummary: String {
+        return String(localized: "\(tree.fileCount) files · \(UnitFormatter.size(tree.wantedSize)) selected")
+    }
+
+    /// "More options" while collapsed: the management mode, and the options
+    /// that differ from their defaults.
+    var moreOptionsSummary: String {
+        var parts = [autoTMM ? String(localized: "Automatic") : String(localized: "Manual")]
+        if useDownloadPath, !autoTMM { parts.append(String(localized: "Incomplete path")) }
+        if stopCondition != .none, startTorrent { parts.append(String(localized: "Stop condition")) }
+        if addToQueueTop { parts.append(String(localized: "Top of queue")) }
+        if skipHashCheck { parts.append(String(localized: "Skip hash check")) }
+        if firstLastPiece { parts.append(String(localized: "First and last pieces first")) }
+        if contentLayout == .subfolder { parts.append(String(localized: "Create subfolder")) }
+        if contentLayout == .noSubfolder { parts.append(String(localized: "Don't create subfolder")) }
+        return parts.joined(separator: " · ")
+    }
+
     func makeParams() -> AddTorrentParams {
         var params = AddTorrentParams.sessionDefaults
         params.autoTmm = autoTMM
@@ -327,7 +358,9 @@ final class AddTorrentModel {
         switch source {
         case .url(let url):
             if let components = URLComponents(string: url), url.lowercased().hasPrefix("magnet:") {
-                return components.queryItems?.first { $0.name == "dn" }?.value ?? String(localized: "Magnet link")
+                // Form encoding: "+" is a space in the name.
+                let name = components.queryItems?.first { $0.name == "dn" }?.value?.replacingOccurrences(of: "+", with: " ")
+                return name ?? String(localized: "Magnet link")
             }
             return URL(string: url)?.lastPathComponent ?? url
         case .file(let path):

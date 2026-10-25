@@ -1,7 +1,6 @@
 import SwiftUI
 
-/// Bottom row: "Never show again", metadata status, "Save as .torrent file…",
-/// Cancel / OK.
+/// Bottom row: "Never show again", "Save as .torrent file…", Cancel / Add.
 struct AddTorrentFooter: View {
     @Bindable var dialog: AddTorrentModel
     let onAccept: () -> Void
@@ -12,15 +11,6 @@ struct AddTorrentFooter: View {
         HStack(spacing: Design.Spacing.medium) {
             Toggle("Never show again", isOn: $dialog.neverShowAgain)
             Spacer()
-            if dialog.isMagnet {
-                if dialog.hasMetadata {
-                    Label("Metadata retrieval complete", systemImage: Symbol.checkmarkCircle)
-                        .foregroundStyle(.secondary)
-                } else if dialog.phase == .retrievingMetadata {
-                    ProgressView().controlSize(.small)
-                    Text("Retrieving metadata…").foregroundStyle(.secondary)
-                }
-            }
             if dialog.hasMetadata {
                 Button("Save as .torrent file…") { exportsTorrent = true }
                     .disabled(!dialog.canSaveTorrentFile)

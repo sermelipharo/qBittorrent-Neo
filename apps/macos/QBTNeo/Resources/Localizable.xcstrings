@@ -1735,6 +1735,16 @@
         }
       }
     },
+    "%@ free": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "свободно %@"
+          }
+        }
+      }
+    },
     "%@ ms": {
       "localizations": {
         "ar": {
@@ -2059,6 +2069,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ 毫秒"
+          }
+        }
+      }
+    },
+    "%@ of %@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ из %2$@"
           }
         }
       }
@@ -3402,6 +3422,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Изменено дополнительных настроек на этой панели: %lld."
+          }
+        }
+      }
+    },
+    "%lld files · %@ selected": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлов: %1$lld · выбрано %2$@"
           }
         }
       }
@@ -57576,6 +57606,16 @@
         }
       }
     },
+    "Choose Folder…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрать папку…"
+          }
+        }
+      }
+    },
     "Choose a save directory": {
       "localizations": {
         "ar": {
@@ -69786,6 +69826,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "內容路徑(P)"
+          }
+        }
+      }
+    },
+    "Content layout": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Структура содержимого"
           }
         }
       }
@@ -124339,6 +124389,16 @@
         }
       }
     },
+    "First and last pieces first": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала первые и последние части"
+          }
+        }
+      }
+    },
     "Fixed slots": {
       "localizations": {
         "ar": {
@@ -157859,6 +157919,16 @@
         }
       }
     },
+    "Management": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управление"
+          }
+        }
+      }
+    },
     "Manual": {
       "localizations": {
         "ar": {
@@ -167424,6 +167494,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Дополнительная информация"
+          }
+        }
+      }
+    },
+    "More options": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополнительно"
           }
         }
       }
@@ -241649,6 +241729,16 @@
         }
       }
     },
+    "Save to": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить в"
+          }
+        }
+      }
+    },
     "Saving Management": {
       "localizations": {
         "ar": {
@@ -272029,6 +272119,16 @@
         }
       }
     },
+    "Stop condition": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Условие остановки"
+          }
+        }
+      }
+    },
     "Stop condition:": {
       "localizations": {
         "ar": {
@@ -280119,6 +280219,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "替補的 WebUI 檔案位置不應該為空白。"
+          }
+        }
+      }
+    },
+    "The category decides the save path in automatic mode": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В автоматическом режиме путь сохранения задаёт категория"
           }
         }
       }
@@ -291097,6 +291207,16 @@
         }
       }
     },
+    "Top of queue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В начало очереди"
+          }
+        }
+      }
+    },
     "Torrent": {
       "localizations": {
         "ru": {
@@ -292493,6 +292613,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Torrent ID(I)"
+          }
+        }
+      }
+    },
+    "Torrent Information": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Информация о торренте"
           }
         }
       }
@@ -296767,6 +296897,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Torrent 不活躍計時器："
+          }
+        }
+      }
+    },
+    "Torrent information": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Информация о торренте"
           }
         }
       }

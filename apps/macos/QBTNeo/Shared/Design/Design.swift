@@ -42,8 +42,8 @@ enum Design {
     enum Window {
         static let mainDefaultSize = CGSize(width: 1280, height: 800)
         static let mainMinSize = CGSize(width: 900, height: 560)
-        static let addTorrentDefaultSize = CGSize(width: 900, height: 680)
-        static let addTorrentMinSize = CGSize(width: 760, height: 520)
+        static let addTorrentDefaultSize = CGSize(width: 840, height: 560)
+        static let addTorrentMinSize = CGSize(width: 700, height: 440)
         static let dialogWidth = 460.0
         static let wideDialogWidth = 560.0
         static let snapshotSize = CGSize(width: 1400, height: 900)
