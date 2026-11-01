@@ -15,7 +15,7 @@ struct AboutLicenseTab: View {
             }
             Section("qBittorrent") {
                 Text("""
-                The core is qBittorrent 5.2.4, Copyright 2006-2026 The qBittorrent project, licensed under the GNU \
+                The core is qBittorrent 5.3.0, Copyright 2006-2026 The qBittorrent project, licensed under the GNU \
                 General Public License version 2 or later. It uses libtorrent (BSD 3-Clause License), Qt (GNU \
                 Lesser General Public License version 3), Boost (Boost Software License) and OpenSSL (Apache \
                 License 2.0).

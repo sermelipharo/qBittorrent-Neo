@@ -1,7 +1,7 @@
 #!/bin/zsh
 # Builds libtorrent-rasterbar (RC_2_0 series) as a static library into
-# build/deps. qBittorrent 5.2.4 supports libtorrent 1.2.19+ and 2.0.10+ but
-# not the 2.1 series that Homebrew ships, so it is built from source.
+# build/deps. qBittorrent 5.3.0 supports libtorrent 1.2.19+ and 2.0.10+; the
+# app stays on the RC_2_0 series (Homebrew ships 2.1), so it is built from source.
 set -euo pipefail
 
 ROOT="${0:A:h:h}"

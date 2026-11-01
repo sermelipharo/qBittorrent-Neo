@@ -86,7 +86,8 @@ namespace Neo
         void setFileLoggerAgeType(int value) override;
         int memoryWorkingSetLimit() const override;
         void setMemoryWorkingSetLimit(int size) override;
-        void sendTestEmail() const override;
+        void sendTestEmail() override;
+        bool loadTranslation(const QString &locale) override;
         AddTorrentManager *addTorrentManager() const override;
 #ifndef DISABLE_WEBUI
         WebUI *webUI() const override;

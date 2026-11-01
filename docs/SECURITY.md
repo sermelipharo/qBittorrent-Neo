@@ -1,6 +1,6 @@
 # Security review of the network-facing parts
 
-Scope: everything this fork adds around qBittorrent 5.2.4. qBittorrent's
+Scope: everything this fork adds around qBittorrent 5.3.0. qBittorrent's
 own networking (libtorrent, WebUI, RSS, search plugins, DNS updater, SMTP,
 GeoIP download, tracker list download) is used unmodified and inherits
 upstream's security properties and fixes.

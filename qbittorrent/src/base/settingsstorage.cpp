@@ -34,6 +34,8 @@
 
 #include <QFile>
 #include <QHash>
+#include <QMetaObject>
+#include <QOverload>
 
 #include "global.h"
 #include "logger.h"
@@ -86,7 +88,7 @@ bool SettingsStorage::save()
 
     if (!writeNativeSettings())
     {
-        m_timer.start();
+        QMetaObject::invokeMethod(&m_timer, qOverload<>(&QTimer::start));
         return false;
     }
 
@@ -108,7 +110,7 @@ void SettingsStorage::storeValueImpl(const QString &key, const QVariant &value)
     {
         m_dirty = true;
         currentValue = value;
-        m_timer.start();
+        QMetaObject::invokeMethod(&m_timer, qOverload<>(&QTimer::start));
     }
 }
 
@@ -152,8 +154,8 @@ void SettingsStorage::readNativeSettings()
         finalPathStr.remove(index, 4);
 
         const Path finalPath {finalPathStr};
-        Utils::Fs::removeFile(finalPath);
-        Utils::Fs::renameFile(newPath, finalPath);
+        if (Utils::Fs::removeFile(finalPath))
+            Utils::Fs::renameFile(newPath, finalPath);
     }
     else
     {
@@ -163,7 +165,16 @@ void SettingsStorage::readNativeSettings()
 
 bool SettingsStorage::writeNativeSettings() const
 {
-    std::unique_ptr<QSettings> nativeSettings = Profile::instance()->applicationSettings(m_nativeSettingsName + u"_new");
+    const auto *profile = Profile::instance();
+
+    // No-op when it has no write permission
+    if (const auto confPath = Path(profile->applicationSettings(m_nativeSettingsName)->fileName());
+        confPath.exists() && !Utils::Fs::isWritable(confPath))
+    {
+        return true;  // no need to retry saving
+    }
+
+    std::unique_ptr<QSettings> nativeSettings = profile->applicationSettings(m_nativeSettingsName + u"_new");
 
     // QSettings deletes the file before writing it out. This can result in problems
     // if the disk is full or a power outage occurs. Those events might occur
@@ -196,7 +207,7 @@ bool SettingsStorage::writeNativeSettings() const
 
     if (status != QSettings::NoError)
     {
-        Utils::Fs::removeFile(newPath);
+        std::ignore = Utils::Fs::removeFile(newPath);
         return false;
     }
 
@@ -205,7 +216,7 @@ bool SettingsStorage::writeNativeSettings() const
     finalPathStr.remove(index, 4);
 
     const Path finalPath {finalPathStr};
-    Utils::Fs::removeFile(finalPath);
+    std::ignore = Utils::Fs::removeFile(finalPath);
     return Utils::Fs::renameFile(newPath, finalPath);
 }
 
@@ -215,7 +226,7 @@ void SettingsStorage::removeValue(const QString &key)
     if (m_data.remove(key))
     {
         m_dirty = true;
-        m_timer.start();
+        QMetaObject::invokeMethod(&m_timer, qOverload<>(&QTimer::start));
     }
 }
 

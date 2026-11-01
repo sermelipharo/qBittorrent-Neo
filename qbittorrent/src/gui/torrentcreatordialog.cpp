@@ -1,6 +1,6 @@
 /*
  * Bittorrent Client using Qt and libtorrent.
- * Copyright (C) 2024  Vladimir Golovnev <glassez@yandex.ru>
+ * Copyright (C) 2024-2026  Vladimir Golovnev <glassez@yandex.ru>
  * Copyright (C) 2024  Radu Carpa <radu.carpa@cern.ch>
  * Copyright (C) 2017  Mike Tzou (Chocobo1)
  * Copyright (C) 2010  Christophe Dumez <chris@qbittorrent.org>
@@ -103,6 +103,7 @@ TorrentCreatorDialog::TorrentCreatorDialog(QWidget *parent, const Path &defaultP
     , m_threadPool {new QThreadPool(this)}
     , m_storeDialogSize(SETTINGS_KEY(u"Size"_s))
     , m_storePieceSize(SETTINGS_KEY(u"PieceSize"_s))
+    , m_storeIgnoreDotfiles(SETTINGS_KEY(u"IgnoreDotfiles"_s))
     , m_storePrivateTorrent(SETTINGS_KEY(u"PrivateTorrent"_s))
     , m_storeStartSeeding(SETTINGS_KEY(u"StartSeeding"_s))
     , m_storeIgnoreRatio(SETTINGS_KEY(u"IgnoreRatio"_s))
@@ -239,17 +240,19 @@ void TorrentCreatorDialog::onCalculatePiecesButtonClicked()
 #ifdef QBT_USES_LIBTORRENT2
     PieceCalculationThread::CalcFunc calc = [path = m_ui->textInputPath->selectedPath()
         , pieceSize = getPieceSize()
+        , ignoreDotfiles = m_ui->checkIgnoreDotfiles->isChecked()
         , torrentFormat = getTorrentFormat()]() -> int
         {
-            return BitTorrent::TorrentCreator::calculateTotalPieces(path, pieceSize, torrentFormat);
+            return BitTorrent::TorrentCreator::calculateTotalPieces(path, pieceSize, ignoreDotfiles, torrentFormat);
         };
 #else
     PieceCalculationThread::CalcFunc calc = [path = m_ui->textInputPath->selectedPath()
         , pieceSize = getPieceSize()
+        , ignoreDotfiles = m_ui->checkIgnoreDotfiles->isChecked()
         , isAlignmentOptimized = m_ui->checkOptimizeAlignment->isChecked()
         , paddedFileSizeLimit = getPaddedFileSizeLimit()]() -> int
         {
-            return BitTorrent::TorrentCreator::calculateTotalPieces(path, pieceSize, isAlignmentOptimized, paddedFileSizeLimit);
+            return BitTorrent::TorrentCreator::calculateTotalPieces(path, pieceSize, ignoreDotfiles, isAlignmentOptimized, paddedFileSizeLimit);
         };
 #endif
 
@@ -288,6 +291,11 @@ void TorrentCreatorDialog::onCreateButtonClicked()
     Path destPath {QFileDialog::getSaveFileName(this, tr("Select where to save the new torrent"), lastSavePath.data(), tr("Torrent Files (*.torrent)"))};
     if (destPath.isEmpty())
         return;
+    if (!destPath.isValid())
+    {
+        QMessageBox::warning(this, tr("Invalid file name"), tr("The name is invalid: \"%1\"").arg(destPath.filename()));
+        return;
+    }
     if (!destPath.hasExtension(TORRENT_FILE_EXTENSION))
         destPath += TORRENT_FILE_EXTENSION;
     m_storeLastSavePath = destPath.parentPath();
@@ -300,6 +308,7 @@ void TorrentCreatorDialog::onCreateButtonClicked()
         .replace(QRegularExpression(u"\n\n[\n]+"_s), u"\n\n"_s).split(u'\n');
     const BitTorrent::TorrentCreatorParams params
     {
+        .ignoreDotfiles = m_ui->checkIgnoreDotfiles->isChecked(),
         .isPrivate = m_ui->checkPrivate->isChecked(),
 #ifdef QBT_USES_LIBTORRENT2
         .torrentFormat = getTorrentFormat(),
@@ -351,16 +360,18 @@ void TorrentCreatorDialog::handleCreationSuccess(const BitTorrent::TorrentCreato
             params.addStopped = false;
             params.contentLayout = BitTorrent::TorrentContentLayout::Original;
             params.savePath = result.savePath;
-            params.skipChecking = true;
+            params.seedMode = true;
             params.stopCondition = BitTorrent::Torrent::StopCondition::None;
             params.useAutoTMM = false;  // otherwise if it is on by default, it will overwrite `savePath` to the default save path
             params.useDownloadPath = false;
 
             if (m_ui->checkIgnoreShareLimits->isChecked())
             {
-                params.ratioLimit = BitTorrent::NO_RATIO_LIMIT;
-                params.seedingTimeLimit = BitTorrent::NO_SEEDING_TIME_LIMIT;
-                params.inactiveSeedingTimeLimit = BitTorrent::NO_SEEDING_TIME_LIMIT;
+                params.shareLimits = {
+                    .ratioLimit = BitTorrent::NO_RATIO_LIMIT,
+                    .seedingTimeLimit = BitTorrent::NO_SEEDING_TIME_LIMIT,
+                    .inactiveSeedingTimeLimit = BitTorrent::NO_SEEDING_TIME_LIMIT
+                };
             }
 
             BitTorrent::Session::instance()->addTorrent(loadResult.value(), params);
@@ -389,6 +400,7 @@ void TorrentCreatorDialog::setInteractionEnabled(const bool enabled) const
     m_ui->lineEditSource->setEnabled(enabled);
     m_ui->comboPieceSize->setEnabled(enabled);
     m_ui->buttonCalcTotalPieces->setEnabled(enabled);
+    m_ui->checkIgnoreDotfiles->setEnabled(enabled);
     m_ui->checkPrivate->setEnabled(enabled);
     m_ui->checkStartSeeding->setEnabled(enabled);
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(enabled);
@@ -406,6 +418,7 @@ void TorrentCreatorDialog::saveSettings()
     m_storeLastAddPath = m_ui->textInputPath->selectedPath();
 
     m_storePieceSize = m_ui->comboPieceSize->currentIndex();
+    m_storeIgnoreDotfiles = m_ui->checkIgnoreDotfiles->isChecked();
     m_storePrivateTorrent = m_ui->checkPrivate->isChecked();
     m_storeStartSeeding = m_ui->checkStartSeeding->isChecked();
     m_storeIgnoreRatio = m_ui->checkIgnoreShareLimits->isChecked();
@@ -429,6 +442,7 @@ void TorrentCreatorDialog::loadSettings()
     m_ui->textInputPath->setSelectedPath(m_storeLastAddPath.get(Utils::Fs::homePath()));
 
     m_ui->comboPieceSize->setCurrentIndex(m_storePieceSize);
+    m_ui->checkIgnoreDotfiles->setChecked(m_storeIgnoreDotfiles.get(true));
     m_ui->checkPrivate->setChecked(m_storePrivateTorrent);
     m_ui->checkStartSeeding->setChecked(m_storeStartSeeding);
     m_ui->checkIgnoreShareLimits->setChecked(m_storeIgnoreRatio);

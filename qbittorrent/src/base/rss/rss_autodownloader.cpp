@@ -43,7 +43,6 @@
 
 #include "base/addtorrentmanager.h"
 #include "base/asyncfilestorage.h"
-#include "base/bittorrent/addtorrenterror.h"
 #include "base/bittorrent/session.h"
 #include "base/bittorrent/torrentdescriptor.h"
 #include "base/global.h"
@@ -129,6 +128,8 @@ AutoDownloader::AutoDownloader(IApplication *app)
 
     connect(app->addTorrentManager(), &AddTorrentManager::torrentAdded
             , this, &AutoDownloader::handleTorrentAdded);
+    connect(app->addTorrentManager(), &AddTorrentManager::duplicateTorrentDetected
+            , this, &AutoDownloader::handleTorrentAdded);
     connect(app->addTorrentManager(), &AddTorrentManager::addTorrentFailed
             , this, &AutoDownloader::handleAddTorrentFailed);
 
@@ -210,6 +211,24 @@ void AutoDownloader::setRule(const AutoDownloadRule &rule)
         emit ruleChanged(rule.name());
         resetProcessingQueue();
     }
+}
+
+bool AutoDownloader::cloneRule(const QString &ruleName, const QString &cloneRuleName)
+{
+    if (!hasRule(ruleName) || hasRule(cloneRuleName))
+        return false;
+
+    // Copy the existing rule and change its name to the new one
+    AutoDownloadRule clonedRule = ruleByName(ruleName);
+    clonedRule.setName(cloneRuleName);
+    // Disable the cloned rule by default to prevent accidental downloads
+    clonedRule.setEnabled(false);
+    // Clear previously matched episodes to allow matching all episodes for the new rule
+    clonedRule.setPreviouslyMatchedEpisodes({});
+    // Clear last match time to allow matching old articles for the new rule
+    clonedRule.setLastMatch({});
+    setRule(clonedRule);
+    return true;
 }
 
 bool AutoDownloader::renameRule(const QString &ruleName, const QString &newRuleName)
@@ -376,24 +395,13 @@ void AutoDownloader::handleTorrentAdded(const QString &source)
     }
 }
 
-void AutoDownloader::handleAddTorrentFailed(const QString &source, const BitTorrent::AddTorrentError &error)
+void AutoDownloader::handleAddTorrentFailed(const QString &source, [[maybe_unused]] const QString &error)
 {
     const auto job = m_waitingJobs.take(source);
     if (!job)
         return;
 
-    if (error.kind == BitTorrent::AddTorrentError::DuplicateTorrent)
-    {
-        if (Feed *feed = Session::instance()->feedByURL(job->feedURL))
-        {
-            if (Article *article = feed->articleByGUID(job->articleData.value(Article::KeyId).toString()))
-                article->markAsRead();
-        }
-    }
-    else
-    {
-        // TODO: Re-schedule job here.
-    }
+    // TODO: Re-schedule job here.
 }
 
 void AutoDownloader::handleNewArticle(const Article *article)

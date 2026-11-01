@@ -39,7 +39,7 @@ target_sources(qbt_app PRIVATE
     cmdoptions.h
     filelogger.h
     legalnotice.h
-    qtlocalpeer/qtlocalpeer.h
+    localpeer.h
     signalhandler.h
     upgrade.h
 
@@ -49,8 +49,8 @@ target_sources(qbt_app PRIVATE
     cmdoptions.cpp
     filelogger.cpp
     legalnotice.cpp
+    localpeer.cpp
     main.cpp
-    qtlocalpeer/qtlocalpeer.cpp
     signalhandler.cpp
     upgrade.cpp
 
@@ -82,8 +82,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set_source_files_properties(
         "${qBittorrent_SOURCE_DIR}/dist/mac/qt.conf"
         "${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentDocument.icns"
-		"${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentIncompleteData.icns"
+        "${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentIncompleteData.icns"
         "${qBittorrent_SOURCE_DIR}/dist/mac/qbittorrent_mac.icns"
+        "${qBittorrent_SOURCE_DIR}/src/icons/qbittorrent-tray-light.svg"
             PROPERTIES
                 MACOSX_PACKAGE_LOCATION Resources
     )
@@ -113,8 +114,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         ${QT_TRANSLATIONS}
         ${qBittorrent_SOURCE_DIR}/dist/mac/qt.conf
         ${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentDocument.icns
-		${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentIncompleteData.icns
+        ${qBittorrent_SOURCE_DIR}/dist/mac/qBitTorrentIncompleteData.icns
         ${qBittorrent_SOURCE_DIR}/dist/mac/qbittorrent_mac.icns
+        ${qBittorrent_SOURCE_DIR}/src/icons/qbittorrent-tray-light.svg
     )
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     set_target_properties(qbt_app PROPERTIES WIN32_EXECUTABLE ON)

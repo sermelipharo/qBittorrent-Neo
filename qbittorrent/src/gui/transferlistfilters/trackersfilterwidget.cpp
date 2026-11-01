@@ -183,7 +183,7 @@ TrackersFilterWidget::TrackersFilterWidget(QWidget *parent, TransferListWidget *
 TrackersFilterWidget::~TrackersFilterWidget()
 {
     for (const Path &iconPath : asConst(m_iconPaths))
-        Utils::Fs::removeFile(iconPath);
+        std::ignore = Utils::Fs::removeFile(iconPath);
 }
 
 void TrackersFilterWidget::handleTorrentTrackersAdded(const BitTorrent::Torrent *torrent, const QList<BitTorrent::TrackerEntry> &trackers)
@@ -494,7 +494,7 @@ void TrackersFilterWidget::handleFavicoDownloadFinished(const Net::DownloadResul
         const bool invalid = (sizes.isEmpty() || icon.pixmap(sizes.first()).isNull());
         if (invalid)
         {
-            Utils::Fs::removeFile(result.filePath);
+            std::ignore = Utils::Fs::removeFile(result.filePath);
             failed = true;
         }
     }
@@ -533,7 +533,7 @@ void TrackersFilterWidget::handleFavicoDownloadFinished(const Net::DownloadResul
     if (matchedTrackerFound)
         m_iconPaths.append(result.filePath);
     else
-        Utils::Fs::removeFile(result.filePath);
+        std::ignore = Utils::Fs::removeFile(result.filePath);
 }
 
 void TrackersFilterWidget::showMenu()
@@ -550,6 +550,8 @@ void TrackersFilterWidget::showMenu()
 
     menu->addAction(UIThemeManager::instance()->getIcon(u"torrent-start"_s, u"media-playback-start"_s), tr("Start torrents")
         , transferList(), &TransferListWidget::startVisibleTorrents);
+    menu->addAction(UIThemeManager::instance()->getIcon(u"torrent-start-forced"_s, u"media-playback-start"_s), tr("Force start torrents")
+        , transferList(), &TransferListWidget::forceStartVisibleTorrents);
     menu->addAction(UIThemeManager::instance()->getIcon(u"torrent-stop"_s, u"media-playback-pause"_s), tr("Stop torrents")
         , transferList(), &TransferListWidget::stopVisibleTorrents);
     menu->addAction(UIThemeManager::instance()->getIcon(u"list-remove"_s), tr("Remove torrents")

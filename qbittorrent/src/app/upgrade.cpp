@@ -34,9 +34,9 @@
 
 #include "base/bittorrent/sharelimits.h"
 #include "base/bittorrent/torrentcontentlayout.h"
-#include "base/global.h"
 #include "base/logger.h"
 #include "base/net/proxyconfigurationmanager.h"
+#include "base/net/smtpencryptiontype.h"
 #include "base/preferences.h"
 #include "base/profile.h"
 #include "base/settingsstorage.h"
@@ -44,9 +44,11 @@
 #include "base/utils/io.h"
 #include "base/utils/string.h"
 
+using namespace Qt::Literals::StringLiterals;
+
 namespace
 {
-    const int MIGRATION_VERSION = 8;
+    const int MIGRATION_VERSION = 12;
     const QString MIGRATION_VERSION_KEY = u"Meta/MigrationVersion"_s;
 
     void exportWebUIHttpsFiles()
@@ -228,13 +230,13 @@ namespace
             switch (number)
             {
             case 0:
-                settingsStorage->storeValue(key, TrayIcon::Style::Normal);
+                settingsStorage->storeValue(key, u"Normal"_s);
                 break;
             case 1:
-                settingsStorage->storeValue(key, TrayIcon::Style::MonoDark);
+                settingsStorage->storeValue(key, u"MonoDark"_s);
                 break;
             case 2:
-                settingsStorage->storeValue(key, TrayIcon::Style::MonoLight);
+                settingsStorage->storeValue(key, u"MonoLight"_s);
                 break;
             default:
                 LogMsg(QCoreApplication::translate("Upgrade", "Invalid value found in configuration file, reverting it to default. Key: \"%1\". Invalid value: \"%2\".")
@@ -245,7 +247,32 @@ namespace
         }
     }
 
-    void migrateSettingKeys()
+    void upgradeTrayIconStyleSettings2()
+    {
+        auto *settingsStorage = SettingsStorage::instance();
+        const auto oldKey = u"Preferences/Advanced/TrayIconStyle"_s;
+        if (!settingsStorage->hasKey(oldKey))
+            return;
+
+        const auto newKey = u"Appearance/TrayIconStyle"_s;
+        const auto value = settingsStorage->loadValue<QString>(oldKey);
+
+        if ((value == u"MonoDark") || (value == u"MonoLight"))
+            settingsStorage->storeValue(newKey, u"Monochrome"_s);
+        else
+            settingsStorage->storeValue(newKey, u"Normal"_s);
+
+        settingsStorage->removeValue(oldKey);
+    }
+
+    enum class MigrateOption
+    {
+        AddNewKeys,
+        RemoveOldKeys
+    };
+
+    template <MigrateOption migrateOption>
+    void handleSettingKeys()
     {
         struct KeyMapping
         {
@@ -334,11 +361,17 @@ namespace
         auto *settingsStorage = SettingsStorage::instance();
         for (const KeyMapping &mapping : mappings)
         {
-            if (settingsStorage->hasKey(mapping.oldKey))
+            if constexpr (migrateOption == MigrateOption::AddNewKeys)
             {
-                const auto value = settingsStorage->loadValue<QVariant>(mapping.oldKey);
-                settingsStorage->storeValue(mapping.newKey, value);
-                // TODO: Remove oldKey after ~v4.4.3 and bump migration version
+                if (settingsStorage->hasKey(mapping.oldKey))
+                {
+                    const auto value = settingsStorage->loadValue<QVariant>(mapping.oldKey);
+                    settingsStorage->storeValue(mapping.newKey, value);
+                }
+            }
+            else if constexpr (migrateOption == MigrateOption::RemoveOldKeys)
+            {
+                settingsStorage->removeValue(mapping.oldKey);
             }
         }
     }
@@ -497,13 +530,118 @@ namespace
         settingsStorage->storeValue(newKey, settingsStorage->loadValue<bool>(oldKey));
         settingsStorage->removeValue(oldKey);
     }
+
+    void migrateSMTPEncryptionSetting()
+    {
+        auto *settingsStorage = SettingsStorage::instance();
+        const QString oldKey = u"Preferences/MailNotification/req_ssl"_s;
+        const QString newKey = u"Preferences/MailNotification/SMTPEncryptionType"_s;
+
+        if (settingsStorage->hasKey(oldKey))
+        {
+            const Net::SMTPEncryptionType setting = settingsStorage->loadValue<bool>(oldKey)
+                ? Net::SMTPEncryptionType::SMTPS
+                : Net::SMTPEncryptionType::None;
+            settingsStorage->storeValue(newKey, setting);
+            settingsStorage->removeValue(oldKey);
+        }
+    }
+
+    void setResolvePeerCountriesSetting()
+    {
+        // User may not have touched this setting so it will stay at the default and its value is empty.
+        // Set it to the previous default value so existing installations are not affected by the new default
+
+        auto *settingsStorage = SettingsStorage::instance();
+        const QString key = u"Preferences/Connection/ResolvePeerCountries"_s;
+        if (!settingsStorage->hasKey(key))
+            SettingsStorage::instance()->storeValue(key, true);
+    }
+
+    void migrateTorrentExportFolderSettings()
+    {
+        const auto doMigrate = [](const QString &oldKey, const QString &newKey, const QString &newEnabledKey)
+        {
+            auto *settingsStorage = SettingsStorage::instance();
+            if (settingsStorage->hasKey(oldKey))
+            {
+                const auto oldPath = settingsStorage->loadValue<Path>(oldKey);
+                settingsStorage->storeValue(newKey, oldPath);
+                settingsStorage->storeValue(newEnabledKey, !oldPath.isEmpty());
+                settingsStorage->removeValue(oldKey);
+            }
+        };
+
+        doMigrate(u"BitTorrent/Session/TorrentExportDirectory"_s, u"BitTorrent/Session/TorrentBackupDirectory"_s, u"BitTorrent/Session/TorrentBackupEnabled"_s);
+        doMigrate(u"BitTorrent/Session/FinishedTorrentExportDirectory"_s, u"BitTorrent/Session/FinishedTorrentBackupDirectory"_s, u"BitTorrent/Session/FinishedTorrentBackupDirectoryEnabled"_s);
+    }
+
+    void migrateWebUISettings()
+    {
+        const auto doMigrate = [](const QString &oldKey, const QString &newKey)
+        {
+            auto *settingsStorage = SettingsStorage::instance();
+            if (settingsStorage->hasKey(oldKey))
+            {
+                settingsStorage->storeValue(newKey, settingsStorage->loadValue<QVariant>(oldKey));
+                settingsStorage->removeValue(oldKey);
+            }
+        };
+
+        doMigrate(u"Preferences/WebUI/Enabled"_s, u"WebUI/Enabled"_s);
+        doMigrate(u"Preferences/WebUI/LocalHostAuth"_s, u"WebUI/LocalHostAuth"_s);
+        doMigrate(u"Preferences/WebUI/AuthSubnetWhitelistEnabled"_s, u"WebUI/AuthSubnetWhitelistEnabled"_s);
+        doMigrate(u"Preferences/WebUI/AuthSubnetWhitelist"_s, u"WebUI/AuthSubnetWhitelist"_s);
+        doMigrate(u"Preferences/WebUI/ServerDomains"_s, u"WebUI/ServerDomains"_s);
+        doMigrate(u"Preferences/WebUI/Address"_s, u"WebUI/Address"_s);
+        doMigrate(u"Preferences/WebUI/Port"_s, u"WebUI/Port"_s);
+        doMigrate(u"Preferences/WebUI/UseUPnP"_s, u"WebUI/UseUPnP"_s);
+        doMigrate(u"Preferences/WebUI/Username"_s, u"WebUI/Username"_s);
+        doMigrate(u"Preferences/WebUI/Password_PBKDF2"_s, u"WebUI/Password_PBKDF2"_s);
+        doMigrate(u"Preferences/WebUI/APIKey"_s, u"WebUI/APIKey"_s);
+        doMigrate(u"Preferences/WebUI/MaxAuthenticationFailCount"_s, u"WebUI/MaxAuthenticationFailCount"_s);
+        doMigrate(u"Preferences/WebUI/BanDuration"_s, u"WebUI/BanDuration"_s);
+        doMigrate(u"Preferences/WebUI/SessionTimeout"_s, u"WebUI/SessionTimeout"_s);
+        doMigrate(u"Preferences/WebUI/ClickjackingProtection"_s, u"WebUI/ClickjackingProtection"_s);
+        doMigrate(u"Preferences/WebUI/CSRFProtection"_s, u"WebUI/CSRFProtection"_s);
+        doMigrate(u"Preferences/WebUI/SecureCookie"_s, u"WebUI/SecureCookie"_s);
+        doMigrate(u"Preferences/WebUI/HostHeaderValidation"_s, u"WebUI/HostHeaderValidation"_s);
+        doMigrate(u"Preferences/WebUI/HTTPS/Enabled"_s, u"WebUI/HTTPS/Enabled"_s);
+        doMigrate(u"Preferences/WebUI/HTTPS/CertificatePath"_s, u"WebUI/HTTPS/CertificatePath"_s);
+        doMigrate(u"Preferences/WebUI/HTTPS/KeyPath"_s, u"WebUI/HTTPS/KeyPath"_s);
+        doMigrate(u"Preferences/WebUI/AlternativeUIEnabled"_s, u"WebUI/AlternativeUIEnabled"_s);
+        doMigrate(u"Preferences/WebUI/RootFolder"_s, u"WebUI/RootFolder"_s);
+        doMigrate(u"Preferences/WebUI/CustomHTTPHeadersEnabled"_s, u"WebUI/CustomHTTPHeadersEnabled"_s);
+        doMigrate(u"Preferences/WebUI/CustomHTTPHeaders"_s, u"WebUI/CustomHTTPHeaders"_s);
+        doMigrate(u"Preferences/WebUI/ReverseProxySupportEnabled"_s, u"WebUI/ReverseProxySupportEnabled"_s);
+        doMigrate(u"Preferences/WebUI/TrustedReverseProxiesList"_s, u"WebUI/TrustedReverseProxiesList"_s);
+    }
+
+    void migrateSearchSettingKeys()
+    {
+        auto *settingsStorage = SettingsStorage::instance();
+
+        const auto oldKey1 = u"Search/StoreOpenedSearchTabs"_s;
+        const auto newKey1 = u"Search/StoreSearchJobs"_s;
+        if (settingsStorage->hasKey(oldKey1))
+        {
+            settingsStorage->storeValue(newKey1, settingsStorage->loadValue<bool>(oldKey1));
+            settingsStorage->removeValue(oldKey1);
+        }
+
+        const auto oldKey2 = u"Search/StoreOpenedSearchTabResults"_s;
+        const auto newKey2 = u"Search/StoreSearchJobResults"_s;
+        if (settingsStorage->hasKey(oldKey2))
+        {
+            settingsStorage->storeValue(newKey2, settingsStorage->loadValue<bool>(oldKey2));
+            settingsStorage->removeValue(oldKey2);
+        }
+    }
 }
 
 bool upgrade()
 {
-    CachedSettingValue<int> version {MIGRATION_VERSION_KEY, 0};
-
-    if (version != MIGRATION_VERSION)
+    if (CachedSettingValue<int> version {MIGRATION_VERSION_KEY, 0}; version != MIGRATION_VERSION)
     {
         if (version < 1)
         {
@@ -516,7 +654,7 @@ bool upgrade()
         }
 
         if (version < 2)
-            migrateSettingKeys();
+            handleSettingKeys<MigrateOption::AddNewKeys>();
 
         if (version < 3)
             migrateProxySettingsEnum();
@@ -540,6 +678,25 @@ bool upgrade()
 
         if (version < 8)
             migrateAddPausedSetting();
+
+        if (version < 9)
+            handleSettingKeys<MigrateOption::RemoveOldKeys>();
+
+        if (version < 10)
+        {
+            upgradeTrayIconStyleSettings2();
+            migrateSMTPEncryptionSetting();
+            setResolvePeerCountriesSetting();
+        }
+
+        if (version < 11)
+        {
+            migrateTorrentExportFolderSettings();
+            migrateWebUISettings();
+        }
+
+        if (version < 12)
+            migrateSearchSettingKeys();
 
         version = MIGRATION_VERSION;
     }

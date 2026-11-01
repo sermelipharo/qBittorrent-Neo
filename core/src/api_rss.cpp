@@ -11,6 +11,7 @@
 
 #include <algorithm>
 
+#include <QCoreApplication>
 #include <QJsonArray>
 #include <QRegularExpression>
 

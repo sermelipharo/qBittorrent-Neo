@@ -6,7 +6,7 @@ struct AboutOverviewTab: View {
         Form {
             Section {
                 Text("An advanced BitTorrent client: qBittorrent's own core with a native SwiftUI interface.")
-                Text("qBittorrent Neo is a fork of qBittorrent 5.2.4 whose Qt Widgets interface is replaced by a native macOS app.")
+                Text("qBittorrent Neo is a fork of qBittorrent 5.3.0 whose Qt Widgets interface is replaced by a native macOS app.")
                     .foregroundStyle(.secondary)
                 Text("Copyright © 2006-2026 The qBittorrent project")
                     .foregroundStyle(.secondary)

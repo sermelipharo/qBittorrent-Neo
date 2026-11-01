@@ -33,30 +33,11 @@ repos:
     - id: check-yaml
       name: Check YAML files
 
-    - id: fix-byte-order-marker
-      name: Check file encoding (UTF-8 without BOM)
-      exclude: |
-        (?x)^(
-          src/base/unicodestrings.h
-        )$
-
-    - id: mixed-line-ending
-      name: Check line ending character (LF)
-      args: ["--fix=lf"]
-      exclude: |
-        (?x)^(
-          src/base/3rdparty/expected.hpp |
-          src/webui/www/private/css/lib/.* |
-          src/webui/www/private/scripts/lib/.* |
-          dist/windows/license.txt |
-          test/testdata/crlf.txt
-        )$
-
     - id: end-of-file-fixer
       name: Check trailing newlines
       exclude: |
         (?x)^(
-          configure |
+          src/base/3rdparty/.* |
           src/webui/www/private/css/lib/.* |
           src/webui/www/private/scripts/lib/.* |
           test/testdata/crlf.txt
@@ -65,18 +46,26 @@ repos:
         - svg
         - ts
 
-    - id: trailing-whitespace
-      name: Check trailing whitespaces
+  - repo: https://github.com/rvben/rumdl-pre-commit.git
+    rev: v0.2.64
+    hooks:
+    - id: rumdl
+      name: Check Markdown files
+      args: ["--config", ".github/workflows/helper/pre-commit/.rumdl.toml", "--fix"]
       exclude: |
         (?x)^(
-          src/webui/www/private/css/lib/.* |
-          src/webui/www/private/scripts/lib/.*
+          doc/.*/qbittorrent\.1\.md |
+          doc/.*/qbittorrent-nox\.1\.md
         )$
-      exclude_types:
-        - ts
+
+  - repo: https://github.com/editorconfig-checker/editorconfig-checker.python.git
+    rev: 3.11.1
+    hooks:
+    - id: editorconfig-checker
+      name: Check code formatting (EditorConfig)
 
   - repo: https://github.com/codespell-project/codespell.git
-    rev: v2.4.1
+    rev: v2.4.3
     hooks:
     - id: codespell
       name: Check spelling (codespell)
@@ -95,7 +84,7 @@ repos:
         - ts
 
   - repo: https://github.com/crate-ci/typos.git
-    rev: v1.35.3
+    rev: v1.50.0
     hooks:
     - id: typos
       name: Check spelling (typos)
@@ -107,6 +96,7 @@ repos:
           .*\.qrc |
           \.pre-commit-config\.yaml |
           Changelog |
+          dist/windows/3rdparty/.* |
           dist/windows/installer-translations/.* |
           src/base/3rdparty/.* |
           src/searchengine/nova3/socks.py |

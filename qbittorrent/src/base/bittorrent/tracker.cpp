@@ -1,7 +1,7 @@
 /*
  * Bittorrent Client using Qt and libtorrent.
+ * Copyright (C) 2015-2026  Vladimir Golovnev <glassez@yandex.ru>
  * Copyright (C) 2019  Mike Tzou (Chocobo1)
- * Copyright (C) 2015  Vladimir Golovnev <glassez@yandex.ru>
  * Copyright (C) 2006  Christophe Dumez <chris@qbittorrent.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -39,9 +39,10 @@
 
 #include "base/exceptions.h"
 #include "base/global.h"
+#include "base/http/constants.h"
 #include "base/http/httperror.h"
+#include "base/http/responsewriter.h"
 #include "base/http/server.h"
-#include "base/http/types.h"
 #include "base/logger.h"
 #include "base/preferences.h"
 
@@ -50,6 +51,8 @@ namespace
     // static limits
     const int MAX_TORRENTS = 10000;
     const int MAX_PEERS_PER_TORRENT = 200;
+    // [BEP-3] the `ip` parameter may hold a DNS name, whose maximum length is 253 characters
+    const int MAX_CLAIMED_ADDRESS_SIZE = 255;
     const int ANNOUNCE_INTERVAL = 1800;  // 30min
 
     // constants
@@ -238,14 +241,11 @@ bool Tracker::start()
     return listenSuccess;
 }
 
-Http::Response Tracker::processRequest(const Http::Request &request, const Http::Environment &env)
+void Tracker::processRequest(const Http::Request &request, const Http::Environment &env, Http::ResponseWriter &responseWriter)
 {
-    clear();  // clear response
-
     m_request = request;
     m_env = env;
-
-    status(200);
+    m_response = {};  // clear response
 
     try
     {
@@ -260,14 +260,16 @@ Http::Response Tracker::processRequest(const Http::Request &request, const Http:
     }
     catch (const HTTPError &error)
     {
-        status(error.statusCode(), error.statusText());
+        m_response.status = error.status();
         if (!error.message().isEmpty())
-            print(error.message(), Http::CONTENT_TYPE_TXT);
+        {
+            m_response.headers.insert(Http::HEADER_CONTENT_TYPE, Http::CONTENT_TYPE_TXT);
+            m_response.content = error.message().toUtf8();
+        }
     }
     catch (const TrackerError &error)
     {
-        clear();  // clear response
-        status(200);
+        m_response = {};  // clear response
 
         const lt::entry::dictionary_type bencodedEntry =
         {
@@ -275,10 +277,12 @@ Http::Response Tracker::processRequest(const Http::Request &request, const Http:
         };
         QByteArray reply;
         lt::bencode(std::back_inserter(reply), bencodedEntry);
-        print(reply, Http::CONTENT_TYPE_TXT);
+        m_response.status = {.code = 200};
+        m_response.headers.insert(Http::HEADER_CONTENT_TYPE, Http::CONTENT_TYPE_TXT);
+        m_response.content = reply;
     }
 
-    return response();
+    responseWriter.setResponse(m_response);
 }
 
 void Tracker::processAnnounceRequest()
@@ -289,6 +293,8 @@ void Tracker::processAnnounceRequest()
     // ip address
     announceReq.socketAddress = m_env.clientAddress;
     announceReq.claimedAddress = queryParams.value(ANNOUNCE_REQUEST_IP);
+    if (announceReq.claimedAddress.size() > MAX_CLAIMED_ADDRESS_SIZE)
+        throw TrackerError(u"Invalid \"ip\" parameter"_s);
 
     // Enforce using IPv4 if address is indeed IPv4 or if it is an IPv4-mapped IPv6 address
     bool ok = false;
@@ -411,7 +417,8 @@ void Tracker::unregisterPeer(const TrackerAnnounceRequest &announceReq)
 
 void Tracker::prepareAnnounceResponse(const TrackerAnnounceRequest &announceReq)
 {
-    const TorrentStats &torrentStats = m_torrents[announceReq.torrentID];
+    // don't create an entry for an unknown torrent, it would bypass the `MAX_TORRENTS` limit
+    const TorrentStats &torrentStats = m_torrents.value(announceReq.torrentID);
 
     lt::entry::dictionary_type replyDict
     {
@@ -481,5 +488,7 @@ void Tracker::prepareAnnounceResponse(const TrackerAnnounceRequest &announceReq)
     // bencode
     QByteArray reply;
     lt::bencode(std::back_inserter(reply), replyDict);
-    print(reply, Http::CONTENT_TYPE_TXT);
+    m_response.status = {.code = 200};
+    m_response.headers.insert(Http::HEADER_CONTENT_TYPE, Http::CONTENT_TYPE_TXT);
+    m_response.content = reply;
 }

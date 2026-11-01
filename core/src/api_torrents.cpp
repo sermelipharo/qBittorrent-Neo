@@ -150,7 +150,7 @@ namespace
         params.addStopped = argOptBool(json, u"stopped"_s);
         if (const auto stopCondition = argOptString(json, u"stopCondition"_s))
             params.stopCondition = parseStopCondition(*stopCondition);
-        params.skipChecking = argBool(json, u"skipChecking"_s);
+        params.seedMode = argBool(json, u"skipChecking"_s);
         params.addToQueueTop = argOptBool(json, u"addToQueueTop"_s);
         if (const auto layout = argOptString(json, u"contentLayout"_s))
             params.contentLayout = parseContentLayout(*layout);
@@ -161,11 +161,11 @@ namespace
         const qint64 upLimit = argInt(json, u"uploadLimit"_s, -1);
         params.downloadLimit = (dlLimit > 0) ? static_cast<int>(dlLimit) : -1;
         params.uploadLimit = (upLimit > 0) ? static_cast<int>(upLimit) : -1;
-        params.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
-        params.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
-        params.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        params.shareLimits.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
+        params.shareLimits.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        params.shareLimits.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         if (const auto action = argOptString(json, u"shareLimitAction"_s))
-            params.shareLimitAction = parseShareLimitAction(*action);
+            params.shareLimits.action = parseShareLimitAction(*action);
 
         for (const QString &priority : asConst(argStringList(json, u"filePriorities"_s)))
             params.filePriorities.append(parsePriority(priority));
@@ -1019,7 +1019,7 @@ void Neo::registerTorrentsApi(Registry &registry)
         return [folder](const QJsonObject &args) -> QJsonValue
         {
             const QString newPathStr = argString(args, u"newPath"_s);
-            if (!Utils::Fs::isValidName(QFileInfo(newPathStr).fileName()))
+            if (!Utils::Fs::isValidFileName(QFileInfo(newPathStr).fileName()))
             {
                 throwConflict(folder
                     ? QCoreApplication::translate("TorrentsController", "Folder name has invalid characters")
@@ -1095,10 +1095,12 @@ void Neo::registerTorrentsApi(Registry &registry)
         const BitTorrent::ShareLimitAction action = parseShareLimitAction(argString(args, u"action"_s));
         forTorrents(args, [=](BitTorrent::Torrent *t)
         {
-            t->setRatioLimit(ratio);
-            t->setSeedingTimeLimit(seeding);
-            t->setInactiveSeedingTimeLimit(inactive);
-            t->setShareLimitAction(action);
+            BitTorrent::ShareLimits limits = t->shareLimits();
+            limits.ratioLimit = ratio;
+            limits.seedingTimeLimit = seeding;
+            limits.inactiveSeedingTimeLimit = inactive;
+            limits.action = action;
+            t->setShareLimits(limits);
         });
         return QJsonValue();
     });
@@ -1370,7 +1372,7 @@ void Neo::registerTorrentsApi(Registry &registry)
         {
             if (tags.isEmpty())
             {
-                t->removeAllTags();
+                t->clearTags();
                 return;
             }
             for (const QString &name : tags)

@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>Skip hash check</source>
-        <translation>Ignorar verificação do hash</translation>
+        <translation type="vanished">Ignorar verificação do hash</translation>
     </message>
     <message>
         <source>Torrent Management Mode:</source>
@@ -199,8 +199,21 @@
         <translation>Limitar velocidade de download</translation>
     </message>
     <message>
+        <source>%1 (Free space on disk: %2)</source>
+        <translation type="vanished">%1 (Espaço livre no disco: %2)</translation>
+    </message>
+    <message>
         <source>KiB/s</source>
         <translation>KiB/s</translation>
+    </message>
+    <message>
+        <source>If set, qBittorrent will assume that all files are present for this torrent and that they all match the hashes in the torrent file. The use case for this mode is if a torrent is created and seeded, or if the user already knows that all the files are complete, this is a way to perform only basic file checks and skip initial hash checks.
+The piece hash will be checked when it is requested for the first time by a peer. If a hash check fails, all files in this torrent will be rechecked.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Seed mode</source>
+        <translation type="unfinished" />
     </message>
     <message>
         <source>Download</source>
@@ -263,6 +276,10 @@
     <message>
         <source>Stop torrents</source>
         <translation>Parar torrents</translation>
+    </message>
+    <message>
+        <source>Force start torrents</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -408,7 +425,7 @@
     </message>
     <message>
         <source>Saving Management</source>
-        <translation>A guardar gestão</translation>
+        <translation>Gestão de gravação</translation>
     </message>
     <message>
         <source>Download rate threshold must be greater than 0.</source>
@@ -471,16 +488,12 @@
         <translation>Exemplos de configuração de proxy reverso</translation>
     </message>
     <message>
-        <source>Could not contact qBittorrent</source>
-        <translation>Não foi possível contactar o qBittorrent</translation>
-    </message>
-    <message>
         <source>Remember choice</source>
         <translation>Memorizar escolha</translation>
     </message>
     <message>
         <source>Are you sure you want to remove these %1 torrents from the transfer list?</source>
-        <translation>Tem a certeza de que pretende remover estes %1 torrents da lista de transferências?</translation>
+        <translation>Quer eliminar estes %1 torrents selecionados da lista de transferências?</translation>
     </message>
     <message>
         <source>Unable to delete torrents.</source>
@@ -500,7 +513,7 @@
     </message>
     <message>
         <source>Are you sure you want to remove %1 from the transfer list?</source>
-        <translation>Tem a certeza de que pretende remover "%1" da lista de transferências?</translation>
+        <translation>Quer eliminar '%1' da lista de transferências?</translation>
     </message>
     <message>
         <source>Unable to set Auto Torrent Management for the selected torrents.</source>
@@ -544,7 +557,7 @@
     </message>
     <message>
         <source>Share ratio limit must not have a negative value.</source>
-        <translation>O limite de rácio de partilha não pode ter um valor negativo.</translation>
+        <translation>O limite de velocidade de partilha não pode ter um valor negativo.</translation>
     </message>
     <message>
         <source>Peer turnover interval must be greater than or equal to 0.</source>
@@ -579,16 +592,40 @@
         <translation>O DSCP dos pares deve estar entre 0 e 255.</translation>
     </message>
     <message>
-        <source>Unable to save preferences, qBittorrent is probably unreachable.</source>
-        <translation>Não foi possível guardar as preferências. O qBittorrent poderá estar inacessível.</translation>
-    </message>
-    <message>
         <source>Unable to add torrents.</source>
         <translation>Não foi possível adicionar os torrents.</translation>
     </message>
     <message>
+        <source>Unable to save preferences, qBittorrent is probably unreachable.</source>
+        <translation>Não foi possível guardar as preferências. O qBittorrent poderá estar inacessível.</translation>
+    </message>
+    <message>
         <source>Error:</source>
         <translation>Erro:</translation>
+    </message>
+    <message>
+        <source>Could not contact qBittorrent.</source>
+        <translation type="vanished">Não foi possível contactar o qBittorrent.</translation>
+    </message>
+    <message>
+        <source>BitTorrent session shutdown timeout must be between -1 and 2147483647.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Unable to resume the session.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Unable to force start torrents.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Invalid path to Python executable. Path contains unnecessary leading and trailing quotes.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Unable to pause the session.</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -663,11 +700,11 @@
     </message>
     <message>
         <source>Global Upload Speed Limit</source>
-        <translation>Limite global da velocidade para os uploads</translation>
+        <translation type="vanished">Limite global da velocidade para os uploads</translation>
     </message>
     <message>
         <source>Global Download Speed Limit</source>
-        <translation>Limite global da velocidade para os downloads</translation>
+        <translation type="vanished">Limite global da velocidade para os downloads</translation>
     </message>
     <message>
         <source>Are you sure you want to quit qBittorrent?</source>
@@ -849,6 +886,54 @@
         <source>Filter feed items...</source>
         <translation>Filtrar itens do feed...</translation>
     </message>
+    <message>
+        <source>Info Hash v1</source>
+        <translation>Hash de informação v1</translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation>Inverter seleção</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation>Selecionar tudo</translation>
+    </message>
+    <message>
+        <source>Remove torrent and content</source>
+        <translation>Remover torrent e conteúdo</translation>
+    </message>
+    <message>
+        <source>Remove torrent</source>
+        <translation>Remover torrent</translation>
+    </message>
+    <message>
+        <source>Info Hash v2</source>
+        <translation>Hash de informação v2</translation>
+    </message>
+    <message>
+        <source>Resume session</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>[PAUSED]</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Global Speed Limits</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Pause session</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Pause Session</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Resume Session</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>OptionsDialog</name>
@@ -890,7 +975,7 @@
     </message>
     <message>
         <source>Web User Interface (Remote control)</source>
-        <translation>Interface web do utilizador (controlo remoto)</translation>
+        <translation>WebUI do utilizador (controlo remoto)</translation>
     </message>
     <message>
         <source>IP address:</source>
@@ -922,11 +1007,11 @@
     </message>
     <message>
         <source>Copy .torrent files to:</source>
-        <translation>Copiar os ficheiros .torrent para:</translation>
+        <translation type="vanished">Copiar os ficheiros .torrent para:</translation>
     </message>
     <message>
         <source>Copy .torrent files for finished downloads to:</source>
-        <translation>Copiar os ficheiros .torrent das transferências terminadas para:</translation>
+        <translation type="vanished">Copiar os ficheiros .torrent das transferências terminadas para:</translation>
     </message>
     <message>
         <source>Pre-allocate disk space for all files</source>
@@ -943,10 +1028,6 @@
     <message>
         <source>SMTP server:</source>
         <translation>Servidor SMTP:</translation>
-    </message>
-    <message>
-        <source>This server requires a secure connection (SSL)</source>
-        <translation>Este servidor requer uma ligação segura (SSL)</translation>
     </message>
     <message>
         <source>Authentication</source>
@@ -990,11 +1071,11 @@
     </message>
     <message>
         <source>Maximum number of upload slots per torrent:</source>
-        <translation>Número máximo de slots de envio por torrent:</translation>
+        <translation>Número máximo de slots de upload por torrent:</translation>
     </message>
     <message>
         <source>Global maximum number of upload slots:</source>
-        <translation>Número máximo global de slots de envio:</translation>
+        <translation>Número máximo global de slots de upload:</translation>
     </message>
     <message>
         <source>Proxy Server</source>
@@ -1046,11 +1127,11 @@
     </message>
     <message>
         <source>Upload:</source>
-        <translation>Envio:</translation>
+        <translation>Upload:</translation>
     </message>
     <message>
         <source>Download:</source>
-        <translation>Transferência:</translation>
+        <translation>Download:</translation>
     </message>
     <message>
         <source>Alternative Rate Limits</source>
@@ -1088,7 +1169,7 @@
     </message>
     <message>
         <source>Apply rate limit to transport overhead</source>
-        <translation>Aplicar o limite de velocidade à sobrecarga do protocolo</translation>
+        <translation>Aplicar o limite de rácio à sobrecarga do protocolo</translation>
     </message>
     <message>
         <source>Apply rate limit to µTP protocol</source>
@@ -1132,7 +1213,7 @@
     </message>
     <message>
         <source>Maximum active uploads:</source>
-        <translation>Máximo de envios ativos:</translation>
+        <translation>Nº máximo de uploads ativos:</translation>
     </message>
     <message>
         <source>Maximum active torrents:</source>
@@ -1252,7 +1333,7 @@
     </message>
     <message>
         <source>Switch torrent to Manual Mode</source>
-        <translation>Mudar o torrent para o 'Modo manual'</translation>
+        <translation>Mudar o torrent para o modo manual</translation>
     </message>
     <message>
         <source>When Torrent Category changed:</source>
@@ -1272,7 +1353,7 @@
     </message>
     <message>
         <source>Relocate torrent</source>
-        <translation>Realocar torrent</translation>
+        <translation>Mover torrent</translation>
     </message>
     <message>
         <source>When Default Save Path changed:</source>
@@ -1280,7 +1361,7 @@
     </message>
     <message>
         <source>Enable Host header validation</source>
-        <translation>Ativar a validação do cabeçalho do Host</translation>
+        <translation>Ativar a validação do cabeçalho do servidor</translation>
     </message>
     <message>
         <source>Security</source>
@@ -1428,7 +1509,7 @@
     </message>
     <message>
         <source>Fixed slots</source>
-        <translation>Slots corrigidos</translation>
+        <translation>Slots fixos</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1480,11 +1561,11 @@
     </message>
     <message>
         <source>Resolve peer countries:</source>
-        <translation>Resolver países dos pares:</translation>
+        <translation>Resolver pares dos países:</translation>
     </message>
     <message>
         <source>ban for:</source>
-        <translation>banir durante:</translation>
+        <translation>banir por:</translation>
     </message>
     <message>
         <source>Ban client after consecutive failures:</source>
@@ -1508,7 +1589,7 @@
     </message>
     <message>
         <source>Peer turnover threshold percentage:</source>
-        <translation>Percentagem-limiar de rotatividade de pares:</translation>
+        <translation>Percentagem de limite de rotatividade de pares:</translation>
     </message>
     <message>
         <source>RSS Torrent Auto Downloader</source>
@@ -1524,11 +1605,11 @@
     </message>
     <message>
         <source>RSS Reader</source>
-        <translation>Leitor RSS</translation>
+        <translation>Leitor de RSS</translation>
     </message>
     <message>
         <source>Edit auto downloading rules...</source>
-        <translation>Editar regras da transferência automática...</translation>
+        <translation>Editar regras de transferência automática...</translation>
     </message>
     <message>
         <source>Download REPACK/PROPER episodes</source>
@@ -1556,7 +1637,7 @@
     </message>
     <message>
         <source>Optional IP address to bind to:</source>
-        <translation>Endereço IP opcional ao qual associar:</translation>
+        <translation>Endereço de IP opcional para ligar-se:</translation>
     </message>
     <message>
         <source>Disallow connection to peers on privileged ports:</source>
@@ -1600,7 +1681,7 @@
     </message>
     <message>
         <source>Random</source>
-        <translation>Aleatória</translation>
+        <translation>Aleatório</translation>
     </message>
     <message>
         <source>%K: Torrent ID</source>
@@ -1704,7 +1785,7 @@
     </message>
     <message>
         <source>Excluded file names</source>
-        <translation>Nomes de ficheiro excluídos</translation>
+        <translation>Nomes de ficheiros excluídos</translation>
     </message>
     <message>
         <source>Support internationalized domain name (IDN):</source>
@@ -1804,7 +1885,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Save path:</source>
-        <translation>Guardar em:</translation>
+        <translation>Caminho de gravação:</translation>
     </message>
     <message>
         <source>months</source>
@@ -1880,7 +1961,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>If &amp;quot;mixed mode&amp;quot; is enabled, I2P torrents are allowed to also get peers from other sources than the tracker, and connect to regular IPs, not providing any anonymization. This may be useful if the user is not interested in the anonymization of I2P, but still wants to be able to connect to I2P peers.</source>
-        <translation>Se o &amp;quot;modo misto&amp;quot; estiver ativado, os torrents I2P podem também obter pares de outras fontes que não o tracker e ligar-se a IPs normais, não fornecendo qualquer anonimização. Isso pode ser útil se o utilizador não estiver interessado na anonimização do I2P, mas ainda quiser se ligar a pares I2P.</translation>
+        <translation>Se o modo misto estiver ativado, os torrents I2P também podem obter pares de outras fontes além do tracker e ligar-se a IPs normais, sem fornecer anonimização. Isto pode ser útil se o utilizador não estiver interessado na anonimização do I2P, mas ainda quiser ligar-se a pares I2P.</translation>
     </message>
     <message>
         <source>DHT bootstrap nodes:</source>
@@ -1952,11 +2033,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>The alternative WebUI files location cannot be blank.</source>
-        <translation>O local alternativo dos ficheiros da interface web não pode estar em branco.</translation>
+        <translation>O local alternativo dos ficheiros da WebUI não pode estar em branco.</translation>
     </message>
     <message>
         <source>Disk cache:</source>
-        <translation>Cache do disco:</translation>
+        <translation>Cache de disco:</translation>
     </message>
     <message>
         <source>Write-through</source>
@@ -1968,7 +2049,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>The WebUI password must be at least 6 characters long.</source>
-        <translation>A palavra-passe da interface web tem de ter pelo menos 6 caracteres.</translation>
+        <translation>A palavra-passe da WebUI tem de ter pelo menos 6 caracteres.</translation>
     </message>
     <message>
         <source>Coalesce reads &amp;amp; writes:</source>
@@ -1980,7 +2061,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>The WebUI username must be at least 3 characters long.</source>
-        <translation>O nome de utilizador da interface web deve ter pelo menos 3 caracteres.</translation>
+        <translation>O nome de utilizador da WebUI deve ter pelo menos 3 caracteres.</translation>
     </message>
     <message>
         <source>Same host request delay:</source>
@@ -1996,7 +2077,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Show external IP in status bar</source>
-        <translation>Mostrar IP externo na barra de status</translation>
+        <translation type="vanished">Mostrar IP externo na barra de status</translation>
     </message>
     <message>
         <source>Fetched trackers</source>
@@ -2036,7 +2117,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Transfer list</source>
-        <translation>Lista de transferências</translation>
+        <translation type="vanished">Lista de transferências</translation>
     </message>
     <message>
         <source>The announce port must be between 0 and 65535.</source>
@@ -2087,16 +2168,12 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <translation>Executar ao concluir o torrent:</translation>
     </message>
     <message>
-        <source>Attempted to send email. Check your inbox to confirm success</source>
-        <translation>Tentativa de enviar e-mail. Verifique a sua caixa de entrada para confirmar</translation>
-    </message>
-    <message>
         <source>Automatically append trackers from URL to new downloads:</source>
         <translation>Adicionar automaticamente trackers a partir de URL às novas transferências:</translation>
     </message>
     <message>
         <source>Torrent content removing mode:</source>
-        <translation>Modo de remoção de conteúdo do torrent:</translation>
+        <translation>Modo de remoção do conteúdo do torrent:</translation>
     </message>
     <message>
         <source>Move files to trash (if possible)</source>
@@ -2112,7 +2189,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>List of alternative WebUI</source>
-        <translation>Lista de interface web alternativa</translation>
+        <translation>Lista de WebUI alternativa</translation>
     </message>
     <message>
         <source>Run on torrent added:</source>
@@ -2165,10 +2242,6 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Log Files</source>
         <translation>Ficheiros do registo</translation>
-    </message>
-    <message>
-        <source>Enable optimized table rendering (experimental)</source>
-        <translation>Ativar renderização de tabela otimizada (experimental)</translation>
     </message>
     <message>
         <source>Note: The password is saved unencrypted</source>
@@ -2231,20 +2304,20 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <translation>Ponto de Código de Serviços Diferenciados (DSCP) para ligações a pares</translation>
     </message>
     <message>
-        <source>The WebUI username must not contain a colon.</source>
-        <translation>O nome de utilizador da WebUI não pode conter dois-pontos.</translation>
+        <source>no encryption used when sending emails</source>
+        <translation>sem encriptação ao enviar e-mails</translation>
     </message>
     <message>
-        <source>Date format:</source>
-        <translation>Formato da data:</translation>
+        <source>SMTPS</source>
+        <translation>SMTPS</translation>
     </message>
     <message>
-        <source>Browser default</source>
-        <translation>Predefinição do navegador</translation>
+        <source>(alternative choice if supported)</source>
+        <translation>(opção alternativa, se suportada)</translation>
     </message>
     <message>
-        <source>Localization</source>
-        <translation>Localização</translation>
+        <source>use SMTPS encryption when sending emails</source>
+        <translation>utilizar encriptação SMTPS ao enviar e-mails</translation>
     </message>
     <message>
         <source>Compact</source>
@@ -2255,12 +2328,208 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <translation>Densidade de apresentação:</translation>
     </message>
     <message>
+        <source>SMTP encryption:</source>
+        <translation>Encriptação SMTP:</translation>
+    </message>
+    <message>
+        <source>Attempted to send test email.\nCheck your inbox to confirm success.\nCheck the Execution Log for errors.</source>
+        <translation type="vanished">Tentativa de envio de e-mail de teste.\nVerifique a caixa de entrada para confirmar se foi enviado com sucesso.\nConsulte o registo de execução para ver eventuais erros.</translation>
+    </message>
+    <message>
+        <source>Default port</source>
+        <translation>Porta predefinida</translation>
+    </message>
+    <message>
+        <source>STARTTLS</source>
+        <translation>STARTTLS</translation>
+    </message>
+    <message>
+        <source>Enable optimized table rendering</source>
+        <translation>Ativar renderização otimizada de tabelas</translation>
+    </message>
+    <message>
+        <source>Select the encryption type used when sending SMTP emails</source>
+        <translation>Selecione o tipo de encriptação utilizado ao enviar e-mails por SMTP</translation>
+    </message>
+    <message>
         <source>It appends the text to the window title to help distinguish qBittorrent instances</source>
         <translation>Acrescenta o texto ao título da janela para ajudar a distinguir instâncias do qBittorrent</translation>
     </message>
     <message>
+        <source>(last choice if no other option)</source>
+        <translation>(última opção se nenhuma outra estiver disponível)</translation>
+    </message>
+    <message>
+        <source>Date format:</source>
+        <translation>Formato da data:</translation>
+    </message>
+    <message>
+        <source>Browser default</source>
+        <translation>Predefinição do navegador</translation>
+    </message>
+    <message>
         <source>Resolve peer host names:</source>
         <translation>Resolver nomes de anfitrião dos pares:</translation>
+    </message>
+    <message>
+        <source>Pread/pwrite</source>
+        <translation>pread/pwrite</translation>
+    </message>
+    <message>
+        <source>use STARTTLS encryption when sending emails</source>
+        <translation>utilizar encriptação STARTTLS ao enviar e-mails</translation>
+    </message>
+    <message>
+        <source>The WebUI username must not contain a colon.</source>
+        <translation>O nome de utilizador da WebUI não pode conter dois-pontos.</translation>
+    </message>
+    <message>
+        <source>Localization</source>
+        <translation>Localização</translation>
+    </message>
+    <message>
+        <source>(best choice if supported)</source>
+        <translation>(melhor opção, se suportada)</translation>
+    </message>
+    <message>
+        <source>Provide the sending email address.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Enable I2P Peer Exchange (I2P PeX) to find more peers (requires restart)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Status bar</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Notification</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Could not contact qBittorrent.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Separate multiple emails with a semicolon.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Allow multiple connections from the same Peer ID:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Attempted to send test email.&lt;br&gt;Check your inbox to confirm success.&lt;br&gt;Check the Execution Log for errors.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Sessions count limit:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>I2P outbound length variance:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Transfer List</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Start BitTorrent session in paused state:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Store backup in:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Save search tabs</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Store backup .torrent file</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Note: b@y.com &amp; c@z.com will both see each other's email addresses, whereas a@x.com will not see them nor be seen.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Display torrent content and some options</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Separate multiple email addresses within each email with a comma.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Provide the recipient email address or addresses.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Show external IP</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Search</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>BitTorrent session shutdown timeout [-1: unlimited]:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Example:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Provide the SMTP server address for sending email notifications.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>smtp.example.com:465 - connect to server smtp.example.com on port 465</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Maximum outstanding block requests from a peer:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Also save search results</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>I2P inbound length variance:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>To manually specify the server port, add a colon and then the port number to the end.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Remove backup when removing torrent</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>When torrent finished move backup to:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>STUN server for WebTorrent NAT traversal:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>The server address can be entered either as a DNS name or an IP address (DNS name recommended).</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Allow outgoing connections when seeding:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>a@x.com;b@y.com,c@z.com - send two emails: the first to just a@x.com, the second to both b@y.com and c@z.com</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2300,7 +2569,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Downloaded</source>
         <comment>i.e: total data downloaded</comment>
-        <translation>Transferido</translation>
+        <translation>Descarregado</translation>
     </message>
     <message>
         <source>Uploaded</source>
@@ -2344,6 +2613,10 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>IP/Address</source>
         <translation>Endereço IP:</translation>
+    </message>
+    <message>
+        <source>Contribution</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2399,7 +2672,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <name>PropertiesWidget</name>
     <message>
         <source>Downloaded:</source>
-        <translation>Transferido:</translation>
+        <translation>Descarregado:</translation>
     </message>
     <message>
         <source>Transfer</source>
@@ -2416,7 +2689,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Uploaded:</source>
-        <translation>Enviado:</translation>
+        <translation>Enviados:</translation>
     </message>
     <message>
         <source>Seeds:</source>
@@ -2424,11 +2697,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Download Speed:</source>
-        <translation>Vel. de transferência:</translation>
+        <translation>Vel. de download:</translation>
     </message>
     <message>
         <source>Upload Speed:</source>
-        <translation>Vel. de envio:</translation>
+        <translation>Vel. de upload:</translation>
     </message>
     <message>
         <source>Peers:</source>
@@ -2436,11 +2709,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Download Limit:</source>
-        <translation>Limite de transferência:</translation>
+        <translation>Limite de download:</translation>
     </message>
     <message>
         <source>Upload Limit:</source>
-        <translation>Limite do envio:</translation>
+        <translation>Limite de upload:</translation>
     </message>
     <message>
         <source>Wasted:</source>
@@ -2464,7 +2737,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Reannounce In:</source>
-        <translation>Novo anúncio em:</translation>
+        <translation>Reanunciar em:</translation>
     </message>
     <message>
         <source>Last Seen Complete:</source>
@@ -2496,7 +2769,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Save Path:</source>
-        <translation>Guardado em:</translation>
+        <translation>Caminho de gravação:</translation>
     </message>
     <message>
         <source>Never</source>
@@ -2544,11 +2817,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Info Hash v2:</source>
-        <translation>Informações de Hash v2:</translation>
+        <translation>Hash de informação v2:</translation>
     </message>
     <message>
         <source>Info Hash v1:</source>
-        <translation>Informações de Hash v1:</translation>
+        <translation>Hash de informação v1:</translation>
     </message>
     <message>
         <source>N/A</source>
@@ -2556,7 +2829,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Progress:</source>
-        <translation>Evolução:</translation>
+        <translation>Progresso:</translation>
     </message>
     <message>
         <source>Use regular expressions</source>
@@ -2632,7 +2905,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Web seed URL:</source>
-        <translation>URL de sementes da web:</translation>
+        <translation>URL da web seed:</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -2660,7 +2933,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Web seed editing</source>
-        <translation>Edição de sementes web</translation>
+        <translation>Edição de web seed</translation>
     </message>
     <message>
         <source>Add web seeds...</source>
@@ -2673,6 +2946,18 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Availability:</source>
         <translation>Disponibilidade:</translation>
+    </message>
+    <message>
+        <source>Copy path</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Copy download URL</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2721,7 +3006,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Read cache hits:</source>
-        <translation>Ler os tops da cache:</translation>
+        <translation>Tops de leituras da cache:</translation>
     </message>
     <message>
         <source>Average time in queue:</source>
@@ -2745,7 +3030,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>All-time upload:</source>
-        <translation>Envios totais:</translation>
+        <translation>Uploads globais:</translation>
     </message>
     <message>
         <source>Total buffer size:</source>
@@ -2770,6 +3055,22 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Total queued size:</source>
         <translation>Tamanho total da fila:</translation>
+    </message>
+    <message>
+        <source>Tracker statistics</source>
+        <translation>Estatísticas dos trackers</translation>
+    </message>
+    <message>
+        <source>Queued tracker announces:</source>
+        <translation>Anúncios de tracker em fila:</translation>
+    </message>
+    <message>
+        <source>Request latency:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>The time it takes from receiving a request from a peer until we're sending the response back on the socket</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2796,19 +3097,19 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Completed (0)</source>
-        <translation>Terminado(s) (0)</translation>
+        <translation>Terminado (0)</translation>
     </message>
     <message>
         <source>Active (0)</source>
-        <translation>Ativo(s) (0)</translation>
+        <translation>Ativos (0)</translation>
     </message>
     <message>
         <source>Inactive (0)</source>
-        <translation>Inativo(s) (0)</translation>
+        <translation>Inativos (0)</translation>
     </message>
     <message>
         <source>Errored (0)</source>
-        <translation>Com erros (0)</translation>
+        <translation>Com erro (0)</translation>
     </message>
     <message>
         <source>All (%1)</source>
@@ -2820,27 +3121,27 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Seeding (%1)</source>
-        <translation>A semear (%1)</translation>
+        <translation>A seed (%1)</translation>
     </message>
     <message>
         <source>Completed (%1)</source>
-        <translation>Terminado(s) (%1)</translation>
+        <translation>Terminados (%1)</translation>
     </message>
     <message>
         <source>Active (%1)</source>
-        <translation>Ativo(s) (%1)</translation>
+        <translation>Ativos (%1)</translation>
     </message>
     <message>
         <source>Inactive (%1)</source>
-        <translation>Inativo(s) (%1)</translation>
+        <translation>Inativos (%1)</translation>
     </message>
     <message>
         <source>Errored (%1)</source>
-        <translation>Com erros (%1)</translation>
+        <translation>Com erro (%1)</translation>
     </message>
     <message>
         <source>Stalled Uploading (%1)</source>
-        <translation>Envio parado (%1)</translation>
+        <translation>Upload parado (%1)</translation>
     </message>
     <message>
         <source>Stalled Downloading (%1)</source>
@@ -2856,7 +3157,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Stalled Uploading (0)</source>
-        <translation>Envio parado (0)</translation>
+        <translation>Upload parado (0)</translation>
     </message>
     <message>
         <source>Stalled (%1)</source>
@@ -2905,6 +3206,10 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Stop torrents</source>
         <translation>Parar torrents</translation>
+    </message>
+    <message>
+        <source>Force start torrents</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -2973,7 +3278,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Completed On</source>
         <comment>Torrent was completed on 01/01/2010 08:00</comment>
-        <translation>Terminado em</translation>
+        <translation>Concluído em</translation>
     </message>
     <message>
         <source>Tracker</source>
@@ -2982,7 +3287,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Down Limit</source>
         <comment>i.e: Download limit</comment>
-        <translation>Limite de transferências</translation>
+        <translation>Limite de downloads</translation>
     </message>
     <message>
         <source>Up Limit</source>
@@ -2992,7 +3297,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Downloaded</source>
         <comment>Amount of data downloaded (e.g. in MB)</comment>
-        <translation>Transferido</translation>
+        <translation>Descarregado</translation>
     </message>
     <message>
         <source>Uploaded</source>
@@ -3017,7 +3322,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>Completed</source>
         <comment>Amount of data completed (e.g. in MB)</comment>
-        <translation>Terminado(s)</translation>
+        <translation>Terminado</translation>
     </message>
     <message>
         <source>Ratio Limit</source>
@@ -3124,7 +3429,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>N/A</source>
-        <translation>N/A</translation>
+        <translation>N/D</translation>
     </message>
     <message>
         <source>Seeds</source>
@@ -3144,7 +3449,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Tracker editing</source>
-        <translation>A editar tracker</translation>
+        <translation>Editar tracker</translation>
     </message>
     <message>
         <source>Leeches</source>
@@ -3263,11 +3568,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>[F] Seeding</source>
-        <translation>[F] A semear</translation>
+        <translation>[F] A seed</translation>
     </message>
     <message>
         <source>Seeding</source>
-        <translation>A semear</translation>
+        <translation>A seed</translation>
     </message>
     <message>
         <source>Queued</source>
@@ -3679,12 +3984,12 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     <message>
         <source>%1h %2m</source>
         <comment>e.g: 3hours 5minutes</comment>
-        <translation>%1 h e %2 m</translation>
+        <translation>%1h e %2m</translation>
     </message>
     <message>
         <source>%1d %2h</source>
         <comment>e.g: 2days 10hours</comment>
-        <translation>%1 d e %2 h</translation>
+        <translation>%1d e %2h</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -3902,7 +4207,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Engine URL</source>
-        <translation>URL do motor de pesquisa</translation>
+        <translation>URL do motor</translation>
     </message>
     <message>
         <source>Engine</source>
@@ -3997,6 +4302,10 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <source>Stop torrents</source>
         <translation>Parar torrents</translation>
     </message>
+    <message>
+        <source>Force start torrents</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>TagFilterModel</name>
@@ -4045,7 +4354,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar.</source>
-        <translation>Um cliente avançado de BitTorrent programado em C++, baseado em ferramentas QT e em 'libtorrent-rasterbar'.</translation>
+        <translation>Um cliente avançado de BitTorrent programado em C++, baseado em ferramentas QT e em libtorrent-rasterbar.</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -4166,19 +4475,19 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <translation>Atualizar separador</translation>
     </message>
     <message>
-        <source>Open download window</source>
-        <translation>Abrir a janela de download</translation>
+        <source>Stop search</source>
+        <translation>Parar pesquisa</translation>
     </message>
     <message>
         <source>Use as search text</source>
         <translation>Utilizar como texto de pesquisa</translation>
     </message>
     <message>
-        <source>Stop search</source>
-        <translation>Parar pesquisa</translation>
+        <source>Open download window</source>
+        <translation>Abrir a janela de download</translation>
     </message>
     <message>
-        <source>Open shared download window</source>
+        <source>Blocked opening search result description page URL. Only http:// and https:// links can be opened.</source>
         <translation type="unfinished" />
     </message>
     <message>
@@ -4186,7 +4495,15 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <translation type="unfinished" />
     </message>
     <message>
+        <source>Search results are no longer available</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
         <source>Open separate download windows</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Open shared download window</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -4213,7 +4530,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Please choose a folder name</source>
-        <translation>Por favor, escolha o nome da pasta</translation>
+        <translation>Por favor, escolha um nome de pasta</translation>
     </message>
     <message>
         <source>New feed name:</source>
@@ -4221,19 +4538,19 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Update all</source>
-        <translation>Atualizar tudo</translation>
+        <translation>Atualizar todos</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>Remover</translation>
     </message>
     <message>
         <source>RSS Downloader...</source>
-        <translation>Downloader de RSS...</translation>
+        <translation>Transferidor RSS...</translation>
     </message>
     <message>
         <source>Mark items read</source>
-        <translation>Marcar itens como lidos</translation>
+        <translation>Assinalar itens como lidos</translation>
     </message>
     <message>
         <source>Update all feeds</source>
@@ -4245,11 +4562,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Torrents: (double-click to download)</source>
-        <translation>Torrents: (duplo clique para fazer o download)</translation>
+        <translation>Torrents: (duplo clique para transferir)</translation>
     </message>
     <message>
         <source>Open news URL</source>
-        <translation>Abrir URL</translation>
+        <translation>Abrir URL de notícias</translation>
     </message>
     <message>
         <source>Rename...</source>
@@ -4297,7 +4614,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Download torrent</source>
-        <translation>Fazer o download do torrent</translation>
+        <translation>Descarregar torrent</translation>
     </message>
     <message>
         <source>Edit feed URL...</source>
@@ -4323,28 +4640,32 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
         <source>Author: </source>
         <translation>Autor: </translation>
     </message>
+    <message>
+        <source>Blocked opening RSS article URL. Only http:// and https:// links can be opened.</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>AutomatedRssDownloader</name>
     <message>
         <source>Download Rules</source>
-        <translation>Regras para transferir</translation>
+        <translation>Regras de transferência</translation>
     </message>
     <message>
         <source>Matching RSS Articles</source>
-        <translation>Artigos RSS coincidentes</translation>
+        <translation>Artigos RSS correspondentes</translation>
     </message>
     <message>
         <source>* to match zero or more of any characters</source>
-        <translation>* para igualar a zero ou mais caracteres</translation>
+        <translation>* para corresponder a zero ou mais caracteres</translation>
     </message>
     <message>
         <source> will match all articles.</source>
-        <translation> irá corresponder a todos os artigos.</translation>
+        <translation> irá corresponder todos os artigos.</translation>
     </message>
     <message>
         <source>Episode filter rules: </source>
-        <translation>Regras para filtro de episódios: </translation>
+        <translation>Regras do filtro de episódios: </translation>
     </message>
     <message>
         <source>Auto downloading of RSS torrents is disabled now! You can enable it in application settings.</source>
@@ -4356,7 +4677,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Save to:</source>
-        <translation>Guardar em:</translation>
+        <translation>Caminho de gravação:</translation>
     </message>
     <message>
         <source>Use Regular Expressions</source>
@@ -4372,11 +4693,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>? to match any single character</source>
-        <translation>? para corresponder a qualquer carácter</translation>
+        <translation>? para corresponder a qualquer carácter único</translation>
     </message>
     <message>
         <source>Matches articles based on episode filter.</source>
-        <translation>Correspondência de artigos tendo por base o filtro de episódios.</translation>
+        <translation>Corresponde a artigos baseados em filtros de episódios.</translation>
     </message>
     <message>
         <source>Assign Category:</source>
@@ -4384,11 +4705,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Regex mode: use Perl-compatible regular expressions</source>
-        <translation>Modo regex: utilizar expressões regulares compatíveis com Perl</translation>
+        <translation>Modo Regex: utilizar expressões regulares compatíveis com Perl</translation>
     </message>
     <message>
         <source>| is used as OR operator</source>
-        <translation>É utilizado como operador OR (OU)</translation>
+        <translation>| é utilizado como operador OU (OR)</translation>
     </message>
     <message>
         <source>Clear downloaded episodes</source>
@@ -4396,7 +4717,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Whitespaces count as AND operators (all words, any order)</source>
-        <translation>Os espaços em branco contam como operadores AND (E) (todas as palavras, qualquer ordem)</translation>
+        <translation>Espaços em branco contam como operadores E (AND) (todas as palavras, qualquer ordem)</translation>
     </message>
     <message>
         <source>An expression with an empty %1 clause (e.g. %2)</source>
@@ -4420,7 +4741,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Infinite range: &lt;b&gt;1x25-;&lt;/b&gt; matches episodes 25 and upward of season one, and all episodes of later seasons</source>
-        <translation>Limite infinito: &lt;b&gt;1x25-;&lt;/b&gt; corresponde os episódios 25 e superiores da temporada um, e a todos os episódios de temporadas posteriores</translation>
+        <translation>Intervalo infinito: &lt;b&gt;1x25-;&lt;/b&gt; combina com os episódios 25 em diante da temporada um, e todos os episódios das temporadas posteriores</translation>
     </message>
     <message>
         <source>Save to a Different Directory</source>
@@ -4432,23 +4753,23 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Single number: &lt;b&gt;1x25;&lt;/b&gt; matches episode 25 of season one</source>
-        <translation>Um número: &lt;b&gt;1x25;&lt;/b&gt; corresponde ao episódio 25 da temporada um</translation>
+        <translation>Número único: &lt;b&gt;1x25;&lt;/b&gt; corresponde ao episódio 25 da primeira temporada</translation>
     </message>
     <message>
         <source>Three range types for episodes are supported: </source>
-        <translation>São suportados três tipos de intervalos para episódios: </translation>
+        <translation>Três tipos de intervalo para episódios são suportados: </translation>
     </message>
     <message>
         <source>Are you sure you want to remove the selected download rules?</source>
-        <translation>Tem a certeza de que quer remover as regras de transferência selecionadas?</translation>
+        <translation>Tem a certeza de que quer remover as regras de transferência seleccionadas?</translation>
     </message>
     <message>
         <source>Use global settings</source>
-        <translation>Utilizar definições globais</translation>
+        <translation>Utilizar definições gerais</translation>
     </message>
     <message>
         <source>Normal range: &lt;b&gt;1x25-40;&lt;/b&gt; matches episodes 25 through 40 of season one</source>
-        <translation>Intervalo normal: &lt;b&gt;1x25-40;&lt;/b&gt; corresponde aos episódios 25 a 40 da temporada um</translation>
+        <translation>Intervalo normal: &lt;b&gt;1x25-40;&lt;/b&gt; corresponde aos episódios 25 a 40 da primeira temporada</translation>
     </message>
     <message>
         <source>Please type the new rule name</source>
@@ -4456,7 +4777,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Rule renaming</source>
-        <translation>Alteração de nome de regra</translation>
+        <translation>Renomeação de regra</translation>
     </message>
     <message>
         <source>Always</source>
@@ -4464,7 +4785,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Episode number is a mandatory positive value</source>
-        <translation>O número de episódio tem de ser obrigatóriamente positivo</translation>
+        <translation>O número do episódio é um valor positivo obrigatório</translation>
     </message>
     <message>
         <source> will match 2, 5, 8 through 15, 30 and onward episodes of season one</source>
@@ -4484,11 +4805,11 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Rss Downloader</source>
-        <translation>Transferidor de RSS</translation>
+        <translation>Transferidor RSS</translation>
     </message>
     <message>
         <source>Season number is a mandatory non-zero value</source>
-        <translation>O número de temporada tem de ser um valor positivo</translation>
+        <translation>Número da temporada é um valor obrigatório diferente de zero</translation>
     </message>
     <message>
         <source>Never</source>
@@ -4504,15 +4825,15 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Use Smart Episode Filter</source>
-        <translation>Utilizar o 'Filtro inteligente de episódios'</translation>
+        <translation>Utilizar filtro inteligente de episódios</translation>
     </message>
     <message>
         <source>If word order is important use * instead of whitespace.</source>
-        <translation>Se a ordem das palavras é importante utilize * em vez de um espaço em branco.</translation>
+        <translation>Se a ordem das palavras é importante, utilize * em vez de espaço em branco.</translation>
     </message>
     <message>
         <source>Please type the name of the new download rule.</source>
-        <translation>Escreva o nome da nova regra para transferências.</translation>
+        <translation>Por favor, escreva o nome da nova regra de transferência.</translation>
     </message>
     <message>
         <source>Wildcard mode: you can use</source>
@@ -4520,7 +4841,7 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source> will exclude all articles.</source>
-        <translation> irá excluir todos os artigos.</translation>
+        <translation> irá eliminar todos os artigos.</translation>
     </message>
     <message>
         <source>Delete rule</source>
@@ -4528,15 +4849,15 @@ Utilize ';' para separar várias entradas. Pode utilizar o carácter universal '
     </message>
     <message>
         <source>Ignore Subsequent Matches for (0 to Disable)</source>
-        <translation>Ignorar ocorrências subsequentes para (0 para desativar)</translation>
+        <translation>Ignorar correspondências subsequentes por (0 para Desativar)</translation>
     </message>
     <message>
         <source>Rename rule...</source>
-        <translation>Mudar o nome da regra...</translation>
+        <translation>Renomear regra...</translation>
     </message>
     <message>
         <source>Last Match: Unknown</source>
-        <translation>Última correspondência: desconhecida</translation>
+        <translation>Última correspondência: Desconhecida</translation>
     </message>
     <message>
         <source>Clear downloaded episodes...</source>
@@ -4581,8 +4902,24 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
         <translation>Adicionar parado(s):</translation>
     </message>
     <message>
+        <source>Rule cloning</source>
+        <translation>Clonagem de regra</translation>
+    </message>
+    <message>
         <source>Clear downloaded episodes confirmation</source>
         <translation>Confirmação de limpeza dos episódios descarregados</translation>
+    </message>
+    <message>
+        <source>Clone rule...</source>
+        <translation>Clonar regra...</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -4622,6 +4959,10 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Other error</source>
         <translation>Outro erro</translation>
+    </message>
+    <message>
+        <source>Force start torrents</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -4809,7 +5150,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     </message>
     <message>
         <source>Save path:</source>
-        <translation>Guardar em:</translation>
+        <translation>Caminho de gravação:</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -4834,6 +5175,10 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Category does not exist</source>
         <translation>A categoria não existe</translation>
+    </message>
+    <message>
+        <source>Torrent share limits</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -4912,7 +5257,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     </message>
     <message>
         <source>JavaScript Required! You must enable JavaScript for the WebUI to work properly</source>
-        <translation>É necessário o JavaScript! Deve ativar o JavaScript para a interface web de forma a poder funcionar corretamente</translation>
+        <translation>É necessário o JavaScript! Deve ativar o JavaScript para a WebUI de forma a poder funcionar corretamente</translation>
     </message>
     <message>
         <source>Login</source>
@@ -4956,7 +5301,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Private
                 torrent (Won't distribute on DHT network)</source>
-        <translation>Torrent privado
+        <translation type="vanished">Torrent privado
                 (não será distribuído na rede DHT)</translation>
     </message>
     <message>
@@ -4981,7 +5326,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     </message>
     <message>
         <source>Web seed URLs:</source>
-        <translation>URL de sementes da web:</translation>
+        <translation>URL de web seeds:</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -5010,7 +5355,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Align to piece boundary for files larger
                 than:</source>
-        <translation>Alinhar ao limite da peça para ficheiros maiores
+        <translation type="vanished">Alinhar ao limite da peça para ficheiros maiores
                 do que:</translation>
     </message>
     <message>
@@ -5040,7 +5385,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Optimize
                     alignment</source>
-        <translation>Otimizar
+        <translation type="vanished">Otimizar
                     alinhamento</translation>
     </message>
     <message>
@@ -5079,7 +5424,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
         <source>Start
                 seeding
                 immediately</source>
-        <translation>Iniciar
+        <translation type="vanished">Iniciar
                 seed
                 imediatamente</translation>
     </message>
@@ -5131,6 +5476,42 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
         <source>Export Torrent</source>
         <translation>Exportar torrent</translation>
     </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Ignore dotfiles</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Align to piece boundary for files larger than:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Private torrent (Won't distribute on DHT network)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Ignore Dotfiles</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Start seeding immediately</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Optimize alignment</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>If checked, filenames starting with a period punctuation mark `.` will not be added to the created torrent.</source>
+        <translation type="unfinished" />
+    </message>
 </context>
 <context>
     <name>DownloadFromURLDialog</name>
@@ -5159,6 +5540,14 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
         <translation>Adicionar ligações torrent</translation>
     </message>
     <message>
+        <source>Add %1 torrents</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Open separate dialog for each torrent</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
         <source>Add Torrents</source>
         <translation type="unfinished" />
     </message>
@@ -5167,15 +5556,7 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
         <translation type="unfinished" />
     </message>
     <message>
-        <source>Add %1 torrents</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
         <source>All torrents will use a single options dialog. Check below to configure each one separately.</source>
-        <translation type="unfinished" />
-    </message>
-    <message>
-        <source>Open separate dialog for each torrent</source>
         <translation type="unfinished" />
     </message>
 </context>
@@ -5200,6 +5581,46 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>KiB/s</source>
         <translation>KiB/s</translation>
+    </message>
+    <message>
+        <source>Upload speed</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Download speed</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Speed limits</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Alternative download speed</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Alternative upload speed</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Upload:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Alternative speed limits</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Download:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Failed to set speed limits</source>
+        <translation type="unfinished" />
     </message>
 </context>
 <context>
@@ -5226,6 +5647,131 @@ Suporta os formatos: S01E01, 1x1, 2017.12.31 e 31.12.2017 (Suporte também para 
     <message>
         <source>Rotate this API key? The current key will immediately stop working and a new key will be generated.</source>
         <translation>Regenerar esta chave API? A chave atual deixará imediatamente de funcionar e será gerada uma nova chave.</translation>
+    </message>
+</context>
+<context>
+    <name>RSSCloneRule</name>
+    <message>
+        <source>Clone</source>
+        <translation>Clonar</translation>
+    </message>
+    <message>
+        <source>Alert</source>
+        <translation>Aviso</translation>
+    </message>
+    <message>
+        <source>The cloned rule will be set as disabled and the downloaded episodes history will be cleared.</source>
+        <translation>A regra clonada ficará desativada e o histórico de episódios descarregados será limpo.</translation>
+    </message>
+    <message>
+        <source>The rule name is unchanged. You must type a new rule name for the clone.</source>
+        <translation>O nome da regra não foi alterado. Tem de introduzir um novo nome para a cópia.</translation>
+    </message>
+    <message>
+        <source>Please type the name for the clone of the download rule.</source>
+        <translation>Introduza o nome da cópia da regra de transferência.</translation>
+    </message>
+    <message>
+        <source>The rule name cannot be empty.</source>
+        <translation>O nome da regra não pode estar vazio.</translation>
+    </message>
+    <message>
+        <source>Unable to clone the selected rule.</source>
+        <translation>Não foi possível clonar a regra selecionada.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>TorrentShareLimitsWidget</name>
+    <message>
+        <source>min</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Enable super seeding for torrent</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Inactive seeding time:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Match all the limits</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Ratio:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Match any limit</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Remove torrent and its content</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Share limit values cannot be empty or invalid.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Action when the limit is reached:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>From category (%1)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Set to</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>From category</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Default (%1)</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Seeding time:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Unlimited</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Stop torrent</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Mode:</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Remove torrent</source>
+        <translation type="unfinished" />
+    </message>
+</context>
+<context>
+    <name>TorrentContent</name>
+    <message>
+        <source>Unavailable until all selected files are downloaded</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <source>Not available for folders</source>
+        <translation type="unfinished" />
     </message>
 </context>
 </TS>

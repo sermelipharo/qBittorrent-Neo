@@ -23,9 +23,10 @@
                 menu: "multiRenameFilesMenu",
                 actions: {
                     ToggleSelection: (element, ref) => {
+                        const TriState = window.qBittorrent.FileTree.TriState;
                         const rowId = Number(element.getAttribute("data-row-id"));
                         const row = bulkRenameFilesTable.getNode(rowId);
-                        const checkState = (row.checked === 1) ? 0 : 1;
+                        const checkState = (row.checked === TriState.Checked) ? TriState.Unchecked : TriState.Checked;
                         bulkRenameFilesTable.toggleNodeTreeCheckbox(rowId, checkState);
                         bulkRenameFilesTable.updateHeaderCheckbox();
                         bulkRenameFilesTable.onRowSelectionChange(bulkRenameFilesTable.getSelectedRows());
@@ -243,9 +244,11 @@
                 document.getElementById("renameOptions").disabled = false;
 
                 // Recreate table
-                let selectedRows = bulkRenameFilesTable.getSelectedRows().map(row => row.rowId.toString());
-                for (const renamedRow of rows)
-                    selectedRows = selectedRows.filter(selectedRow => selectedRow !== renamedRow.rowId.toString());
+                const selectedRows = bulkRenameFilesTable.getSelectedRows().map(row => row.rowId.toString());
+                for (const renamedRow of rows) {
+                    const id = renamedRow.rowId.toString();
+                    window.qBittorrent.Misc.filterInPlace(selectedRows, (row => row !== id));
+                }
                 bulkRenameFilesTable.clear();
 
                 // Adjust file enumeration count by 1 when replacing single files to prevent naming conflicts
@@ -281,7 +284,7 @@
 
                     const row = {
                         fileId: index,
-                        checked: 1, // unchecked
+                        checked: window.qBittorrent.FileTree.TriState.Unchecked,
                         path: file.name,
                         original: window.qBittorrent.Filesystem.fileName(file.name),
                         renamed: "",
@@ -326,7 +329,7 @@
                             folderNode.path = (parent.path === "")
                                 ? folderName
                                 : [parent.path, folderName].join(window.qBittorrent.Filesystem.PathSeparator);
-                            folderNode.checked = selectedRows.includes(rowId.toString()) ? 0 : 1;
+                            folderNode.checked = selectedRows.includes(rowId.toString()) ? window.qBittorrent.FileTree.TriState.Checked : window.qBittorrent.FileTree.TriState.Unchecked;
                             folderNode.original = folderName;
                             folderNode.renamed = "";
                             folderNode.root = parent;
@@ -341,7 +344,7 @@
                     const childNode = new window.qBittorrent.FileTree.FileNode();
                     childNode.rowId = rowId;
                     childNode.path = row.path;
-                    childNode.checked = selectedRows.includes(rowId.toString()) ? 0 : 1;
+                    childNode.checked = selectedRows.includes(rowId.toString()) ? window.qBittorrent.FileTree.TriState.Checked : window.qBittorrent.FileTree.TriState.Unchecked;
                     childNode.original = row.original;
                     childNode.renamed = "";
                     childNode.root = parent;
@@ -442,14 +445,14 @@
             <input id="closeButton" type="button" value="Close" style="float: right; width: 30%;">
         </div>
         <div id="torrentFiles" class="panel" style="position: absolute; top: 0; right: 0; bottom: 0; left: 228px; margin: 35px 10px 45px 20px; border-bottom: 0; height: initial;">
-            <div id="bulkRenameFilesTableFixedHeaderDiv" class="dynamicTableFixedHeaderDiv">
-                <table class="dynamicTable">
-                    <thead>
-                        <tr class="dynamicTableHeader"></tr>
-                    </thead>
-                </table>
-            </div>
             <div id="bulkRenameFilesTableDiv" class="dynamicTableDiv">
+                <div id="bulkRenameFilesTableFixedHeaderDiv" class="dynamicTableFixedHeaderDiv">
+                    <table class="dynamicTable">
+                        <thead>
+                            <tr class="dynamicTableHeader"></tr>
+                        </thead>
+                    </table>
+                </div>
                 <table class="dynamicTable">
                     <tbody></tbody>
                 </table>

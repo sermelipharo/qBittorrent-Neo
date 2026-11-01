@@ -96,7 +96,6 @@ PropertiesWidget::PropertiesWidget(QWidget *parent)
     connect(m_ui->listWebSeeds, &QWidget::customContextMenuRequested, this, &PropertiesWidget::displayWebSeedListMenu);
     connect(m_ui->stackedProperties, &QStackedWidget::currentChanged, this, &PropertiesWidget::loadDynamicData);
     connect(BitTorrent::Session::instance(), &BitTorrent::Session::torrentSavePathChanged, this, &PropertiesWidget::updateSavePath);
-    connect(BitTorrent::Session::instance(), &BitTorrent::Session::torrentMetadataReceived, this, &PropertiesWidget::updateTorrentInfos);
     connect(m_ui->filesList, &TorrentContentWidget::stateChanged, this, &PropertiesWidget::saveSettings);
 
     // set bar height relative to screen dpi
@@ -303,12 +302,6 @@ void PropertiesWidget::setContentFilterPattern()
     m_ui->filesList->setFilterPattern(m_contentFilterLine->text(), m_storeFilterPatternFormat.get(FilterPatternFormat::Wildcards));
 }
 
-void PropertiesWidget::updateTorrentInfos(BitTorrent::Torrent *const torrent)
-{
-    if (torrent == m_torrent)
-        loadTorrentInfos(m_torrent);
-}
-
 void PropertiesWidget::loadTorrentInfos(BitTorrent::Torrent *const torrent)
 {
     clear();
@@ -480,9 +473,8 @@ void PropertiesWidget::loadDynamicData()
                     // Pieces availability
                     showPiecesAvailability(true);
 
-                    using TorrentPtr = QPointer<BitTorrent::Torrent>;
                     m_torrent->fetchPieceAvailability().then(this
-                            , [this, torrent = TorrentPtr(m_torrent)](const QList<int> &pieceAvailability)
+                            , [this, torrent = QPointer(m_torrent)](const QList<int> &pieceAvailability)
                     {
                         if (m_torrent && (m_torrent == torrent))
                             m_piecesAvailability->setAvailability(pieceAvailability);
@@ -499,9 +491,8 @@ void PropertiesWidget::loadDynamicData()
                 qreal progress = m_torrent->progress() * 100.;
                 m_ui->labelProgressVal->setText(Utils::String::fromDouble(progress, 1) + u'%');
 
-                using TorrentPtr = QPointer<BitTorrent::Torrent>;
                 m_torrent->fetchDownloadingPieces().then(this
-                        , [this, torrent = TorrentPtr(m_torrent)](const QBitArray &downloadingPieces)
+                        , [this, torrent = QPointer(m_torrent)](const QBitArray &downloadingPieces)
                 {
                     if (m_torrent && (m_torrent == torrent))
                         m_downloadedPieces->setProgress(m_torrent->pieces(), downloadingPieces);
@@ -529,8 +520,7 @@ void PropertiesWidget::loadUrlSeeds()
     if (!m_torrent)
         return;
 
-    using TorrentPtr = QPointer<BitTorrent::Torrent>;
-    m_torrent->fetchURLSeeds().then(this, [this, torrent = TorrentPtr(m_torrent)](const QList<QUrl> &urlSeeds)
+    m_torrent->fetchURLSeeds().then(this, [this, torrent = QPointer(m_torrent)](const QList<QUrl> &urlSeeds)
     {
         if (!m_torrent || (m_torrent != torrent))
             return;
@@ -603,10 +593,11 @@ void PropertiesWidget::configure()
                 delete m_speedWidget;
             }
 
-            const auto displayText = u"<center><b>%1</b><p>%2</p></center>"_s
+            const auto displayText = u"<center><b>%1</b><p><a href=\"#\">%2</a></p></center>"_s
                 .arg(tr("Speed graphs are disabled"), tr("You can enable it in Advanced Options"));
             auto *label = new QLabel(displayText, this);
             label->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+            connect(label, &QLabel::linkActivated, this, &PropertiesWidget::openAdvancedSettingsLinkActivated);
             m_speedWidget = label;
             m_ui->speedLayout->addWidget(m_speedWidget);
         }

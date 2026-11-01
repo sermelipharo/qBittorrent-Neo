@@ -261,13 +261,13 @@ window.qBittorrent.ContextMenu ??= (() => {
 
         // hide an item
         hideItem(item) {
-            this.menu.querySelector(`a[href$="${item}"]`).parentNode.classList.add("invisible");
+            this.menu.querySelector(`a[href$="${item}"]`).parentElement.classList.add("invisible");
             return this;
         }
 
         // show an item
         showItem(item) {
-            this.menu.querySelector(`a[href$="${item}"]`).parentNode.classList.remove("invisible");
+            this.menu.querySelector(`a[href$="${item}"]`).parentElement.classList.remove("invisible");
             return this;
         }
 
@@ -295,6 +295,15 @@ window.qBittorrent.ContextMenu ??= (() => {
                 this.options.actions[action](element, this, action);
             return this;
         }
+
+        setTooltip(item, text) {
+            const element = this.menu.querySelector(`a[href$="${item}"]`).parentElement;
+            if (text.length > 0)
+                element.title = text;
+            else
+                element.removeAttribute("title");
+            return this;
+        }
     }
 
     class FilterListContextMenu extends ContextMenu {
@@ -316,6 +325,7 @@ window.qBittorrent.ContextMenu ??= (() => {
         updateTorrentActions() {
             const torrentsVisible = torrentsTable.tableBody.children.length > 0;
             this.setEnabled("startTorrents", torrentsVisible)
+                .setEnabled("forceStartTorrents", torrentsVisible)
                 .setEnabled("stopTorrents", torrentsVisible)
                 .setEnabled("deleteTorrents", torrentsVisible);
         }
@@ -479,7 +489,7 @@ window.qBittorrent.ContextMenu ??= (() => {
             const createMenuItem = (text, imgURL, clickFn) => {
                 const anchor = document.createElement("a");
                 anchor.textContent = text;
-                anchor.addEventListener("click", clickFn);
+                anchor.addEventListener("click", (_event) => clickFn());
 
                 const img = document.createElement("img");
                 img.src = imgURL;
@@ -491,8 +501,8 @@ window.qBittorrent.ContextMenu ??= (() => {
 
                 return item;
             };
-            contextCategoryList.appendChild(createMenuItem("QBT_TR(New...)QBT_TR[CONTEXT=TransferListWidget]", "images/list-add.svg", (event) => { torrentNewCategoryFN(); }));
-            contextCategoryList.appendChild(createMenuItem("QBT_TR(Reset)QBT_TR[CONTEXT=TransferListWidget]", "images/edit-clear.svg", (event) => { torrentSetCategoryFN(""); }));
+            contextCategoryList.appendChild(createMenuItem("QBT_TR(New...)QBT_TR[CONTEXT=TransferListWidget]", "images/list-add.svg", torrentNewCategoryFN));
+            contextCategoryList.appendChild(createMenuItem("QBT_TR(Reset)QBT_TR[CONTEXT=TransferListWidget]", "images/edit-clear.svg", () => torrentSetCategoryFN("")));
 
             const sortedCategories = [...categories.keys()];
             sortedCategories.sort(window.qBittorrent.Misc.naturalSortCollator.compare);
@@ -529,7 +539,7 @@ window.qBittorrent.ContextMenu ??= (() => {
             const createMenuItem = (text, imgURL, clickFn) => {
                 const anchor = document.createElement("a");
                 anchor.textContent = text;
-                anchor.addEventListener("click", clickFn);
+                anchor.addEventListener("click", (_event) => clickFn());
 
                 const img = document.createElement("img");
                 img.src = imgURL;
@@ -541,8 +551,8 @@ window.qBittorrent.ContextMenu ??= (() => {
 
                 return item;
             };
-            contextTagList.appendChild(createMenuItem("QBT_TR(Add...)QBT_TR[CONTEXT=TransferListWidget]", "images/list-add.svg", (event) => { torrentAddTagsFN(); }));
-            contextTagList.appendChild(createMenuItem("QBT_TR(Remove All)QBT_TR[CONTEXT=TransferListWidget]", "images/edit-clear.svg", (event) => { torrentRemoveAllTagsFN(); }));
+            contextTagList.appendChild(createMenuItem("QBT_TR(Add...)QBT_TR[CONTEXT=TransferListWidget]", "images/list-add.svg", torrentAddTagsFN));
+            contextTagList.appendChild(createMenuItem("QBT_TR(Remove All)QBT_TR[CONTEXT=TransferListWidget]", "images/edit-clear.svg", torrentRemoveAllTagsFN));
 
             const sortedTags = [...tags.keys()];
             sortedTags.sort(window.qBittorrent.Misc.naturalSortCollator.compare);
@@ -630,7 +640,7 @@ window.qBittorrent.ContextMenu ??= (() => {
 
     class SearchPluginsTableContextMenu extends ContextMenu {
         updateMenuItems() {
-            const enabledColumnIndex = (text) => {
+            const enabledColumnIndex = () => {
                 const columns = document.querySelectorAll("#searchPluginsTableFixedHeaderRow th");
                 return Array.prototype.findIndex.call(columns, (column => column.textContent === "Enabled"));
             };
@@ -715,22 +725,39 @@ window.qBittorrent.ContextMenu ??= (() => {
         }
     }
 
-    class RssArticleContextMenu extends ContextMenu {}
+    class RssArticleContextMenu extends ContextMenu {
+        updateMenuItems() {
+            const isMultiSelect = window.qBittorrent.Rss.rssArticleTable.selectedRowsIds().length > 1;
+
+            const label = isMultiSelect
+                ? "QBT_TR(Open separate download windows)QBT_TR[CONTEXT=RSSWidget]"
+                : "QBT_TR(Download torrent)QBT_TR[CONTEXT=RSSWidget]";
+            const downloadAnchor = this.menu.querySelector("a[href=\"#Download\"]");
+            downloadAnchor.querySelector("img").alt = label;
+            downloadAnchor.lastChild.nodeValue = ` ${label}`;
+
+            if (isMultiSelect)
+                this.showItem("OpenSharedDownloadWindow");
+            else
+                this.hideItem("OpenSharedDownloadWindow");
+        }
+    }
 
     class RssDownloaderRuleContextMenu extends ContextMenu {
         adjustMenuPosition(e) {
+            const rssDownloaderPage = document.getElementById("rssdownloaderpage");
             this.updateMenuItems();
 
             // draw the menu off-screen to know the menu dimensions
             this.menu.style.left = "-999em";
             this.menu.style.top = "-999em";
             // position the menu
-            let xPosMenu = e.pageX + this.options.offsets.x - document.getElementById("rssdownloaderpage").offsetLeft;
-            let yPosMenu = e.pageY + this.options.offsets.y - document.getElementById("rssdownloaderpage").offsetTop;
-            if ((xPosMenu + this.menu.offsetWidth) > document.documentElement.clientWidth)
+            let xPosMenu = e.pageX + this.options.offsets.x - rssDownloaderPage.offsetLeft;
+            let yPosMenu = e.pageY + this.options.offsets.y - rssDownloaderPage.offsetTop;
+            if ((xPosMenu + this.menu.offsetWidth) > rssDownloaderPage.clientWidth)
                 xPosMenu -= this.menu.offsetWidth;
-            if ((yPosMenu + this.menu.offsetHeight) > document.documentElement.clientHeight)
-                yPosMenu = document.documentElement.clientHeight - this.menu.offsetHeight;
+            if ((yPosMenu + this.menu.offsetHeight) > rssDownloaderPage.clientHeight)
+                yPosMenu = rssDownloaderPage.clientHeight - this.menu.offsetHeight;
             xPosMenu = Math.max(xPosMenu, 0);
             yPosMenu = Math.max(yPosMenu, 0);
 
@@ -747,18 +774,21 @@ window.qBittorrent.ContextMenu ??= (() => {
                     // menu when nothing selected
                     this.hideItem("deleteRule");
                     this.hideItem("renameRule");
+                    this.hideItem("cloneRule");
                     this.hideItem("clearDownloadedEpisodes");
                     break;
                 case 1:
                     // menu when single item selected
                     this.showItem("deleteRule");
                     this.showItem("renameRule");
+                    this.showItem("cloneRule");
                     this.showItem("clearDownloadedEpisodes");
                     break;
                 default:
                     // menu when multiple items selected
                     this.showItem("deleteRule");
                     this.hideItem("renameRule");
+                    this.hideItem("cloneRule");
                     this.showItem("clearDownloadedEpisodes");
                     break;
             }

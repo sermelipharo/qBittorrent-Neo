@@ -176,15 +176,15 @@ namespace Neo
             {u"completed"_s, torrent.completedSize()},
             {u"connectionsCount"_s, torrent.connectionsCount()},
             {u"connectionsLimit"_s, torrent.connectionsLimit()},
-            {u"maxRatio"_s, torrent.effectiveRatioLimit()},
-            {u"maxSeedingTime"_s, torrent.effectiveSeedingTimeLimit()},
-            {u"maxInactiveSeedingTime"_s, torrent.effectiveInactiveSeedingTimeLimit()},
+            {u"maxRatio"_s, torrent.effectiveShareLimits().ratioLimit},
+            {u"maxSeedingTime"_s, torrent.effectiveShareLimits().seedingTimeLimit},
+            {u"maxInactiveSeedingTime"_s, torrent.effectiveShareLimits().inactiveSeedingTimeLimit},
             {u"ratio"_s, adjustRatio(torrent.realRatio())},
-            {u"ratioLimit"_s, torrent.ratioLimit()},
+            {u"ratioLimit"_s, torrent.shareLimits().ratioLimit},
             {u"popularity"_s, torrent.popularity()},
-            {u"seedingTimeLimit"_s, torrent.seedingTimeLimit()},
-            {u"inactiveSeedingTimeLimit"_s, torrent.inactiveSeedingTimeLimit()},
-            {u"shareLimitAction"_s, shareLimitActionName(torrent.shareLimitAction())},
+            {u"seedingTimeLimit"_s, torrent.shareLimits().seedingTimeLimit},
+            {u"inactiveSeedingTimeLimit"_s, torrent.shareLimits().inactiveSeedingTimeLimit},
+            {u"shareLimitAction"_s, shareLimitActionName(torrent.shareLimits().action)},
             {u"lastSeenComplete"_s, toSecs(torrent.lastSeenComplete())},
             {u"lastActivity"_s, lastActivity},
             {u"autoTmm"_s, torrent.isAutoTMMEnabled()},
@@ -214,10 +214,10 @@ namespace Neo
             {u"name"_s, name},
             {u"savePath"_s, options.savePath.toString()},
             {u"downloadPath"_s, downloadPath},
-            {u"ratioLimit"_s, options.ratioLimit},
-            {u"seedingTimeLimit"_s, options.seedingTimeLimit},
-            {u"inactiveSeedingTimeLimit"_s, options.inactiveSeedingTimeLimit},
-            {u"shareLimitAction"_s, shareLimitActionName(options.shareLimitAction)}
+            {u"ratioLimit"_s, options.shareLimits.ratioLimit},
+            {u"seedingTimeLimit"_s, options.shareLimits.seedingTimeLimit},
+            {u"inactiveSeedingTimeLimit"_s, options.shareLimits.inactiveSeedingTimeLimit},
+            {u"shareLimitAction"_s, shareLimitActionName(options.shareLimits.action)}
         };
     }
 
@@ -230,10 +230,10 @@ namespace Neo
             options.downloadPath = BitTorrent::DownloadPathOption {false, {}};
         else if (downloadPath.contains(u"path"))
             options.downloadPath = BitTorrent::DownloadPathOption {true, Path(downloadPath.value(u"path").toObject().value(u"path").toString())};
-        options.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
-        options.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
-        options.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
-        options.shareLimitAction = parseShareLimitAction(argString(json, u"shareLimitAction"_s));
+        options.shareLimits.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
+        options.shareLimits.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        options.shareLimits.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        options.shareLimits.action = parseShareLimitAction(argString(json, u"shareLimitAction"_s));
         return options;
     }
 

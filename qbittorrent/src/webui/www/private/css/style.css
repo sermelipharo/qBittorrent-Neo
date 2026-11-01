@@ -271,6 +271,10 @@ input[type="range"] {
     accent-color: var(--color-accent-blue);
 }
 
+input[type="range"] {
+    accent-color: var(--color-accent-blue);
+}
+
 input[type="button"],
 input[type="submit"],
 button {
@@ -924,7 +928,7 @@ td.noWrap {
     white-space: nowrap;
 }
 
-#tristate_cb {
+#tristateCb {
     margin-bottom: 0;
     margin-top: 0;
 }

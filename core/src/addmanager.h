@@ -53,7 +53,8 @@ namespace Neo
         QString addDescriptor(const QString &source, BitTorrent::TorrentDescriptor descriptor
                 , const BitTorrent::AddTorrentParams &params, std::shared_ptr<TorrentFileGuard> guard);
         void onTorrentAdded(const QString &source, BitTorrent::Torrent *torrent);
-        void onAddTorrentFailed(const QString &source, const BitTorrent::AddTorrentError &reason);
+        void onAddTorrentFailed(const QString &source, const QString &reason);
+        void onDuplicateTorrentDetected(const QString &source, BitTorrent::Torrent *torrent, const QString &message);
 
         QMultiHash<QString, Reply> m_pendingUrls;
         QList<BitTorrent::TorrentDescriptor> m_fetchedMetadata;

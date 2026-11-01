@@ -2,7 +2,7 @@
 
 **The qBittorrent you know, with a native Mac interface.**
 
-qBittorrent Neo runs the engine of [qBittorrent](https://www.qbittorrent.org) 5.2.4
+qBittorrent Neo runs the engine of [qBittorrent](https://www.qbittorrent.org) 5.3.0
 (the same torrent handling, RSS, search, Web UI and settings) with a new interface
 written in SwiftUI for macOS. It looks and behaves like a Mac app, and it keeps all of
 qBittorrent's features and settings.

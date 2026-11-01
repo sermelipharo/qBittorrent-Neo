@@ -82,6 +82,8 @@ TransferListFiltersWidget::TransferListFiltersWidget(QWidget *parent, TransferLi
                 , transferList, &TransferListWidget::stopVisibleTorrents);
         connect(categoryFilterWidget, &CategoryFilterWidget::actionStartTorrentsTriggered
                 , transferList, &TransferListWidget::startVisibleTorrents);
+        connect(categoryFilterWidget, &CategoryFilterWidget::actionForceStartTorrentsTriggered
+                , transferList, &TransferListWidget::forceStartVisibleTorrents);
         connect(categoryFilterWidget, &CategoryFilterWidget::categoryChanged
                 , transferList, &TransferListWidget::applyCategoryFilter);
 
@@ -103,6 +105,8 @@ TransferListFiltersWidget::TransferListFiltersWidget(QWidget *parent, TransferLi
                 , transferList, &TransferListWidget::stopVisibleTorrents);
         connect(tagFilterWidget, &TagFilterWidget::actionStartTorrentsTriggered
                 , transferList, &TransferListWidget::startVisibleTorrents);
+        connect(tagFilterWidget, &TagFilterWidget::actionForceStartTorrentsTriggered
+                , transferList, &TransferListWidget::forceStartVisibleTorrents);
         connect(tagFilterWidget, &TagFilterWidget::tagChanged
                 , transferList, &TransferListWidget::applyTagFilter);
 

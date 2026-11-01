@@ -2,27 +2,45 @@
 name = "qBittorrent-search-engine"
 description = "Search engine for qBittorrent search feature"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.13"
 dynamic = ["version"]
 
 [dependency-groups]
 dev = [
     "bandit",
-    "isort",
     "mypy",
     "pycodestyle",
+    "pydoclint",
     "pyflakes",
     "pyright",
     "pytest",
+    "ruff",
     "rust-just",
 ]
+
+[tool.bandit]
+skips = ["B110", "B310", "B314", "B405"]
 
 [tool.mypy]
 explicit_package_bases = true
 strict = true
 
+[tool.pydoclint]
+style = "sphinx"
+arg-type-hints-in-docstring = false
+check-return-types = false
+
 [tool.pyright]
 typeCheckingMode = "strict"
+
+[tool.pytest]
+addopts = ["--showlocals"]
+
+[tool.ruff]
+line-length = 1000
+
+[tool.ruff.lint]
+ignore = ["FA100", "FA102", "UP045"]
 
 [tool.setuptools.packages.find]
 where = ["./"]

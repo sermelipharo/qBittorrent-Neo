@@ -194,6 +194,7 @@ void Neo::registerCreatorApi(Registry &registry)
         params.source = argString(json, u"source"_s);
         params.trackers = argStringList(json, u"trackers"_s);
         params.urlSeeds = argStringList(json, u"urlSeeds"_s);
+        params.ignoreDotfiles = argOptBool(json, u"ignoreDotfiles"_s).value_or(true);
         if (params.sourcePath.isEmpty())
             throwInvalid(QCoreApplication::translate("TorrentCreatorController", "Source path is required"));
 
@@ -252,10 +253,11 @@ void Neo::registerCreatorApi(Registry &registry)
         const Path source {argString(args, u"sourcePath"_s)};
         const int pieceSize = static_cast<int>(argInt(args, u"pieceSize"_s));
         const BitTorrent::TorrentFormat format = parseFormat(argString(args, u"format"_s));
+        const bool ignoreDotfiles = argOptBool(args, u"ignoreDotfiles"_s).value_or(true);
         // Completing a reply is thread-safe (it only calls the C callback).
-        QThreadPool::globalInstance()->start([source, pieceSize, format, reply]
+        QThreadPool::globalInstance()->start([source, pieceSize, ignoreDotfiles, format, reply]
         {
-            reply.ok(BitTorrent::TorrentCreator::calculateTotalPieces(source, pieceSize, format));
+            reply.ok(BitTorrent::TorrentCreator::calculateTotalPieces(source, pieceSize, ignoreDotfiles, format));
         });
     });
 }

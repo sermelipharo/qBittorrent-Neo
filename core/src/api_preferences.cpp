@@ -218,8 +218,10 @@ namespace
             {u"tempPathEnabled"_s, session->isDownloadPathEnabled()},
             {u"tempPath"_s, session->downloadPath().toString()},
             {u"useCategoryPathsInManualMode"_s, session->useCategoryPathsInManualMode()},
-            {u"exportDir"_s, session->torrentExportDirectory().toString()},
-            {u"exportDirFin"_s, session->finishedTorrentExportDirectory().toString()},
+            // qBittorrent 5.3 keeps the folder when backups are off; an empty
+            // folder still means "off" here.
+            {u"exportDir"_s, session->isTorrentFileBackupEnabled() ? session->torrentBackupDirectory().toString() : QString()},
+            {u"exportDirFin"_s, session->isFinishedTorrentBackupDirectoryEnabled() ? session->finishedTorrentBackupDirectory().toString() : QString()},
             {u"watchedFolders"_s, watchedFoldersJson()},
             {u"excludedFileNamesEnabled"_s, session->isExcludedFileNamesEnabled()},
             {u"excludedFileNames"_s, toJsonArray(session->excludedFileNames())},
@@ -227,7 +229,7 @@ namespace
             {u"mailNotificationSender"_s, pref->getMailNotificationSender()},
             {u"mailNotificationEmail"_s, pref->getMailNotificationEmail()},
             {u"mailNotificationSmtp"_s, pref->getMailNotificationSMTP()},
-            {u"mailNotificationSslEnabled"_s, pref->getMailNotificationSMTPSSL()},
+            {u"mailNotificationSslEnabled"_s, pref->getMailNotificationSMTPEncryptionType() != Net::SMTPEncryptionType::None},
             {u"mailNotificationAuthEnabled"_s, pref->getMailNotificationSMTPAuth()},
             {u"mailNotificationUsername"_s, pref->getMailNotificationSMTPUsername()},
             {u"mailNotificationPassword"_s, pref->getMailNotificationSMTPPassword()},
@@ -320,10 +322,10 @@ namespace
             {u"slowTorrentDlRateThreshold"_s, session->downloadRateForSlowTorrents()},
             {u"slowTorrentUlRateThreshold"_s, session->uploadRateForSlowTorrents()},
             {u"slowTorrentInactiveTimer"_s, session->slowTorrentsInactivityTimer()},
-            {u"maxRatio"_s, session->globalMaxRatio()},
-            {u"maxSeedingTime"_s, session->globalMaxSeedingMinutes()},
-            {u"maxInactiveSeedingTime"_s, session->globalMaxInactiveSeedingMinutes()},
-            {u"maxRatioAct"_s, shareLimitActionName(session->shareLimitAction())},
+            {u"maxRatio"_s, session->shareLimits().ratioLimit},
+            {u"maxSeedingTime"_s, session->shareLimits().seedingTimeLimit},
+            {u"maxInactiveSeedingTime"_s, session->shareLimits().inactiveSeedingTimeLimit},
+            {u"maxRatioAct"_s, shareLimitActionName(session->shareLimits().action)},
             {u"addTrackersEnabled"_s, session->isAddTrackersEnabled()},
             {u"addTrackers"_s, session->additionalTrackers()},
             {u"addTrackersFromUrlEnabled"_s, session->isAddTrackersFromURLEnabled()},
@@ -547,8 +549,20 @@ namespace
         s[u"downloads.tempPathEnabled"_s] = [session](const QJsonValue &v) { session->setDownloadPathEnabled(v.toBool()); };
         s[u"downloads.tempPath"_s] = [session](const QJsonValue &v) { session->setDownloadPath(Path(v.toString())); };
         s[u"downloads.useCategoryPathsInManualMode"_s] = [session](const QJsonValue &v) { session->setUseCategoryPathsInManualMode(v.toBool()); };
-        s[u"downloads.exportDir"_s] = [session](const QJsonValue &v) { session->setTorrentExportDirectory(Path(v.toString())); };
-        s[u"downloads.exportDirFin"_s] = [session](const QJsonValue &v) { session->setFinishedTorrentExportDirectory(Path(v.toString())); };
+        s[u"downloads.exportDir"_s] = [session](const QJsonValue &v)
+        {
+            const Path path {v.toString()};
+            session->setTorrentFileBackupEnabled(!path.isEmpty());
+            if (!path.isEmpty())
+                session->setTorrentBackupDirectory(path);
+        };
+        s[u"downloads.exportDirFin"_s] = [session](const QJsonValue &v)
+        {
+            const Path path {v.toString()};
+            session->setFinishedTorrentBackupDirectoryEnabled(!path.isEmpty());
+            if (!path.isEmpty())
+                session->setFinishedTorrentBackupDirectory(path);
+        };
         s[u"downloads.watchedFolders"_s] = setWatchedFolders;
         s[u"downloads.excludedFileNamesEnabled"_s] = [session](const QJsonValue &v) { session->setExcludedFileNamesEnabled(v.toBool()); };
         s[u"downloads.excludedFileNames"_s] = [session](const QJsonValue &v) { session->setExcludedFileNames(stringList(v)); };
@@ -556,7 +570,15 @@ namespace
         s[u"downloads.mailNotificationSender"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSender(v.toString()); };
         s[u"downloads.mailNotificationEmail"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationEmail(v.toString()); };
         s[u"downloads.mailNotificationSmtp"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTP(v.toString()); };
-        s[u"downloads.mailNotificationSslEnabled"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPSSL(v.toBool()); };
+        // Turning encryption on keeps a chosen STARTTLS; otherwise SMTPS, as the old "SSL" box meant.
+        s[u"downloads.mailNotificationSslEnabled"_s] = [pref](const QJsonValue &v)
+        {
+            const Net::SMTPEncryptionType current = pref->getMailNotificationSMTPEncryptionType();
+            if (!v.toBool())
+                pref->setMailNotificationSMTPEncryptionType(Net::SMTPEncryptionType::None);
+            else if (current == Net::SMTPEncryptionType::None)
+                pref->setMailNotificationSMTPEncryptionType(Net::SMTPEncryptionType::SMTPS);
+        };
         s[u"downloads.mailNotificationAuthEnabled"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPAuth(v.toBool()); };
         s[u"downloads.mailNotificationUsername"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPUsername(v.toString()); };
         s[u"downloads.mailNotificationPassword"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPPassword(v.toString()); };
@@ -629,13 +651,31 @@ namespace
         s[u"bittorrent.slowTorrentDlRateThreshold"_s] = [session](const QJsonValue &v) { session->setDownloadRateForSlowTorrents(toInt(v)); };
         s[u"bittorrent.slowTorrentUlRateThreshold"_s] = [session](const QJsonValue &v) { session->setUploadRateForSlowTorrents(toInt(v)); };
         s[u"bittorrent.slowTorrentInactiveTimer"_s] = [session](const QJsonValue &v) { session->setSlowTorrentsInactivityTimer(toInt(v)); };
-        s[u"bittorrent.maxRatio"_s] = [session](const QJsonValue &v) { session->setGlobalMaxRatio((v.toDouble() < 0) ? -1 : v.toDouble()); };
-        s[u"bittorrent.maxSeedingTime"_s] = [session](const QJsonValue &v) { session->setGlobalMaxSeedingMinutes(std::max(toInt(v), -1)); };
-        s[u"bittorrent.maxInactiveSeedingTime"_s] = [session](const QJsonValue &v) { session->setGlobalMaxInactiveSeedingMinutes(std::max(toInt(v), -1)); };
-        s[u"bittorrent.maxRatioAct"_s] = [session](const QJsonValue &v)
+        const auto updateShareLimits = [session](const auto &change)
+        {
+            BitTorrent::ShareLimits limits = session->shareLimits();
+            change(limits);
+            session->setShareLimits(limits);
+        };
+        s[u"bittorrent.maxRatio"_s] = [updateShareLimits](const QJsonValue &v)
+        {
+            updateShareLimits([&v](BitTorrent::ShareLimits &l) { l.ratioLimit = (v.toDouble() < 0) ? -1 : v.toDouble(); });
+        };
+        s[u"bittorrent.maxSeedingTime"_s] = [updateShareLimits](const QJsonValue &v)
+        {
+            updateShareLimits([&v](BitTorrent::ShareLimits &l) { l.seedingTimeLimit = std::max(toInt(v), -1); });
+        };
+        s[u"bittorrent.maxInactiveSeedingTime"_s] = [updateShareLimits](const QJsonValue &v)
+        {
+            updateShareLimits([&v](BitTorrent::ShareLimits &l) { l.inactiveSeedingTimeLimit = std::max(toInt(v), -1); });
+        };
+        s[u"bittorrent.maxRatioAct"_s] = [updateShareLimits](const QJsonValue &v)
         {
             const BitTorrent::ShareLimitAction action = parseShareLimitAction(v.toString());
-            session->setShareLimitAction((action == BitTorrent::ShareLimitAction::Default) ? BitTorrent::ShareLimitAction::Stop : action);
+            updateShareLimits([action](BitTorrent::ShareLimits &l)
+            {
+                l.action = (action == BitTorrent::ShareLimitAction::Default) ? BitTorrent::ShareLimitAction::Stop : action;
+            });
         };
         s[u"bittorrent.addTrackersEnabled"_s] = [session](const QJsonValue &v) { session->setAddTrackersEnabled(v.toBool()); };
         s[u"bittorrent.addTrackers"_s] = [session](const QJsonValue &v) { session->setAdditionalTrackers(v.toString()); };

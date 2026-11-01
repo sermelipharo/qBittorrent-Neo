@@ -1,7 +1,7 @@
 # Parity status
 
 What the SwiftUI app can do through the in-process qBittorrent core. The
-behaviour behind every call is qBittorrent 5.2.4's own code; the bridge
+behaviour behind every call is qBittorrent 5.3.0's own code; the bridge
 only converts data. "Verified" means exercised against a real session
 (smoke tool `core/tools/smoke.c` and/or the app with a scratch profile).
 

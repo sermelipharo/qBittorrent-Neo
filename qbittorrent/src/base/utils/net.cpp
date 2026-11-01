@@ -28,6 +28,8 @@
 
 #include "net.h"
 
+#include <ranges>
+
 #include <QList>
 #include <QNetworkInterface>
 #include <QSslCertificate>
@@ -35,6 +37,52 @@
 #include <QString>
 
 #include "base/global.h"
+
+namespace
+{
+    const QChar IPV4_SEPARATOR = u'.';
+    const QChar IP_RANGE_SEPARATOR = u'-';
+    const QChar CIDR_INDICATOR = u'/';
+
+    // avoid using Qt parsing, which allows non-standard notation.
+    bool isValidIPv4(const QStringView ip)
+    {
+        const QList<QStringView> octets = ip.split(IPV4_SEPARATOR, Qt::SkipEmptyParts);
+        if (octets.size() != 4)
+            return false;
+
+        for (const QStringView octet : octets)
+        {
+            const qsizetype len = octet.length();
+            if (len > 3)
+                return false;
+            if ((len > 1) && octet.startsWith(u'0'))
+                return false;
+
+            if (std::ranges::any_of(octet, [](const QChar c) { return !c.isDigit(); }))
+                return false;
+
+            const int value = octet.toInt();
+            if (value > 255)
+                return false;
+        }
+
+        return true;
+    }
+
+    bool isValidIPRange(const QHostAddress &first, const QHostAddress &last)
+    {
+        if (first.isNull() || last.isNull())
+            return false;
+        if (first.protocol() != last.protocol())
+            return false;
+        if (first.protocol() == QAbstractSocket::IPv4Protocol)
+            return first.toIPv4Address() <= last.toIPv4Address();
+        if (first.protocol() == QAbstractSocket::IPv6Protocol)
+            return std::ranges::lexicographical_compare(first.toIPv6Address().c, last.toIPv6Address().c, std::less_equal());
+        return false;
+    }
+}
 
 namespace Utils
 {
@@ -83,11 +131,58 @@ namespace Utils
             return subnet.first.toString() + u'/' + QString::number(subnet.second);
         }
 
+        IPRange subnetToIPRange(const Subnet &subnet)
+        {
+            const QHostAddress address = subnet.first;
+            const int prefixLength = subnet.second;
+
+            const QHostAddress::NetworkLayerProtocol addressFamily = address.protocol();
+
+            if (addressFamily == QAbstractSocket::IPv4Protocol)
+            {
+                const quint32 ip = address.toIPv4Address();
+                const auto mask = static_cast<quint32>(0xFFFFFFFF) << (32 - prefixLength);
+
+                const quint32 network = ip & mask;
+                const quint32 broadcast = network | ~mask;
+
+                const QHostAddress start {network};
+                const QHostAddress end {broadcast};
+
+                return std::make_pair(start, end);
+            }
+            if (addressFamily == QAbstractSocket::IPv6Protocol)
+            {
+                // Special case: /128 is a single IP
+                if (prefixLength == 128)
+                    return std::make_pair(address, address);
+
+                Q_IPV6ADDR addressBytes = address.toIPv6Address();
+
+                const int headBytes = prefixLength / 8;
+                const int bits = prefixLength % 8;
+                const auto maskByte = (static_cast<quint8>(0xFF) << (8 - bits));
+
+                addressBytes[headBytes] &= maskByte;
+                const QHostAddress start {addressBytes};
+
+                addressBytes[headBytes] |= ~maskByte;
+                for (int i = headBytes + 1; i < 16; ++i)
+                    addressBytes[i] = 0xFF;
+                const QHostAddress end {addressBytes};
+
+                return std::make_pair(start, end);
+            }
+
+            // fallback
+            return {};
+        }
+
         QHostAddress canonicalIPv6Addr(const QHostAddress &addr)
         {
             // Link-local IPv6 textual address always contains a scope id (or zone index)
             // The scope id is appended to the IPv6 address using the '%' character
-            // The scope id can be either a interface name or an interface number
+            // The scope id can be either an interface name or an interface number
             // Examples:
             // fe80::1%ethernet_17
             // fe80::1%13
@@ -114,6 +209,98 @@ namespace Utils
             return canonical;
         }
 
+        QHostAddress resolveForwardedClientAddress(const QHostAddress &peerAddress
+                , const QStringView forwardedFor, const QList<Subnet> &trustedProxies)
+        {
+            // only a trusted proxy may declare an address on the client's behalf
+            if (!isIPInSubnets(peerAddress, trustedProxies))
+                return peerAddress;
+
+            const QList<QStringView> hops = forwardedFor.split(u',', Qt::SkipEmptyParts);
+            if (hops.isEmpty())
+                return peerAddress;
+
+            QHostAddress hopAddress;
+            for (const QStringView hop : std::views::reverse(hops))
+            {
+                if (!hopAddress.setAddress(hop.trimmed().toString()))  // the chain is unresolvable past this point
+                    return peerAddress;
+
+                // anything beyond the nearest hop that no trusted proxy vouches for was
+                // supplied by the client itself and cannot be relied upon
+                if (!isIPInSubnets(hopAddress, trustedProxies))
+                    return hopAddress;
+            }
+
+            // every hop is itself a trusted proxy
+            return hopAddress;
+        }
+
+        std::optional<IPRange> parseIPRange(QStringView filterStr, const bool isStrictIPv4)
+        {
+            filterStr = filterStr.trimmed();
+
+            QHostAddress first, last;
+            QStringView firstIPStr, lastIPStr;
+            QList<QStringView> parts = filterStr.split(IP_RANGE_SEPARATOR);
+
+            if (parts.isEmpty() || (parts.size() > 2))
+            {
+                // invalid range
+                return std::nullopt;
+            }
+            if (parts.size() == 2)
+            {
+                // ip range format eg.
+                // "127.0.0.0 - 127.255.255.255"
+                firstIPStr = parts.first().trimmed();
+                lastIPStr = parts.last().trimmed();
+                first = QHostAddress(firstIPStr.toString());
+                last = QHostAddress(lastIPStr.toString());
+            }
+            else if (filterStr.contains(CIDR_INDICATOR))
+            {
+                // CIDR notation
+                // "127.0.0.0/8"
+                firstIPStr = filterStr.first(filterStr.indexOf(CIDR_INDICATOR));
+                const std::optional<Subnet> subnet = parseSubnet(filterStr.toString());
+                if (!subnet)
+                    return std::nullopt;
+
+                const IPRange ipRange = subnetToIPRange(subnet.value());
+                first = ipRange.first;
+                last = ipRange.second;
+            }
+            else
+            {
+                firstIPStr = filterStr;
+                const QHostAddress addr {filterStr.toString()};
+                first = addr;
+                last = addr;
+            }
+            if (isStrictIPv4 && (first.protocol() == QAbstractSocket::IPv4Protocol))
+            {
+                if (!isValidIPv4(firstIPStr)
+                    || (!lastIPStr.isEmpty() && !isValidIPv4(lastIPStr)))
+                {
+                    return std::nullopt;
+                }
+            }
+            if (!isValidIPRange(first, last))
+                return std::nullopt;
+            return std::make_pair(first, last);
+        }
+
+        QString ipRangeToString(const IPRange &ipRange)
+        {
+            const QHostAddress firstIP = ipRange.first;
+            const QHostAddress lastIP = ipRange.second;
+            if (firstIP == lastIP)
+                return firstIP.toString();
+
+            return (firstIP.toString() + u" - " + lastIP.toString());
+        }
+
         QList<QSslCertificate> loadSSLCertificate(const QByteArray &data)
         {
             const QList<QSslCertificate> certs {QSslCertificate::fromData(data)};
@@ -127,6 +314,28 @@ namespace Utils
         bool isSSLCertificatesValid(const QByteArray &data)
         {
             return !loadSSLCertificate(data).isEmpty();
+        }
+
+        bool lessThan(const QHostAddress &left, const QHostAddress &right)
+        {
+            const QAbstractSocket::NetworkLayerProtocol leftProtocol = left.protocol();
+            const QAbstractSocket::NetworkLayerProtocol rightProtocol = right.protocol();
+
+            if (leftProtocol != rightProtocol)
+                return leftProtocol < rightProtocol;
+
+            switch (leftProtocol)
+            {
+            case QAbstractSocket::IPv4Protocol:
+                return left.toIPv4Address() < right.toIPv4Address();
+            case QAbstractSocket::IPv6Protocol:
+                return std::ranges::lexicographical_compare(left.toIPv6Address().c, right.toIPv6Address().c);
+            case QAbstractSocket::AnyIPProtocol:
+            case QAbstractSocket::UnknownNetworkLayerProtocol:
+                return left.toString() < left.toString();
+            }
+
+            Q_UNREACHABLE_RETURN(false);
         }
     }
 }

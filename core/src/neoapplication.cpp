@@ -27,7 +27,7 @@
 #include "base/net/geoipmanager.h"
 #include "base/net/proxyconfigurationmanager.h"
 #include "base/net/reverseresolution.h"
-#include "base/net/smtp.h"
+#include "base/net/smtpclient.h"
 #include "base/preferences.h"
 #include "base/profile.h"
 #include "base/rss/rss_autodownloader.h"
@@ -272,16 +272,23 @@ namespace Neo
 
     void NeoApplication::initializeTranslation()
     {
-        const QString localeStr = Preferences::instance()->getLocale();
+        loadTranslation(Preferences::instance()->getLocale());
+    }
 
-        if (m_qtTranslator.load((u"qtbase_" + localeStr), QLibraryInfo::path(QLibraryInfo::TranslationsPath))
-            || m_qtTranslator.load((u"qt_" + localeStr), QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
-        {
+    // Also called by the Web API when the language changes.
+    bool NeoApplication::loadTranslation(const QString &locale)
+    {
+        removeTranslator(&m_qtTranslator);
+        removeTranslator(&m_translator);
+
+        const QString trPath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+        if (m_qtTranslator.load((u"qtbase_" + locale), trPath) || m_qtTranslator.load((u"qt_" + locale), trPath))
             installTranslator(&m_qtTranslator);
-        }
 
-        if (m_translator.load(u":/lang/qbittorrent_" + localeStr))
+        const bool success = m_translator.load(u":/lang/qbittorrent_" + locale);
+        if (success)
             installTranslator(&m_translator);
+        return success;
     }
 
     QString NeoApplication::instanceName() const
@@ -327,7 +334,7 @@ namespace Neo
     void NeoApplication::setFileLoggerPath(const Path &path)
     {
         if (m_fileLogger)
-            m_fileLogger->changePath(path);
+            m_fileLogger->setPath(path);
         m_storeFileLoggerPath = path;
     }
 
@@ -419,7 +426,7 @@ namespace Neo
     }
 #endif
 
-    void NeoApplication::sendTestEmail() const
+    void NeoApplication::sendTestEmail()
     {
         const Preferences *pref = Preferences::instance();
         if (!pref->isMailNotificationEnabled())
@@ -428,9 +435,8 @@ namespace Neo
         const QString content = tr("This is a test email.") + u'\n'
             + tr("Thank you for using qBittorrent.") + u'\n';
 
-        auto *smtp = new Net::Smtp();
-        smtp->sendMail(pref->getMailNotificationSender(), pref->getMailNotificationEmail()
-                , tr("Test email"), content);
+        Net::SMTPClient::sendMail(pref->getMailNotificationSender(), pref->getMailNotificationEmail()
+                , tr("Test email"), content, this);
     }
 
     void NeoApplication::sendNotificationEmail(const BitTorrent::Torrent *torrent)
@@ -443,9 +449,8 @@ namespace Neo
             + tr("Thank you for using qBittorrent.") + u'\n';
 
         const Preferences *pref = Preferences::instance();
-        auto *smtp = new Net::Smtp(this);
-        smtp->sendMail(pref->getMailNotificationSender(), pref->getMailNotificationEmail()
-                , tr("Torrent \"%1\" has finished downloading").arg(torrent->name()), content);
+        Net::SMTPClient::sendMail(pref->getMailNotificationSender(), pref->getMailNotificationEmail()
+                , tr("Torrent \"%1\" has finished downloading").arg(torrent->name()), content, this);
     }
 
     void NeoApplication::torrentAdded(const BitTorrent::Torrent *torrent) const

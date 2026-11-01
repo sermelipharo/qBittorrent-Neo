@@ -35,6 +35,7 @@ namespace Neo
     {
         connect(this, &AddTorrentManager::torrentAdded, this, &NeoAddTorrentManager::onTorrentAdded);
         connect(this, &AddTorrentManager::addTorrentFailed, this, &NeoAddTorrentManager::onAddTorrentFailed);
+        connect(this, &AddTorrentManager::duplicateTorrentDetected, this, &NeoAddTorrentManager::onDuplicateTorrentDetected);
     }
 
     void NeoAddTorrentManager::add(const QString &source, const BitTorrent::AddTorrentParams &params, const Reply &reply)
@@ -152,14 +153,21 @@ namespace Neo
             reply.ok(torrent->id().toString());
     }
 
-    void NeoAddTorrentManager::onAddTorrentFailed(const QString &source, const BitTorrent::AddTorrentError &reason)
+    void NeoAddTorrentManager::onAddTorrentFailed(const QString &source, const QString &reason)
     {
         const QList<Reply> replies = m_pendingUrls.values(source);
         m_pendingUrls.remove(source);
-        const ErrorKind kind = (reason.kind == BitTorrent::AddTorrentError::DuplicateTorrent)
-                ? ErrorKind::Conflict : ErrorKind::Network;
         for (const Reply &reply : replies)
-            reply.fail(kind, reason.message);
+            reply.fail(ErrorKind::Network, reason);
+    }
+
+    void NeoAddTorrentManager::onDuplicateTorrentDetected(const QString &source, [[maybe_unused]] BitTorrent::Torrent *torrent
+            , const QString &message)
+    {
+        const QList<Reply> replies = m_pendingUrls.values(source);
+        m_pendingUrls.remove(source);
+        for (const Reply &reply : replies)
+            reply.fail(ErrorKind::Conflict, message);
     }
 
     void NeoAddTorrentManager::rememberMetadata(const BitTorrent::TorrentDescriptor &descriptor)

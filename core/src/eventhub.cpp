@@ -10,7 +10,6 @@
 #include <QJsonDocument>
 #include <QTimer>
 
-#include "base/bittorrent/addtorrenterror.h"
 #include "base/bittorrent/infohash.h"
 #include "base/bittorrent/session.h"
 #include "base/bittorrent/torrent.h"
@@ -111,7 +110,8 @@ namespace Neo
         {
             post(u"torrentRemoved"_s, torrentValues(torrent));
         });
-        connect(session, &BitTorrent::Session::fullDiskError, this, [this](const BitTorrent::Torrent *torrent, const QString &msg)
+        // qBittorrent 5.3 renamed it from fullDiskError; the app keeps the old event name.
+        connect(session, &BitTorrent::Session::torrentIOError, this, [this](const BitTorrent::Torrent *torrent, const QString &msg)
         {
             QJsonObject values = torrentValues(torrent);
             values[u"message"_s] = msg;
@@ -131,9 +131,14 @@ namespace Neo
     void EventHub::attachComponents(NeoAddTorrentManager *addManager)
     {
         connect(addManager, &AddTorrentManager::addTorrentFailed, this
-                , [this](const QString &source, const BitTorrent::AddTorrentError &reason)
+                , [this](const QString &source, const QString &reason)
         {
-            post(u"addTorrentFailed"_s, {{u"source"_s, source}, {u"reason"_s, reason.message}});
+            post(u"addTorrentFailed"_s, {{u"source"_s, source}, {u"reason"_s, reason}});
+        });
+        connect(addManager, &AddTorrentManager::duplicateTorrentDetected, this
+                , [this](const QString &source, [[maybe_unused]] BitTorrent::Torrent *torrent, const QString &message)
+        {
+            post(u"addTorrentFailed"_s, {{u"source"_s, source}, {u"reason"_s, message}});
         });
         connect(addManager, &NeoAddTorrentManager::duplicateTorrent, this
                 , [this](const QString &hash, const QString &name, const bool merged)

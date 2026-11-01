@@ -157,7 +157,7 @@ namespace
         };
     }
 
-    QJsonObject pluginJson(const PluginInfo *plugin)
+    QJsonObject pluginJson(const SearchPluginInfo *plugin)
     {
         QJsonArray categories;
         for (const QString &category : asConst(plugin->supportedCategories))
@@ -244,7 +244,7 @@ void Neo::registerSearchApi(Registry &registry)
         auto *manager = pluginManager();
         for (const QString &name : asConst(manager->allPlugins()))
         {
-            if (const PluginInfo *plugin = manager->pluginInfo(name))
+            if (const SearchPluginInfo *plugin = manager->pluginInfo(name))
                 result.append(pluginJson(plugin));
         }
         return result;
@@ -278,7 +278,7 @@ void Neo::registerSearchApi(Registry &registry)
         auto *manager = pluginManager();
         auto *context = new QObject(CoreHost::instance());
         QObject::connect(manager, &SearchPluginManager::checkForUpdatesFinished, context
-                , [context, reply](const QHash<QString, PluginVersion> &updateInfo)
+                , [context, reply](const QHash<QString, SearchPluginVersion> &updateInfo)
         {
             context->deleteLater();
             awaitPluginOutcomes(reply, static_cast<int>(updateInfo.size()), true);

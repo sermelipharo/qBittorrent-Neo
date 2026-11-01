@@ -49,12 +49,12 @@ namespace Neo
             {u"tags"_s, tags},
             {u"savePath"_s, params.savePath.toString()},
             {u"downloadPath"_s, params.downloadPath.toString()},
-            {u"skipChecking"_s, params.skipChecking},
+            {u"skipChecking"_s, params.seedMode},
             {u"uploadLimit"_s, params.uploadLimit},
             {u"downloadLimit"_s, params.downloadLimit},
-            {u"ratioLimit"_s, params.ratioLimit},
-            {u"seedingTimeLimit"_s, params.seedingTimeLimit},
-            {u"inactiveSeedingTimeLimit"_s, params.inactiveSeedingTimeLimit}
+            {u"ratioLimit"_s, params.shareLimits.ratioLimit},
+            {u"seedingTimeLimit"_s, params.shareLimits.seedingTimeLimit},
+            {u"inactiveSeedingTimeLimit"_s, params.shareLimits.inactiveSeedingTimeLimit}
         };
         if (params.useDownloadPath)
             json[u"useDownloadPath"_s] = *params.useDownloadPath;
@@ -88,15 +88,15 @@ namespace Neo
         params.addStopped = argOptBool(json, u"stopped"_s);
         if (const auto condition = argOptString(json, u"stopCondition"_s))
             params.stopCondition = parseStopCondition(*condition);
-        params.skipChecking = argBool(json, u"skipChecking"_s);
+        params.seedMode = argBool(json, u"skipChecking"_s);
         params.addToQueueTop = argOptBool(json, u"addToQueueTop"_s);
         if (const auto layout = argOptString(json, u"contentLayout"_s))
             params.contentLayout = parseContentLayout(*layout);
         params.uploadLimit = static_cast<int>(argInt(json, u"uploadLimit"_s, -1));
         params.downloadLimit = static_cast<int>(argInt(json, u"downloadLimit"_s, -1));
-        params.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
-        params.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
-        params.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        params.shareLimits.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
+        params.shareLimits.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        params.shareLimits.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         return params;
     }
 }

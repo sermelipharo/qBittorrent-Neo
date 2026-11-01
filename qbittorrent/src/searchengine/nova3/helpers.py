@@ -1,4 +1,4 @@
-# VERSION: 1.55
+# VERSION: 1.59
 
 # Author:
 #  Christophe DUMEZ (chris@qbittorrent.org)
@@ -30,6 +30,7 @@
 import datetime
 import gzip
 import html
+import http.cookiejar
 import io
 import os
 import socket
@@ -46,7 +47,9 @@ import socks
 
 
 def _getBrowserUserAgent() -> str:
-    """ Disguise as browser to circumvent website blocking """
+    """
+    Disguise as browser to circumvent website blocking
+    """
 
     # Firefox release calendar
     # https://whattrainisitnow.com/calendar/
@@ -55,7 +58,7 @@ def _getBrowserUserAgent() -> str:
     baseDate = datetime.date(2024, 4, 16)
     baseVersion = 125
 
-    nowDate = datetime.date.today()
+    nowDate = datetime.datetime.now(datetime.UTC).date()
     nowVersion = baseVersion + ((nowDate - baseDate).days // 30)
 
     return f"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:{nowVersion}.0) Gecko/20100101 Firefox/{nowVersion}.0"
@@ -77,15 +80,6 @@ def enable_socks_proxy(enable: bool) -> None:
             elif (parts.scheme == "socks5") or (parts.scheme == "socks5h"):
                 socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, parts.hostname, parts.port, resolveHostname, parts.username, parts.password)
                 socket.socket = cast(type[socket.socket], socks.socksocket)  # type: ignore[misc]
-        else:
-            # the following code provide backward compatibility for older qbt versions
-            # TODO: scheduled be removed with qbt >= 5.3
-            legacySocksURL = os.environ.get("sock_proxy")
-            if legacySocksURL is not None:
-                legacySocksURL = f"socks5h://{legacySocksURL.strip()}"
-                parts = urllib.parse.urlsplit(legacySocksURL)
-                socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, parts.hostname, parts.port, True, parts.username, parts.password)
-                socket.socket = cast(type[socket.socket], socks.socksocket)  # type: ignore[misc]
     else:
         socket.socket = _original_socket  # type: ignore[misc]
 
@@ -95,15 +89,20 @@ htmlentitydecode = html.unescape
 
 
 def retrieve_url(url: str, custom_headers: Mapping[str, str] = {}, request_data: Optional[Any] = None, ssl_context: Optional[ssl.SSLContext] = None, unescape_html_entities: bool = True) -> str:
-    """ Return the content of the url page as a string """
+    """
+    Return the content of the url page as a string
+    """
 
     request = urllib.request.Request(url, request_data, {**_headers, **custom_headers})
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()), urllib.request.HTTPSHandler(context=ssl_context))
+
     try:
-        response = urllib.request.urlopen(request, context=ssl_context)
+        with opener.open(request) as response:
+            contentType = response.getheader('Content-Type', '')
+            data: bytes = response.read()
     except urllib.error.URLError as errno:
         print(f"Connection error: {errno.reason}", file=sys.stderr)
         return ""
-    data: bytes = response.read()
 
     # Check if it is gzipped
     if data[:2] == b'\x1f\x8b':
@@ -113,7 +112,7 @@ def retrieve_url(url: str, custom_headers: Mapping[str, str] = {}, request_data:
 
     charset = 'utf-8'
     try:
-        charset = response.getheader('Content-Type', '').split('charset=', 1)[1]
+        charset = contentType.split('charset=', 1)[1]
     except IndexError:
         pass
 
@@ -126,14 +125,18 @@ def retrieve_url(url: str, custom_headers: Mapping[str, str] = {}, request_data:
 
 
 def download_file(url: str, referer: Optional[str] = None, ssl_context: Optional[ssl.SSLContext] = None) -> str:
-    """ Download file at url and write it to a file, return the path to the file and the url """
+    """
+    Download file at url and write it to a file, return both the path to the file and the url
+    """
 
     # Download url
     request = urllib.request.Request(url, headers=_headers)
     if referer is not None:
         request.add_header('referer', referer)
-    response = urllib.request.urlopen(request, context=ssl_context)
-    data = response.read()
+
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()), urllib.request.HTTPSHandler(context=ssl_context))
+    with opener.open(request) as response:
+        data = response.read()
 
     # Check if it is gzipped
     if data[:2] == b'\x1f\x8b':

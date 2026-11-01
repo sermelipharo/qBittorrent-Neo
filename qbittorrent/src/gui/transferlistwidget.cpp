@@ -1,6 +1,6 @@
 /*
  * Bittorrent Client using Qt and libtorrent.
- * Copyright (C) 2023-2024  Vladimir Golovnev <glassez@yandex.ru>
+ * Copyright (C) 2023-2026  Vladimir Golovnev <glassez@yandex.ru>
  * Copyright (C) 2006  Christophe Dumez <chris@qbittorrent.org>
  *
  * This program is free software; you can redistribute it and/or
@@ -64,6 +64,7 @@
 #include "previewselectdialog.h"
 #include "speedlimitdialog.h"
 #include "torrentcategorydialog.h"
+#include "torrentcontentlayoutdialog.h"
 #include "torrentcreatordialog.h"
 #include "torrentoptionsdialog.h"
 #include "trackerentriesdialog.h"
@@ -218,7 +219,7 @@ TransferListWidget::TransferListWidget(IGUIApplication *app, QWidget *parent)
     connect(editHotkey, &QShortcut::activated, this, &TransferListWidget::renameSelectedTorrent);
     const auto *deleteHotkey = new QShortcut(Utils::KeySequence::deleteItem(), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(deleteHotkey, &QShortcut::activated, this, &TransferListWidget::softDeleteSelectedTorrents);
-    const auto *permDeleteHotkey = new QShortcut((Qt::SHIFT | Qt::Key_Delete), this, nullptr, nullptr, Qt::WidgetShortcut);
+    const auto *permDeleteHotkey = new QShortcut(Utils::KeySequence::permanentlyDeleteItem(), this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(permDeleteHotkey, &QShortcut::activated, this, &TransferListWidget::permDeleteSelectedTorrents);
     const auto *doubleClickHotkeyReturn = new QShortcut(Qt::Key_Return, this, nullptr, nullptr, Qt::WidgetShortcut);
     connect(doubleClickHotkeyReturn, &QShortcut::activated, this, &TransferListWidget::torrentDoubleClicked);
@@ -396,6 +397,12 @@ void TransferListWidget::startVisibleTorrents()
 {
     for (BitTorrent::Torrent *const torrent : asConst(getVisibleTorrents()))
         torrent->start();
+}
+
+void TransferListWidget::forceStartVisibleTorrents()
+{
+    for (BitTorrent::Torrent *const torrent : asConst(getVisibleTorrents()))
+        torrent->start(BitTorrent::TorrentOperatingMode::Forced);
 }
 
 void TransferListWidget::stopSelectedTorrents()
@@ -814,6 +821,23 @@ void TransferListWidget::editTorrentTrackers()
     trackerDialog->open();
 }
 
+void TransferListWidget::manageTorrentContent()
+{
+    const QModelIndexList selectedIndexes = selectionModel()->selectedRows();
+    if ((selectedIndexes.size() != 1) || !selectedIndexes.first().isValid())
+        return;
+
+    const QModelIndex modelIndex = m_listModel->index(mapToSource(selectedIndexes.first()).row(), TransferListModel::TR_NAME);
+    BitTorrent::Torrent *const torrent = m_listModel->torrentHandle(modelIndex);
+    if (!torrent)
+        return;
+
+    auto *dialog = new TorrentContentLayoutDialog(torrent, this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    connect(torrent, &QObject::destroyed, dialog, &QDialog::reject);
+    dialog->open();
+}
+
 void TransferListWidget::exportTorrent()
 {
     if (getSelectedTorrents().isEmpty())
@@ -960,7 +984,7 @@ void TransferListWidget::removeSelectionTag(const Tag &tag)
 
 void TransferListWidget::clearSelectionTags()
 {
-    applyToSelectedTorrents([](BitTorrent::Torrent *const torrent) { torrent->removeAllTags(); });
+    applyToSelectedTorrents([](BitTorrent::Torrent *const torrent) { torrent->clearTags(); });
 }
 
 void TransferListWidget::displayListMenu()
@@ -1021,6 +1045,8 @@ void TransferListWidget::displayListMenu()
     connect(actionSuperSeedingMode, &QAction::triggered, this, &TransferListWidget::setSelectedTorrentsSuperSeeding);
     auto *actionRename = new QAction(UIThemeManager::instance()->getIcon(u"edit-rename"_s), tr("Re&name..."), listMenu);
     connect(actionRename, &QAction::triggered, this, &TransferListWidget::renameSelectedTorrent);
+    auto *actionManageContent = new QAction(UIThemeManager::instance()->getIcon(u"edit-rename"_s), tr("Manage content..."), listMenu);
+    connect(actionManageContent, &QAction::triggered, this, &TransferListWidget::manageTorrentContent);
     auto *actionSequentialDownload = new TriStateAction(tr("Download in sequential order"), listMenu);
     connect(actionSequentialDownload, &QAction::triggered, this, &TransferListWidget::setSelectedTorrentsSequentialDownload);
     auto *actionFirstLastPiecePrio = new TriStateAction(tr("Download first and last pieces first"), listMenu);
@@ -1167,7 +1193,10 @@ void TransferListWidget::displayListMenu()
     listMenu->addSeparator();
     listMenu->addAction(actionSetTorrentPath);
     if (selectedIndexes.size() == 1)
+    {
         listMenu->addAction(actionRename);
+        listMenu->addAction(actionManageContent);
+    }
     listMenu->addAction(actionEditTracker);
 
     // Category Menu

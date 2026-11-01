@@ -1,6 +1,6 @@
 # qBittorrent Neo — architecture
 
-qBittorrent Neo is qBittorrent 5.2.4 with its Qt Widgets GUI replaced by a
+qBittorrent Neo is qBittorrent 5.3.0 with its Qt Widgets GUI replaced by a
 native SwiftUI app. The whole qBittorrent application core runs inside the
 app process; the SwiftUI code talks to it through a narrow C interface.
 
@@ -31,8 +31,9 @@ app process; the SwiftUI code talks to it through a narrow C interface.
 
 ## Repository layout
 
-* `qbittorrent/` — qBittorrent 5.2.4, imported with `git subtree` (full
-  history; the `upstream` branch is `release-5.2.4`). Never edited. Upstream
+* `qbittorrent/` — qBittorrent 5.3.0, imported with `git subtree` (full
+  history; the `upstream` branch is `release-5.2.4`, `release-5.3.0` is
+  merged in). Never edited. Upstream
   updates: `git fetch https://github.com/qbittorrent/qBittorrent.git
   refs/tags/release-X:refs/tags/release-X` then `git subtree merge
   --prefix=qbittorrent release-X`.
