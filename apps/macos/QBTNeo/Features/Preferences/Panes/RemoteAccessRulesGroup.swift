@@ -30,6 +30,10 @@ struct RemoteAccessRulesGroup: View {
                       range: 0...Int64(Int32.max), unit: String(localized: "sec"), special: .text(String(localized: "Disabled")),
                       width: FeatureDesign.Width.wideSpinField)
                 .setting("web_ui_session_timeout")
+            SpinField(title: SettingsCatalog.key("web_ui_sessions_count_limit"), value: $model.draft.webui.webUiSessionsCountLimit,
+                      range: 0...Int64(Int32.max), special: .text(String(localized: "Unlimited")),
+                      width: FeatureDesign.Width.wideSpinField)
+                .setting("web_ui_sessions_count_limit")
         }
         .sheet(isPresented: $isEditingSubnets) {
             TrustedSubnetsSheet(subnets: model.draft.webui.bypassAuthSubnetWhitelist) { list in

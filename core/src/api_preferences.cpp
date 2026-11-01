@@ -375,6 +375,7 @@ namespace
             {u"webUiMaxAuthFailCount"_s, pref->getWebUIMaxAuthFailCount()},
             {u"webUiBanDuration"_s, static_cast<qint64>(pref->getWebUIBanDuration().count())},
             {u"webUiSessionTimeout"_s, pref->getWebUISessionTimeout()},
+            {u"webUiSessionsCountLimit"_s, pref->getWebUISessionsCountLimit()},
             {u"alternativeWebuiEnabled"_s, pref->isAltWebUIEnabled()},
             {u"alternativeWebuiPath"_s, pref->getWebUIRootFolder().toString()},
             {u"webUiClickjackingProtectionEnabled"_s, pref->isWebUIClickjackingProtectionEnabled()},
@@ -726,6 +727,7 @@ namespace
         s[u"webui.webUiMaxAuthFailCount"_s] = [pref](const QJsonValue &v) { pref->setWebUIMaxAuthFailCount(toInt(v)); };
         s[u"webui.webUiBanDuration"_s] = [pref](const QJsonValue &v) { pref->setWebUIBanDuration(std::chrono::seconds(toInt(v))); };
         s[u"webui.webUiSessionTimeout"_s] = [pref](const QJsonValue &v) { pref->setWebUISessionTimeout(toInt(v)); };
+        s[u"webui.webUiSessionsCountLimit"_s] = [pref](const QJsonValue &v) { pref->setWebUISessionsCountLimit(std::max(toInt(v), 0)); };
         s[u"webui.alternativeWebuiEnabled"_s] = [pref](const QJsonValue &v) { pref->setAltWebUIEnabled(v.toBool()); };
         s[u"webui.alternativeWebuiPath"_s] = [pref](const QJsonValue &v) { pref->setWebUIRootFolder(Path(v.toString())); };
         s[u"webui.webUiClickjackingProtectionEnabled"_s] = [pref](const QJsonValue &v) { pref->setWebUIClickjackingProtectionEnabled(v.toBool()); };

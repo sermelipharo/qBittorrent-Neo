@@ -2591,6 +2591,11 @@ public struct WebUiPrefs: Equatable, Hashable {
      * Seconds, 0 = disabled.
      */
     public var webUiSessionTimeout: Int64
+    /**
+     * Most WebUI sessions kept at once; the oldest is dropped for a new one.
+     * 0 = no limit (still capped at `webui::session::MAX_SESSIONS`).
+     */
+    public var webUiSessionsCountLimit: Int64
     public var alternativeWebuiEnabled: Bool
     public var alternativeWebuiPath: String
     public var webUiClickjackingProtectionEnabled: Bool
@@ -2634,7 +2639,11 @@ public struct WebUiPrefs: Equatable, Hashable {
          */webUiBanDuration: Int64,
         /**
          * Seconds, 0 = disabled.
-         */webUiSessionTimeout: Int64, alternativeWebuiEnabled: Bool, alternativeWebuiPath: String, webUiClickjackingProtectionEnabled: Bool, webUiCsrfProtectionEnabled: Bool, webUiSecureCookieEnabled: Bool, webUiHostHeaderValidationEnabled: Bool, webUiUseCustomHttpHeadersEnabled: Bool,
+         */webUiSessionTimeout: Int64,
+        /**
+         * Most WebUI sessions kept at once; the oldest is dropped for a new one.
+         * 0 = no limit (still capped at `webui::session::MAX_SESSIONS`).
+         */webUiSessionsCountLimit: Int64, alternativeWebuiEnabled: Bool, alternativeWebuiPath: String, webUiClickjackingProtectionEnabled: Bool, webUiCsrfProtectionEnabled: Bool, webUiSecureCookieEnabled: Bool, webUiHostHeaderValidationEnabled: Bool, webUiUseCustomHttpHeadersEnabled: Bool,
         /**
          * `Header: value` per line.
          */webUiCustomHttpHeaders: String, webUiReverseProxyEnabled: Bool,
@@ -2658,6 +2667,7 @@ public struct WebUiPrefs: Equatable, Hashable {
         self.webUiMaxAuthFailCount = webUiMaxAuthFailCount
         self.webUiBanDuration = webUiBanDuration
         self.webUiSessionTimeout = webUiSessionTimeout
+        self.webUiSessionsCountLimit = webUiSessionsCountLimit
         self.alternativeWebuiEnabled = alternativeWebuiEnabled
         self.alternativeWebuiPath = alternativeWebuiPath
         self.webUiClickjackingProtectionEnabled = webUiClickjackingProtectionEnabled
@@ -5261,7 +5271,7 @@ extension WebSeed: Codable {
 
 extension WebUiPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case webUiEnabled, webUiDomainList, webUiAddress, webUiPort, webUiUpnp, useHttps, webUiHttpsCertPath, webUiHttpsKeyPath, webUiUsername, webUiPasswordPbkdf2, webUiApiKey, bypassLocalAuth, bypassAuthSubnetWhitelistEnabled, bypassAuthSubnetWhitelist, webUiMaxAuthFailCount, webUiBanDuration, webUiSessionTimeout, alternativeWebuiEnabled, alternativeWebuiPath, webUiClickjackingProtectionEnabled, webUiCsrfProtectionEnabled, webUiSecureCookieEnabled, webUiHostHeaderValidationEnabled, webUiUseCustomHttpHeadersEnabled, webUiCustomHttpHeaders, webUiReverseProxyEnabled, webUiReverseProxiesList, dyndnsEnabled, dyndnsService, dyndnsUsername, dyndnsPassword, dyndnsDomain
+        case webUiEnabled, webUiDomainList, webUiAddress, webUiPort, webUiUpnp, useHttps, webUiHttpsCertPath, webUiHttpsKeyPath, webUiUsername, webUiPasswordPbkdf2, webUiApiKey, bypassLocalAuth, bypassAuthSubnetWhitelistEnabled, bypassAuthSubnetWhitelist, webUiMaxAuthFailCount, webUiBanDuration, webUiSessionTimeout, webUiSessionsCountLimit, alternativeWebuiEnabled, alternativeWebuiPath, webUiClickjackingProtectionEnabled, webUiCsrfProtectionEnabled, webUiSecureCookieEnabled, webUiHostHeaderValidationEnabled, webUiUseCustomHttpHeadersEnabled, webUiCustomHttpHeaders, webUiReverseProxyEnabled, webUiReverseProxiesList, dyndnsEnabled, dyndnsService, dyndnsUsername, dyndnsPassword, dyndnsDomain
     }
 
     static var neoEmpty: WebUiPrefs {
@@ -5287,6 +5297,7 @@ extension WebUiPrefs: Codable {
         let v14: Int64 = try c.decodeIfPresent(Int64.self, forKey: .webUiMaxAuthFailCount) ?? 0
         let v15: Int64 = try c.decodeIfPresent(Int64.self, forKey: .webUiBanDuration) ?? 0
         let v16: Int64 = try c.decodeIfPresent(Int64.self, forKey: .webUiSessionTimeout) ?? 0
+        let v16b: Int64 = try c.decodeIfPresent(Int64.self, forKey: .webUiSessionsCountLimit) ?? 0
         let v17: Bool = try c.decodeIfPresent(Bool.self, forKey: .alternativeWebuiEnabled) ?? false
         let v18: String = try c.decodeIfPresent(String.self, forKey: .alternativeWebuiPath) ?? ""
         let v19: Bool = try c.decodeIfPresent(Bool.self, forKey: .webUiClickjackingProtectionEnabled) ?? false
@@ -5320,6 +5331,7 @@ extension WebUiPrefs: Codable {
             webUiMaxAuthFailCount: v14,
             webUiBanDuration: v15,
             webUiSessionTimeout: v16,
+            webUiSessionsCountLimit: v16b,
             alternativeWebuiEnabled: v17,
             alternativeWebuiPath: v18,
             webUiClickjackingProtectionEnabled: v19,

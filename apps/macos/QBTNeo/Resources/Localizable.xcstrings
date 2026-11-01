@@ -256329,6 +256329,16 @@
         }
       }
     },
+    "Sessions count limit:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предел числа сеансов:"
+          }
+        }
+      }
+    },
     "Session waste:": {
       "localizations": {
         "ar": {

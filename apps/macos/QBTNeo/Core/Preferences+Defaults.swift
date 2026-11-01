@@ -89,7 +89,7 @@ extension WebUiPrefs {
         useHttps: false, webUiHttpsCertPath: "", webUiHttpsKeyPath: "", webUiUsername: "admin",
         webUiPasswordPbkdf2: "", webUiApiKey: "", bypassLocalAuth: false,
         bypassAuthSubnetWhitelistEnabled: false, bypassAuthSubnetWhitelist: [], webUiMaxAuthFailCount: 5,
-        webUiBanDuration: 3600, webUiSessionTimeout: 3600, alternativeWebuiEnabled: false,
+        webUiBanDuration: 3600, webUiSessionTimeout: 3600, webUiSessionsCountLimit: 15, alternativeWebuiEnabled: false,
         alternativeWebuiPath: "", webUiClickjackingProtectionEnabled: true, webUiCsrfProtectionEnabled: true,
         webUiSecureCookieEnabled: true, webUiHostHeaderValidationEnabled: true,
         webUiUseCustomHttpHeadersEnabled: false, webUiCustomHttpHeaders: "", webUiReverseProxyEnabled: false,
