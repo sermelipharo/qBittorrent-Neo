@@ -103,6 +103,7 @@ final class AppModel {
             }
         }
         corePreferences = client.preferences()
+        moveLegacyConfirmations()
         log.append(contentsOf: client.mainLog(lastKnownId: -1, levels: []))
         phase = .running
         restartRefreshLoop()

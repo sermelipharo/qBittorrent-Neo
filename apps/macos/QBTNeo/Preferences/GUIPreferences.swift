@@ -60,10 +60,6 @@ final class GUIPreferences {
 
     var notificationsEnabled: Bool { didSet { set(notificationsEnabled, .notificationsEnabled) } }
     var notifyTorrentAdded: Bool { didSet { set(notifyTorrentAdded, .notifyTorrentAdded) } }
-    var confirmRemoveAllTags: Bool { didSet { set(confirmRemoveAllTags, .confirmRemoveAllTags) } }
-    var confirmRemoveTrackerFromAllTorrents: Bool {
-        didSet { set(confirmRemoveTrackerFromAllTorrents, .confirmRemoveTrackerFromAllTorrents) }
-    }
     var downloadTrackerFavicon: Bool { didSet { set(downloadTrackerFavicon, .downloadTrackerFavicon) } }
     /// Clamped to 0...99.
     var savePathHistoryLength: Int {
@@ -164,8 +160,6 @@ final class GUIPreferences {
 
         notificationsEnabled = read.bool(.notificationsEnabled, true)
         notifyTorrentAdded = read.bool(.notifyTorrentAdded, false)
-        confirmRemoveAllTags = read.bool(.confirmRemoveAllTags, true)
-        confirmRemoveTrackerFromAllTorrents = read.bool(.confirmRemoveTrackerFromAllTorrents, true)
         downloadTrackerFavicon = read.bool(.downloadTrackerFavicon, false)
         savePathHistoryLength = min(max(read.int(.savePathHistoryLength, 8), 0), 99)
         speedGraphsEnabled = read.bool(.speedGraphsEnabled, true)
@@ -236,6 +230,15 @@ final class GUIPreferences {
         var result = list.filter { $0 != path }
         result.insert(path, at: 0)
         return Array(result.prefix(limit))
+    }
+
+    /// The two confirmations kept here before they became core preferences, removed from the
+    /// defaults once read; nil where none was stored.
+    func takeLegacyConfirmations() -> (removeAllTags: Bool?, removeTrackerFromAll: Bool?) {
+        let keys = [GUIPreferenceKey.legacyConfirmRemoveAllTags, .legacyConfirmRemoveTrackerFromAllTorrents].map(\.rawValue)
+        let values = keys.map { defaults.object(forKey: $0) as? Bool }
+        keys.forEach(defaults.removeObject(forKey:))
+        return (values[0], values[1])
     }
 
     private func set(_ value: Any, _ key: GUIPreferenceKey) {

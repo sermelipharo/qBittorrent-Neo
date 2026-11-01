@@ -410,6 +410,8 @@ namespace
             {u"saveStatisticsInterval"_s, static_cast<qint64>(session->saveStatisticsInterval().count())},
             {u"torrentFileSizeLimit"_s, pref->getTorrentFileSizeLimit()},
             {u"confirmTorrentRecheck"_s, pref->confirmTorrentRecheck()},
+            {u"confirmRemoveAllTags"_s, pref->confirmRemoveAllTags()},
+            {u"confirmRemoveTrackerFromAllTorrents"_s, pref->confirmRemoveTrackerFromAllTorrents()},
             {u"recheckCompletedTorrents"_s, pref->recheckTorrentsOnCompletion()},
             {u"appInstanceName"_s, app->instanceName()},
             {u"refreshInterval"_s, session->refreshInterval()},
@@ -770,6 +772,8 @@ namespace
         s[u"advanced.saveStatisticsInterval"_s] = [session](const QJsonValue &v) { session->setSaveStatisticsInterval(std::chrono::minutes(toInt(v))); };
         s[u"advanced.torrentFileSizeLimit"_s] = [pref](const QJsonValue &v) { pref->setTorrentFileSizeLimit(v.toInteger()); };
         s[u"advanced.confirmTorrentRecheck"_s] = [pref](const QJsonValue &v) { pref->setConfirmTorrentRecheck(v.toBool()); };
+        s[u"advanced.confirmRemoveAllTags"_s] = [pref](const QJsonValue &v) { pref->setConfirmRemoveAllTags(v.toBool()); };
+        s[u"advanced.confirmRemoveTrackerFromAllTorrents"_s] = [pref](const QJsonValue &v) { pref->setConfirmRemoveTrackerFromAllTorrents(v.toBool()); };
         s[u"advanced.recheckCompletedTorrents"_s] = [pref](const QJsonValue &v) { pref->recheckTorrentsOnCompletion(v.toBool()); };
         s[u"advanced.appInstanceName"_s] = [app](const QJsonValue &v) { app->setInstanceName(v.toString()); };
         s[u"advanced.refreshInterval"_s] = [session](const QJsonValue &v) { session->setRefreshInterval(toInt(v)); };

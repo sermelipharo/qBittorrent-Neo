@@ -177,8 +177,18 @@ extension AppModel {
         }
     }
 
+    /// Carries the two confirmations the app kept itself before qBittorrent 5.3 into the core.
+    func moveLegacyConfirmations() {
+        let legacy = gui.takeLegacyConfirmations()
+        guard legacy.removeAllTags != nil || legacy.removeTrackerFromAll != nil else { return }
+        var prefs = corePreferences
+        prefs.advanced.confirmRemoveAllTags = legacy.removeAllTags ?? prefs.advanced.confirmRemoveAllTags
+        prefs.advanced.confirmRemoveTrackerFromAllTorrents = legacy.removeTrackerFromAll ?? prefs.advanced.confirmRemoveTrackerFromAllTorrents
+        if prefs != corePreferences { savePreferences(prefs) }
+    }
+
     func requestRemoveAllTags(_ ids: [String]) {
-        if gui.confirmRemoveAllTags {
+        if corePreferences.advanced.confirmRemoveAllTags {
             confirmation = .removeAllTags(ids: ids)
         } else {
             removeAllTags(ids)
@@ -399,7 +409,7 @@ extension AppModel {
     }
 
     func requestRemoveTracker(host: String) {
-        if gui.confirmRemoveTrackerFromAllTorrents {
+        if corePreferences.advanced.confirmRemoveTrackerFromAllTorrents {
             confirmation = .removeTrackerFromAll(host: host)
         } else {
             removeTracker(host: host)

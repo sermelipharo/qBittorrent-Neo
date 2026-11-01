@@ -142,6 +142,8 @@ public struct AdvancedPrefs: Equatable, Hashable {
      */
     public var torrentFileSizeLimit: Int64
     public var confirmTorrentRecheck: Bool
+    public var confirmRemoveAllTags: Bool
+    public var confirmRemoveTrackerFromAllTorrents: Bool
     public var recheckCompletedTorrents: Bool
     public var appInstanceName: String
     /**
@@ -274,7 +276,7 @@ public struct AdvancedPrefs: Equatable, Hashable {
          */saveStatisticsInterval: Int64,
         /**
          * Bytes.
-         */torrentFileSizeLimit: Int64, confirmTorrentRecheck: Bool, recheckCompletedTorrents: Bool, appInstanceName: String,
+         */torrentFileSizeLimit: Int64, confirmTorrentRecheck: Bool, confirmRemoveAllTags: Bool, confirmRemoveTrackerFromAllTorrents: Bool, recheckCompletedTorrents: Bool, appInstanceName: String,
         /**
          * Milliseconds.
          */refreshInterval: Int64, resolvePeerHostNames: Bool, resolvePeerCountries: Bool, reannounceWhenAddressChanged: Bool, enableEmbeddedTracker: Bool, embeddedTrackerPort: Int64, embeddedTrackerPortForwarding: Bool,
@@ -342,6 +344,8 @@ public struct AdvancedPrefs: Equatable, Hashable {
         self.saveStatisticsInterval = saveStatisticsInterval
         self.torrentFileSizeLimit = torrentFileSizeLimit
         self.confirmTorrentRecheck = confirmTorrentRecheck
+        self.confirmRemoveAllTags = confirmRemoveAllTags
+        self.confirmRemoveTrackerFromAllTorrents = confirmRemoveTrackerFromAllTorrents
         self.recheckCompletedTorrents = recheckCompletedTorrents
         self.appInstanceName = appInstanceName
         self.refreshInterval = refreshInterval
@@ -3351,7 +3355,7 @@ extension AddTorrentParams: Codable {
 
 extension AdvancedPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, dhtBootstrapNodes
+        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, confirmRemoveAllTags, confirmRemoveTrackerFromAllTorrents, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, dhtBootstrapNodes
     }
 
     static var neoEmpty: AdvancedPrefs {
@@ -3370,6 +3374,8 @@ extension AdvancedPrefs: Codable {
         let v7: Int64 = try c.decodeIfPresent(Int64.self, forKey: .saveStatisticsInterval) ?? 0
         let v8: Int64 = try c.decodeIfPresent(Int64.self, forKey: .torrentFileSizeLimit) ?? 0
         let v9: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmTorrentRecheck) ?? false
+        let v9a: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveAllTags) ?? true
+        let v9b: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveTrackerFromAllTorrents) ?? true
         let v10: Bool = try c.decodeIfPresent(Bool.self, forKey: .recheckCompletedTorrents) ?? false
         let v11: String = try c.decodeIfPresent(String.self, forKey: .appInstanceName) ?? ""
         let v12: Int64 = try c.decodeIfPresent(Int64.self, forKey: .refreshInterval) ?? 0
@@ -3441,6 +3447,8 @@ extension AdvancedPrefs: Codable {
             saveStatisticsInterval: v7,
             torrentFileSizeLimit: v8,
             confirmTorrentRecheck: v9,
+            confirmRemoveAllTags: v9a,
+            confirmRemoveTrackerFromAllTorrents: v9b,
             recheckCompletedTorrents: v10,
             appInstanceName: v11,
             refreshInterval: v12,

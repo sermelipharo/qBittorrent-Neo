@@ -18,10 +18,13 @@ struct ConfirmationsGroup: View {
             SettingsDisclosure(title: "More confirmations", section: .confirmations) {
                 Toggle(SettingsCatalog.title("confirm_torrent_recheck"), isOn: $model.draft.advanced.confirmTorrentRecheck)
                     .setting("confirm_torrent_recheck")
-                Toggle(SettingsCatalog.title("Preferences/Advanced/confirmRemoveAllTags"), isOn: $gui.confirmRemoveAllTags)
-                    .setting("Preferences/Advanced/confirmRemoveAllTags")
-                Toggle(SettingsCatalog.title("GUI/ConfirmActions/RemoveTrackerFromAllTorrents"), isOn: $gui.confirmRemoveTrackerFromAllTorrents)
-                    .setting("GUI/ConfirmActions/RemoveTrackerFromAllTorrents")
+                Toggle(SettingsCatalog.title("confirm_remove_all_tags"), isOn: $model.draft.advanced.confirmRemoveAllTags)
+                    .setting("confirm_remove_all_tags")
+                Toggle(
+                    SettingsCatalog.title("confirm_remove_tracker_from_all_torrents"),
+                    isOn: $model.draft.advanced.confirmRemoveTrackerFromAllTorrents
+                )
+                .setting("confirm_remove_tracker_from_all_torrents")
                 Toggle(SettingsCatalog.title("delete_torrent_content_files"), isOn: $model.draft.behavior.deleteTorrentContentFiles)
                     .setting("delete_torrent_content_files")
             }

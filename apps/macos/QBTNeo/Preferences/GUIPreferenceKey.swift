@@ -43,8 +43,9 @@ enum GUIPreferenceKey: String, CaseIterable {
     // Advanced page (GUI-only rows)
     case notificationsEnabled = "GUI/Notifications/Enabled"
     case notifyTorrentAdded = "Application/GUI/Notifications/TorrentAdded"
-    case confirmRemoveAllTags = "Preferences/Advanced/confirmRemoveAllTags"
-    case confirmRemoveTrackerFromAllTorrents = "GUI/ConfirmActions/RemoveTrackerFromAllTorrents"
+    // Kept here before qBittorrent 5.3 put them in the WebAPI; now core preferences, read once to move them.
+    case legacyConfirmRemoveAllTags = "Preferences/Advanced/confirmRemoveAllTags"
+    case legacyConfirmRemoveTrackerFromAllTorrents = "GUI/ConfirmActions/RemoveTrackerFromAllTorrents"
     case downloadTrackerFavicon = "GUI/DownloadTrackerFavicon"
     case savePathHistoryLength = "AddNewTorrentDialog/SavePathHistoryLength"
     case speedGraphsEnabled = "SpeedWidget/Enabled"

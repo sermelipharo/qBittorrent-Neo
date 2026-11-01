@@ -39,7 +39,8 @@ enum SettingsCatalogCheck {
         "rss_processing_enabled", "rss_auto_downloading_enabled", "rss_download_repack_proper_episodes", "rss_smart_episode_filters",
         "resume_data_storage_type", "torrent_content_remove_option", "memory_working_set_limit", "current_network_interface",
         "current_interface_name", "current_interface_address", "save_resume_data_interval", "save_statistics_interval",
-        "torrent_file_size_limit", "confirm_torrent_recheck", "recheck_completed_torrents", "app_instance_name", "refresh_interval",
+        "torrent_file_size_limit", "confirm_torrent_recheck", "confirm_remove_all_tags",
+        "confirm_remove_tracker_from_all_torrents", "recheck_completed_torrents", "app_instance_name", "refresh_interval",
         "resolve_peer_host_names", "resolve_peer_countries", "reannounce_when_address_changed", "enable_embedded_tracker",
         "embedded_tracker_port", "embedded_tracker_port_forwarding", "mark_of_the_web", "ignore_ssl_errors", "python_executable_path",
         "bdecode_depth_limit", "bdecode_token_limit", "async_io_threads", "hashing_threads", "file_pool_size", "checking_memory_use",
@@ -63,7 +64,7 @@ enum SettingsCatalogCheck {
             .menuBarContentMode, .menuBarShowsIcon, .menuBarSpeedDirection, .menuBarHidesZeroSpeed, .menuBarCountStyle,
             .preventSuspendWhenDownloading, .preventSuspendWhenSeeding, .statusBarFreeDiskSpace, .checkForUpdates,
             .addTorrentDialogEnabled, .addTorrentDialogTopLevel, .confirmMergeTrackers, .disableRecursiveDownload,
-            .notificationsEnabled, .notifyTorrentAdded, .confirmRemoveAllTags, .confirmRemoveTrackerFromAllTorrents,
+            .notificationsEnabled, .notifyTorrentAdded,
             .downloadTrackerFavicon, .savePathHistoryLength, .speedGraphsEnabled, .rssEnabled, .searchEnabled, .lockPasswordHash,
         ]
         return gui.map(\.rawValue) + [
