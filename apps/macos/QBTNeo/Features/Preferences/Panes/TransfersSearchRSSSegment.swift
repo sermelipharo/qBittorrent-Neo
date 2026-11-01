@@ -42,6 +42,12 @@ struct TransfersSearchRSSSegment: View {
                 .setting("Search/HistoryLength")
                 CommitTextField(title: SettingsCatalog.key("python_executable_path"), text: $model.draft.advanced.pythonExecutablePath,
                                 prompt: String(localized: "(Auto detect if empty)"), trims: true)
+                    .onChange(of: model.draft.advanced.pythonExecutablePath) { _, path in
+                        // A path pasted in quotes (qBittorrent 5.3 refuses those) works without them.
+                        for quote in ["\"", "'"] where path.count > 1 && path.hasPrefix(quote) && path.hasSuffix(quote) {
+                            model.draft.advanced.pythonExecutablePath = String(path.dropFirst().dropLast())
+                        }
+                    }
                     .setting("python_executable_path")
             }
 
