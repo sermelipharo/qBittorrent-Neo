@@ -7,7 +7,12 @@ struct DemoState: Sendable {
     var torrents: [String: DemoTorrent] = [:]
     var categories: [String: Category] = [:]
     var tags: Set<String> = []
-    var preferences = Preferences.qbtDefaults
+    /// The defaults, with peer countries shown (off by default since qBittorrent 5.3) so the demo has flags.
+    var preferences: Preferences = {
+        var prefs = Preferences.qbtDefaults
+        prefs.advanced.resolvePeerCountries = true
+        return prefs
+    }()
     var altSpeed = false
     var listener: (any EventListener)?
     var events: [CoreEvent] = []
