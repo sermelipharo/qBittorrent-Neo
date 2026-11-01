@@ -7,7 +7,9 @@ set -euo pipefail
 ROOT="${0:A:h:h}"
 CONFIG="${1:-${QBTNEO_CORE_CONFIG:-Release}}"
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
-# Xcode's environment must not leak into the CMake build.
+# Xcode's environment must not leak into the CMake build. The SDK is passed
+# explicitly: without a sysroot its frameworks are not system headers and
+# -pedantic-errors fails inside them.
 unset SDKROOT MACOSX_DEPLOYMENT_TARGET ARCHS CC CXX LD LDFLAGS CFLAGS CXXFLAGS OTHER_LDFLAGS 2>/dev/null || true
 
 "$ROOT/scripts/build-deps.sh"
@@ -18,6 +20,7 @@ if [[ ! -f "$BUILD/CMakeCache.txt" ]] || ! grep -q "CMAKE_BUILD_TYPE:STRING=$CON
         -DCMAKE_BUILD_TYPE="$CONFIG" \
         -DCMAKE_OSX_ARCHITECTURES=arm64 \
         -DCMAKE_OSX_DEPLOYMENT_TARGET=27.0 \
+        -DCMAKE_OSX_SYSROOT="$(xcrun --sdk macosx --show-sdk-path)" \
         -DQT_NO_PRIVATE_MODULE_WARNING=ON \
         -DCMAKE_PREFIX_PATH="$ROOT/build/deps;/opt/homebrew/opt/qt;/opt/homebrew/opt/boost;/opt/homebrew/opt/openssl@3"
 fi
