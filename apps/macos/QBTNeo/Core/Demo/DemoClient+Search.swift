@@ -4,7 +4,7 @@ extension DemoClient: SearchClient {
     private var store: DemoFeatureStore { .shared }
 
     func searchEngineStatus() -> SearchEngineStatus {
-        SearchEngineStatus(pythonFound: true, pythonPath: "/usr/bin/python3", pythonVersion: "3.9.6", message: "")
+        SearchEngineStatus(pythonFound: true, pythonPath: "python3", pythonVersion: "3.13.16", message: "")
     }
 
     func searchPlugins() -> [SearchPlugin] {

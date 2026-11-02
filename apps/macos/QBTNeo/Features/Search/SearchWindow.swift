@@ -57,7 +57,7 @@ struct SearchWindow: View {
             } description: {
                 Text("Python is required to use the search engine but it does not seem to be installed.")
                 Text(status.message)
-                Text("Install Python 3.9 or later (for example from python.org or with Homebrew), or set its path in Settings › Advanced.")
+                Text("Clear the Python path in Settings › Advanced to use the bundled Python, or set it to Python 3.13 or later.")
             }
         } else if model.engineStatus != nil, model.plugins.isEmpty {
             ContentUnavailableView {

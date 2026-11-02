@@ -145298,12 +145298,12 @@
         }
       }
     },
-    "Install Python 3.9 or later (for example from python.org or with Homebrew), or set its path in Settings › Advanced.": {
+    "Clear the Python path in Settings › Advanced to use the bundled Python, or set it to Python 3.13 or later.": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Установите Python 3.9 или новее (например, с python.org или через Homebrew) либо укажите путь к нему в «Настройки › Расширенные»."
+            "value": "Очистите путь к Python в «Настройки › Расширенные», чтобы использовать встроенный Python, или укажите Python 3.13 или новее."
           }
         }
       }
