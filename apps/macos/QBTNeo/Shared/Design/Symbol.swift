@@ -123,6 +123,7 @@ enum Symbol {
     static let trashSlash = "trash.slash"
     static let tray = "tray"
     static let trayFull = "tray.full"
+    static let tray2 = "tray.2"
     static let wandAndStars = "wand.and.stars"
     static let xmark = "xmark"
     static let xmarkCircle = "xmark.circle"
@@ -247,6 +248,7 @@ enum Symbol {
         trashSlash,
         tray,
         trayFull,
+        tray2,
         wandAndStars,
         xmark,
         xmarkCircle,

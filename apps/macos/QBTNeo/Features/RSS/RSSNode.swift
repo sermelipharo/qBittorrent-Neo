@@ -1,14 +1,17 @@
 import Foundation
 
-/// A row of the feed tree: the sticky "Unread" item, a folder or a feed.
+/// A row of the feed tree: the sticky "All" (qBittorrent 5.3) and "Unread"
+/// items, a folder or a feed.
 struct RSSNode: Identifiable, Hashable {
     enum Kind: Hashable {
+        case all
         case unread
         case folder
         case feed
     }
 
-    /// Identifier of the sticky "Unread" row (not a valid item path).
+    /// Identifiers of the sticky rows (not valid item paths).
+    static let allID = "\u{1}all"
     static let unreadID = "\u{1}unread"
 
     let id: String
@@ -22,8 +25,12 @@ struct RSSNode: Identifiable, Hashable {
     var iconPath = ""
     var children: [Self]?
 
-    /// The item path in the core ("" = root for the Unread row).
-    var path: String { kind == .unread ? "" : id }
+    /// "All" and "Unread": they stand for the root folder and cannot be
+    /// renamed, moved or deleted.
+    var isSticky: Bool { kind == .all || kind == .unread }
+
+    /// The item path in the core ("" = root for the sticky rows).
+    var path: String { isSticky ? "" : id }
 
     /// Parent folder path of the item.
     var parentPath: String {
@@ -51,6 +58,17 @@ struct RSSNode: Identifiable, Hashable {
         url = feed.url
         refreshInterval = feed.refreshInterval
         iconPath = feed.iconPath
+        children = nil
+    }
+
+    /// "All": every article; no count, as in qBittorrent.
+    static let all = Self(id: allID, kind: .all, name: String(localized: "All"), unreadCount: 0)
+
+    private init(id: String, kind: Kind, name: String, unreadCount: Int64) {
+        self.id = id
+        self.kind = kind
+        self.name = name
+        self.unreadCount = unreadCount
         children = nil
     }
 

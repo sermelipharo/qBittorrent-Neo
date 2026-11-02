@@ -8,7 +8,7 @@ struct RSSFeedList: View {
     var body: some View {
         List(model.nodes, children: \.children, selection: $model.selection) { node in
             RSSNodeRow(node: node)
-                .draggable(node.kind == .unread ? "" : node.id)
+                .draggable(node.isSticky ? "" : node.id)
                 .dropDestination(for: String.self) { ids, _ in
                     guard node.kind == .folder else { return false }
                     Task { await model.move(ids.filter { !$0.isEmpty }, into: node.path) }
@@ -18,12 +18,12 @@ struct RSSFeedList: View {
         .contextMenu(forSelectionType: RSSNode.ID.self) { ids in
             RSSFeedContextMenu(model: model, nodes: ids.compactMap(model.node))
         } primaryAction: { ids in
-            if ids.count == 1, let node = ids.first.flatMap(model.node), node.kind != .unread {
+            if ids.count == 1, let node = ids.first.flatMap(model.node), !node.isSticky {
                 model.sheet = .rename(node)
             }
         }
         .onDeleteCommand {
-            let nodes = model.selectedNodes.filter { $0.kind != .unread }
+            let nodes = model.selectedNodes.filter { !$0.isSticky }
             if !nodes.isEmpty { model.pendingDeletion = nodes }
         }
         .dropDestination(for: String.self) { ids, _ in

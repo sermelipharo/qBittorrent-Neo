@@ -15,7 +15,7 @@ struct RSSFeedContextMenu: View {
             Button("Update") { model.update(nodes) }
             Button("Mark items read") { model.markRead(nodes) }
             Divider()
-            if nodes.count == 1, let node = nodes.first, node.kind != .unread {
+            if nodes.count == 1, let node = nodes.first, !node.isSticky {
                 Button("Rename…") { model.sheet = .rename(node) }
                 if node.kind == .feed {
                     Button("Feed options…") { model.sheet = .feedOptions(node) }
@@ -27,7 +27,7 @@ struct RSSFeedContextMenu: View {
                 }
                 Divider()
             } else if nodes.count > 1 {
-                Button("Delete") { model.pendingDeletion = nodes.filter { $0.kind != .unread } }
+                Button("Delete") { model.pendingDeletion = nodes.filter { !$0.isSticky } }
                 Divider()
             }
             Button("New subscription…", action: newSubscription)

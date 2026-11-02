@@ -28,6 +28,7 @@ struct RSSNodeIcon: View {
 
     private var symbol: String {
         switch node.kind {
+        case .all: Symbol.tray2
         case .unread: Symbol.tray
         case .folder: Symbol.folder
         case .feed: Symbol.dotRadiowavesUpForward

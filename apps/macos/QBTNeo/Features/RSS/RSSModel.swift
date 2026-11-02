@@ -25,7 +25,7 @@ final class RSSModel {
     @ObservationIgnored private var nodeIndex: [String: RSSNode] = [:]
     @ObservationIgnored private var currentArticleID: RSSArticleItem.ID?
 
-    var totalUnread: Int64 { nodes.first?.unreadCount ?? 0 }
+    var totalUnread: Int64 { nodeIndex[RSSNode.unreadID]?.unreadCount ?? 0 }
 
     // MARK: Loading
 
@@ -39,7 +39,7 @@ final class RSSModel {
         guard let client else { return }
         tree = await CoreCall.run { client.rssTree(withArticles: true) }
         let root = RSSNode(folder: tree)
-        nodes = [RSSNode(unreadCount: root.unreadCount)] + (root.children ?? [])
+        nodes = [.all, RSSNode(unreadCount: root.unreadCount)] + (root.children ?? [])
         nodeIndex = [:]
         index(nodes)
         selection = selection.filter { nodeIndex[$0] != nil }
@@ -72,7 +72,7 @@ final class RSSModel {
         selection.count == 1 ? selection.first.flatMap { nodeIndex[$0] } : nil
     }
 
-    var showsFeedColumn: Bool { selection.contains(RSSNode.unreadID) }
+    var showsFeedColumn: Bool { selection.contains(RSSNode.unreadID) || selection.contains(RSSNode.allID) }
 
     // MARK: Articles
 
@@ -80,12 +80,13 @@ final class RSSModel {
         var items: [RSSArticleItem] = []
         let selectedPaths = selectedNodes.map(\.path)
         let unreadView = selection.contains(RSSNode.unreadID)
+        let allView = selection.contains(RSSNode.allID)
         collect(tree, into: &items) { feed in
-            unreadView || selectedPaths.contains { path in
+            allView || unreadView || selectedPaths.contains { path in
                 path == feed.path || feed.path.hasPrefix(path + "\\")
             }
         }
-        if unreadView {
+        if unreadView, !allView {
             let keep = Set(articles.filter { articleSelection.contains($0.id) }.map(\.id))
             items = items.filter { !$0.article.isRead || keep.contains($0.id) }
         }
@@ -131,7 +132,7 @@ final class RSSModel {
         guard let client else { return }
         tree = await CoreCall.run { client.rssTree(withArticles: true) }
         let root = RSSNode(folder: tree)
-        nodes = [RSSNode(unreadCount: root.unreadCount)] + (root.children ?? [])
+        nodes = [.all, RSSNode(unreadCount: root.unreadCount)] + (root.children ?? [])
         nodeIndex = [:]
         index(nodes)
     }
@@ -143,7 +144,7 @@ final class RSSModel {
     var destinationFolder: String {
         guard let node = selectedNodes.first else { return "" }
         switch node.kind {
-        case .unread: return ""
+        case .all, .unread: return ""
         case .folder: return node.path
         case .feed: return node.parentPath
         }
@@ -206,7 +207,7 @@ final class RSSModel {
     }
 
     func move(_ ids: [RSSNode.ID], into folder: String) async {
-        for id in ids where id != RSSNode.unreadID {
+        for id in ids where nodeIndex[id]?.isSticky == false {
             guard let node = nodeIndex[id], node.parentPath != folder, id != folder else { continue }
             let destination = folder.isEmpty ? node.name : folder + "\\" + node.name
             do {
@@ -219,16 +220,16 @@ final class RSSModel {
     }
 
     func delete(_ nodes: [RSSNode]) async {
-        for node in nodes where node.kind != .unread {
+        for node in nodes where !node.isSticky {
             try? client?.rssRemoveItem(path: node.path)
         }
         selection = [RSSNode.unreadID]
         await reload()
     }
 
-    /// "Update": selected items, or everything when "Unread" is selected.
+    /// "Update": selected items, or everything when "All" or "Unread" is selected.
     func update(_ nodes: [RSSNode]) {
-        let paths = nodes.contains { $0.kind == .unread } ? [""] : nodes.map(\.path)
+        let paths = nodes.contains(where: \.isSticky) ? [""] : nodes.map(\.path)
         for path in paths { try? client?.rssRefreshItem(itemPath: path) }
         Task { await reload() }
     }
@@ -238,7 +239,7 @@ final class RSSModel {
     }
 
     func markRead(_ nodes: [RSSNode]) {
-        let paths = nodes.contains { $0.kind == .unread } ? [""] : nodes.map(\.path)
+        let paths = nodes.contains(where: \.isSticky) ? [""] : nodes.map(\.path)
         for path in paths { try? client?.rssMarkAsRead(itemPath: path, articleId: nil) }
         Task { await reload() }
     }
