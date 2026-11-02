@@ -284732,6 +284732,172 @@
         }
       }
     },
+    "The entered IP address or range is invalid.": {
+      "localizations": {
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daxil edilmiş İP ünvanı və ya aralıq səhvdir."
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unesena IP adresa je nevažeća."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'adreça IP o l'interval introduït no és vàlid."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadaná adresa nebo rozsah IP je neplatný."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die eingegebene IP-Adresse oder der IP-Bereich ist ungültig."
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The entered IP address or range is invalid."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La dirección IP o el rango de direcciones IP introducido no es válido."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'adresse IP ou la plage d'adresses IP saisie est invalide."
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O enderezo IP ou intervalo introducido non é válido."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unesena IP adresa ili raspon nije valjan."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Érvénytelen a beírt IP cím vagy tartomány."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'indirizzo IP o l'intervallo inserito non è valido."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "입력한 IP 주소 또는 범위가 잘못되었습니다."
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रविष्ट गरिएको IP ठेगाना वा दायरा अमान्य छ।"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het opgegeven IP-adres of -bereik is ongeldig."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Podany adres IP lub zakres jest nieprawidłowy."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O endereço IP ou intervalo inserido é inválido."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O endereço IP ou intervalo introduzido é inválido."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Указанные IP-адрес или диапазон являются недопустимыми."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadaná IP adresa alebo rozsah je neplatný."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den angivna IP-adressen eller det angivna IP-intervallet är ogiltigt."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ที่อยู่ IP หรือช่วง IP ที่ป้อนไม่ถูกต้อง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Girilen IP adresi veya aralık geçersiz."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введена IP-адреса або діапазон є недійсними."
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Địa chỉ IP hoặc dải địa chỉ IP đã nhập không hợp lệ."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入的 IP 地址或范围无效。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "輸入的 IP 位址或範圍無效。"
+          }
+        }
+      }
+    },
     "The entered IP is already banned.": {
       "localizations": {
         "ar": {
