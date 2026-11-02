@@ -6,8 +6,6 @@ struct TransfersSearchRSSSegment: View {
     @Environment(AppModel.self) private var app
     @Environment(GUIPreferences.self) private var gui
     @Environment(\.openWindow) private var openWindow
-    @AppStorage(FeatureDefaults.storeSearchTabs, store: AppDefaults.store) private var storeTabs = false
-    @AppStorage(FeatureDefaults.storeSearchResults, store: AppDefaults.store) private var storeResults = false
     @AppStorage(FeatureDefaults.searchHistoryLength, store: AppDefaults.store) private var historyLength = 50
     @State private var status: SearchEngineStatus?
 
@@ -23,11 +21,11 @@ struct TransfersSearchRSSSegment: View {
                     pythonStatus
                 }
                 .setting("system.searchPlugins")
-                Toggle(SettingsCatalog.title("Search/StoreOpenedSearchTabs"), isOn: $storeTabs)
-                    .setting("Search/StoreOpenedSearchTabs")
-                Toggle(SettingsCatalog.title("Search/StoreOpenedSearchTabResults"), isOn: $storeResults)
-                    .disabled(!storeTabs)
-                    .setting("Search/StoreOpenedSearchTabResults", indented: true)
+                Toggle(SettingsCatalog.title("store_search_jobs"), isOn: $model.draft.behavior.storeSearchJobs)
+                    .setting("store_search_jobs")
+                Toggle(SettingsCatalog.title("store_search_job_results"), isOn: $model.draft.behavior.storeSearchJobResults)
+                    .disabled(!model.draft.behavior.storeSearchJobs)
+                    .setting("store_search_job_results", indented: true)
                 LabeledContent(SettingsCatalog.key("Search/HistoryLength")) {
                     HStack(spacing: Design.Spacing.tight) {
                         TextField(SettingsCatalog.title("Search/HistoryLength"), value: $historyLength, format: .number)

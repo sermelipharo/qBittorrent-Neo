@@ -5,8 +5,6 @@ struct SearchWindow: View {
     @Environment(AppModel.self) private var app
     @Environment(\.openWindow) private var openWindow
     @State private var model = SearchModel()
-    @AppStorage(FeatureDefaults.storeSearchTabs, store: AppDefaults.store) private var storesTabs = false
-    @AppStorage(FeatureDefaults.storeSearchResults, store: AppDefaults.store) private var storesResults = false
     /// Snapshots: run this search on open.
     var initialPattern: String?
 
@@ -34,7 +32,8 @@ struct SearchWindow: View {
             Text(alert.message)
         }
         .task(id: app.phase) {
-            await model.attach(app.client, profileRoot: app.launch.isSnapshot ? nil : app.launch.profileDirectory)
+            await model.attach(app.client, profileRoot: app.launch.isSnapshot ? nil : app.launch.profileDirectory,
+                               preferences: app.corePreferencesReader)
             if let initialPattern, model.tabs.isEmpty {
                 model.pattern = initialPattern
                 model.search()
@@ -45,8 +44,8 @@ struct SearchWindow: View {
                 if case .searchPluginsUpdated = event { await model.reloadPlugins() }
             }
         }
-        .onChange(of: storesTabs) { model.storageSettingsChanged() }
-        .onChange(of: storesResults) { model.storageSettingsChanged() }
+        .onChange(of: app.corePreferences.behavior.storeSearchJobs) { model.storageSettingsChanged() }
+        .onChange(of: app.corePreferences.behavior.storeSearchJobResults) { model.storageSettingsChanged() }
         .onAppear { if app.openWindow == nil { app.openWindow = openWindow } }
     }
 

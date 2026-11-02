@@ -188,6 +188,8 @@ namespace
             {u"performanceWarning"_s, session->isPerformanceWarningEnabled()},
             {u"statusBarExternalIp"_s, pref->isStatusbarExternalIPDisplayed()},
             {u"confirmTorrentDeletion"_s, pref->confirmTorrentDeletion()},
+            {u"storeSearchJobs"_s, pref->storeSearchJobs()},
+            {u"storeSearchJobResults"_s, pref->storeSearchJobResults()},
             {u"fileLogEnabled"_s, app->isFileLoggerEnabled()},
             {u"fileLogPath"_s, app->fileLoggerPath().toString()},
             {u"fileLogBackupEnabled"_s, app->isFileLoggerBackup()},
@@ -223,10 +225,11 @@ namespace
             {u"tempPathEnabled"_s, session->isDownloadPathEnabled()},
             {u"tempPath"_s, session->downloadPath().toString()},
             {u"useCategoryPathsInManualMode"_s, session->useCategoryPathsInManualMode()},
-            // qBittorrent 5.3 keeps the folder when backups are off; an empty
-            // folder still means "off" here.
-            {u"exportDir"_s, session->isTorrentFileBackupEnabled() ? session->torrentBackupDirectory().toString() : QString()},
-            {u"exportDirFin"_s, session->isFinishedTorrentBackupDirectoryEnabled() ? session->finishedTorrentBackupDirectory().toString() : QString()},
+            {u"torrentFilesBackupEnabled"_s, session->isTorrentFileBackupEnabled()},
+            {u"torrentFilesBackupDir"_s, session->torrentBackupDirectory().toString()},
+            {u"torrentFilesFinishedBackupDirEnabled"_s, session->isFinishedTorrentBackupDirectoryEnabled()},
+            {u"torrentFilesFinishedBackupDir"_s, session->finishedTorrentBackupDirectory().toString()},
+            {u"removeTorrentFileBackup"_s, session->removeTorrentFileBackup()},
             {u"watchedFolders"_s, watchedFoldersJson()},
             {u"excludedFileNamesEnabled"_s, session->isExcludedFileNamesEnabled()},
             {u"excludedFileNames"_s, toJsonArray(session->excludedFileNames())},
@@ -531,6 +534,8 @@ namespace
         s[u"behavior.performanceWarning"_s] = [session](const QJsonValue &v) { session->setPerformanceWarningEnabled(v.toBool()); };
         s[u"behavior.statusBarExternalIp"_s] = [pref](const QJsonValue &v) { pref->setStatusbarExternalIPDisplayed(v.toBool()); };
         s[u"behavior.confirmTorrentDeletion"_s] = [pref](const QJsonValue &v) { pref->setConfirmTorrentDeletion(v.toBool()); };
+        s[u"behavior.storeSearchJobs"_s] = [pref](const QJsonValue &v) { pref->setStoreSearchJobs(v.toBool()); };
+        s[u"behavior.storeSearchJobResults"_s] = [pref](const QJsonValue &v) { pref->setStoreSearchJobResults(v.toBool()); };
         s[u"behavior.fileLogEnabled"_s] = [app](const QJsonValue &v) { app->setFileLoggerEnabled(v.toBool()); };
         s[u"behavior.fileLogPath"_s] = [app](const QJsonValue &v) { app->setFileLoggerPath(Path(v.toString())); };
         s[u"behavior.fileLogBackupEnabled"_s] = [app](const QJsonValue &v) { app->setFileLoggerBackup(v.toBool()); };
@@ -558,20 +563,11 @@ namespace
         s[u"downloads.tempPathEnabled"_s] = [session](const QJsonValue &v) { session->setDownloadPathEnabled(v.toBool()); };
         s[u"downloads.tempPath"_s] = [session](const QJsonValue &v) { session->setDownloadPath(Path(v.toString())); };
         s[u"downloads.useCategoryPathsInManualMode"_s] = [session](const QJsonValue &v) { session->setUseCategoryPathsInManualMode(v.toBool()); };
-        s[u"downloads.exportDir"_s] = [session](const QJsonValue &v)
-        {
-            const Path path {v.toString()};
-            session->setTorrentFileBackupEnabled(!path.isEmpty());
-            if (!path.isEmpty())
-                session->setTorrentBackupDirectory(path);
-        };
-        s[u"downloads.exportDirFin"_s] = [session](const QJsonValue &v)
-        {
-            const Path path {v.toString()};
-            session->setFinishedTorrentBackupDirectoryEnabled(!path.isEmpty());
-            if (!path.isEmpty())
-                session->setFinishedTorrentBackupDirectory(path);
-        };
+        s[u"downloads.torrentFilesBackupEnabled"_s] = [session](const QJsonValue &v) { session->setTorrentFileBackupEnabled(v.toBool()); };
+        s[u"downloads.torrentFilesBackupDir"_s] = [session](const QJsonValue &v) { session->setTorrentBackupDirectory(Path(v.toString())); };
+        s[u"downloads.torrentFilesFinishedBackupDirEnabled"_s] = [session](const QJsonValue &v) { session->setFinishedTorrentBackupDirectoryEnabled(v.toBool()); };
+        s[u"downloads.torrentFilesFinishedBackupDir"_s] = [session](const QJsonValue &v) { session->setFinishedTorrentBackupDirectory(Path(v.toString())); };
+        s[u"downloads.removeTorrentFileBackup"_s] = [session](const QJsonValue &v) { session->setRemoveTorrentFileBackup(v.toBool()); };
         s[u"downloads.watchedFolders"_s] = setWatchedFolders;
         s[u"downloads.excludedFileNamesEnabled"_s] = [session](const QJsonValue &v) { session->setExcludedFileNamesEnabled(v.toBool()); };
         s[u"downloads.excludedFileNames"_s] = [session](const QJsonValue &v) { session->setExcludedFileNames(stringList(v)); };

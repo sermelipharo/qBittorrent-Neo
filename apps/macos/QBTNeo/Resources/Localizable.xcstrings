@@ -59040,6 +59040,16 @@
         }
       }
     },
+    "Choose backup directory": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите папку для резервных копий"
+          }
+        }
+      }
+    },
     "Choose export directory": {
       "localizations": {
         "ar": {
@@ -238767,6 +238777,16 @@
         }
       }
     },
+    "Remove backup when removing torrent": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалять резервную копию при удалении торрента"
+          }
+        }
+      }
+    },
     "Rule cloning": {
       "localizations": {
         "az-Latn": {
@@ -283405,6 +283425,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "替補的 WebUI 檔案位置不應該為空白。"
+          }
+        }
+      }
+    },
+    "Store backup .torrent file": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хранить резервную копию торрент-файла"
+          }
+        }
+      }
+    },
+    "Store backup in:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хранить резервные копии в:"
           }
         }
       }
@@ -339307,6 +339347,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Записей: %lld"
+          }
+        }
+      }
+    },
+    "When torrent finished move backup to:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По завершении перемещать копию в:"
           }
         }
       }

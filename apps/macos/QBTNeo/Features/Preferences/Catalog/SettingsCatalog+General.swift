@@ -6,7 +6,7 @@ extension SettingsCatalog {
             SettingSpec("system.openAtLogin", .startup, String(localized: "Open qBittorrent Neo at login"),
                         keywords: ["login item", "launch", "autostart", "SMAppService"]),
             SettingSpec("GUI/StartUpWindowState", .startup, String(localized: "At startup, show window:"), keywords: ["minimized"]),
-            SettingSpec("BitTorrent/Session/StartPaused", .startup, String(localized: "Start with all transfers paused"), .advanced,
+            SettingSpec("start_paused", .startup, String(localized: "Start with all transfers paused"), .advanced,
                         help: String(localized: "Nothing downloads or uploads until you resume."),
                         check: .pref(\.advanced.startPaused)),
 

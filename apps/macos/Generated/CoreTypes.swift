@@ -469,6 +469,16 @@ public struct BehaviorPrefs: Equatable, Hashable {
     public var performanceWarning: Bool
     public var statusBarExternalIp: Bool
     public var confirmTorrentDeletion: Bool
+    /**
+     * Keep search tabs/jobs (GUI search tabs and WebUI search jobs) across
+     * restarts (qBittorrent 5.3 `Search/StoreSearchJobs`).
+     */
+    public var storeSearchJobs: Bool
+    /**
+     * Also keep their results (`Search/StoreSearchJobResults`; only with
+     * `store_search_jobs`).
+     */
+    public var storeSearchJobResults: Bool
     public var fileLogEnabled: Bool
     /**
      * Empty = `<profile>/data/logs`.
@@ -492,7 +502,15 @@ public struct BehaviorPrefs: Equatable, Hashable {
     public init(
         /**
          * UI language code, "" = system.
-         */locale: String, performanceWarning: Bool, statusBarExternalIp: Bool, confirmTorrentDeletion: Bool, fileLogEnabled: Bool,
+         */locale: String, performanceWarning: Bool, statusBarExternalIp: Bool, confirmTorrentDeletion: Bool,
+        /**
+         * Keep search tabs/jobs (GUI search tabs and WebUI search jobs) across
+         * restarts (qBittorrent 5.3 `Search/StoreSearchJobs`).
+         */storeSearchJobs: Bool,
+        /**
+         * Also keep their results (`Search/StoreSearchJobResults`; only with
+         * `store_search_jobs`).
+         */storeSearchJobResults: Bool, fileLogEnabled: Bool,
         /**
          * Empty = `<profile>/data/logs`.
          */fileLogPath: String, fileLogBackupEnabled: Bool,
@@ -506,6 +524,8 @@ public struct BehaviorPrefs: Equatable, Hashable {
         self.performanceWarning = performanceWarning
         self.statusBarExternalIp = statusBarExternalIp
         self.confirmTorrentDeletion = confirmTorrentDeletion
+        self.storeSearchJobs = storeSearchJobs
+        self.storeSearchJobResults = storeSearchJobResults
         self.fileLogEnabled = fileLogEnabled
         self.fileLogPath = fileLogPath
         self.fileLogBackupEnabled = fileLogBackupEnabled
@@ -956,13 +976,26 @@ public struct DownloadsPrefs: Equatable, Hashable {
     public var tempPath: String
     public var useCategoryPathsInManualMode: Bool
     /**
-     * Copy .torrent files to ("" = off).
+     * qBittorrent 5.3 "Store backup .torrent file" (replaced "Copy .torrent
+     * files to", migrated on load in `PreferencesStore::load`): keep a copy
+     * of each added torrent's .torrent file.
      */
-    public var exportDir: String
+    public var torrentFilesBackupEnabled: Bool
     /**
-     * Copy .torrent files of finished downloads to ("" = off).
+     * Backup folder; a relative path is inside the profile's data folder
+     * ("" reads as `backup`).
      */
-    public var exportDirFin: String
+    public var torrentFilesBackupDir: String
+    /**
+     * Move the backup to `torrent_files_finished_backup_dir` when the
+     * torrent finishes.
+     */
+    public var torrentFilesFinishedBackupDirEnabled: Bool
+    public var torrentFilesFinishedBackupDir: String
+    /**
+     * Delete the backup when the torrent is removed.
+     */
+    public var removeTorrentFileBackup: Bool
     public var watchedFolders: [WatchedFolder]
     public var excludedFileNamesEnabled: Bool
     public var excludedFileNames: [String]
@@ -1006,11 +1039,21 @@ public struct DownloadsPrefs: Equatable, Hashable {
          * Empty = `<save_path>/temp`.
          */tempPath: String, useCategoryPathsInManualMode: Bool,
         /**
-         * Copy .torrent files to ("" = off).
-         */exportDir: String,
+         * qBittorrent 5.3 "Store backup .torrent file" (replaced "Copy .torrent
+         * files to", migrated on load in `PreferencesStore::load`): keep a copy
+         * of each added torrent's .torrent file.
+         */torrentFilesBackupEnabled: Bool,
         /**
-         * Copy .torrent files of finished downloads to ("" = off).
-         */exportDirFin: String, watchedFolders: [WatchedFolder], excludedFileNamesEnabled: Bool, excludedFileNames: [String], mailNotificationEnabled: Bool, mailNotificationSender: String, mailNotificationEmail: String, mailNotificationSmtp: String,
+         * Backup folder; a relative path is inside the profile's data folder
+         * ("" reads as `backup`).
+         */torrentFilesBackupDir: String,
+        /**
+         * Move the backup to `torrent_files_finished_backup_dir` when the
+         * torrent finishes.
+         */torrentFilesFinishedBackupDirEnabled: Bool, torrentFilesFinishedBackupDir: String,
+        /**
+         * Delete the backup when the torrent is removed.
+         */removeTorrentFileBackup: Bool, watchedFolders: [WatchedFolder], excludedFileNamesEnabled: Bool, excludedFileNames: [String], mailNotificationEnabled: Bool, mailNotificationSender: String, mailNotificationEmail: String, mailNotificationSmtp: String,
         /**
          * qBittorrent 5.3 replaced "requires a secure connection (SSL)" by an
          * encryption type; old files are migrated on load
@@ -1034,8 +1077,11 @@ public struct DownloadsPrefs: Equatable, Hashable {
         self.tempPathEnabled = tempPathEnabled
         self.tempPath = tempPath
         self.useCategoryPathsInManualMode = useCategoryPathsInManualMode
-        self.exportDir = exportDir
-        self.exportDirFin = exportDirFin
+        self.torrentFilesBackupEnabled = torrentFilesBackupEnabled
+        self.torrentFilesBackupDir = torrentFilesBackupDir
+        self.torrentFilesFinishedBackupDirEnabled = torrentFilesFinishedBackupDirEnabled
+        self.torrentFilesFinishedBackupDir = torrentFilesFinishedBackupDir
+        self.removeTorrentFileBackup = removeTorrentFileBackup
         self.watchedFolders = watchedFolders
         self.excludedFileNamesEnabled = excludedFileNamesEnabled
         self.excludedFileNames = excludedFileNames
@@ -3637,7 +3683,7 @@ extension AppConfig: Codable {
 
 extension BehaviorPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case locale, performanceWarning, statusBarExternalIp, confirmTorrentDeletion, fileLogEnabled, fileLogPath, fileLogBackupEnabled, fileLogMaxSize, fileLogDeleteOld, fileLogAge, fileLogAgeType, deleteTorrentContentFiles
+        case locale, performanceWarning, statusBarExternalIp, confirmTorrentDeletion, storeSearchJobs, storeSearchJobResults, fileLogEnabled, fileLogPath, fileLogBackupEnabled, fileLogMaxSize, fileLogDeleteOld, fileLogAge, fileLogAgeType, deleteTorrentContentFiles
     }
 
     static var neoEmpty: BehaviorPrefs {
@@ -3650,27 +3696,31 @@ extension BehaviorPrefs: Codable {
         let v1: Bool = try c.decodeIfPresent(Bool.self, forKey: .performanceWarning) ?? false
         let v2: Bool = try c.decodeIfPresent(Bool.self, forKey: .statusBarExternalIp) ?? false
         let v3: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmTorrentDeletion) ?? false
-        let v4: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogEnabled) ?? false
-        let v5: String = try c.decodeIfPresent(String.self, forKey: .fileLogPath) ?? ""
-        let v6: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogBackupEnabled) ?? false
-        let v7: Int64 = try c.decodeIfPresent(Int64.self, forKey: .fileLogMaxSize) ?? 0
-        let v8: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogDeleteOld) ?? false
-        let v9: Int64 = try c.decodeIfPresent(Int64.self, forKey: .fileLogAge) ?? 0
-        let v10: FileLogAgeType = try c.decodeIfPresent(FileLogAgeType.self, forKey: .fileLogAgeType) ?? .days
-        let v11: Bool = try c.decodeIfPresent(Bool.self, forKey: .deleteTorrentContentFiles) ?? false
+        let v4: Bool = try c.decodeIfPresent(Bool.self, forKey: .storeSearchJobs) ?? false
+        let v5: Bool = try c.decodeIfPresent(Bool.self, forKey: .storeSearchJobResults) ?? false
+        let v6: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogEnabled) ?? false
+        let v7: String = try c.decodeIfPresent(String.self, forKey: .fileLogPath) ?? ""
+        let v8: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogBackupEnabled) ?? false
+        let v9: Int64 = try c.decodeIfPresent(Int64.self, forKey: .fileLogMaxSize) ?? 0
+        let v10: Bool = try c.decodeIfPresent(Bool.self, forKey: .fileLogDeleteOld) ?? false
+        let v11: Int64 = try c.decodeIfPresent(Int64.self, forKey: .fileLogAge) ?? 0
+        let v12: FileLogAgeType = try c.decodeIfPresent(FileLogAgeType.self, forKey: .fileLogAgeType) ?? .days
+        let v13: Bool = try c.decodeIfPresent(Bool.self, forKey: .deleteTorrentContentFiles) ?? false
         self.init(
             locale: v0,
             performanceWarning: v1,
             statusBarExternalIp: v2,
             confirmTorrentDeletion: v3,
-            fileLogEnabled: v4,
-            fileLogPath: v5,
-            fileLogBackupEnabled: v6,
-            fileLogMaxSize: v7,
-            fileLogDeleteOld: v8,
-            fileLogAge: v9,
-            fileLogAgeType: v10,
-            deleteTorrentContentFiles: v11
+            storeSearchJobs: v4,
+            storeSearchJobResults: v5,
+            fileLogEnabled: v6,
+            fileLogPath: v7,
+            fileLogBackupEnabled: v8,
+            fileLogMaxSize: v9,
+            fileLogDeleteOld: v10,
+            fileLogAge: v11,
+            fileLogAgeType: v12,
+            deleteTorrentContentFiles: v13
         )
     }
 }
@@ -3949,7 +3999,7 @@ extension CreatorTask: Codable {
 
 extension DownloadsPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case torrentContentLayout, addToTopOfQueue, addStoppedEnabled, torrentStopCondition, mergeTrackers, autoDeleteMode, preallocateAll, incompleteFilesExt, useUnwantedFolder, autoTmmEnabled, torrentChangedTmmEnabled, savePathChangedTmmEnabled, categoryChangedTmmEnabled, useSubcategories, savePath, tempPathEnabled, tempPath, useCategoryPathsInManualMode, exportDir, exportDirFin, watchedFolders, excludedFileNamesEnabled, excludedFileNames, mailNotificationEnabled, mailNotificationSender, mailNotificationEmail, mailNotificationSmtp, mailNotificationEncryptionType, mailNotificationAuthEnabled, mailNotificationUsername, mailNotificationPassword, autorunOnTorrentAddedEnabled, autorunOnTorrentAddedProgram, autorunEnabled, autorunProgram
+        case torrentContentLayout, addToTopOfQueue, addStoppedEnabled, torrentStopCondition, mergeTrackers, autoDeleteMode, preallocateAll, incompleteFilesExt, useUnwantedFolder, autoTmmEnabled, torrentChangedTmmEnabled, savePathChangedTmmEnabled, categoryChangedTmmEnabled, useSubcategories, savePath, tempPathEnabled, tempPath, useCategoryPathsInManualMode, torrentFilesBackupEnabled, torrentFilesBackupDir, torrentFilesFinishedBackupDirEnabled, torrentFilesFinishedBackupDir, removeTorrentFileBackup, watchedFolders, excludedFileNamesEnabled, excludedFileNames, mailNotificationEnabled, mailNotificationSender, mailNotificationEmail, mailNotificationSmtp, mailNotificationEncryptionType, mailNotificationAuthEnabled, mailNotificationUsername, mailNotificationPassword, autorunOnTorrentAddedEnabled, autorunOnTorrentAddedProgram, autorunEnabled, autorunProgram
     }
 
     static var neoEmpty: DownloadsPrefs {
@@ -3976,23 +4026,26 @@ extension DownloadsPrefs: Codable {
         let v15: Bool = try c.decodeIfPresent(Bool.self, forKey: .tempPathEnabled) ?? false
         let v16: String = try c.decodeIfPresent(String.self, forKey: .tempPath) ?? ""
         let v17: Bool = try c.decodeIfPresent(Bool.self, forKey: .useCategoryPathsInManualMode) ?? false
-        let v18: String = try c.decodeIfPresent(String.self, forKey: .exportDir) ?? ""
-        let v19: String = try c.decodeIfPresent(String.self, forKey: .exportDirFin) ?? ""
-        let v20: [WatchedFolder] = try c.decodeIfPresent([WatchedFolder].self, forKey: .watchedFolders) ?? []
-        let v21: Bool = try c.decodeIfPresent(Bool.self, forKey: .excludedFileNamesEnabled) ?? false
-        let v22: [String] = try c.decodeIfPresent([String].self, forKey: .excludedFileNames) ?? []
-        let v23: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationEnabled) ?? false
-        let v24: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSender) ?? ""
-        let v25: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationEmail) ?? ""
-        let v26: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSmtp) ?? ""
-        let v27: SmtpEncryptionType = try c.decodeIfPresent(SmtpEncryptionType.self, forKey: .mailNotificationEncryptionType) ?? .none
-        let v28: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationAuthEnabled) ?? false
-        let v29: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationUsername) ?? ""
-        let v30: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationPassword) ?? ""
-        let v31: Bool = try c.decodeIfPresent(Bool.self, forKey: .autorunOnTorrentAddedEnabled) ?? false
-        let v32: String = try c.decodeIfPresent(String.self, forKey: .autorunOnTorrentAddedProgram) ?? ""
-        let v33: Bool = try c.decodeIfPresent(Bool.self, forKey: .autorunEnabled) ?? false
-        let v34: String = try c.decodeIfPresent(String.self, forKey: .autorunProgram) ?? ""
+        let v18: Bool = try c.decodeIfPresent(Bool.self, forKey: .torrentFilesBackupEnabled) ?? false
+        let v19: String = try c.decodeIfPresent(String.self, forKey: .torrentFilesBackupDir) ?? ""
+        let v20: Bool = try c.decodeIfPresent(Bool.self, forKey: .torrentFilesFinishedBackupDirEnabled) ?? false
+        let v21: String = try c.decodeIfPresent(String.self, forKey: .torrentFilesFinishedBackupDir) ?? ""
+        let v22: Bool = try c.decodeIfPresent(Bool.self, forKey: .removeTorrentFileBackup) ?? false
+        let v23: [WatchedFolder] = try c.decodeIfPresent([WatchedFolder].self, forKey: .watchedFolders) ?? []
+        let v24: Bool = try c.decodeIfPresent(Bool.self, forKey: .excludedFileNamesEnabled) ?? false
+        let v25: [String] = try c.decodeIfPresent([String].self, forKey: .excludedFileNames) ?? []
+        let v26: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationEnabled) ?? false
+        let v27: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSender) ?? ""
+        let v28: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationEmail) ?? ""
+        let v29: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSmtp) ?? ""
+        let v30: SmtpEncryptionType = try c.decodeIfPresent(SmtpEncryptionType.self, forKey: .mailNotificationEncryptionType) ?? .none
+        let v31: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationAuthEnabled) ?? false
+        let v32: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationUsername) ?? ""
+        let v33: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationPassword) ?? ""
+        let v34: Bool = try c.decodeIfPresent(Bool.self, forKey: .autorunOnTorrentAddedEnabled) ?? false
+        let v35: String = try c.decodeIfPresent(String.self, forKey: .autorunOnTorrentAddedProgram) ?? ""
+        let v36: Bool = try c.decodeIfPresent(Bool.self, forKey: .autorunEnabled) ?? false
+        let v37: String = try c.decodeIfPresent(String.self, forKey: .autorunProgram) ?? ""
         self.init(
             torrentContentLayout: v0,
             addToTopOfQueue: v1,
@@ -4012,23 +4065,26 @@ extension DownloadsPrefs: Codable {
             tempPathEnabled: v15,
             tempPath: v16,
             useCategoryPathsInManualMode: v17,
-            exportDir: v18,
-            exportDirFin: v19,
-            watchedFolders: v20,
-            excludedFileNamesEnabled: v21,
-            excludedFileNames: v22,
-            mailNotificationEnabled: v23,
-            mailNotificationSender: v24,
-            mailNotificationEmail: v25,
-            mailNotificationSmtp: v26,
-            mailNotificationEncryptionType: v27,
-            mailNotificationAuthEnabled: v28,
-            mailNotificationUsername: v29,
-            mailNotificationPassword: v30,
-            autorunOnTorrentAddedEnabled: v31,
-            autorunOnTorrentAddedProgram: v32,
-            autorunEnabled: v33,
-            autorunProgram: v34
+            torrentFilesBackupEnabled: v18,
+            torrentFilesBackupDir: v19,
+            torrentFilesFinishedBackupDirEnabled: v20,
+            torrentFilesFinishedBackupDir: v21,
+            removeTorrentFileBackup: v22,
+            watchedFolders: v23,
+            excludedFileNamesEnabled: v24,
+            excludedFileNames: v25,
+            mailNotificationEnabled: v26,
+            mailNotificationSender: v27,
+            mailNotificationEmail: v28,
+            mailNotificationSmtp: v29,
+            mailNotificationEncryptionType: v30,
+            mailNotificationAuthEnabled: v31,
+            mailNotificationUsername: v32,
+            mailNotificationPassword: v33,
+            autorunOnTorrentAddedEnabled: v34,
+            autorunOnTorrentAddedProgram: v35,
+            autorunEnabled: v36,
+            autorunProgram: v37
         )
     }
 }

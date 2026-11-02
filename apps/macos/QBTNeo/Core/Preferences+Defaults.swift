@@ -18,7 +18,7 @@ extension Preferences {
 extension BehaviorPrefs {
     static let qbtDefaults = BehaviorPrefs(
         locale: "", performanceWarning: false, statusBarExternalIp: false, confirmTorrentDeletion: true,
-        fileLogEnabled: true, fileLogPath: "", fileLogBackupEnabled: true, fileLogMaxSize: 65,
+        storeSearchJobs: false, storeSearchJobResults: false, fileLogEnabled: true, fileLogPath: "", fileLogBackupEnabled: true, fileLogMaxSize: 65,
         fileLogDeleteOld: true, fileLogAge: 1, fileLogAgeType: .months, deleteTorrentContentFiles: false
     )
 }
@@ -30,7 +30,9 @@ extension DownloadsPrefs {
         incompleteFilesExt: false, useUnwantedFolder: false, autoTmmEnabled: false,
         torrentChangedTmmEnabled: true, savePathChangedTmmEnabled: false, categoryChangedTmmEnabled: false,
         useSubcategories: false, savePath: "", tempPathEnabled: false, tempPath: "",
-        useCategoryPathsInManualMode: false, exportDir: "", exportDirFin: "", watchedFolders: [],
+        useCategoryPathsInManualMode: false, torrentFilesBackupEnabled: false, torrentFilesBackupDir: "backup",
+        torrentFilesFinishedBackupDirEnabled: false, torrentFilesFinishedBackupDir: "backup", removeTorrentFileBackup: false,
+        watchedFolders: [],
         excludedFileNamesEnabled: false, excludedFileNames: [], mailNotificationEnabled: false,
         mailNotificationSender: "qBittorrent_notification@example.com", mailNotificationEmail: "",
         mailNotificationSmtp: "smtp.changeme.com", mailNotificationEncryptionType: .smtps,

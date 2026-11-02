@@ -32,6 +32,10 @@ final class AppModel {
     @ObservationIgnored private(set) var client: (any CoreClient)?
     /// The core's preferences (reloaded on `PreferencesChanged`).
     var corePreferences = Preferences.qbtDefaults
+    /// Reads `corePreferences` without keeping the model alive (feature models that outlive a call).
+    var corePreferencesReader: @MainActor () -> Preferences {
+        { [weak self] in self?.corePreferences ?? .qbtDefaults }
+    }
 
     // MARK: Main window presentation state
     var sheet: MainSheet?
@@ -103,7 +107,7 @@ final class AppModel {
             }
         }
         corePreferences = client.preferences()
-        moveLegacyConfirmations()
+        moveLegacyPreferences()
         log.append(contentsOf: client.mainLog(lastKnownId: -1, levels: []))
         phase = .running
         restartRefreshLoop()

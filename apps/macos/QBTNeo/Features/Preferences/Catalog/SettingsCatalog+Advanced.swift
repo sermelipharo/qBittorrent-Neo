@@ -30,7 +30,7 @@ extension SettingsCatalog {
                    \.advanced.saveResumeDataInterval),
             expert("save_statistics_interval", .dataRecovery, String(localized: "Save statistics interval [0: disabled]"),
                    \.advanced.saveStatisticsInterval),
-            expert("BitTorrent/Session/ShutdownTimeout", .dataRecovery, String(localized: "BitTorrent session shutdown timeout [-1: unlimited]"),
+            expert("shutdown_timeout", .dataRecovery, String(localized: "BitTorrent session shutdown timeout [-1: unlimited]"),
                    \.advanced.shutdownTimeout),
         ]
     }

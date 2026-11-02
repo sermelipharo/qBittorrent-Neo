@@ -69,32 +69,6 @@ extension PreferencesModel {
         set { draft.downloads.excludedFileNames = Self.lines(newValue) }
     }
 
-    var exportDirectoryEnabled: Bool {
-        get { exportDirChecked }
-        set {
-            exportDirChecked = newValue
-            if newValue {
-                draft.downloads.exportDir = rememberedPaths["exportDir"] ?? ""
-            } else {
-                rememberedPaths["exportDir"] = draft.downloads.exportDir
-                draft.downloads.exportDir = ""
-            }
-        }
-    }
-
-    var finishedExportDirectoryEnabled: Bool {
-        get { finishedExportDirChecked }
-        set {
-            finishedExportDirChecked = newValue
-            if newValue {
-                draft.downloads.exportDirFin = rememberedPaths["exportDirFin"] ?? ""
-            } else {
-                rememberedPaths["exportDirFin"] = draft.downloads.exportDirFin
-                draft.downloads.exportDirFin = ""
-            }
-        }
-    }
-
     // MARK: Connection ("-1 = unlimited" behind a checkbox)
 
     var maxConnectionsEnabled: Bool {

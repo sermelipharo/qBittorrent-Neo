@@ -4,9 +4,7 @@ import Foundation
 /// cover, stored in `UserDefaults` under qBittorrent's ini keys, plus a few
 /// derived defaults.
 enum FeatureDefaults {
-    // Settings › Search
-    static let storeSearchTabs = "Search/StoreOpenedSearchTabs"
-    static let storeSearchResults = "Search/StoreOpenedSearchTabResults"
+    // Settings › Search ("Store opened tabs" is in the core preferences)
     static let searchHistoryLength = "Search/HistoryLength"
     static let searchHistory = "Search/History"
     static let searchUsesRegex = "SearchTab/UseRegexAsFilteringPattern"

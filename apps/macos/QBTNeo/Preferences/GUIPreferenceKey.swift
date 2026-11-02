@@ -46,6 +46,10 @@ enum GUIPreferenceKey: String, CaseIterable {
     // Kept here before qBittorrent 5.3 put them in the WebAPI; now core preferences, read once to move them.
     case legacyConfirmRemoveAllTags = "Preferences/Advanced/confirmRemoveAllTags"
     case legacyConfirmRemoveTrackerFromAllTorrents = "GUI/ConfirmActions/RemoveTrackerFromAllTorrents"
+    // Search › "Store opened tabs": core preferences since qBittorrent 5.3 (`store_search_jobs`,
+    // `store_search_job_results`, shared with the WebUI's search jobs); read once to move them.
+    case legacyStoreSearchTabs = "Search/StoreOpenedSearchTabs"
+    case legacyStoreSearchResults = "Search/StoreOpenedSearchTabResults"
     case downloadTrackerFavicon = "GUI/DownloadTrackerFavicon"
     case savePathHistoryLength = "AddNewTorrentDialog/SavePathHistoryLength"
     case speedGraphsEnabled = "SpeedWidget/Enabled"

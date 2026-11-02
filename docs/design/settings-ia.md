@@ -400,7 +400,7 @@ text.
 2. **Startup**
    * Open qBit NeoRS at login `[B]` (SMAppService)
    * *At startup, show window:* Normal / Minimized `[B]` (`GUI/StartUpWindowState`)
-   * *Start with all transfers paused* `[A]` (`BitTorrent/Session/StartPaused`)
+   * *Start with all transfers paused* `[A]` (`start_paused`, `BitTorrent/Session/StartPaused`)
      ↳ *Nothing downloads or uploads until you resume.*
 3. **Default App**. Two rows, each a checkmark status or a "Make Default"
    button:
@@ -508,8 +508,9 @@ Inner segments: **Adding · Files · Seeding & Queue**.
 5. **.torrent Files** `[A]`
    * Delete .torrent files afterwards, with "Also when addition is
      cancelled" (`auto_delete_mode`). The data-loss warning is kept.
-   * Copy .torrent files to:
-   * Copy .torrent files for finished downloads to:
+   * Store backup in: (qBittorrent 5.3)
+   * When torrent finished move backup to:
+   * Remove backup when removing torrent
 6. **Extra Trackers** `[A]`
    * Automatically append these trackers to new downloads: (text)
    * Automatically append trackers from URL to new downloads: URL and
@@ -893,8 +894,9 @@ Counts:
 | 27 | `temp_path_enabled` | Downloads › Saving Management | Transfers › Adding › Save Location | B | new: "Keep incomplete downloads in:" |
 | 28 | `temp_path` | Downloads › Saving Management | Transfers › Adding › Save Location | B | new: "Keep incomplete downloads in:" |
 | 29 | `use_category_paths_in_manual_mode` | Downloads › Saving Management | Transfers › Files › Categories & Automatic Mode | A | kept |
-| 30 | `export_dir` | Downloads › Saving Management | Transfers › Adding › .torrent Files | A | kept |
-| 31 | `export_dir_fin` | Downloads › Saving Management | Transfers › Adding › .torrent Files | A | kept |
+| 30 | `torrent_files_backup_enabled`, `torrent_files_backup_dir` (5.3; were `export_dir`) | Downloads › Store backup .torrent file | Transfers › Adding › .torrent Files | A | kept: "Store backup in:" |
+| 31 | `torrent_files_finished_backup_dir_enabled`, `torrent_files_finished_backup_dir` (5.3; were `export_dir_fin`) | Downloads › Store backup .torrent file | Transfers › Adding › .torrent Files | A | kept: "When torrent finished move backup to:" |
+| — | `remove_torrent_file_backup` (5.3) | Downloads › Store backup .torrent file | Transfers › Adding › .torrent Files | A | kept |
 | 32 | `scan_dirs` | Downloads › Automatically add torrents from (legacy API view) | Transfers › Adding › Watched Folders | B | kept (edited through the folder list) |
 | 33 | `excluded_file_names_enabled` | Downloads › Excluded file names | Transfers › Files › Files on Disk | A | kept; editor in a disclosure |
 | 34 | `excluded_file_names` | Downloads › Excluded file names | Transfers › Files › Files on Disk | A | kept; editor in a disclosure |
@@ -1130,10 +1132,10 @@ Keys qBittorrent keeps outside the WebAPI that have a Settings control, plus the
 | `GUI/DownloadTrackerFavicon` | Download tracker's favicon | Advanced › qBittorrent Section | Interface › Sidebar | B | new: "Show tracker icons" |
 | `AddNewTorrentDialog/SavePathHistoryLength` | Save path history length | Advanced › qBittorrent Section | Transfers › Adding › Adding Torrents | A | new: "Remember recent save locations:" |
 | `SpeedWidget/Enabled` | Enable speed graphs | Advanced › qBittorrent Section | Interface › Torrent Details | B | new: "Show speed graphs" |
-| `BitTorrent/Session/StartPaused` | Start BitTorrent session in paused state | Advanced › qBittorrent Section | General › Startup | A | new: "Start with all transfers paused" |
-| `BitTorrent/Session/ShutdownTimeout` | BitTorrent session shutdown timeout [-1: unlimited] | Advanced › qBittorrent Section | Advanced › Data & Recovery | X | kept |
-| `Search/StoreOpenedSearchTabs` | Store opened tabs | Search › Search UI | Search & RSS › Search Tabs | B | new: "Reopen search tabs at launch" |
-| `Search/StoreOpenedSearchTabResults` | Also store search results | Search › Search UI | Search & RSS › Search Tabs | R | kept |
+| `start_paused` (5.3 WebAPI; `BitTorrent/Session/StartPaused`) | Start BitTorrent session in paused state | Advanced › qBittorrent Section | General › Startup | A | new: "Start with all transfers paused" |
+| `shutdown_timeout` (5.3 WebAPI; `BitTorrent/Session/ShutdownTimeout`) | BitTorrent session shutdown timeout [-1: unlimited] | Advanced › qBittorrent Section | Advanced › Data & Recovery | X | kept |
+| `store_search_jobs` (5.3 WebAPI; `Search/StoreSearchJobs`, was GUI-only `Search/StoreOpenedSearchTabs`) | Store opened tabs | Search › Search UI | Search & RSS › Search Tabs | B | new: "Reopen search tabs at launch" |
+| `store_search_job_results` (5.3 WebAPI; `Search/StoreSearchJobResults`, was `Search/StoreOpenedSearchTabResults`) | Also store search results | Search › Search UI | Search & RSS › Search Tabs | R | kept |
 | `Search/HistoryLength` | History length | Search › Search UI | Search & RSS › Search Tabs | A | kept |
 | `Preferences/WebUI/Enabled` | Web User Interface (Remote control) | WebUI › (group) | Remote › (page switch) | B | new: "Allow control from a web browser" |
 | `Settings/ShowAdvanced (new)` | — | — | Advanced › (page switch) | B | new key: "Show advanced settings" |
@@ -1187,7 +1189,7 @@ translation, and their qBittorrent strings stay as a fallback until then.
 | Seeding & Queue | Раздача и очередь | (Transfers segment) |
 | Save Location | Место сохранения | "Saving Management" (part) |
 | Watched Folders | Папки наблюдения | "Automatically add torrents from:" |
-| .torrent Files | Файлы .torrent | "Delete .torrent files afterwards" plus the export paths |
+| .torrent Files | Файлы .torrent | "Delete .torrent files afterwards" plus the backup folders |
 | Extra Trackers | Дополнительные трекеры | "Automatically append these trackers…" |
 | Removing Torrents | Удаление торрентов | Advanced row |
 | Files on Disk | Файлы на диске | unnamed Downloads group |
@@ -1274,7 +1276,7 @@ translation, and their qBittorrent strings stay as a fallback until then.
 | `Preferences/WebUI/Enabled` | Web User Interface (Remote control) | Allow control from a web browser | Разрешить управление через веб-браузер |
 | `SearchEnabled` | (View menu) Search Engine | Show search engine | Показывать поисковик |
 | `GUI/RSSWidget/Enabled` | (View menu) RSS Reader | Show RSS reader | Показывать RSS-ленты |
-| `Search/StoreOpenedSearchTabs` | Store opened tabs | Reopen search tabs at launch | Восстанавливать вкладки поиска при запуске |
+| `store_search_jobs` | Store opened tabs | Reopen search tabs at launch | Восстанавливать вкладки поиска при запуске |
 | `python_executable_path` | Python executable path (may require restart) | Python executable: | Исполняемый файл Python: |
 | — | — | Test Port | Проверить порт |
 | — | — | Connected — peers can reach you | Подключено — пиры могут подключиться к вам |

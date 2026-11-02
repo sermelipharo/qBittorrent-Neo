@@ -18,8 +18,8 @@ struct GeneralPane: View {
                 }
                 .fixedSize()
                 .setting("GUI/StartUpWindowState")
-                Toggle(SettingsCatalog.title("BitTorrent/Session/StartPaused"), isOn: $model.draft.advanced.startPaused)
-                    .setting("BitTorrent/Session/StartPaused")
+                Toggle(SettingsCatalog.title("start_paused"), isOn: $model.draft.advanced.startPaused)
+                    .setting("start_paused")
             }
 
             SettingsGroup(.defaultApp) {

@@ -8,12 +8,15 @@ import Foundation
 enum SettingsCatalogCheck {
     /// `/api/v2/app/preferences` GET keys plus `web_ui_password` (preferences.md Appendix A).
     static let apiKeys: [String] = [
-        "locale", "performance_warning", "status_bar_external_ip", "confirm_torrent_deletion", "file_log_enabled", "file_log_path",
+        "locale", "performance_warning", "status_bar_external_ip", "confirm_torrent_deletion", "store_search_jobs",
+        "store_search_job_results", "file_log_enabled", "file_log_path",
         "file_log_backup_enabled", "file_log_max_size", "file_log_delete_old", "file_log_age", "file_log_age_type",
         "delete_torrent_content_files", "torrent_content_layout", "add_to_top_of_queue", "add_stopped_enabled", "torrent_stop_condition",
         "merge_trackers", "auto_delete_mode", "preallocate_all", "incomplete_files_ext", "use_unwanted_folder", "auto_tmm_enabled",
         "torrent_changed_tmm_enabled", "save_path_changed_tmm_enabled", "category_changed_tmm_enabled", "save_path", "temp_path_enabled",
-        "temp_path", "use_category_paths_in_manual_mode", "export_dir", "export_dir_fin", "scan_dirs", "excluded_file_names_enabled",
+        "temp_path", "use_category_paths_in_manual_mode", "torrent_files_backup_enabled", "torrent_files_backup_dir",
+        "torrent_files_finished_backup_dir_enabled", "torrent_files_finished_backup_dir", "remove_torrent_file_backup", "scan_dirs",
+        "excluded_file_names_enabled",
         "excluded_file_names", "mail_notification_enabled", "mail_notification_sender", "mail_notification_email", "mail_notification_smtp",
         "mail_notification_encryption_type", "mail_notification_auth_enabled", "mail_notification_username", "mail_notification_password",
         "autorun_on_torrent_added_enabled", "autorun_on_torrent_added_program", "autorun_enabled", "autorun_program", "listen_port",
@@ -44,6 +47,7 @@ enum SettingsCatalogCheck {
         "confirm_remove_tracker_from_all_torrents", "recheck_completed_torrents", "app_instance_name", "refresh_interval",
         "resolve_peer_host_names", "resolve_peer_countries", "reannounce_when_address_changed", "enable_embedded_tracker",
         "embedded_tracker_port", "embedded_tracker_port_forwarding", "mark_of_the_web", "ignore_ssl_errors", "python_executable_path",
+        "start_paused", "shutdown_timeout",
         "bdecode_depth_limit", "bdecode_token_limit", "async_io_threads", "hashing_threads", "file_pool_size", "checking_memory_use",
         "disk_cache", "disk_cache_ttl", "disk_queue_size", "disk_io_type", "disk_io_read_mode", "disk_io_write_mode",
         "enable_coalesce_read_write", "enable_piece_extent_affinity", "enable_upload_suggestions", "send_buffer_watermark",
@@ -69,9 +73,8 @@ enum SettingsCatalogCheck {
             .downloadTrackerFavicon, .savePathHistoryLength, .speedGraphsEnabled, .rssEnabled, .searchEnabled, .lockPasswordHash,
         ]
         return gui.map(\.rawValue) + [
-            FeatureDefaults.storeSearchTabs, FeatureDefaults.storeSearchResults, FeatureDefaults.searchHistoryLength,
+            FeatureDefaults.searchHistoryLength,
             SettingsNavigator.showAdvancedKey, "watched_folders.json", "Preferences/WebUI/Enabled",
-            "BitTorrent/Session/StartPaused", "BitTorrent/Session/ShutdownTimeout",
             "LaunchServices (.torrent)", "LaunchServices (magnet:)",
         ]
     }

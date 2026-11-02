@@ -68,8 +68,10 @@ extension SettingsCatalog {
         [
             SettingSpec("Preferences/Search/SearchEnabled", .search, String(localized: "Show search engine"), keywords: ["search plugins"]),
             SettingSpec("system.searchPlugins", .search, String(localized: "Search plugins…"), keywords: ["nova", "engines"]),
-            SettingSpec("Search/StoreOpenedSearchTabs", .search, String(localized: "Reopen search tabs at launch"), keywords: ["store opened tabs"]),
-            SettingSpec("Search/StoreOpenedSearchTabResults", .search, String(localized: "Also store search results"), .revealed),
+            SettingSpec("store_search_jobs", .search, String(localized: "Reopen search tabs at launch"), keywords: ["store opened tabs"],
+                        check: .pref(\.behavior.storeSearchJobs)),
+            SettingSpec("store_search_job_results", .search, String(localized: "Also store search results"), .revealed,
+                        check: .pref(\.behavior.storeSearchJobResults)),
             SettingSpec("Search/HistoryLength", .search, String(localized: "History length"), .advanced,
                         check: .defaults(FeatureDefaults.searchHistoryLength, 50)),
             SettingSpec("python_executable_path", .search, String(localized: "Python executable:"), .advanced,

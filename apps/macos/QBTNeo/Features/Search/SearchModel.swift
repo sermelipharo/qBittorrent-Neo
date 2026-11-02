@@ -21,15 +21,19 @@ final class SearchModel {
     @ObservationIgnored private(set) var client: (any SearchClient)?
     @ObservationIgnored private var store: SearchSessionStore?
     @ObservationIgnored private var isRestoring = false
+    /// The core's preferences ("Store opened tabs" and "Also store search results").
+    @ObservationIgnored private var preferences: @MainActor () -> Preferences = { .qbtDefaults }
 
     init() {
         history = AppDefaults.store.stringArray(forKey: FeatureDefaults.searchHistory) ?? []
     }
 
     /// `profileRoot` locates the saved tabs; nil (snapshots) disables storing.
-    func attach(_ client: (any CoreClient)?, profileRoot: String?) async {
+    /// `preferences` reads the core's current preferences.
+    func attach(_ client: (any CoreClient)?, profileRoot: String?, preferences: @escaping @MainActor () -> Preferences) async {
         guard let client = client as? any SearchClient else { return }
         self.client = client
+        self.preferences = preferences
         if self.store == nil, let profileRoot { store = SearchSessionStore(profileRoot: profileRoot) }
         await reloadPlugins()
         await restoreSession()
@@ -123,8 +127,8 @@ final class SearchModel {
 
     // MARK: Stored session
 
-    private var storesTabs: Bool { AppDefaults.store.bool(forKey: FeatureDefaults.storeSearchTabs) }
-    private var storesResults: Bool { storesTabs && AppDefaults.store.bool(forKey: FeatureDefaults.storeSearchResults) }
+    private var storesTabs: Bool { preferences().behavior.storeSearchJobs }
+    private var storesResults: Bool { storesTabs && preferences().behavior.storeSearchJobResults }
 
     private func adopt(_ tab: SearchTabModel) {
         tab.didStop = { [weak self] tab in self?.storeResults(of: tab) }

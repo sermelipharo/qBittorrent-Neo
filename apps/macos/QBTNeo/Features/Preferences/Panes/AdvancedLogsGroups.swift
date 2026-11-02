@@ -53,13 +53,13 @@ struct AdvancedLogsGroups: View {
             SpinField(title: SettingsCatalog.key("save_statistics_interval"), value: $model.draft.advanced.saveStatisticsInterval,
                       range: 0...Int64(Int32.max), unit: String(localized: "min"), special: .text(String(localized: "0 (disabled)")))
                 .setting("save_statistics_interval")
-            SpinField(title: SettingsCatalog.key("BitTorrent/Session/ShutdownTimeout"), value: $model.draft.advanced.shutdownTimeout,
+            SpinField(title: SettingsCatalog.key("shutdown_timeout"), value: $model.draft.advanced.shutdownTimeout,
                       range: -1...Int64(Int32.max), unit: String(localized: "sec"), special: .text(String(localized: "-1 (unlimited)"), at: -1))
                 .help("""
                     Sets the timeout for the session to be shut down gracefully, at which point it will be forcibly \
                     terminated. Note that this does not apply to the saving resume data time.
                     """)
-                .setting("BitTorrent/Session/ShutdownTimeout")
+                .setting("shutdown_timeout")
         }
     }
 }

@@ -241,6 +241,15 @@ final class GUIPreferences {
         return (values[0], values[1])
     }
 
+    /// The two "Store opened tabs" settings kept here before they became core preferences,
+    /// removed from the defaults once read; nil where none was stored.
+    func takeLegacySearchStorage() -> (tabs: Bool?, results: Bool?) {
+        let keys = [GUIPreferenceKey.legacyStoreSearchTabs, .legacyStoreSearchResults].map(\.rawValue)
+        let values = keys.map { defaults.object(forKey: $0) as? Bool }
+        keys.forEach(defaults.removeObject(forKey:))
+        return (values[0], values[1])
+    }
+
     private func set(_ value: Any, _ key: GUIPreferenceKey) {
         defaults.set(value, forKey: key.rawValue)
     }

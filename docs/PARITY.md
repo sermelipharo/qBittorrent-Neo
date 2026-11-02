@@ -18,7 +18,7 @@ only converts data. "Verified" means exercised against a real session
 | Categories, tags | list, create, edit (save/download paths, share limits and mode), remove, set; tags list/create/delete/add/remove | Done |
 | Global transfer | server state, alternative limits, global limits, speed history | Done, verified |
 | Log | main log (level filter), peer log, clear | Done, verified |
-| Preferences | all 224 fields of the app's `Preferences` record, read and write (only changed fields are written) | Done, verified (read all pages, write speed/BitTorrent/RSS fields) |
+| Preferences | all 233 fields of the app's `Preferences` record, read and write (only changed fields are written), including the 5.3 .torrent backups and stored search jobs | Done, verified (read all pages, write speed/BitTorrent/RSS, backup and search job fields) |
 
 ## Feature clients
 

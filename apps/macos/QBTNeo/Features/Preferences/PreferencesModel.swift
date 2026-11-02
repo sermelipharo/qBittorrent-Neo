@@ -20,15 +20,10 @@ final class PreferencesModel {
     var webUIPassword = ""
     private(set) var passwordMessage: PreferencesNotice?
 
-    /// "Copy .torrent files to:" checkboxes (an empty path means off).
-    var exportDirChecked = false
-    var finishedExportDirChecked = false
-
     @ObservationIgnored private(set) var client: (any CoreClient)?
     /// Values kept while a "-1 = disabled" setting is unchecked.
     @ObservationIgnored var remembered: [String: Int64] = [:]
     @ObservationIgnored var rememberedRatio: Double?
-    @ObservationIgnored var rememberedPaths: [String: String] = [:]
     @ObservationIgnored private var applyTask: Task<Void, Never>?
     static let debounce = Duration.milliseconds(500)
 
@@ -42,7 +37,6 @@ final class PreferencesModel {
         let prefs = await CoreCall.run { client.preferences() }
         applied = prefs
         draft = prefs
-        syncCheckboxes()
         applyTask?.cancel()
         isLoaded = true
     }
@@ -55,15 +49,9 @@ final class PreferencesModel {
         applied = prefs
         if !hasUnappliedEdits {
             draft = prefs
-            syncCheckboxes()
         }
         applyTask?.cancel()
         applyTask = nil
-    }
-
-    private func syncCheckboxes() {
-        exportDirChecked = !draft.downloads.exportDir.isEmpty
-        finishedExportDirChecked = !draft.downloads.exportDirFin.isEmpty
     }
 
     // MARK: Applying

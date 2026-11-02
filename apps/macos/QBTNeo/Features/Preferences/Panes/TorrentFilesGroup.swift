@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Transfers › Adding › .torrent Files (advanced): deleting them after adding
-/// and copying them to export folders.
+/// and keeping backups ("Store backup .torrent file").
 struct TorrentFilesGroup: View {
     @Bindable var model: PreferencesModel
 
@@ -21,17 +21,24 @@ struct TorrentFilesGroup: View {
             }
             .setting("auto_delete_mode")
         } content: {
-            exportRow("export_dir", isOn: $model.exportDirectoryEnabled, path: $model.draft.downloads.exportDir)
-            exportRow("export_dir_fin", isOn: $model.finishedExportDirectoryEnabled, path: $model.draft.downloads.exportDirFin)
+            backupRow("torrent_files_backup_enabled", isOn: $model.draft.downloads.torrentFilesBackupEnabled,
+                      path: $model.draft.downloads.torrentFilesBackupDir)
+            backupRow("torrent_files_finished_backup_dir_enabled", isOn: $model.draft.downloads.torrentFilesFinishedBackupDirEnabled,
+                      path: $model.draft.downloads.torrentFilesFinishedBackupDir)
+            Toggle(SettingsCatalog.title("remove_torrent_file_backup"), isOn: $model.draft.downloads.removeTorrentFileBackup)
+                .setting("remove_torrent_file_backup")
         }
     }
 
-    private func exportRow(_ id: String, isOn: Binding<Bool>, path: Binding<String>) -> some View {
+    /// A relative folder is inside the profile's data folder and is created
+    /// when needed, so it isn't validated.
+    private func backupRow(_ id: String, isOn: Binding<Bool>, path: Binding<String>) -> some View {
         LabeledContent {
             HStack(spacing: Design.Spacing.small) {
                 Toggle(SettingsCatalog.title(id), isOn: isOn)
                     .labelsHidden()
-                PathControl(title: SettingsCatalog.key(id), path: path, panelMessage: String(localized: "Choose export directory"))
+                PathControl(title: SettingsCatalog.key(id), path: path, placeholder: "backup",
+                            panelMessage: String(localized: "Choose backup directory"), validates: false)
                     .disabled(!isOn.wrappedValue)
             }
         } label: {
