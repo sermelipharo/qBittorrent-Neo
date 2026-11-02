@@ -18,6 +18,7 @@
 
 #include <QCoreApplication>
 #include <QPointer>
+#include <QStringList>
 #include <QTranslator>
 
 #include "base/interfaces/iapplication.h"
@@ -63,6 +64,15 @@ namespace Neo
         static void ensureGeoIP();
 
         bool isComponentsReady() const;
+
+        // qBittorrent 5.3's Lua plugins engine runs only while this switch
+        // (a setting of the profile, off by default) is on. Setting it
+        // starts or stops the engine once the components are ready.
+        bool isPluginsEnabled() const;
+        void setPluginsEnabled(bool enabled);
+        // Why the engine refused to start (unsafe folder or file permissions).
+        QStringList pluginsProblems() const;
+        static Path pluginsFolder();
         const StartupConfig &config() const;
         Path defaultProfileRoot() const;
 
@@ -97,6 +107,8 @@ namespace Neo
     signals:
         // Session restored and every component created.
         void componentsReady();
+        // The plugins engine was started or stopped.
+        void pluginsEngineChanged();
 
     private:
         void initializeTranslation();
@@ -104,6 +116,8 @@ namespace Neo
         void torrentFinished(const BitTorrent::Torrent *torrent);
         void sendNotificationEmail(const BitTorrent::Torrent *torrent);
         void runExternalProgram(const QString &programTemplate, const BitTorrent::Torrent *torrent) const;
+        void startPluginsEngine();
+        void stopPluginsEngine();
 
         StartupConfig m_config;
         bool m_componentsReady = false;
@@ -129,5 +143,7 @@ namespace Neo
         SettingValue<int> m_storeFileLoggerAgeType;
         SettingValue<Path> m_storeFileLoggerPath;
         SettingValue<int> m_storeMemoryWorkingSetLimit;
+        SettingValue<bool> m_storePluginsEnabled;
+        QStringList m_pluginsProblems;
     };
 }

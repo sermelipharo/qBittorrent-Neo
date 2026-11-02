@@ -18,6 +18,7 @@ class QTimer;
 namespace Neo
 {
     class NeoAddTorrentManager;
+    class NeoApplication;
 
     QString logLevelName(Log::MsgType type);
     QJsonObject logMessageJson(const Log::Msg &msg);
@@ -38,6 +39,9 @@ namespace Neo
         void attachLogger();
         void attachSession();
         void attachComponents(NeoAddTorrentManager *addManager);
+        // "pluginsChanged" when the plugins engine starts or stops and on its
+        // install/update/uninstall/enable signals.
+        void attachPlugins(NeoApplication *app);
 
         // Coalesces bursts of RSS changes into one "rssUpdated" event.
         void scheduleRssUpdate();

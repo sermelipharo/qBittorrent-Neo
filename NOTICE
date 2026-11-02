@@ -61,6 +61,13 @@ Third-party components linked into the application:
   (bzip2 license), mpdecimal (BSD-2-Clause), Expat (MIT) and libuuid
   (BSD-3-Clause); their license texts ship in Contents/Resources/python/licenses
   (scripts/python-licenses in the sources).
+* Lua 5.5 (https://www.lua.org), MIT License, Copyright (C) 1994-2025
+  Lua.org, PUC-Rio, and LuaBridge 3 (https://github.com/kunitoki/LuaBridge3),
+  MIT License, Copyright 2007-2020 Nathan Reed, Nigel Atkinson, Vinnie
+  Falco, Dmitry Tarakanov, kunitoki and contributors: the copies in
+  qbittorrent/src/base/3rdparty, built for qBittorrent 5.3's Lua plugins
+  engine (src/base/plugins), which the app starts only when plugins are
+  turned on.
 * The free IP to Country Lite database by DB-IP (https://db-ip.com),
   Creative Commons Attribution 4.0 International License, downloaded at run
   time by qBittorrent's GeoIP manager.

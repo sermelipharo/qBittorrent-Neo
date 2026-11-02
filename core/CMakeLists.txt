@@ -36,6 +36,10 @@ include(FeatureOptionsSetup)
 set(GUI OFF CACHE BOOL "Build qBittorrent's Qt Widgets GUI" FORCE)
 feature_option(WEBUI "Enable built-in HTTP server for remote control" ON)
 set(STACKTRACE OFF CACHE BOOL "" FORCE)
+# qBittorrent 5.3's Lua plugins engine (src/base/plugins, Lua 5.5 and
+# LuaBridge from src/base/3rdparty) is always built; the app starts it only
+# while its "Enable plugins" setting is on (NeoApplication).
+set(PLUGINS ON CACHE BOOL "Enable built-in Lua plugins engine" FORCE)
 set(TESTING OFF CACHE BOOL "" FORCE)
 
 include(CheckPackages)
@@ -85,6 +89,7 @@ add_library(qbtneocore SHARED
     src/api_app.cpp
     src/api_creator.cpp
     src/api_log.cpp
+    src/api_plugins.cpp
     src/api_preferences.cpp
     src/api_rss.cpp
     src/api_search.cpp

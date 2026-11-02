@@ -455,6 +455,7 @@ namespace
             {u"sendBufferWatermarkFactor"_s, session->sendBufferWatermarkFactor()},
             {u"connectionSpeed"_s, session->connectionSpeed()},
             {u"webtorrentStunServer"_s, session->getWebTorrentSTUNServer()},
+            {u"pluginsEnabled"_s, app->isPluginsEnabled()},
             {u"seedingOutgoingConnections"_s, session->isSeedingOutgoingConnectionsEnabled()},
             {u"socketSendBufferSize"_s, session->socketSendBufferSize()},
             {u"socketReceiveBufferSize"_s, session->socketReceiveBufferSize()},
@@ -818,6 +819,8 @@ namespace
         s[u"advanced.sendBufferWatermarkFactor"_s] = [session](const QJsonValue &v) { session->setSendBufferWatermarkFactor(toInt(v)); };
         s[u"advanced.connectionSpeed"_s] = [session](const QJsonValue &v) { session->setConnectionSpeed(toInt(v)); };
         s[u"advanced.webtorrentStunServer"_s] = [session](const QJsonValue &v) { session->setWebTorrentSTUNServer(v.toString().trimmed()); };
+        // qBittorrent Neo, not in the WebAPI: starts or stops the plugins engine.
+        s[u"advanced.pluginsEnabled"_s] = [app](const QJsonValue &v) { app->setPluginsEnabled(v.toBool()); };
         s[u"advanced.seedingOutgoingConnections"_s] = [session](const QJsonValue &v) { session->setSeedingOutgoingConnections(v.toBool()); };
         s[u"advanced.socketSendBufferSize"_s] = [session](const QJsonValue &v) { session->setSocketSendBufferSize(toInt(v)); };
         s[u"advanced.socketReceiveBufferSize"_s] = [session](const QJsonValue &v) { session->setSocketReceiveBufferSize(toInt(v)); };

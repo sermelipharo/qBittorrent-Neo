@@ -91,6 +91,7 @@ namespace Neo
     void registerAppApi(Registry &registry);
     void registerCreatorApi(Registry &registry);
     void registerLogApi(Registry &registry);
+    void registerPluginsApi(Registry &registry);
     void registerPreferencesApi(Registry &registry);
     void registerRssApi(Registry &registry);
     void registerSearchApi(Registry &registry);

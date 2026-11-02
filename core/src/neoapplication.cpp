@@ -12,7 +12,12 @@
 
 #include <algorithm>
 
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <QDateTime>
+#include <QDir>
+#include <QFile>
 #include <QLibraryInfo>
 #include <QProcess>
 #include <QStandardPaths>
@@ -28,6 +33,7 @@
 #include "base/net/proxyconfigurationmanager.h"
 #include "base/net/reverseresolution.h"
 #include "base/net/smtpclient.h"
+#include "base/plugins/pluginsengine.h"
 #include "base/preferences.h"
 #include "base/profile.h"
 #include "base/rss/rss_autodownloader.h"
@@ -62,6 +68,38 @@ namespace
     // Default profile root of the app (a CustomProfile, so qBittorrent's own
     // profile of a regular installation is never touched).
     const QString DEFAULT_PROFILE_FOLDER = u"mk.lex.qbittorrentneo"_s;
+
+    // qBittorrent loads every *.lua file of the plugins folder with full
+    // access (programs, e-mail). The engine is not started when the folder
+    // or one of those files could have been written by another user: each
+    // must be owned by the user running the app and not group/world-writable.
+    QStringList unsafePluginsPaths(const Path &folder)
+    {
+        QStringList problems;
+        const uid_t uid = ::geteuid();
+        const auto check = [&problems, uid](const QString &path, const bool isFolder)
+        {
+            struct stat st {};
+            if (::stat(QFile::encodeName(path).constData(), &st) != 0)
+                problems += QCoreApplication::translate("NeoApplication", "Can't read '%1'.").arg(path);
+            else if (isFolder ? !S_ISDIR(st.st_mode) : !S_ISREG(st.st_mode))
+                problems += QCoreApplication::translate("NeoApplication", "'%1' is not a regular file or folder.").arg(path);
+            else if (st.st_uid != uid)
+                problems += QCoreApplication::translate("NeoApplication", "'%1' is not owned by you.").arg(path);
+            else if ((st.st_mode & (S_IWGRP | S_IWOTH)) != 0)
+                problems += QCoreApplication::translate("NeoApplication", "'%1' is writable by other users.").arg(path);
+        };
+
+        check(folder.data(), true);
+        if (!problems.isEmpty())
+            return problems;
+
+        // The same files as PluginsEngine::loadPlugins().
+        const QDir dir {folder.data()};
+        for (const QString &file : dir.entryList({u"*.lua"_s}))
+            check(dir.absoluteFilePath(file), false);
+        return problems;
+    }
 }
 
 // RSS::Session and RSS::AutoDownloader may only be created by a class named
@@ -98,6 +136,7 @@ namespace Neo
         , m_storeFileLoggerAgeType(FILELOGGER_SETTINGS_KEY(u"AgeType"_s))
         , m_storeFileLoggerPath(FILELOGGER_SETTINGS_KEY(u"Path"_s))
         , m_storeMemoryWorkingSetLimit(SETTINGS_KEY(u"MemoryWorkingSetLimit"_s))
+        , m_storePluginsEnabled(u"Neo/PluginsEnabled"_s)
     {
         qRegisterMetaType<Log::Msg>("Log::Msg");
         qRegisterMetaType<Log::Peer>("Log::Peer");
@@ -198,6 +237,11 @@ namespace Neo
 
             m_addTorrentManager = new NeoAddTorrentManager(this, btSession, this);
 
+            // qBittorrent creates the plugins engine here unconditionally;
+            // qBittorrent Neo only while the switch is on.
+            if (isPluginsEnabled())
+                startPluginsEngine();
+
             // qBittorrent creates the geolocation manager here; it is created
             // on first use instead (peer lists), or now if the WebUI, whose
             // peer lists need it too, is enabled.
@@ -228,6 +272,77 @@ namespace Neo
         });
     }
 
+    bool NeoApplication::isPluginsEnabled() const
+    {
+        return m_storePluginsEnabled.get(false);
+    }
+
+    void NeoApplication::setPluginsEnabled(const bool enabled)
+    {
+        if (enabled == isPluginsEnabled())
+            return;
+
+        m_storePluginsEnabled = enabled;
+        if (!m_componentsReady || m_isCleanupRun)
+            return; // started with the other components
+
+        if (enabled)
+            startPluginsEngine();
+        else
+            stopPluginsEngine();
+    }
+
+    QStringList NeoApplication::pluginsProblems() const
+    {
+        return m_pluginsProblems;
+    }
+
+    Path NeoApplication::pluginsFolder()
+    {
+        // PluginsEngine::pluginsPath()
+        return specialFolderLocation(SpecialFolder::Data) / Path(u"plugins"_s);
+    }
+
+    void NeoApplication::startPluginsEngine()
+    {
+        if (PluginsEngine::instance())
+            return;
+
+        // Created owner-only, so that the permission check below passes for
+        // a new profile (qBittorrent creates it with the first install).
+        const Path folder = pluginsFolder();
+        if (!folder.exists() && Utils::Fs::mkpath(folder))
+            QFile::setPermissions(folder.data(), (QFile::ReadOwner | QFile::WriteOwner | QFile::ExeOwner));
+
+        m_pluginsProblems = unsafePluginsPaths(folder);
+        if (!m_pluginsProblems.isEmpty())
+        {
+            for (const QString &problem : asConst(m_pluginsProblems))
+                LogMsg(tr("Plugins were not started. Reason: %1").arg(problem), Log::WARNING);
+        }
+        else
+        {
+            PluginsEngine::initInstance();
+            LogMsg(tr("Plugins engine started. Lua %1, LuaBridge %2.")
+                .arg(PluginsEngine::luaVersion().toString(), PluginsEngine::luaBridgeVersion().toString()));
+        }
+        emit pluginsEngineChanged();
+    }
+
+    void NeoApplication::stopPluginsEngine()
+    {
+        m_pluginsProblems.clear();
+        if (!PluginsEngine::instance())
+        {
+            emit pluginsEngineChanged();
+            return;
+        }
+
+        PluginsEngine::freeInstance();
+        LogMsg(tr("Plugins engine stopped."));
+        emit pluginsEngineChanged();
+    }
+
     void NeoApplication::ensureGeoIP()
     {
         if (!Net::GeoIPManager::instance())
@@ -246,6 +361,8 @@ namespace Neo
         delete m_webui;
         m_webui = nullptr;
 #endif
+
+        PluginsEngine::freeInstance();
 
         ::Application::deleteRss();
 

@@ -15,12 +15,14 @@
 #include "base/bittorrent/torrent.h"
 #include "base/global.h"
 #include "base/logger.h"
+#include "base/plugins/pluginsengine.h"
 #include "base/preferences.h"
 #include "base/rss/rss_feed.h"
 #include "base/rss/rss_folder.h"
 #include "base/rss/rss_session.h"
 #include "addmanager.h"
 #include "jsonutil.h"
+#include "neoapplication.h"
 
 namespace
 {
@@ -158,5 +160,22 @@ namespace Neo
         connect(rss->rootFolder(), &RSS::Item::newArticle, this, schedule);
         connect(rss->rootFolder(), &RSS::Item::articleRead, this, schedule);
         connect(rss->rootFolder(), &RSS::Item::articleAboutToBeRemoved, this, schedule);
+    }
+
+    void EventHub::attachPlugins(NeoApplication *app)
+    {
+        connect(app, &NeoApplication::pluginsEngineChanged, this, [this]
+        {
+            post(u"pluginsChanged"_s);
+            auto *engine = PluginsEngine::instance();
+            if (!engine)
+                return; // its connections went away with it
+
+            const auto changed = [this] { post(u"pluginsChanged"_s); };
+            connect(engine, &PluginsEngine::pluginInstalled, this, changed);
+            connect(engine, &PluginsEngine::pluginUpdated, this, changed);
+            connect(engine, &PluginsEngine::pluginUninstalled, this, changed);
+            connect(engine, &PluginsEngine::pluginEnabledChanged, this, changed);
+        });
     }
 }

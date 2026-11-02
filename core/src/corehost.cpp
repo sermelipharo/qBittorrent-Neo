@@ -134,12 +134,14 @@ namespace Neo
         g_instance = this;
 
         m_events->attachLogger();
+        m_events->attachPlugins(m_app);
         connect(m_app, &NeoApplication::componentsReady, this, &CoreHost::onComponentsReady);
         m_app->startComponents();
 
         registerAppApi(m_registry);
         registerCreatorApi(m_registry);
         registerLogApi(m_registry);
+        registerPluginsApi(m_registry);
         registerPreferencesApi(m_registry);
         registerRssApi(m_registry);
         registerSearchApi(m_registry);
