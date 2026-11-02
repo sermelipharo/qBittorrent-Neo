@@ -66,7 +66,7 @@ enum RSSDescriptionRenderer {
         let port = url.port.map { ":\($0)" } ?? ""
         let base = "\(scheme)://\(host)\(port)/"
         return html.replacingOccurrences(
-            of: #"(<a\s+[^>]*?href\s*=\s*["'])(?!https?:|ftp:|mailto:|#)/?([^"']*)(["'])"#, with: "$1\(base)$2$3",
+            of: #"(<a\s+[^>]*?href\s*=\s*["'])(?!https?:|ftp:|mailto:|magnet:|#)/?([^"']*)(["'])"#, with: "$1\(base)$2$3",
             options: [.regularExpression, .caseInsensitive]
         )
     }

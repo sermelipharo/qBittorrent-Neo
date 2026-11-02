@@ -11,6 +11,17 @@ enum RSSLinkPolicy {
         return isHex && (text.count == 40 || text.count == 64)
     }
 
+    /// A link in an article's text that adds a torrent instead of opening
+    /// (qBittorrent 5.3): a magnet link, or an http(s) URL whose path ends
+    /// in `.torrent`.
+    static func isTorrentLink(_ url: URL) -> Bool {
+        switch url.scheme?.lowercased() {
+        case "magnet": true
+        case "http", "https": url.path(percentEncoded: false).hasSuffix(".torrent")
+        default: false
+        }
+    }
+
     static func isWebURL(_ url: URL) -> Bool {
         let scheme = url.scheme?.lowercased()
         return scheme == "http" || scheme == "https"

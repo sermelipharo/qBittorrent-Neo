@@ -19,6 +19,8 @@ struct RSSWindow: View {
         } detail: {
             RSSArticleView(item: model.currentArticle, showsFeed: model.showsFeedColumn) {
                 if let item = model.currentArticle { model.download([item], app: app) }
+            } addTorrent: { url in
+                app.add(.url(url: url.absoluteString))
             }
         }
         .searchable(text: $model.filter, placement: .toolbar, prompt: "Filter feed items…")

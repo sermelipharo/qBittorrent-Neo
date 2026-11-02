@@ -23,7 +23,8 @@ enum RSSHTMLSanitizer {
 
     /// Link schemes kept in `href`; anything else (javascript:, data:, file:,
     /// custom app schemes) is dropped. Relative links have no scheme.
-    static let allowedSchemes: Set<String> = ["http", "https", "ftp", "mailto"]
+    /// Magnet links are added as torrents by the article view.
+    static let allowedSchemes: Set<String> = ["http", "https", "ftp", "mailto", "magnet"]
 
     static func sanitize(_ html: String) -> String {
         let chars = Array(html.unicodeScalars)
