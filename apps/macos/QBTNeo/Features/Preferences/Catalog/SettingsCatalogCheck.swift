@@ -51,13 +51,15 @@ enum SettingsCatalogCheck {
         "bdecode_depth_limit", "bdecode_token_limit", "async_io_threads", "hashing_threads", "file_pool_size", "checking_memory_use",
         "disk_cache", "disk_cache_ttl", "disk_queue_size", "disk_io_type", "disk_io_read_mode", "disk_io_write_mode",
         "enable_coalesce_read_write", "enable_piece_extent_affinity", "enable_upload_suggestions", "send_buffer_watermark",
-        "send_buffer_low_watermark", "send_buffer_watermark_factor", "connection_speed", "socket_send_buffer_size",
+        "send_buffer_low_watermark", "send_buffer_watermark_factor", "connection_speed", "seeding_outgoing_connections",
+        "socket_send_buffer_size",
         "socket_receive_buffer_size", "socket_backlog_size", "outgoing_ports_min", "outgoing_ports_max", "upnp_lease_duration", "peer_tos",
         "utp_tcp_mixed_mode", "hostname_cache_ttl", "idn_support_enabled", "enable_multi_connections_from_same_ip",
+        "enable_multi_connections_from_same_peer_id",
         "validate_https_tracker_certificate", "ssrf_mitigation", "block_peers_on_privileged_ports", "upload_slots_behavior",
         "upload_choking_algorithm", "announce_to_all_trackers", "announce_to_all_tiers", "announce_ip", "announce_port",
         "max_concurrent_http_announces", "stop_tracker_timeout", "peer_turnover", "peer_turnover_cutoff", "peer_turnover_interval",
-        "request_queue_size", "dht_bootstrap_nodes",
+        "request_queue_size", "max_outstanding_block_requests", "dht_bootstrap_nodes",
     ]
 
     /// GUI-only keys with a Settings control (settings-ia.md §8.2).

@@ -60,6 +60,8 @@ extension SettingsCatalog {
     private static var expertNetwork: [SettingSpec] {
         [
             expert("connection_speed", .networkTuning, String(localized: "Outgoing connections per second"), \.advanced.connectionSpeed),
+            expert("seeding_outgoing_connections", .networkTuning, String(localized: "Allow outgoing connections when seeding"),
+                   \.advanced.seedingOutgoingConnections),
             expert("socket_send_buffer_size", .networkTuning, String(localized: "Socket send buffer size [0: system default]"),
                    \.advanced.socketSendBufferSize),
             expert("socket_receive_buffer_size", .networkTuning, String(localized: "Socket receive buffer size [0: system default]"),
@@ -76,6 +78,9 @@ extension SettingsCatalog {
                    \.advanced.hostnameCacheTtl),
             expert("enable_multi_connections_from_same_ip", .networkTuning,
                    String(localized: "Allow multiple connections from the same IP address"), \.advanced.enableMultiConnectionsFromSameIp),
+            expert("enable_multi_connections_from_same_peer_id", .networkTuning,
+                   String(localized: "Allow multiple connections from the same Peer ID"),
+                   \.advanced.enableMultiConnectionsFromSamePeerId),
             expert("enable_upload_suggestions", .networkTuning, String(localized: "Send upload piece suggestions"),
                    \.advanced.enableUploadSuggestions),
             expert("send_buffer_watermark", .networkTuning, String(localized: "Send buffer watermark"), \.advanced.sendBufferWatermark),
@@ -91,6 +96,8 @@ extension SettingsCatalog {
                    \.advanced.peerTurnoverInterval),
             expert("request_queue_size", .peersUploading, String(localized: "Maximum outstanding requests to a single peer"),
                    \.advanced.requestQueueSize),
+            expert("max_outstanding_block_requests", .peersUploading, String(localized: "Maximum outstanding block requests from a peer"),
+                   \.advanced.maxOutstandingBlockRequests),
         ]
     }
 

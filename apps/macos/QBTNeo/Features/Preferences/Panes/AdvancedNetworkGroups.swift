@@ -7,6 +7,8 @@ struct AdvancedNetworkGroups: View {
     var body: some View {
         SettingsGroup(.networkTuning) {
             spin("connection_speed", $model.draft.advanced.connectionSpeed, 0...Int64(Int32.max))
+            Toggle(SettingsCatalog.title("seeding_outgoing_connections"), isOn: $model.draft.advanced.seedingOutgoingConnections)
+                .setting("seeding_outgoing_connections")
             spin("socket_send_buffer_size", $model.socketSendBufferKiB, 0...Int64(Int32.max), unit: UnitFormatter.kib,
                  special: .text(String(localized: "0 (system default)")), wide: true)
             spin("socket_receive_buffer_size", $model.socketReceiveBufferKiB, 0...Int64(Int32.max), unit: UnitFormatter.kib,
@@ -24,6 +26,9 @@ struct AdvancedNetworkGroups: View {
             spin("hostname_cache_ttl", $model.draft.advanced.hostnameCacheTtl, 0...Int64(Int32.max), unit: "s")
             Toggle(SettingsCatalog.title("enable_multi_connections_from_same_ip"), isOn: $model.draft.advanced.enableMultiConnectionsFromSameIp)
                 .setting("enable_multi_connections_from_same_ip")
+            Toggle(SettingsCatalog.title("enable_multi_connections_from_same_peer_id"),
+                   isOn: $model.draft.advanced.enableMultiConnectionsFromSamePeerId)
+                .setting("enable_multi_connections_from_same_peer_id")
             Toggle(SettingsCatalog.title("enable_upload_suggestions"), isOn: $model.draft.advanced.enableUploadSuggestions)
                 .setting("enable_upload_suggestions")
             spin("send_buffer_watermark", $model.draft.advanced.sendBufferWatermark, 1...Int64(Int32.max), unit: UnitFormatter.kib)
@@ -44,6 +49,7 @@ struct AdvancedNetworkGroups: View {
             spin("peer_turnover_cutoff", $model.draft.advanced.peerTurnoverCutoff, 0...100, unit: "%")
             spin("peer_turnover_interval", $model.draft.advanced.peerTurnoverInterval, 30...3_600, unit: "s")
             spin("request_queue_size", $model.draft.advanced.requestQueueSize, 1...Int64(Int32.max))
+            spin("max_outstanding_block_requests", $model.draft.advanced.maxOutstandingBlockRequests, 1...Int64(Int32.max))
         }
 
         SettingsGroup(.trackersAnnouncing) {

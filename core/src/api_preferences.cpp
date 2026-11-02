@@ -454,6 +454,8 @@ namespace
             {u"sendBufferLowWatermark"_s, session->sendBufferLowWatermark()},
             {u"sendBufferWatermarkFactor"_s, session->sendBufferWatermarkFactor()},
             {u"connectionSpeed"_s, session->connectionSpeed()},
+            {u"webtorrentStunServer"_s, session->getWebTorrentSTUNServer()},
+            {u"seedingOutgoingConnections"_s, session->isSeedingOutgoingConnectionsEnabled()},
             {u"socketSendBufferSize"_s, session->socketSendBufferSize()},
             {u"socketReceiveBufferSize"_s, session->socketReceiveBufferSize()},
             {u"socketBacklogSize"_s, session->socketBacklogSize()},
@@ -465,6 +467,7 @@ namespace
             {u"hostnameCacheTtl"_s, session->hostnameCacheTTL()},
             {u"idnSupportEnabled"_s, session->isIDNSupportEnabled()},
             {u"enableMultiConnectionsFromSameIp"_s, session->multiConnectionsPerIpEnabled()},
+            {u"enableMultiConnectionsFromSamePeerId"_s, session->multiConnectionsPerPeerIDEnabled()},
             {u"validateHttpsTrackerCertificate"_s, session->validateHTTPSTrackerCertificate()},
             {u"ssrfMitigation"_s, session->isSSRFMitigationEnabled()},
             {u"blockPeersOnPrivilegedPorts"_s, session->blockPeersOnPrivilegedPorts()},
@@ -480,6 +483,7 @@ namespace
             {u"peerTurnoverCutoff"_s, session->peerTurnoverCutoff()},
             {u"peerTurnoverInterval"_s, session->peerTurnoverInterval()},
             {u"requestQueueSize"_s, session->requestQueueSize()},
+            {u"maxOutstandingBlockRequests"_s, session->maxOutstandingBlockRequests()},
             {u"dhtBootstrapNodes"_s, session->getDHTBootstrapNodes()}
         };
     }
@@ -813,6 +817,8 @@ namespace
         s[u"advanced.sendBufferLowWatermark"_s] = [session](const QJsonValue &v) { session->setSendBufferLowWatermark(toInt(v)); };
         s[u"advanced.sendBufferWatermarkFactor"_s] = [session](const QJsonValue &v) { session->setSendBufferWatermarkFactor(toInt(v)); };
         s[u"advanced.connectionSpeed"_s] = [session](const QJsonValue &v) { session->setConnectionSpeed(toInt(v)); };
+        s[u"advanced.webtorrentStunServer"_s] = [session](const QJsonValue &v) { session->setWebTorrentSTUNServer(v.toString().trimmed()); };
+        s[u"advanced.seedingOutgoingConnections"_s] = [session](const QJsonValue &v) { session->setSeedingOutgoingConnections(v.toBool()); };
         s[u"advanced.socketSendBufferSize"_s] = [session](const QJsonValue &v) { session->setSocketSendBufferSize(toInt(v)); };
         s[u"advanced.socketReceiveBufferSize"_s] = [session](const QJsonValue &v) { session->setSocketReceiveBufferSize(toInt(v)); };
         s[u"advanced.socketBacklogSize"_s] = [session](const QJsonValue &v) { session->setSocketBacklogSize(toInt(v)); };
@@ -824,6 +830,7 @@ namespace
         s[u"advanced.hostnameCacheTtl"_s] = [session](const QJsonValue &v) { session->setHostnameCacheTTL(toInt(v)); };
         s[u"advanced.idnSupportEnabled"_s] = [session](const QJsonValue &v) { session->setIDNSupportEnabled(v.toBool()); };
         s[u"advanced.enableMultiConnectionsFromSameIp"_s] = [session](const QJsonValue &v) { session->setMultiConnectionsPerIpEnabled(v.toBool()); };
+        s[u"advanced.enableMultiConnectionsFromSamePeerId"_s] = [session](const QJsonValue &v) { session->setMultiConnectionsPerPeerIDEnabled(v.toBool()); };
         s[u"advanced.validateHttpsTrackerCertificate"_s] = [session](const QJsonValue &v) { session->setValidateHTTPSTrackerCertificate(v.toBool()); };
         s[u"advanced.ssrfMitigation"_s] = [session](const QJsonValue &v) { session->setSSRFMitigationEnabled(v.toBool()); };
         s[u"advanced.blockPeersOnPrivilegedPorts"_s] = [session](const QJsonValue &v) { session->setBlockPeersOnPrivilegedPorts(v.toBool()); };
@@ -843,6 +850,7 @@ namespace
         s[u"advanced.peerTurnoverCutoff"_s] = [session](const QJsonValue &v) { session->setPeerTurnoverCutoff(toInt(v)); };
         s[u"advanced.peerTurnoverInterval"_s] = [session](const QJsonValue &v) { session->setPeerTurnoverInterval(toInt(v)); };
         s[u"advanced.requestQueueSize"_s] = [session](const QJsonValue &v) { session->setRequestQueueSize(toInt(v)); };
+        s[u"advanced.maxOutstandingBlockRequests"_s] = [session](const QJsonValue &v) { session->setMaxOutstandingBlockRequests(toInt(v)); };
         s[u"advanced.dhtBootstrapNodes"_s] = [session](const QJsonValue &v) { session->setDHTBootstrapNodes(v.toString()); };
         return s;
     }

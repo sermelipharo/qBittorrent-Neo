@@ -29038,6 +29038,26 @@
         }
       }
     },
+    "Allow multiple connections from the same Peer ID": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешать несколько соединений с одного ID пира"
+          }
+        }
+      }
+    },
+    "Allow outgoing connections when seeding": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешать исходящие соединения при раздаче"
+          }
+        }
+      }
+    },
     "Also delete .torrent files whose addition was cancelled": {
       "localizations": {
         "ar": {
@@ -164533,6 +164553,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "每個 torrent 上傳通道的最大數："
+          }
+        }
+      }
+    },
+    "Maximum outstanding block requests from a peer": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Максимум нерешённых запросов блоков от пира"
           }
         }
       }

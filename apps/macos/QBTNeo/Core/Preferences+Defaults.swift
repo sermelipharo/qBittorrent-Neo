@@ -115,14 +115,17 @@ extension AdvancedPrefs {
         diskQueueSize: 100 * 1024 * 1024, diskIoType: .default, diskIoReadMode: .enableOsCache,
         diskIoWriteMode: .enableOsCache, enableCoalesceReadWrite: false, enablePieceExtentAffinity: false,
         enableUploadSuggestions: false, sendBufferWatermark: 500, sendBufferLowWatermark: 10,
-        sendBufferWatermarkFactor: 50, connectionSpeed: 30, socketSendBufferSize: 0, socketReceiveBufferSize: 0,
+        sendBufferWatermarkFactor: 50, connectionSpeed: 30, seedingOutgoingConnections: true, socketSendBufferSize: 0, socketReceiveBufferSize: 0,
         socketBacklogSize: 30, outgoingPortsMin: 0, outgoingPortsMax: 0, upnpLeaseDuration: 0, peerTos: 1,
         utpTcpMixedMode: .preferTcp, hostnameCacheTtl: 1200, idnSupportEnabled: false,
-        enableMultiConnectionsFromSameIp: false, validateHttpsTrackerCertificate: true, ssrfMitigation: true,
+        enableMultiConnectionsFromSameIp: false, enableMultiConnectionsFromSamePeerId: false,
+        validateHttpsTrackerCertificate: true, ssrfMitigation: true,
         blockPeersOnPrivilegedPorts: false, uploadSlotsBehavior: .fixedSlots,
         uploadChokingAlgorithm: .fastestUpload, announceToAllTrackers: false, announceToAllTiers: true,
         announceIp: "", announcePort: 0, maxConcurrentHttpAnnounces: 50, stopTrackerTimeout: 2,
         peerTurnover: 4, peerTurnoverCutoff: 90, peerTurnoverInterval: 300, requestQueueSize: 500,
-        dhtBootstrapNodes: "dht.libtorrent.org:25401, dht.transmissionbt.com:6881, router.bittorrent.com:6881"
+        maxOutstandingBlockRequests: 2000,
+        dhtBootstrapNodes: "dht.libtorrent.org:25401, dht.transmissionbt.com:6881, router.bittorrent.com:6881",
+        webtorrentStunServer: "stun.l.google.com:19302"
     )
 }

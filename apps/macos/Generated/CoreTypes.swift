@@ -216,6 +216,11 @@ public struct AdvancedPrefs: Equatable, Hashable {
      */
     public var connectionSpeed: Int64
     /**
+     * Finished torrents make outgoing peer connections (libtorrent
+     * `seeding_outgoing_connections`).
+     */
+    public var seedingOutgoingConnections: Bool
+    /**
      * Bytes, 0 = system default.
      */
     public var socketSendBufferSize: Int64
@@ -232,6 +237,10 @@ public struct AdvancedPrefs: Equatable, Hashable {
     public var hostnameCacheTtl: Int64
     public var idnSupportEnabled: Bool
     public var enableMultiConnectionsFromSameIp: Bool
+    /**
+     * libtorrent `allow_multiple_connections_per_pid`.
+     */
+    public var enableMultiConnectionsFromSamePeerId: Bool
     public var validateHttpsTrackerCertificate: Bool
     public var ssrfMitigation: Bool
     public var blockPeersOnPrivilegedPorts: Bool
@@ -260,9 +269,18 @@ public struct AdvancedPrefs: Equatable, Hashable {
     public var peerTurnoverInterval: Int64
     public var requestQueueSize: Int64
     /**
+     * Queued block requests accepted from one peer (libtorrent
+     * `max_allowed_in_request_queue`).
+     */
+    public var maxOutstandingBlockRequests: Int64
+    /**
      * Comma-separated `host:port`.
      */
     public var dhtBootstrapNodes: String
+    /**
+     * Stored for WebAPI clients; the engine has no WebTorrent.
+     */
+    public var webtorrentStunServer: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -316,11 +334,18 @@ public struct AdvancedPrefs: Equatable, Hashable {
          * Outgoing connections per second.
          */connectionSpeed: Int64,
         /**
+         * Finished torrents make outgoing peer connections (libtorrent
+         * `seeding_outgoing_connections`).
+         */seedingOutgoingConnections: Bool,
+        /**
          * Bytes, 0 = system default.
          */socketSendBufferSize: Int64, socketReceiveBufferSize: Int64, socketBacklogSize: Int64, outgoingPortsMin: Int64, outgoingPortsMax: Int64,
         /**
          * Seconds, 0 = permanent.
-         */upnpLeaseDuration: Int64, peerTos: Int64, utpTcpMixedMode: UtpMixedMode, hostnameCacheTtl: Int64, idnSupportEnabled: Bool, enableMultiConnectionsFromSameIp: Bool, validateHttpsTrackerCertificate: Bool, ssrfMitigation: Bool, blockPeersOnPrivilegedPorts: Bool, uploadSlotsBehavior: UploadSlotsBehavior, uploadChokingAlgorithm: UploadChokingAlgorithm, announceToAllTrackers: Bool, announceToAllTiers: Bool, announceIp: String, announcePort: Int64, maxConcurrentHttpAnnounces: Int64,
+         */upnpLeaseDuration: Int64, peerTos: Int64, utpTcpMixedMode: UtpMixedMode, hostnameCacheTtl: Int64, idnSupportEnabled: Bool, enableMultiConnectionsFromSameIp: Bool,
+        /**
+         * libtorrent `allow_multiple_connections_per_pid`.
+         */enableMultiConnectionsFromSamePeerId: Bool, validateHttpsTrackerCertificate: Bool, ssrfMitigation: Bool, blockPeersOnPrivilegedPorts: Bool, uploadSlotsBehavior: UploadSlotsBehavior, uploadChokingAlgorithm: UploadChokingAlgorithm, announceToAllTrackers: Bool, announceToAllTiers: Bool, announceIp: String, announcePort: Int64, maxConcurrentHttpAnnounces: Int64,
         /**
          * Seconds, 0 = disabled.
          */stopTrackerTimeout: Int64,
@@ -334,8 +359,15 @@ public struct AdvancedPrefs: Equatable, Hashable {
          * Seconds.
          */peerTurnoverInterval: Int64, requestQueueSize: Int64,
         /**
+         * Queued block requests accepted from one peer (libtorrent
+         * `max_allowed_in_request_queue`).
+         */maxOutstandingBlockRequests: Int64,
+        /**
          * Comma-separated `host:port`.
-         */dhtBootstrapNodes: String) {
+         */dhtBootstrapNodes: String,
+        /**
+         * Stored for WebAPI clients; the engine has no WebTorrent.
+         */webtorrentStunServer: String) {
         self.resumeDataStorageType = resumeDataStorageType
         self.torrentContentRemoveOption = torrentContentRemoveOption
         self.memoryWorkingSetLimit = memoryWorkingSetLimit
@@ -381,6 +413,7 @@ public struct AdvancedPrefs: Equatable, Hashable {
         self.sendBufferLowWatermark = sendBufferLowWatermark
         self.sendBufferWatermarkFactor = sendBufferWatermarkFactor
         self.connectionSpeed = connectionSpeed
+        self.seedingOutgoingConnections = seedingOutgoingConnections
         self.socketSendBufferSize = socketSendBufferSize
         self.socketReceiveBufferSize = socketReceiveBufferSize
         self.socketBacklogSize = socketBacklogSize
@@ -392,6 +425,7 @@ public struct AdvancedPrefs: Equatable, Hashable {
         self.hostnameCacheTtl = hostnameCacheTtl
         self.idnSupportEnabled = idnSupportEnabled
         self.enableMultiConnectionsFromSameIp = enableMultiConnectionsFromSameIp
+        self.enableMultiConnectionsFromSamePeerId = enableMultiConnectionsFromSamePeerId
         self.validateHttpsTrackerCertificate = validateHttpsTrackerCertificate
         self.ssrfMitigation = ssrfMitigation
         self.blockPeersOnPrivilegedPorts = blockPeersOnPrivilegedPorts
@@ -407,7 +441,9 @@ public struct AdvancedPrefs: Equatable, Hashable {
         self.peerTurnoverCutoff = peerTurnoverCutoff
         self.peerTurnoverInterval = peerTurnoverInterval
         self.requestQueueSize = requestQueueSize
+        self.maxOutstandingBlockRequests = maxOutstandingBlockRequests
         self.dhtBootstrapNodes = dhtBootstrapNodes
+        self.webtorrentStunServer = webtorrentStunServer
     }
 
 }
@@ -3563,7 +3599,7 @@ extension AddTorrentParams: Codable {
 
 extension AdvancedPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, confirmRemoveAllTags, confirmRemoveTrackerFromAllTorrents, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, dhtBootstrapNodes
+        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, confirmRemoveAllTags, confirmRemoveTrackerFromAllTorrents, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, seedingOutgoingConnections, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, enableMultiConnectionsFromSamePeerId, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, maxOutstandingBlockRequests, dhtBootstrapNodes, webtorrentStunServer
     }
 
     static var neoEmpty: AdvancedPrefs {
@@ -3582,68 +3618,72 @@ extension AdvancedPrefs: Codable {
         let v7: Int64 = try c.decodeIfPresent(Int64.self, forKey: .saveStatisticsInterval) ?? 0
         let v8: Int64 = try c.decodeIfPresent(Int64.self, forKey: .torrentFileSizeLimit) ?? 0
         let v9: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmTorrentRecheck) ?? false
-        let v9a: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveAllTags) ?? true
-        let v9b: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveTrackerFromAllTorrents) ?? true
-        let v10: Bool = try c.decodeIfPresent(Bool.self, forKey: .recheckCompletedTorrents) ?? false
-        let v11: String = try c.decodeIfPresent(String.self, forKey: .appInstanceName) ?? ""
-        let v12: Int64 = try c.decodeIfPresent(Int64.self, forKey: .refreshInterval) ?? 0
-        let v13: Bool = try c.decodeIfPresent(Bool.self, forKey: .resolvePeerHostNames) ?? false
-        let v14: Bool = try c.decodeIfPresent(Bool.self, forKey: .resolvePeerCountries) ?? false
-        let v15: Bool = try c.decodeIfPresent(Bool.self, forKey: .reannounceWhenAddressChanged) ?? false
-        let v16: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableEmbeddedTracker) ?? false
-        let v17: Int64 = try c.decodeIfPresent(Int64.self, forKey: .embeddedTrackerPort) ?? 0
-        let v18: Bool = try c.decodeIfPresent(Bool.self, forKey: .embeddedTrackerPortForwarding) ?? false
-        let v19: Bool = try c.decodeIfPresent(Bool.self, forKey: .markOfTheWeb) ?? false
-        let v20: Bool = try c.decodeIfPresent(Bool.self, forKey: .ignoreSslErrors) ?? false
-        let v21: String = try c.decodeIfPresent(String.self, forKey: .pythonExecutablePath) ?? ""
-        let v22: Bool = try c.decodeIfPresent(Bool.self, forKey: .startPaused) ?? false
-        let v23: Int64 = try c.decodeIfPresent(Int64.self, forKey: .shutdownTimeout) ?? 0
-        let v24: Int64 = try c.decodeIfPresent(Int64.self, forKey: .bdecodeDepthLimit) ?? 0
-        let v25: Int64 = try c.decodeIfPresent(Int64.self, forKey: .bdecodeTokenLimit) ?? 0
-        let v26: Int64 = try c.decodeIfPresent(Int64.self, forKey: .asyncIoThreads) ?? 0
-        let v27: Int64 = try c.decodeIfPresent(Int64.self, forKey: .hashingThreads) ?? 0
-        let v28: Int64 = try c.decodeIfPresent(Int64.self, forKey: .filePoolSize) ?? 0
-        let v29: Int64 = try c.decodeIfPresent(Int64.self, forKey: .checkingMemoryUse) ?? 0
-        let v30: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskCache) ?? 0
-        let v31: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskCacheTtl) ?? 0
-        let v32: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskQueueSize) ?? 0
-        let v33: DiskIoType = try c.decodeIfPresent(DiskIoType.self, forKey: .diskIoType) ?? .`default`
-        let v34: DiskIoReadMode = try c.decodeIfPresent(DiskIoReadMode.self, forKey: .diskIoReadMode) ?? .disableOsCache
-        let v35: DiskIoWriteMode = try c.decodeIfPresent(DiskIoWriteMode.self, forKey: .diskIoWriteMode) ?? .disableOsCache
-        let v36: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableCoalesceReadWrite) ?? false
-        let v37: Bool = try c.decodeIfPresent(Bool.self, forKey: .enablePieceExtentAffinity) ?? false
-        let v38: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableUploadSuggestions) ?? false
-        let v39: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferWatermark) ?? 0
-        let v40: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferLowWatermark) ?? 0
-        let v41: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferWatermarkFactor) ?? 0
-        let v42: Int64 = try c.decodeIfPresent(Int64.self, forKey: .connectionSpeed) ?? 0
-        let v43: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketSendBufferSize) ?? 0
-        let v44: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketReceiveBufferSize) ?? 0
-        let v45: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketBacklogSize) ?? 0
-        let v46: Int64 = try c.decodeIfPresent(Int64.self, forKey: .outgoingPortsMin) ?? 0
-        let v47: Int64 = try c.decodeIfPresent(Int64.self, forKey: .outgoingPortsMax) ?? 0
-        let v48: Int64 = try c.decodeIfPresent(Int64.self, forKey: .upnpLeaseDuration) ?? 0
-        let v49: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTos) ?? 0
-        let v50: UtpMixedMode = try c.decodeIfPresent(UtpMixedMode.self, forKey: .utpTcpMixedMode) ?? .preferTcp
-        let v51: Int64 = try c.decodeIfPresent(Int64.self, forKey: .hostnameCacheTtl) ?? 0
-        let v52: Bool = try c.decodeIfPresent(Bool.self, forKey: .idnSupportEnabled) ?? false
-        let v53: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableMultiConnectionsFromSameIp) ?? false
-        let v54: Bool = try c.decodeIfPresent(Bool.self, forKey: .validateHttpsTrackerCertificate) ?? false
-        let v55: Bool = try c.decodeIfPresent(Bool.self, forKey: .ssrfMitigation) ?? false
-        let v56: Bool = try c.decodeIfPresent(Bool.self, forKey: .blockPeersOnPrivilegedPorts) ?? false
-        let v57: UploadSlotsBehavior = try c.decodeIfPresent(UploadSlotsBehavior.self, forKey: .uploadSlotsBehavior) ?? .fixedSlots
-        let v58: UploadChokingAlgorithm = try c.decodeIfPresent(UploadChokingAlgorithm.self, forKey: .uploadChokingAlgorithm) ?? .roundRobin
-        let v59: Bool = try c.decodeIfPresent(Bool.self, forKey: .announceToAllTrackers) ?? false
-        let v60: Bool = try c.decodeIfPresent(Bool.self, forKey: .announceToAllTiers) ?? false
-        let v61: String = try c.decodeIfPresent(String.self, forKey: .announceIp) ?? ""
-        let v62: Int64 = try c.decodeIfPresent(Int64.self, forKey: .announcePort) ?? 0
-        let v63: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxConcurrentHttpAnnounces) ?? 0
-        let v64: Int64 = try c.decodeIfPresent(Int64.self, forKey: .stopTrackerTimeout) ?? 0
-        let v65: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnover) ?? 0
-        let v66: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnoverCutoff) ?? 0
-        let v67: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnoverInterval) ?? 0
-        let v68: Int64 = try c.decodeIfPresent(Int64.self, forKey: .requestQueueSize) ?? 0
-        let v69: String = try c.decodeIfPresent(String.self, forKey: .dhtBootstrapNodes) ?? ""
+        let v10: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveAllTags) ?? false
+        let v11: Bool = try c.decodeIfPresent(Bool.self, forKey: .confirmRemoveTrackerFromAllTorrents) ?? false
+        let v12: Bool = try c.decodeIfPresent(Bool.self, forKey: .recheckCompletedTorrents) ?? false
+        let v13: String = try c.decodeIfPresent(String.self, forKey: .appInstanceName) ?? ""
+        let v14: Int64 = try c.decodeIfPresent(Int64.self, forKey: .refreshInterval) ?? 0
+        let v15: Bool = try c.decodeIfPresent(Bool.self, forKey: .resolvePeerHostNames) ?? false
+        let v16: Bool = try c.decodeIfPresent(Bool.self, forKey: .resolvePeerCountries) ?? false
+        let v17: Bool = try c.decodeIfPresent(Bool.self, forKey: .reannounceWhenAddressChanged) ?? false
+        let v18: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableEmbeddedTracker) ?? false
+        let v19: Int64 = try c.decodeIfPresent(Int64.self, forKey: .embeddedTrackerPort) ?? 0
+        let v20: Bool = try c.decodeIfPresent(Bool.self, forKey: .embeddedTrackerPortForwarding) ?? false
+        let v21: Bool = try c.decodeIfPresent(Bool.self, forKey: .markOfTheWeb) ?? false
+        let v22: Bool = try c.decodeIfPresent(Bool.self, forKey: .ignoreSslErrors) ?? false
+        let v23: String = try c.decodeIfPresent(String.self, forKey: .pythonExecutablePath) ?? ""
+        let v24: Bool = try c.decodeIfPresent(Bool.self, forKey: .startPaused) ?? false
+        let v25: Int64 = try c.decodeIfPresent(Int64.self, forKey: .shutdownTimeout) ?? 0
+        let v26: Int64 = try c.decodeIfPresent(Int64.self, forKey: .bdecodeDepthLimit) ?? 0
+        let v27: Int64 = try c.decodeIfPresent(Int64.self, forKey: .bdecodeTokenLimit) ?? 0
+        let v28: Int64 = try c.decodeIfPresent(Int64.self, forKey: .asyncIoThreads) ?? 0
+        let v29: Int64 = try c.decodeIfPresent(Int64.self, forKey: .hashingThreads) ?? 0
+        let v30: Int64 = try c.decodeIfPresent(Int64.self, forKey: .filePoolSize) ?? 0
+        let v31: Int64 = try c.decodeIfPresent(Int64.self, forKey: .checkingMemoryUse) ?? 0
+        let v32: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskCache) ?? 0
+        let v33: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskCacheTtl) ?? 0
+        let v34: Int64 = try c.decodeIfPresent(Int64.self, forKey: .diskQueueSize) ?? 0
+        let v35: DiskIoType = try c.decodeIfPresent(DiskIoType.self, forKey: .diskIoType) ?? .`default`
+        let v36: DiskIoReadMode = try c.decodeIfPresent(DiskIoReadMode.self, forKey: .diskIoReadMode) ?? .disableOsCache
+        let v37: DiskIoWriteMode = try c.decodeIfPresent(DiskIoWriteMode.self, forKey: .diskIoWriteMode) ?? .disableOsCache
+        let v38: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableCoalesceReadWrite) ?? false
+        let v39: Bool = try c.decodeIfPresent(Bool.self, forKey: .enablePieceExtentAffinity) ?? false
+        let v40: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableUploadSuggestions) ?? false
+        let v41: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferWatermark) ?? 0
+        let v42: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferLowWatermark) ?? 0
+        let v43: Int64 = try c.decodeIfPresent(Int64.self, forKey: .sendBufferWatermarkFactor) ?? 0
+        let v44: Int64 = try c.decodeIfPresent(Int64.self, forKey: .connectionSpeed) ?? 0
+        let v45: Bool = try c.decodeIfPresent(Bool.self, forKey: .seedingOutgoingConnections) ?? false
+        let v46: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketSendBufferSize) ?? 0
+        let v47: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketReceiveBufferSize) ?? 0
+        let v48: Int64 = try c.decodeIfPresent(Int64.self, forKey: .socketBacklogSize) ?? 0
+        let v49: Int64 = try c.decodeIfPresent(Int64.self, forKey: .outgoingPortsMin) ?? 0
+        let v50: Int64 = try c.decodeIfPresent(Int64.self, forKey: .outgoingPortsMax) ?? 0
+        let v51: Int64 = try c.decodeIfPresent(Int64.self, forKey: .upnpLeaseDuration) ?? 0
+        let v52: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTos) ?? 0
+        let v53: UtpMixedMode = try c.decodeIfPresent(UtpMixedMode.self, forKey: .utpTcpMixedMode) ?? .preferTcp
+        let v54: Int64 = try c.decodeIfPresent(Int64.self, forKey: .hostnameCacheTtl) ?? 0
+        let v55: Bool = try c.decodeIfPresent(Bool.self, forKey: .idnSupportEnabled) ?? false
+        let v56: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableMultiConnectionsFromSameIp) ?? false
+        let v57: Bool = try c.decodeIfPresent(Bool.self, forKey: .enableMultiConnectionsFromSamePeerId) ?? false
+        let v58: Bool = try c.decodeIfPresent(Bool.self, forKey: .validateHttpsTrackerCertificate) ?? false
+        let v59: Bool = try c.decodeIfPresent(Bool.self, forKey: .ssrfMitigation) ?? false
+        let v60: Bool = try c.decodeIfPresent(Bool.self, forKey: .blockPeersOnPrivilegedPorts) ?? false
+        let v61: UploadSlotsBehavior = try c.decodeIfPresent(UploadSlotsBehavior.self, forKey: .uploadSlotsBehavior) ?? .fixedSlots
+        let v62: UploadChokingAlgorithm = try c.decodeIfPresent(UploadChokingAlgorithm.self, forKey: .uploadChokingAlgorithm) ?? .roundRobin
+        let v63: Bool = try c.decodeIfPresent(Bool.self, forKey: .announceToAllTrackers) ?? false
+        let v64: Bool = try c.decodeIfPresent(Bool.self, forKey: .announceToAllTiers) ?? false
+        let v65: String = try c.decodeIfPresent(String.self, forKey: .announceIp) ?? ""
+        let v66: Int64 = try c.decodeIfPresent(Int64.self, forKey: .announcePort) ?? 0
+        let v67: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxConcurrentHttpAnnounces) ?? 0
+        let v68: Int64 = try c.decodeIfPresent(Int64.self, forKey: .stopTrackerTimeout) ?? 0
+        let v69: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnover) ?? 0
+        let v70: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnoverCutoff) ?? 0
+        let v71: Int64 = try c.decodeIfPresent(Int64.self, forKey: .peerTurnoverInterval) ?? 0
+        let v72: Int64 = try c.decodeIfPresent(Int64.self, forKey: .requestQueueSize) ?? 0
+        let v73: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxOutstandingBlockRequests) ?? 0
+        let v74: String = try c.decodeIfPresent(String.self, forKey: .dhtBootstrapNodes) ?? ""
+        let v75: String = try c.decodeIfPresent(String.self, forKey: .webtorrentStunServer) ?? ""
         self.init(
             resumeDataStorageType: v0,
             torrentContentRemoveOption: v1,
@@ -3655,68 +3695,72 @@ extension AdvancedPrefs: Codable {
             saveStatisticsInterval: v7,
             torrentFileSizeLimit: v8,
             confirmTorrentRecheck: v9,
-            confirmRemoveAllTags: v9a,
-            confirmRemoveTrackerFromAllTorrents: v9b,
-            recheckCompletedTorrents: v10,
-            appInstanceName: v11,
-            refreshInterval: v12,
-            resolvePeerHostNames: v13,
-            resolvePeerCountries: v14,
-            reannounceWhenAddressChanged: v15,
-            enableEmbeddedTracker: v16,
-            embeddedTrackerPort: v17,
-            embeddedTrackerPortForwarding: v18,
-            markOfTheWeb: v19,
-            ignoreSslErrors: v20,
-            pythonExecutablePath: v21,
-            startPaused: v22,
-            shutdownTimeout: v23,
-            bdecodeDepthLimit: v24,
-            bdecodeTokenLimit: v25,
-            asyncIoThreads: v26,
-            hashingThreads: v27,
-            filePoolSize: v28,
-            checkingMemoryUse: v29,
-            diskCache: v30,
-            diskCacheTtl: v31,
-            diskQueueSize: v32,
-            diskIoType: v33,
-            diskIoReadMode: v34,
-            diskIoWriteMode: v35,
-            enableCoalesceReadWrite: v36,
-            enablePieceExtentAffinity: v37,
-            enableUploadSuggestions: v38,
-            sendBufferWatermark: v39,
-            sendBufferLowWatermark: v40,
-            sendBufferWatermarkFactor: v41,
-            connectionSpeed: v42,
-            socketSendBufferSize: v43,
-            socketReceiveBufferSize: v44,
-            socketBacklogSize: v45,
-            outgoingPortsMin: v46,
-            outgoingPortsMax: v47,
-            upnpLeaseDuration: v48,
-            peerTos: v49,
-            utpTcpMixedMode: v50,
-            hostnameCacheTtl: v51,
-            idnSupportEnabled: v52,
-            enableMultiConnectionsFromSameIp: v53,
-            validateHttpsTrackerCertificate: v54,
-            ssrfMitigation: v55,
-            blockPeersOnPrivilegedPorts: v56,
-            uploadSlotsBehavior: v57,
-            uploadChokingAlgorithm: v58,
-            announceToAllTrackers: v59,
-            announceToAllTiers: v60,
-            announceIp: v61,
-            announcePort: v62,
-            maxConcurrentHttpAnnounces: v63,
-            stopTrackerTimeout: v64,
-            peerTurnover: v65,
-            peerTurnoverCutoff: v66,
-            peerTurnoverInterval: v67,
-            requestQueueSize: v68,
-            dhtBootstrapNodes: v69
+            confirmRemoveAllTags: v10,
+            confirmRemoveTrackerFromAllTorrents: v11,
+            recheckCompletedTorrents: v12,
+            appInstanceName: v13,
+            refreshInterval: v14,
+            resolvePeerHostNames: v15,
+            resolvePeerCountries: v16,
+            reannounceWhenAddressChanged: v17,
+            enableEmbeddedTracker: v18,
+            embeddedTrackerPort: v19,
+            embeddedTrackerPortForwarding: v20,
+            markOfTheWeb: v21,
+            ignoreSslErrors: v22,
+            pythonExecutablePath: v23,
+            startPaused: v24,
+            shutdownTimeout: v25,
+            bdecodeDepthLimit: v26,
+            bdecodeTokenLimit: v27,
+            asyncIoThreads: v28,
+            hashingThreads: v29,
+            filePoolSize: v30,
+            checkingMemoryUse: v31,
+            diskCache: v32,
+            diskCacheTtl: v33,
+            diskQueueSize: v34,
+            diskIoType: v35,
+            diskIoReadMode: v36,
+            diskIoWriteMode: v37,
+            enableCoalesceReadWrite: v38,
+            enablePieceExtentAffinity: v39,
+            enableUploadSuggestions: v40,
+            sendBufferWatermark: v41,
+            sendBufferLowWatermark: v42,
+            sendBufferWatermarkFactor: v43,
+            connectionSpeed: v44,
+            seedingOutgoingConnections: v45,
+            socketSendBufferSize: v46,
+            socketReceiveBufferSize: v47,
+            socketBacklogSize: v48,
+            outgoingPortsMin: v49,
+            outgoingPortsMax: v50,
+            upnpLeaseDuration: v51,
+            peerTos: v52,
+            utpTcpMixedMode: v53,
+            hostnameCacheTtl: v54,
+            idnSupportEnabled: v55,
+            enableMultiConnectionsFromSameIp: v56,
+            enableMultiConnectionsFromSamePeerId: v57,
+            validateHttpsTrackerCertificate: v58,
+            ssrfMitigation: v59,
+            blockPeersOnPrivilegedPorts: v60,
+            uploadSlotsBehavior: v61,
+            uploadChokingAlgorithm: v62,
+            announceToAllTrackers: v63,
+            announceToAllTiers: v64,
+            announceIp: v65,
+            announcePort: v66,
+            maxConcurrentHttpAnnounces: v67,
+            stopTrackerTimeout: v68,
+            peerTurnover: v69,
+            peerTurnoverCutoff: v70,
+            peerTurnoverInterval: v71,
+            requestQueueSize: v72,
+            maxOutstandingBlockRequests: v73,
+            dhtBootstrapNodes: v74,
+            webtorrentStunServer: v75
         )
     }
 }
