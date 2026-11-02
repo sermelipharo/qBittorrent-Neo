@@ -176,6 +176,21 @@ struct DemoRSSState: Sendable {
         rules[index].name = new
     }
 
+    /// qBittorrent 5.3 `cloneRule`: disabled, no history, no last match.
+    mutating func cloneRule(_ source: String, to clone: String) throws {
+        guard var copy = rules.first(where: { $0.name == source }) else {
+            throw QbtError.NotFound(message: "Rule doesn't exist: \(source).")
+        }
+        if rules.contains(where: { $0.name == clone }) {
+            throw QbtError.Conflict(message: "A rule with this name already exists, please choose another name.")
+        }
+        copy.name = clone
+        copy.enabled = false
+        copy.previouslyMatchedEpisodes = []
+        copy.lastMatch = ""
+        rules.append(copy)
+    }
+
     mutating func clearHistory(_ name: String) {
         for index in rules.indices where rules[index].name == name {
             rules[index].previouslyMatchedEpisodes = []

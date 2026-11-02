@@ -101,6 +101,10 @@ extension QtCoreClient: RSSClient {
         try bridge.callVoid("rssRenameRule", ["oldName": oldName, "newName": newName])
     }
 
+    func rssCloneRule(sourceName: String, cloneName: String) throws {
+        try bridge.callVoid("rssCloneRule", ["sourceName": sourceName, "cloneName": cloneName])
+    }
+
     func rssRemoveRule(name: String) throws {
         try bridge.callVoid("rssRemoveRule", ["name": name])
     }

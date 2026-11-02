@@ -18,6 +18,7 @@ protocol RSSClient: AnyObject, Sendable {
     func rssRules() -> [RssAutoDownloadRule]
     func rssSetRule(rule: RssAutoDownloadRule) throws
     func rssRenameRule(oldName: String, newName: String) throws
+    func rssCloneRule(sourceName: String, cloneName: String) throws
     func rssRemoveRule(name: String) throws
     func rssMatchingArticles(ruleName: String) throws -> [RssMatchingArticles]
     func rssPreviewRuleMatches(rule: RssAutoDownloadRule) -> [RssMatchingArticles]

@@ -56,6 +56,10 @@ extension DemoClient: RSSClient {
         try rss.rss.withLock { try $0.renameRule(oldName, to: newName) }
     }
 
+    func rssCloneRule(sourceName: String, cloneName: String) throws {
+        try rss.rss.withLock { try $0.cloneRule(sourceName, to: cloneName) }
+    }
+
     func rssRemoveRule(name: String) throws {
         rss.rss.withLock { $0.rules.removeAll { $0.name == name } }
     }

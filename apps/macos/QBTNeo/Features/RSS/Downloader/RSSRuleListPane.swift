@@ -1,7 +1,7 @@
 import SwiftUI
 
-/// "Download Rules": rule names with an enabled checkbox; add, rename and
-/// remove; context menu as in qBittorrent.
+/// "Download Rules": rule names with an enabled checkbox; add, rename,
+/// clone (qBittorrent 5.3) and remove; context menu as in qBittorrent.
 struct RSSRuleListPane: View {
     @Bindable var model: RSSDownloaderModel
     @State private var prompt: RulePrompt?
@@ -21,6 +21,12 @@ struct RSSRuleListPane: View {
                     Button("Rename rule…", systemImage: Symbol.pencil, action: renameSelected)
                         .disabled(model.selection.count != 1)
                         .help("Rename selected rule. You can also use the F2 hotkey to rename.")
+                    Button("Clone rule…", systemImage: Symbol.docOnDoc) {
+                        if let name = model.selection.first { prompt = .clone(name) }
+                    }
+                    .disabled(model.selection.count != 1)
+                    .help(String(localized: "Clone selected rule to a new rule.") + "\n"
+                        + String(localized: "The cloned rule will be set as disabled and the downloaded episodes history will be cleared."))
                 }
                 .labelStyle(.iconOnly)
                 .fixedSize()
@@ -36,6 +42,8 @@ struct RSSRuleListPane: View {
                     Button("Delete rule") { pendingRemoval = [name] }
                     Divider()
                     Button("Rename rule…") { prompt = .rename(name) }
+                    Divider()
+                    Button("Clone rule…") { prompt = .clone(name) }
                 } else if names.count > 1 {
                     Button("Delete selected rules") { pendingRemoval = names }
                 }

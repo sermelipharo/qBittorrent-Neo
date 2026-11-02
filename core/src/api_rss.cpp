@@ -279,6 +279,12 @@ void Neo::registerRssApi(Registry &registry)
             throwConflict(QCoreApplication::translate("RSS", "Unable to rename the rule"));
         return QJsonValue();
     });
+    registry.add(u"rssCloneRule"_s, [](const QJsonObject &args)
+    {
+        if (!autoDownloader()->cloneRule(argString(args, u"sourceName"_s), argString(args, u"cloneName"_s)))
+            throwConflict(QCoreApplication::translate("AutomatedRssDownloader", "A rule with this name already exists, please choose another name."));
+        return QJsonValue();
+    });
     registry.add(u"rssRemoveRule"_s, [](const QJsonObject &args)
     {
         autoDownloader()->removeRule(argString(args, u"name"_s));

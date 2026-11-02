@@ -170,6 +170,24 @@ final class RSSDownloaderModel {
         }
     }
 
+    /// "Clone rule…": the copy is disabled, with no episode history.
+    func cloneRule(_ source: String, to clone: String) async -> String? {
+        let clone = clone.trimmingCharacters(in: .whitespaces)
+        guard !clone.isEmpty else { return nil }
+        if rules.contains(where: { $0.name == clone }) {
+            return String(localized: "A rule with this name already exists, please choose another name.")
+        }
+        flushSave()
+        do {
+            try client?.rssCloneRule(sourceName: source, cloneName: clone)
+            await reload()
+            selection = [clone]
+            return nil
+        } catch {
+            return error.userMessage
+        }
+    }
+
     func removeRules(_ names: Set<String>) async {
         saveTask?.cancel()
         draft = nil
