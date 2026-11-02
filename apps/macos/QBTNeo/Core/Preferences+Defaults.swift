@@ -67,7 +67,7 @@ extension BitTorrentPrefs {
         maxActiveCheckingTorrents: 1, queueingEnabled: false, maxActiveDownloads: 3, maxActiveTorrents: 5,
         maxActiveUploads: 3, dontCountSlowTorrents: false, slowTorrentDlRateThreshold: 2,
         slowTorrentUlRateThreshold: 2, slowTorrentInactiveTimer: 60, maxRatio: -1, maxSeedingTime: -1,
-        maxInactiveSeedingTime: -1, maxRatioAct: .stop, addTrackersEnabled: false, addTrackers: "",
+        maxInactiveSeedingTime: -1, shareLimitsMode: .matchAny, maxRatioAct: .stop, addTrackersEnabled: false, addTrackers: "",
         addTrackersFromUrlEnabled: false, addTrackersUrl: "", addTrackersUrlList: ""
     )
 }

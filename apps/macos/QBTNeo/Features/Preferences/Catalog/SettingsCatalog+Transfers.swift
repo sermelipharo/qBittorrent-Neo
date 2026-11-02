@@ -100,6 +100,8 @@ extension SettingsCatalog {
                         keys: ["max_seeding_time_enabled", "max_seeding_time"], keywords: ["seeding limit"]),
             SettingSpec("max_inactive_seeding_time_enabled", .seedingLimits, String(localized: "When inactive seeding time reaches"),
                         keys: ["max_inactive_seeding_time_enabled", "max_inactive_seeding_time"], keywords: ["seeding limit"]),
+            SettingSpec("share_limits_mode", .seedingLimits, String(localized: "Mode:"),
+                        keywords: ["Any of the above", "All the above", "match all", "match any", "share limits"]),
             SettingSpec("max_ratio_act", .seedingLimits, String(localized: "then"), keywords: ["ratio", "super seeding", "remove"]),
 
             SettingSpec("queueing_enabled", .queue, String(localized: "Limit the number of active torrents"),

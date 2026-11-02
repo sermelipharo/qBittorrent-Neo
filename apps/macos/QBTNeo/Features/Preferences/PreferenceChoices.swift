@@ -13,6 +13,8 @@ enum PreferenceChoices {
     static let encryptionModes: [EncryptionMode] = [.allow, .require, .disable]
     /// "then" combo: the GUI index differs from the enum value.
     static let shareLimitActions: [ShareLimitAction] = [.stop, .remove, .removeWithContent, .enableSuperSeeding]
+    /// "Any of the above" / "All the above" radios (the global mode is never Default).
+    static let shareLimitsModes: [ShareLimitsMode] = [.matchAny, .matchAll]
     static let fileLogAgeTypes: [FileLogAgeType] = [.days, .months, .years]
     static let protocols: [BtProtocol] = [.both, .tcp, .utp]
     static let dynDNSServices: [DynDnsService] = [.dynDns, .noIp]
@@ -82,6 +84,13 @@ enum PreferenceChoices {
         case .remove: String(localized: "Remove torrent")
         case .removeWithContent: String(localized: "Remove torrent and its files")
         case .enableSuperSeeding: String(localized: "Enable super seeding for torrent")
+        }
+    }
+
+    static func title(_ value: ShareLimitsMode) -> String {
+        switch value {
+        case .default, .matchAny: String(localized: "Any of the above")
+        case .matchAll: String(localized: "All the above")
         }
     }
 

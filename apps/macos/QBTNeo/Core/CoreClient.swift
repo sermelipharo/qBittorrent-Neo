@@ -62,6 +62,7 @@ protocol CoreClient: AnyObject, Sendable {
         ratioLimit: Double,
         seedingTimeLimit: Int64,
         inactiveSeedingTimeLimit: Int64,
+        mode: ShareLimitsMode,
         action: ShareLimitAction
     ) throws
     func setSuperSeeding(hashes: [String], value: Bool) throws

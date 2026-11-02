@@ -136,6 +136,7 @@ enum SettingsSearchAliases {
         "max_ratio": ["BitTorrent/Session/GlobalMaxRatio"],
         "max_seeding_time": ["BitTorrent/Session/GlobalMaxSeedingMinutes"],
         "max_inactive_seeding_time": ["BitTorrent/Session/GlobalMaxInactiveSeedingMinutes"],
+        "share_limits_mode": ["BitTorrent/Session/ShareLimitsMode", "Seeding Limits"],
         "max_ratio_act": ["BitTorrent/Session/ShareLimitAction", "Seeding Limits"],
         "add_trackers_enabled": ["BitTorrent/Session/AddTrackersEnabled"],
         "add_trackers": ["BitTorrent/Session/AdditionalTrackers"],

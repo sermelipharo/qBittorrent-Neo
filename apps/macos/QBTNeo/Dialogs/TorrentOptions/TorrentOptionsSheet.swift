@@ -94,7 +94,8 @@ struct TorrentOptionsSheet: View {
             if new.shareLimits != old.shareLimits {
                 let limits = new.shareLimits
                 try client.setShareLimits(hashes: ids, ratioLimit: limits.ratio, seedingTimeLimit: limits.seedingMinutes,
-                                          inactiveSeedingTimeLimit: limits.inactiveMinutes, action: limits.action)
+                                          inactiveSeedingTimeLimit: limits.inactiveMinutes, mode: limits.mode,
+                                          action: limits.action)
             }
             if new.sequential != old.sequential, let value = TorrentOptionsState.uniform(new.sequential) {
                 try client.setSequentialDownload(hashes: ids, value: value)

@@ -6,9 +6,21 @@ struct ShareLimits: Equatable, Sendable {
     var ratio = -2.0
     var seedingMinutes: Int64 = -2
     var inactiveMinutes: Int64 = -2
+    /// Act when any limit is reached, or only when all of them are (qBittorrent 5.3).
+    var mode: ShareLimitsMode = .default
     var action: ShareLimitAction = .default
 
     static let actions: [ShareLimitAction] = [.default, .stop, .remove, .removeWithContent, .enableSuperSeeding]
+    static let modes: [ShareLimitsMode] = [.default, .matchAny, .matchAll]
+
+    static func title(of mode: ShareLimitsMode, fromCategory: Bool) -> String {
+        switch mode {
+        case .default:
+            if fromCategory { String(localized: "From category") } else { String(localized: "Default") }
+        case .matchAny: String(localized: "Match any limit")
+        case .matchAll: String(localized: "Match all the limits")
+        }
+    }
 
     static func title(of action: ShareLimitAction, fromCategory: Bool) -> String {
         switch action {

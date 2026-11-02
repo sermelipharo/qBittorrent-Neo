@@ -330,6 +330,7 @@ namespace
             {u"maxRatio"_s, session->shareLimits().ratioLimit},
             {u"maxSeedingTime"_s, session->shareLimits().seedingTimeLimit},
             {u"maxInactiveSeedingTime"_s, session->shareLimits().inactiveSeedingTimeLimit},
+            {u"shareLimitsMode"_s, shareLimitsModeName(session->shareLimits().mode)},
             {u"maxRatioAct"_s, shareLimitActionName(session->shareLimits().action)},
             {u"addTrackersEnabled"_s, session->isAddTrackersEnabled()},
             {u"addTrackers"_s, session->additionalTrackers()},
@@ -671,6 +672,15 @@ namespace
         s[u"bittorrent.maxInactiveSeedingTime"_s] = [updateShareLimits](const QJsonValue &v)
         {
             updateShareLimits([&v](BitTorrent::ShareLimits &l) { l.inactiveSeedingTimeLimit = std::max(toInt(v), -1); });
+        };
+        s[u"bittorrent.shareLimitsMode"_s] = [updateShareLimits](const QJsonValue &v)
+        {
+            // The global mode is never Default (Session treats it as MatchAny).
+            const BitTorrent::ShareLimitsMode mode = parseShareLimitsMode(v.toString());
+            updateShareLimits([mode](BitTorrent::ShareLimits &l)
+            {
+                l.mode = (mode == BitTorrent::ShareLimitsMode::Default) ? BitTorrent::ShareLimitsMode::MatchAny : mode;
+            });
         };
         s[u"bittorrent.maxRatioAct"_s] = [updateShareLimits](const QJsonValue &v)
         {

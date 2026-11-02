@@ -55,6 +55,28 @@ namespace Neo
         return BitTorrent::ShareLimitAction::Default;
     }
 
+    QString shareLimitsModeName(const BitTorrent::ShareLimitsMode mode)
+    {
+        switch (mode)
+        {
+        case BitTorrent::ShareLimitsMode::MatchAny:
+            return u"matchAny"_s;
+        case BitTorrent::ShareLimitsMode::MatchAll:
+            return u"matchAll"_s;
+        default:
+            return u"default"_s;
+        }
+    }
+
+    BitTorrent::ShareLimitsMode parseShareLimitsMode(const QString &name)
+    {
+        if (name == u"matchAny")
+            return BitTorrent::ShareLimitsMode::MatchAny;
+        if (name == u"matchAll")
+            return BitTorrent::ShareLimitsMode::MatchAll;
+        return BitTorrent::ShareLimitsMode::Default;
+    }
+
     QString torrentStateName(const BitTorrent::TorrentState state)
     {
         using BitTorrent::TorrentState;
@@ -184,6 +206,7 @@ namespace Neo
             {u"popularity"_s, torrent.popularity()},
             {u"seedingTimeLimit"_s, torrent.shareLimits().seedingTimeLimit},
             {u"inactiveSeedingTimeLimit"_s, torrent.shareLimits().inactiveSeedingTimeLimit},
+            {u"shareLimitsMode"_s, shareLimitsModeName(torrent.shareLimits().mode)},
             {u"shareLimitAction"_s, shareLimitActionName(torrent.shareLimits().action)},
             {u"lastSeenComplete"_s, toSecs(torrent.lastSeenComplete())},
             {u"lastActivity"_s, lastActivity},
@@ -217,7 +240,8 @@ namespace Neo
             {u"ratioLimit"_s, options.shareLimits.ratioLimit},
             {u"seedingTimeLimit"_s, options.shareLimits.seedingTimeLimit},
             {u"inactiveSeedingTimeLimit"_s, options.shareLimits.inactiveSeedingTimeLimit},
-            {u"shareLimitAction"_s, shareLimitActionName(options.shareLimits.action)}
+            {u"shareLimitAction"_s, shareLimitActionName(options.shareLimits.action)},
+            {u"shareLimitsMode"_s, shareLimitsModeName(options.shareLimits.mode)}
         };
     }
 
@@ -233,6 +257,7 @@ namespace Neo
         options.shareLimits.ratioLimit = argDouble(json, u"ratioLimit"_s, BitTorrent::DEFAULT_RATIO_LIMIT);
         options.shareLimits.seedingTimeLimit = static_cast<int>(argInt(json, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         options.shareLimits.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
+        options.shareLimits.mode = parseShareLimitsMode(argString(json, u"shareLimitsMode"_s));
         options.shareLimits.action = parseShareLimitAction(argString(json, u"shareLimitAction"_s));
         return options;
     }

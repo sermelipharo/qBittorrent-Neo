@@ -15,7 +15,8 @@ extension TorrentInfo {
             trackersCount: 0, dlLimit: 0, upLimit: 0, downloaded: 0, uploaded: 0, downloadedSession: 0,
             uploadedSession: 0, amountLeft: 0, completed: 0, connectionsCount: 0, connectionsLimit: 100,
             maxRatio: -1, maxSeedingTime: -1, maxInactiveSeedingTime: -1, ratio: 0, ratioLimit: -2, popularity: 0,
-            seedingTimeLimit: -2, inactiveSeedingTimeLimit: -2, shareLimitAction: .default, lastSeenComplete: 0,
+            seedingTimeLimit: -2, inactiveSeedingTimeLimit: -2, shareLimitsMode: .default, shareLimitAction: .default,
+            lastSeenComplete: 0,
             lastActivity: 0, autoTmm: false, timeActive: 0, seedingTime: 0, availability: -1, reannounce: 0,
             comment: "", hasTrackerWarning: false, hasTrackerError: false, hasOtherAnnounceError: false,
             errorMessage: ""
@@ -40,7 +41,7 @@ extension AddTorrentParams {
         name: nil, category: nil, tags: [], savePath: nil, useDownloadPath: nil, downloadPath: nil, autoTmm: nil,
         stopped: nil, stopCondition: nil, skipChecking: false, addToQueueTop: nil, contentLayout: nil,
         sequential: false, firstLastPiecePriority: false, forced: false, downloadLimit: nil, uploadLimit: nil,
-        ratioLimit: nil, seedingTimeLimit: nil, inactiveSeedingTimeLimit: nil, shareLimitAction: nil,
+        ratioLimit: nil, seedingTimeLimit: nil, inactiveSeedingTimeLimit: nil, shareLimitAction: nil, shareLimitsMode: nil,
         filePriorities: [], filePaths: [], trackers: [], urlSeeds: [], cookie: nil
     )
 }
@@ -60,11 +61,14 @@ extension Category {
         self.init(
             name: name, savePath: savePath, downloadPath: downloadPath, ratioLimit: shareLimits.ratio,
             seedingTimeLimit: shareLimits.seedingMinutes, inactiveSeedingTimeLimit: shareLimits.inactiveMinutes,
-            shareLimitAction: shareLimits.action
+            shareLimitAction: shareLimits.action, shareLimitsMode: shareLimits.mode
         )
     }
 
     var shareLimits: ShareLimits {
-        ShareLimits(ratio: ratioLimit, seedingMinutes: seedingTimeLimit, inactiveMinutes: inactiveSeedingTimeLimit, action: shareLimitAction)
+        ShareLimits(
+            ratio: ratioLimit, seedingMinutes: seedingTimeLimit, inactiveMinutes: inactiveSeedingTimeLimit,
+            mode: shareLimitsMode, action: shareLimitAction
+        )
     }
 }

@@ -167,6 +167,8 @@ namespace
         params.shareLimits.inactiveSeedingTimeLimit = static_cast<int>(argInt(json, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         if (const auto action = argOptString(json, u"shareLimitAction"_s))
             params.shareLimits.action = parseShareLimitAction(*action);
+        if (const auto mode = argOptString(json, u"shareLimitsMode"_s))
+            params.shareLimits.mode = parseShareLimitsMode(*mode);
 
         for (const QString &priority : asConst(argStringList(json, u"filePriorities"_s)))
             params.filePriorities.append(parsePriority(priority));
@@ -1120,12 +1122,14 @@ void Neo::registerTorrentsApi(Registry &registry)
         const int seeding = static_cast<int>(argInt(args, u"seedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         const int inactive = static_cast<int>(argInt(args, u"inactiveSeedingTimeLimit"_s, BitTorrent::DEFAULT_SEEDING_TIME_LIMIT));
         const BitTorrent::ShareLimitAction action = parseShareLimitAction(argString(args, u"action"_s));
+        const BitTorrent::ShareLimitsMode mode = parseShareLimitsMode(argString(args, u"mode"_s));
         forTorrents(args, [=](BitTorrent::Torrent *t)
         {
             BitTorrent::ShareLimits limits = t->shareLimits();
             limits.ratioLimit = ratio;
             limits.seedingTimeLimit = seeding;
             limits.inactiveSeedingTimeLimit = inactive;
+            limits.mode = mode;
             limits.action = action;
             t->setShareLimits(limits);
         });

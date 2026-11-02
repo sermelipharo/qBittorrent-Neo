@@ -1,12 +1,15 @@
 import SwiftUI
 
 /// qBittorrent's `TorrentShareLimitsWidget`: ratio, seeding time and inactive
-/// seeding time each Default / Unlimited / Set to, plus the limit action.
-/// Used by Torrent Options, the category dialog and torrent-parameter editors.
+/// seeding time each Default / Unlimited / Set to, plus the limits mode (any
+/// or all of them) and the limit action. Used by Torrent Options, the
+/// category dialog and torrent-parameter editors.
 struct ShareLimitsEditor: View {
     @Binding var limits: ShareLimits
     /// "From category" instead of "Default" when the defaults come from a category.
     var fromCategory = false
+    /// Hidden where the edited value has no mode (torrent-parameter templates).
+    var showsMode = true
 
     @State private var ratioMode = ShareLimitMode.default
     @State private var seedingMode = ShareLimitMode.default
@@ -35,6 +38,19 @@ struct ShareLimitsEditor: View {
                 Text("Inactive seeding time:").fixedSize()
                 modePicker("Inactive seeding time", $inactiveMode)
                 minutesField("Inactive seeding time", $inactive, enabled: inactiveMode == .set)
+            }
+            if showsMode {
+                GridRow {
+                    Text("Mode:").fixedSize()
+                    Picker("Mode:", selection: $limits.mode) {
+                        ForEach(ShareLimits.modes, id: \.self) { mode in
+                            Text(ShareLimits.title(of: mode, fromCategory: fromCategory)).tag(mode)
+                        }
+                    }
+                    .labelsHidden()
+                    .fixedSize()
+                    .gridCellColumns(2)
+                }
             }
             GridRow {
                 Text("Action when the limit is reached:").fixedSize()

@@ -26,6 +26,8 @@ namespace Neo
 {
     QString shareLimitActionName(BitTorrent::ShareLimitAction action);
     BitTorrent::ShareLimitAction parseShareLimitAction(const QString &name);
+    QString shareLimitsModeName(BitTorrent::ShareLimitsMode mode);
+    BitTorrent::ShareLimitsMode parseShareLimitsMode(const QString &name);
     QString torrentStateName(BitTorrent::TorrentState state);
     QString stopConditionName(BitTorrent::Torrent::StopCondition condition);
     BitTorrent::Torrent::StopCondition parseStopCondition(const QString &name);

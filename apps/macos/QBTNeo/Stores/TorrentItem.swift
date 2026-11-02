@@ -76,6 +76,7 @@ final class TorrentItem: Identifiable {
     var seedingTimeLimit: Int64 { info.seedingTimeLimit }
     var inactiveSeedingTimeLimit: Int64 { info.inactiveSeedingTimeLimit }
     var shareLimitAction: ShareLimitAction { info.shareLimitAction }
+    var shareLimitsMode: ShareLimitsMode { info.shareLimitsMode }
     var lastSeenComplete: Int64 { info.lastSeenComplete }
     var lastActivity: Int64 { info.lastActivity }
     var autoTMM: Bool { info.autoTmm }

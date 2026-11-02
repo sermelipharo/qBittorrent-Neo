@@ -13,9 +13,9 @@ only converts data. "Verified" means exercised against a real session
 | Transfer list | syncMainData (record diffs: torrents, categories, tags, trackers, server state), resetMainData | Done, verified |
 | Properties | properties, trackers (+ DHT/PeX/LSD rows, endpoints), webSeeds, files (+ availability), pieceStates, pieceAvailability, peers (+ host names, countries), exportTorrent | Done, verified (General, Trackers, Peers, HTTP Sources, Content, Speed tabs) |
 | Adding | addTorrent (magnet / hash / http(s) URL / file / bytes, all options, extra trackers and web seeds, cookie), fetchMetadata (+ cancel), saveFetchedMetadata, duplicate handling (merge trackers) | Done, verified (Sintel magnet through the add dialog) |
-| Torrent actions | start, stop, force start, remove (+ content: delete or trash per setting), recheck, reannounce, set location / save path / download path, rename torrent / file / folder, file priority, auto TMM, per-torrent limits, share limits, super seeding, sequential, first/last piece, DHT/PeX/LSD per torrent, queue up/down/top/bottom | Done (stop / remove-with-files verified) |
+| Torrent actions | start, stop, force start, remove (+ content: delete or trash per setting), recheck, reannounce, set location / save path / download path, rename torrent / file / folder, file priority, auto TMM, per-torrent limits, share limits (with the 5.3 match any / all mode), super seeding, sequential, first/last piece, DHT/PeX/LSD per torrent, queue up/down/top/bottom | Done (stop / remove-with-files verified) |
 | Trackers, peers, web seeds | add / edit / remove / replace trackers, add peers, ban peers, add / edit / remove web seeds | Done |
-| Categories, tags | list, create, edit (save/download paths, share limits), remove, set; tags list/create/delete/add/remove | Done |
+| Categories, tags | list, create, edit (save/download paths, share limits and mode), remove, set; tags list/create/delete/add/remove | Done |
 | Global transfer | server state, alternative limits, global limits, speed history | Done, verified |
 | Log | main log (level filter), peer log, clear | Done, verified |
 | Preferences | all 224 fields of the app's `Preferences` record, read and write (only changed fields are written) | Done, verified (read all pages, write speed/BitTorrent/RSS fields) |

@@ -214,7 +214,8 @@ final class DemoClient: CoreClient {
     func setUploadLimit(hashes: [String], limit: Int64) throws { mutate { $0.update(hashes) { $0.info.upLimit = max(limit, 0) } } }
 
     func setShareLimits(
-        hashes: [String], ratioLimit: Double, seedingTimeLimit: Int64, inactiveSeedingTimeLimit: Int64, action: ShareLimitAction
+        hashes: [String], ratioLimit: Double, seedingTimeLimit: Int64, inactiveSeedingTimeLimit: Int64, mode: ShareLimitsMode,
+        action: ShareLimitAction
     ) throws {
         mutate { state in
             let global = state.preferences.bittorrent
@@ -222,6 +223,7 @@ final class DemoClient: CoreClient {
                 torrent.info.ratioLimit = ratioLimit
                 torrent.info.seedingTimeLimit = seedingTimeLimit
                 torrent.info.inactiveSeedingTimeLimit = inactiveSeedingTimeLimit
+                torrent.info.shareLimitsMode = mode
                 torrent.info.shareLimitAction = action
                 torrent.info.maxRatio = ratioLimit == -2 ? global.maxRatio : ratioLimit
                 torrent.info.maxSeedingTime = seedingTimeLimit == -2 ? global.maxSeedingTime : seedingTimeLimit

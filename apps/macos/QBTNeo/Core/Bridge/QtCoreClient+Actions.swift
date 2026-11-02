@@ -73,11 +73,12 @@ extension QtCoreClient {
         ratioLimit: Double,
         seedingTimeLimit: Int64,
         inactiveSeedingTimeLimit: Int64,
+        mode: ShareLimitsMode,
         action: ShareLimitAction
     ) throws {
         try bridge.callVoid("setShareLimits", [
             "hashes": hashes, "ratioLimit": ratioLimit, "seedingTimeLimit": seedingTimeLimit,
-            "inactiveSeedingTimeLimit": inactiveSeedingTimeLimit, "action": action,
+            "inactiveSeedingTimeLimit": inactiveSeedingTimeLimit, "mode": mode, "action": action,
         ])
     }
 

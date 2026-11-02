@@ -54,7 +54,7 @@ struct TorrentParamsTemplateEditor: View {
             Text("Files checked").tag(Optional(StopCondition.filesChecked))
         }
         OptionalBoolPicker(title: "Add to top of queue:", value: $params.addToQueueTop)
-        ShareLimitsEditor(limits: $params.shareLimits)
+        ShareLimitsEditor(limits: $params.shareLimits, showsMode: false)
             .sheet(isPresented: $showsTags) {
                 TagsPickerSheet(tags: $params.tags)
             }
@@ -62,7 +62,7 @@ struct TorrentParamsTemplateEditor: View {
 }
 
 extension TorrentParamsTemplate {
-    /// Share limits as edited by `ShareLimitsEditor` (the template has no action).
+    /// Share limits as edited by `ShareLimitsEditor` (the template has no action or mode).
     var shareLimits: ShareLimits {
         get { ShareLimits(ratio: ratioLimit, seedingMinutes: seedingTimeLimit, inactiveMinutes: inactiveSeedingTimeLimit) }
         set {

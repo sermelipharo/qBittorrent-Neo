@@ -45,6 +45,7 @@ public struct AddTorrentParams: Equatable, Hashable {
     public var seedingTimeLimit: Int64?
     public var inactiveSeedingTimeLimit: Int64?
     public var shareLimitAction: ShareLimitAction?
+    public var shareLimitsMode: ShareLimitsMode?
     /**
      * Per-file priorities in torrent file order; empty = all Normal.
      */
@@ -71,7 +72,7 @@ public struct AddTorrentParams: Equatable, Hashable {
          */downloadLimit: Int64?, uploadLimit: Int64?,
         /**
          * -2 global, -1 unlimited.
-         */ratioLimit: Double?, seedingTimeLimit: Int64?, inactiveSeedingTimeLimit: Int64?, shareLimitAction: ShareLimitAction?,
+         */ratioLimit: Double?, seedingTimeLimit: Int64?, inactiveSeedingTimeLimit: Int64?, shareLimitAction: ShareLimitAction?, shareLimitsMode: ShareLimitsMode?,
         /**
          * Per-file priorities in torrent file order; empty = all Normal.
          */filePriorities: [FilePriority],
@@ -105,6 +106,7 @@ public struct AddTorrentParams: Equatable, Hashable {
         self.seedingTimeLimit = seedingTimeLimit
         self.inactiveSeedingTimeLimit = inactiveSeedingTimeLimit
         self.shareLimitAction = shareLimitAction
+        self.shareLimitsMode = shareLimitsMode
         self.filePriorities = filePriorities
         self.filePaths = filePaths
         self.trackers = trackers
@@ -559,6 +561,11 @@ public struct BitTorrentPrefs: Equatable, Hashable {
      */
     public var maxInactiveSeedingTime: Int64
     /**
+     * qBittorrent 5.3: act when any enabled limit is reached (`MatchAny`)
+     * or only when all of them are (`MatchAll`). `Default` means `MatchAny`.
+     */
+    public var shareLimitsMode: ShareLimitsMode
+    /**
      * Never `Default` at the global level.
      */
     public var maxRatioAct: ShareLimitAction
@@ -599,6 +606,10 @@ public struct BitTorrentPrefs: Equatable, Hashable {
          * Minutes, -1 = disabled.
          */maxInactiveSeedingTime: Int64,
         /**
+         * qBittorrent 5.3: act when any enabled limit is reached (`MatchAny`)
+         * or only when all of them are (`MatchAll`). `Default` means `MatchAny`.
+         */shareLimitsMode: ShareLimitsMode,
+        /**
          * Never `Default` at the global level.
          */maxRatioAct: ShareLimitAction, addTrackersEnabled: Bool,
         /**
@@ -624,6 +635,7 @@ public struct BitTorrentPrefs: Equatable, Hashable {
         self.maxRatio = maxRatio
         self.maxSeedingTime = maxSeedingTime
         self.maxInactiveSeedingTime = maxInactiveSeedingTime
+        self.shareLimitsMode = shareLimitsMode
         self.maxRatioAct = maxRatioAct
         self.addTrackersEnabled = addTrackersEnabled
         self.addTrackers = addTrackers
@@ -698,6 +710,10 @@ public struct Category: Equatable, Hashable {
      * `Default` = inherit.
      */
     public var shareLimitAction: ShareLimitAction
+    /**
+     * `Default` = inherit.
+     */
+    public var shareLimitsMode: ShareLimitsMode
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -716,7 +732,10 @@ public struct Category: Equatable, Hashable {
          */inactiveSeedingTimeLimit: Int64,
         /**
          * `Default` = inherit.
-         */shareLimitAction: ShareLimitAction) {
+         */shareLimitAction: ShareLimitAction,
+        /**
+         * `Default` = inherit.
+         */shareLimitsMode: ShareLimitsMode) {
         self.name = name
         self.savePath = savePath
         self.downloadPath = downloadPath
@@ -724,6 +743,7 @@ public struct Category: Equatable, Hashable {
         self.seedingTimeLimit = seedingTimeLimit
         self.inactiveSeedingTimeLimit = inactiveSeedingTimeLimit
         self.shareLimitAction = shareLimitAction
+        self.shareLimitsMode = shareLimitsMode
     }
 
 }
@@ -2062,6 +2082,10 @@ public struct TorrentInfo: Equatable, Hashable {
      */
     public var seedingTimeLimit: Int64
     public var inactiveSeedingTimeLimit: Int64
+    /**
+     * The torrent's own mode (`Default` = from category / global).
+     */
+    public var shareLimitsMode: ShareLimitsMode
     public var shareLimitAction: ShareLimitAction
     public var lastSeenComplete: Int64
     public var lastActivity: Int64
@@ -2139,7 +2163,10 @@ public struct TorrentInfo: Equatable, Hashable {
          */ratioLimit: Double, popularity: Double,
         /**
          * Minutes: -2 use global, -1 unlimited.
-         */seedingTimeLimit: Int64, inactiveSeedingTimeLimit: Int64, shareLimitAction: ShareLimitAction, lastSeenComplete: Int64, lastActivity: Int64, autoTmm: Bool, timeActive: Int64, seedingTime: Int64,
+         */seedingTimeLimit: Int64, inactiveSeedingTimeLimit: Int64,
+        /**
+         * The torrent's own mode (`Default` = from category / global).
+         */shareLimitsMode: ShareLimitsMode, shareLimitAction: ShareLimitAction, lastSeenComplete: Int64, lastActivity: Int64, autoTmm: Bool, timeActive: Int64, seedingTime: Int64,
         /**
          * Distributed copies, -1 when unknown.
          */availability: Double,
@@ -2206,6 +2233,7 @@ public struct TorrentInfo: Equatable, Hashable {
         self.popularity = popularity
         self.seedingTimeLimit = seedingTimeLimit
         self.inactiveSeedingTimeLimit = inactiveSeedingTimeLimit
+        self.shareLimitsMode = shareLimitsMode
         self.shareLimitAction = shareLimitAction
         self.lastSeenComplete = lastSeenComplete
         self.lastActivity = lastActivity
@@ -3145,6 +3173,14 @@ public enum ShareLimitAction: Equatable, Hashable {
 
 }
 
+public enum ShareLimitsMode: Equatable, Hashable {
+
+    case `default`
+    case matchAny
+    case matchAll
+
+}
+
 public enum StatusFilter: Equatable, Hashable {
 
     case all
@@ -3331,6 +3367,7 @@ extension SchedulerDays: Sendable {}
 extension SearchJobOutcome: Sendable {}
 extension SearchJobStatus: Sendable {}
 extension ShareLimitAction: Sendable {}
+extension ShareLimitsMode: Sendable {}
 extension StatusFilter: Sendable {}
 extension StopCondition: Sendable {}
 extension TorrentFormat: Sendable {}
@@ -3346,7 +3383,7 @@ extension QbtError: Sendable {}
 
 extension AddTorrentParams: Codable {
     enum CodingKeys: String, CodingKey {
-        case name, category, tags, savePath, useDownloadPath, downloadPath, autoTmm, stopped, stopCondition, skipChecking, addToQueueTop, contentLayout, sequential, firstLastPiecePriority, forced, downloadLimit, uploadLimit, ratioLimit, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitAction, filePriorities, filePaths, trackers, urlSeeds, cookie
+        case name, category, tags, savePath, useDownloadPath, downloadPath, autoTmm, stopped, stopCondition, skipChecking, addToQueueTop, contentLayout, sequential, firstLastPiecePriority, forced, downloadLimit, uploadLimit, ratioLimit, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitAction, shareLimitsMode, filePriorities, filePaths, trackers, urlSeeds, cookie
     }
 
     static var neoEmpty: AddTorrentParams {
@@ -3376,11 +3413,12 @@ extension AddTorrentParams: Codable {
         let v18: Int64? = try c.decodeIfPresent(Int64.self, forKey: .seedingTimeLimit)
         let v19: Int64? = try c.decodeIfPresent(Int64.self, forKey: .inactiveSeedingTimeLimit)
         let v20: ShareLimitAction? = try c.decodeIfPresent(ShareLimitAction.self, forKey: .shareLimitAction)
-        let v21: [FilePriority] = try c.decodeIfPresent([FilePriority].self, forKey: .filePriorities) ?? []
-        let v22: [String] = try c.decodeIfPresent([String].self, forKey: .filePaths) ?? []
-        let v23: [String] = try c.decodeIfPresent([String].self, forKey: .trackers) ?? []
-        let v24: [String] = try c.decodeIfPresent([String].self, forKey: .urlSeeds) ?? []
-        let v25: String? = try c.decodeIfPresent(String.self, forKey: .cookie)
+        let v21: ShareLimitsMode? = try c.decodeIfPresent(ShareLimitsMode.self, forKey: .shareLimitsMode)
+        let v22: [FilePriority] = try c.decodeIfPresent([FilePriority].self, forKey: .filePriorities) ?? []
+        let v23: [String] = try c.decodeIfPresent([String].self, forKey: .filePaths) ?? []
+        let v24: [String] = try c.decodeIfPresent([String].self, forKey: .trackers) ?? []
+        let v25: [String] = try c.decodeIfPresent([String].self, forKey: .urlSeeds) ?? []
+        let v26: String? = try c.decodeIfPresent(String.self, forKey: .cookie)
         self.init(
             name: v0,
             category: v1,
@@ -3403,11 +3441,12 @@ extension AddTorrentParams: Codable {
             seedingTimeLimit: v18,
             inactiveSeedingTimeLimit: v19,
             shareLimitAction: v20,
-            filePriorities: v21,
-            filePaths: v22,
-            trackers: v23,
-            urlSeeds: v24,
-            cookie: v25
+            shareLimitsMode: v21,
+            filePriorities: v22,
+            filePaths: v23,
+            trackers: v24,
+            urlSeeds: v25,
+            cookie: v26
         )
     }
 }
@@ -3638,7 +3677,7 @@ extension BehaviorPrefs: Codable {
 
 extension BitTorrentPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case dht, pex, lsd, encryption, anonymousMode, maxActiveCheckingTorrents, queueingEnabled, maxActiveDownloads, maxActiveTorrents, maxActiveUploads, dontCountSlowTorrents, slowTorrentDlRateThreshold, slowTorrentUlRateThreshold, slowTorrentInactiveTimer, maxRatio, maxSeedingTime, maxInactiveSeedingTime, maxRatioAct, addTrackersEnabled, addTrackers, addTrackersFromUrlEnabled, addTrackersUrl, addTrackersUrlList
+        case dht, pex, lsd, encryption, anonymousMode, maxActiveCheckingTorrents, queueingEnabled, maxActiveDownloads, maxActiveTorrents, maxActiveUploads, dontCountSlowTorrents, slowTorrentDlRateThreshold, slowTorrentUlRateThreshold, slowTorrentInactiveTimer, maxRatio, maxSeedingTime, maxInactiveSeedingTime, shareLimitsMode, maxRatioAct, addTrackersEnabled, addTrackers, addTrackersFromUrlEnabled, addTrackersUrl, addTrackersUrlList
     }
 
     static var neoEmpty: BitTorrentPrefs {
@@ -3664,12 +3703,13 @@ extension BitTorrentPrefs: Codable {
         let v14: Double = try c.decodeIfPresent(Double.self, forKey: .maxRatio) ?? 0
         let v15: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxSeedingTime) ?? 0
         let v16: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxInactiveSeedingTime) ?? 0
-        let v17: ShareLimitAction = try c.decodeIfPresent(ShareLimitAction.self, forKey: .maxRatioAct) ?? .`default`
-        let v18: Bool = try c.decodeIfPresent(Bool.self, forKey: .addTrackersEnabled) ?? false
-        let v19: String = try c.decodeIfPresent(String.self, forKey: .addTrackers) ?? ""
-        let v20: Bool = try c.decodeIfPresent(Bool.self, forKey: .addTrackersFromUrlEnabled) ?? false
-        let v21: String = try c.decodeIfPresent(String.self, forKey: .addTrackersUrl) ?? ""
-        let v22: String = try c.decodeIfPresent(String.self, forKey: .addTrackersUrlList) ?? ""
+        let v17: ShareLimitsMode = try c.decodeIfPresent(ShareLimitsMode.self, forKey: .shareLimitsMode) ?? .`default`
+        let v18: ShareLimitAction = try c.decodeIfPresent(ShareLimitAction.self, forKey: .maxRatioAct) ?? .`default`
+        let v19: Bool = try c.decodeIfPresent(Bool.self, forKey: .addTrackersEnabled) ?? false
+        let v20: String = try c.decodeIfPresent(String.self, forKey: .addTrackers) ?? ""
+        let v21: Bool = try c.decodeIfPresent(Bool.self, forKey: .addTrackersFromUrlEnabled) ?? false
+        let v22: String = try c.decodeIfPresent(String.self, forKey: .addTrackersUrl) ?? ""
+        let v23: String = try c.decodeIfPresent(String.self, forKey: .addTrackersUrlList) ?? ""
         self.init(
             dht: v0,
             pex: v1,
@@ -3688,12 +3728,13 @@ extension BitTorrentPrefs: Codable {
             maxRatio: v14,
             maxSeedingTime: v15,
             maxInactiveSeedingTime: v16,
-            maxRatioAct: v17,
-            addTrackersEnabled: v18,
-            addTrackers: v19,
-            addTrackersFromUrlEnabled: v20,
-            addTrackersUrl: v21,
-            addTrackersUrlList: v22
+            shareLimitsMode: v17,
+            maxRatioAct: v18,
+            addTrackersEnabled: v19,
+            addTrackers: v20,
+            addTrackersFromUrlEnabled: v21,
+            addTrackersUrl: v22,
+            addTrackersUrlList: v23
         )
     }
 }
@@ -3730,7 +3771,7 @@ extension BuildInfo: Codable {
 
 extension Category: Codable {
     enum CodingKeys: String, CodingKey {
-        case name, savePath, downloadPath, ratioLimit, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitAction
+        case name, savePath, downloadPath, ratioLimit, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitAction, shareLimitsMode
     }
 
     static var neoEmpty: Category {
@@ -3746,6 +3787,7 @@ extension Category: Codable {
         let v4: Int64 = try c.decodeIfPresent(Int64.self, forKey: .seedingTimeLimit) ?? 0
         let v5: Int64 = try c.decodeIfPresent(Int64.self, forKey: .inactiveSeedingTimeLimit) ?? 0
         let v6: ShareLimitAction = try c.decodeIfPresent(ShareLimitAction.self, forKey: .shareLimitAction) ?? .`default`
+        let v7: ShareLimitsMode = try c.decodeIfPresent(ShareLimitsMode.self, forKey: .shareLimitsMode) ?? .`default`
         self.init(
             name: v0,
             savePath: v1,
@@ -3753,7 +3795,8 @@ extension Category: Codable {
             ratioLimit: v3,
             seedingTimeLimit: v4,
             inactiveSeedingTimeLimit: v5,
-            shareLimitAction: v6
+            shareLimitAction: v6,
+            shareLimitsMode: v7
         )
     }
 }
@@ -4806,7 +4849,7 @@ extension TorrentFile: Codable {
 
 extension TorrentInfo: Codable {
     enum CodingKeys: String, CodingKey {
-        case hash, infohashV1, infohashV2, name, hasMetadata, createdBy, creationDate, `private`, totalSize, piecesNum, pieceSize, magnetUri, size, progress, totalWasted, piecesHave, dlSpeed, upSpeed, queuePosition, numSeeds, numComplete, numLeechs, numIncomplete, state, eta, seqDl, fLPiecePrio, category, tags, superSeeding, forceStart, savePath, downloadPath, contentPath, rootPath, addedOn, completionOn, tracker, trackersCount, dlLimit, upLimit, downloaded, uploaded, downloadedSession, uploadedSession, amountLeft, completed, connectionsCount, connectionsLimit, maxRatio, maxSeedingTime, maxInactiveSeedingTime, ratio, ratioLimit, popularity, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitAction, lastSeenComplete, lastActivity, autoTmm, timeActive, seedingTime, availability, reannounce, comment, hasTrackerWarning, hasTrackerError, hasOtherAnnounceError, errorMessage
+        case hash, infohashV1, infohashV2, name, hasMetadata, createdBy, creationDate, `private`, totalSize, piecesNum, pieceSize, magnetUri, size, progress, totalWasted, piecesHave, dlSpeed, upSpeed, queuePosition, numSeeds, numComplete, numLeechs, numIncomplete, state, eta, seqDl, fLPiecePrio, category, tags, superSeeding, forceStart, savePath, downloadPath, contentPath, rootPath, addedOn, completionOn, tracker, trackersCount, dlLimit, upLimit, downloaded, uploaded, downloadedSession, uploadedSession, amountLeft, completed, connectionsCount, connectionsLimit, maxRatio, maxSeedingTime, maxInactiveSeedingTime, ratio, ratioLimit, popularity, seedingTimeLimit, inactiveSeedingTimeLimit, shareLimitsMode, shareLimitAction, lastSeenComplete, lastActivity, autoTmm, timeActive, seedingTime, availability, reannounce, comment, hasTrackerWarning, hasTrackerError, hasOtherAnnounceError, errorMessage
     }
 
     static var neoEmpty: TorrentInfo {
@@ -4872,19 +4915,20 @@ extension TorrentInfo: Codable {
         let v54: Double = try c.decodeIfPresent(Double.self, forKey: .popularity) ?? 0
         let v55: Int64 = try c.decodeIfPresent(Int64.self, forKey: .seedingTimeLimit) ?? 0
         let v56: Int64 = try c.decodeIfPresent(Int64.self, forKey: .inactiveSeedingTimeLimit) ?? 0
-        let v57: ShareLimitAction = try c.decodeIfPresent(ShareLimitAction.self, forKey: .shareLimitAction) ?? .`default`
-        let v58: Int64 = try c.decodeIfPresent(Int64.self, forKey: .lastSeenComplete) ?? 0
-        let v59: Int64 = try c.decodeIfPresent(Int64.self, forKey: .lastActivity) ?? 0
-        let v60: Bool = try c.decodeIfPresent(Bool.self, forKey: .autoTmm) ?? false
-        let v61: Int64 = try c.decodeIfPresent(Int64.self, forKey: .timeActive) ?? 0
-        let v62: Int64 = try c.decodeIfPresent(Int64.self, forKey: .seedingTime) ?? 0
-        let v63: Double = try c.decodeIfPresent(Double.self, forKey: .availability) ?? 0
-        let v64: Int64 = try c.decodeIfPresent(Int64.self, forKey: .reannounce) ?? 0
-        let v65: String = try c.decodeIfPresent(String.self, forKey: .comment) ?? ""
-        let v66: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasTrackerWarning) ?? false
-        let v67: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasTrackerError) ?? false
-        let v68: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasOtherAnnounceError) ?? false
-        let v69: String = try c.decodeIfPresent(String.self, forKey: .errorMessage) ?? ""
+        let v57: ShareLimitsMode = try c.decodeIfPresent(ShareLimitsMode.self, forKey: .shareLimitsMode) ?? .`default`
+        let v58: ShareLimitAction = try c.decodeIfPresent(ShareLimitAction.self, forKey: .shareLimitAction) ?? .`default`
+        let v59: Int64 = try c.decodeIfPresent(Int64.self, forKey: .lastSeenComplete) ?? 0
+        let v60: Int64 = try c.decodeIfPresent(Int64.self, forKey: .lastActivity) ?? 0
+        let v61: Bool = try c.decodeIfPresent(Bool.self, forKey: .autoTmm) ?? false
+        let v62: Int64 = try c.decodeIfPresent(Int64.self, forKey: .timeActive) ?? 0
+        let v63: Int64 = try c.decodeIfPresent(Int64.self, forKey: .seedingTime) ?? 0
+        let v64: Double = try c.decodeIfPresent(Double.self, forKey: .availability) ?? 0
+        let v65: Int64 = try c.decodeIfPresent(Int64.self, forKey: .reannounce) ?? 0
+        let v66: String = try c.decodeIfPresent(String.self, forKey: .comment) ?? ""
+        let v67: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasTrackerWarning) ?? false
+        let v68: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasTrackerError) ?? false
+        let v69: Bool = try c.decodeIfPresent(Bool.self, forKey: .hasOtherAnnounceError) ?? false
+        let v70: String = try c.decodeIfPresent(String.self, forKey: .errorMessage) ?? ""
         self.init(
             hash: v0,
             infohashV1: v1,
@@ -4943,19 +4987,20 @@ extension TorrentInfo: Codable {
             popularity: v54,
             seedingTimeLimit: v55,
             inactiveSeedingTimeLimit: v56,
-            shareLimitAction: v57,
-            lastSeenComplete: v58,
-            lastActivity: v59,
-            autoTmm: v60,
-            timeActive: v61,
-            seedingTime: v62,
-            availability: v63,
-            reannounce: v64,
-            comment: v65,
-            hasTrackerWarning: v66,
-            hasTrackerError: v67,
-            hasOtherAnnounceError: v68,
-            errorMessage: v69
+            shareLimitsMode: v57,
+            shareLimitAction: v58,
+            lastSeenComplete: v59,
+            lastActivity: v60,
+            autoTmm: v61,
+            timeActive: v62,
+            seedingTime: v63,
+            availability: v64,
+            reannounce: v65,
+            comment: v66,
+            hasTrackerWarning: v67,
+            hasTrackerError: v68,
+            hasOtherAnnounceError: v69,
+            errorMessage: v70
         )
     }
 }
@@ -5967,6 +6012,27 @@ extension ShareLimitAction: Codable {
         case .remove: try c.encode("remove")
         case .removeWithContent: try c.encode("removeWithContent")
         case .enableSuperSeeding: try c.encode("enableSuperSeeding")
+        }
+    }
+}
+
+extension ShareLimitsMode: Codable {
+    public init(from decoder: any Decoder) throws {
+        let value = try decoder.singleValueContainer().decode(String.self)
+        switch value {
+        case "default": self = .`default`
+        case "matchAny": self = .matchAny
+        case "matchAll": self = .matchAll
+        default: throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Unknown ShareLimitsMode \(value)"))
+        }
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.singleValueContainer()
+        switch self {
+        case .`default`: try c.encode("default")
+        case .matchAny: try c.encode("matchAny")
+        case .matchAll: try c.encode("matchAll")
         }
     }
 }

@@ -33,7 +33,8 @@ struct TorrentOptionsState: Equatable {
         downloadLimit = items.allSatisfy { $0.dlLimit == first.dlLimit } ? max(first.dlLimit, 0) : -1
         uploadLimit = items.allSatisfy { $0.upLimit == first.upLimit } ? max(first.upLimit, 0) : -1
         shareLimits = ShareLimits(ratio: first.ratioLimit, seedingMinutes: first.seedingTimeLimit,
-                                  inactiveMinutes: first.inactiveSeedingTimeLimit, action: first.shareLimitAction)
+                                  inactiveMinutes: first.inactiveSeedingTimeLimit, mode: first.shareLimitsMode,
+                                  action: first.shareLimitAction)
         sequential = items.map(\.sequentialDownload)
         firstLast = items.map(\.firstLastPiecePriority)
         let publicTorrents = discovery.filter { !$0.private }

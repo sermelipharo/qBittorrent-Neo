@@ -23,6 +23,12 @@ struct TransfersSeedingSegment: View {
                 SpinControl(title: SettingsCatalog.key("max_inactive_seeding_time_enabled"), value: $model.maxInactiveSeedingTime,
                             range: 0...9_999_999, unit: String(localized: "min"), width: FeatureDesign.Width.wideSpinField)
             }
+            Picker(SettingsCatalog.title("share_limits_mode"), selection: $model.draft.bittorrent.shareLimitsMode) {
+                ForEach(PreferenceChoices.shareLimitsModes, id: \.self) { Text(PreferenceChoices.title($0)).tag($0) }
+            }
+            .pickerStyle(.radioGroup)
+            .horizontalRadioGroupLayout()
+            .setting("share_limits_mode")
             Picker(SettingsCatalog.title("max_ratio_act"), selection: $model.draft.bittorrent.maxRatioAct) {
                 ForEach(PreferenceChoices.shareLimitActions, id: \.self) { Text(PreferenceChoices.title($0)).tag($0) }
             }
