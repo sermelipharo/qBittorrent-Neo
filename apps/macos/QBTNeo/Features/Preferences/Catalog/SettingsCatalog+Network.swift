@@ -112,6 +112,13 @@ extension SettingsCatalog {
             SettingSpec("ignore_ssl_errors", .protection, String(localized: "Ignore SSL errors"),
                         help: String(localized: "Unsafe: accepts forged certificates for RSS, updates and downloads."),
                         keywords: ["certificate", "TLS"], check: .pref(\.advanced.ignoreSslErrors)),
+            SettingSpec("plugins_enabled", .plugins, String(localized: "Enable plugins"),
+                        help: String(localized: """
+                            Plugins are Lua programs that react to torrent events. An enabled plugin can run programs and send \
+                            e-mail as you: install plugins only from people you trust.
+                            """),
+                        keywords: ["Lua", "scripts", "extensions", String(localized: "Manage Plugins…")],
+                        check: .pref(\.advanced.pluginsEnabled)),
         ]
     }
 }

@@ -5,11 +5,13 @@ import Foundation
 enum FeatureWindowID: String {
     case rssDownloader = "rss-downloader"
     case searchPlugins = "search-plugins"
+    case plugins
 
     var title: String {
         switch self {
         case .rssDownloader: String(localized: "RSS Downloader")
         case .searchPlugins: String(localized: "Search plugins")
+        case .plugins: String(localized: "Plugins")
         }
     }
 }

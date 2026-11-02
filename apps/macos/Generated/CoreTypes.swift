@@ -281,6 +281,11 @@ public struct AdvancedPrefs: Equatable, Hashable {
      * Stored for WebAPI clients; the engine has no WebTorrent.
      */
     public var webtorrentStunServer: String
+    /**
+     * qBit NeoRS: run Lua plugins (qBittorrent 5.3's plugins engine, a
+     * build option there). Off by default; not settable through the WebAPI.
+     */
+    public var pluginsEnabled: Bool
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -367,7 +372,11 @@ public struct AdvancedPrefs: Equatable, Hashable {
          */dhtBootstrapNodes: String,
         /**
          * Stored for WebAPI clients; the engine has no WebTorrent.
-         */webtorrentStunServer: String) {
+         */webtorrentStunServer: String,
+        /**
+         * qBit NeoRS: run Lua plugins (qBittorrent 5.3's plugins engine, a
+         * build option there). Off by default; not settable through the WebAPI.
+         */pluginsEnabled: Bool) {
         self.resumeDataStorageType = resumeDataStorageType
         self.torrentContentRemoveOption = torrentContentRemoveOption
         self.memoryWorkingSetLimit = memoryWorkingSetLimit
@@ -444,6 +453,7 @@ public struct AdvancedPrefs: Equatable, Hashable {
         self.maxOutstandingBlockRequests = maxOutstandingBlockRequests
         self.dhtBootstrapNodes = dhtBootstrapNodes
         self.webtorrentStunServer = webtorrentStunServer
+        self.pluginsEnabled = pluginsEnabled
     }
 
 }
@@ -1398,6 +1408,194 @@ public struct PeerLogEntry: Equatable, Hashable {
         self.timestamp = timestamp
         self.blocked = blocked
         self.reason = reason
+    }
+
+}
+
+/**
+ * An installed plugin as shown in the Plugins window.
+ */
+public struct PluginInfo: Equatable, Hashable {
+    /**
+     * File name without `.lua` (qBittorrent's plugin ID).
+     */
+    public var id: String
+    /**
+     * `NAME`.
+     */
+    public var name: String
+    /**
+     * `VERSION` ("major.minor").
+     */
+    public var version: String
+    /**
+     * Optional `AUTHOR` (qBit NeoRS extension; "" when absent).
+     */
+    public var author: String
+    /**
+     * Optional `DESCRIPTION` (qBit NeoRS extension; "" when absent).
+     */
+    public var description: String
+    /**
+     * Defines a global `invoke` function (shown in the Plugins menu).
+     */
+    public var invocable: Bool
+    public var enabled: Bool
+    /**
+     * Event handlers the plugin defines (`onTorrentAdded`, ...).
+     */
+    public var handlers: [String]
+    public var filePath: String
+    public var fileSize: Int64
+    /**
+     * SHA-256 of the file, lower-case hex.
+     */
+    public var sha256: String
+    /**
+     * Since the engine started: programs started with `qBittorrent.exec`.
+     */
+    public var programsRun: Int64
+    /**
+     * Since the engine started: e-mails sent with `qBittorrent.sendMail`.
+     */
+    public var mailsSent: Int64
+    /**
+     * Since the engine started: failed or stopped callbacks.
+     */
+    public var failures: Int64
+    /**
+     * The last failure ("" when none).
+     */
+    public var lastError: String
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(
+        /**
+         * File name without `.lua` (qBittorrent's plugin ID).
+         */id: String,
+        /**
+         * `NAME`.
+         */name: String,
+        /**
+         * `VERSION` ("major.minor").
+         */version: String,
+        /**
+         * Optional `AUTHOR` (qBit NeoRS extension; "" when absent).
+         */author: String,
+        /**
+         * Optional `DESCRIPTION` (qBit NeoRS extension; "" when absent).
+         */description: String,
+        /**
+         * Defines a global `invoke` function (shown in the Plugins menu).
+         */invocable: Bool, enabled: Bool,
+        /**
+         * Event handlers the plugin defines (`onTorrentAdded`, ...).
+         */handlers: [String], filePath: String, fileSize: Int64,
+        /**
+         * SHA-256 of the file, lower-case hex.
+         */sha256: String,
+        /**
+         * Since the engine started: programs started with `qBittorrent.exec`.
+         */programsRun: Int64,
+        /**
+         * Since the engine started: e-mails sent with `qBittorrent.sendMail`.
+         */mailsSent: Int64,
+        /**
+         * Since the engine started: failed or stopped callbacks.
+         */failures: Int64,
+        /**
+         * The last failure ("" when none).
+         */lastError: String) {
+        self.id = id
+        self.name = name
+        self.version = version
+        self.author = author
+        self.description = description
+        self.invocable = invocable
+        self.enabled = enabled
+        self.handlers = handlers
+        self.filePath = filePath
+        self.fileSize = fileSize
+        self.sha256 = sha256
+        self.programsRun = programsRun
+        self.mailsSent = mailsSent
+        self.failures = failures
+        self.lastError = lastError
+    }
+
+}
+
+/**
+ * Result of installing a plugin file.
+ */
+public struct PluginInstallResult: Equatable, Hashable {
+    public var plugin: PluginInfo
+    /**
+     * An older version was replaced.
+     */
+    public var updated: Bool
+    /**
+     * The replaced version ("" for a new plugin).
+     */
+    public var previousVersion: String
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(plugin: PluginInfo,
+        /**
+         * An older version was replaced.
+         */updated: Bool,
+        /**
+         * The replaced version ("" for a new plugin).
+         */previousVersion: String) {
+        self.plugin = plugin
+        self.updated = updated
+        self.previousVersion = previousVersion
+    }
+
+}
+
+/**
+ * State of the plugins engine for the Plugins window.
+ */
+public struct PluginsStatus: Equatable, Hashable {
+    /**
+     * The engine runs (the global switch is on and it started).
+     */
+    public var running: Bool
+    /**
+     * The plugins folder.
+     */
+    public var folder: String
+    /**
+     * Installed plugins, sorted by ID.
+     */
+    public var plugins: [PluginInfo]
+    /**
+     * Folder or file problems found while loading (files that did not load).
+     */
+    public var problems: [String]
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(
+        /**
+         * The engine runs (the global switch is on and it started).
+         */running: Bool,
+        /**
+         * The plugins folder.
+         */folder: String,
+        /**
+         * Installed plugins, sorted by ID.
+         */plugins: [PluginInfo],
+        /**
+         * Folder or file problems found while loading (files that did not load).
+         */problems: [String]) {
+        self.running = running
+        self.folder = folder
+        self.plugins = plugins
+        self.problems = problems
     }
 
 }
@@ -3093,6 +3291,11 @@ public enum CoreEvent: Equatable, Hashable {
      * A WebAPI client or signal asked the application to quit.
      */
     case shutdownRequested
+    /**
+     * Plugins were loaded, installed, updated, removed, enabled or
+     * disabled, or the engine started or stopped.
+     */
+    case pluginsChanged
 
 }
 
@@ -3456,6 +3659,9 @@ extension MetadataFile: Sendable {}
 extension NetworkInterface: Sendable {}
 extension PeerInfo: Sendable {}
 extension PeerLogEntry: Sendable {}
+extension PluginInfo: Sendable {}
+extension PluginInstallResult: Sendable {}
+extension PluginsStatus: Sendable {}
 extension Preferences: Sendable {}
 extension RssArticle: Sendable {}
 extension RssAutoDownloadRule: Sendable {}
@@ -3599,7 +3805,7 @@ extension AddTorrentParams: Codable {
 
 extension AdvancedPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, confirmRemoveAllTags, confirmRemoveTrackerFromAllTorrents, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, seedingOutgoingConnections, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, enableMultiConnectionsFromSamePeerId, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, maxOutstandingBlockRequests, dhtBootstrapNodes, webtorrentStunServer
+        case resumeDataStorageType, torrentContentRemoveOption, memoryWorkingSetLimit, currentNetworkInterface, currentInterfaceName, currentInterfaceAddress, saveResumeDataInterval, saveStatisticsInterval, torrentFileSizeLimit, confirmTorrentRecheck, confirmRemoveAllTags, confirmRemoveTrackerFromAllTorrents, recheckCompletedTorrents, appInstanceName, refreshInterval, resolvePeerHostNames, resolvePeerCountries, reannounceWhenAddressChanged, enableEmbeddedTracker, embeddedTrackerPort, embeddedTrackerPortForwarding, markOfTheWeb, ignoreSslErrors, pythonExecutablePath, startPaused, shutdownTimeout, bdecodeDepthLimit, bdecodeTokenLimit, asyncIoThreads, hashingThreads, filePoolSize, checkingMemoryUse, diskCache, diskCacheTtl, diskQueueSize, diskIoType, diskIoReadMode, diskIoWriteMode, enableCoalesceReadWrite, enablePieceExtentAffinity, enableUploadSuggestions, sendBufferWatermark, sendBufferLowWatermark, sendBufferWatermarkFactor, connectionSpeed, seedingOutgoingConnections, socketSendBufferSize, socketReceiveBufferSize, socketBacklogSize, outgoingPortsMin, outgoingPortsMax, upnpLeaseDuration, peerTos, utpTcpMixedMode, hostnameCacheTtl, idnSupportEnabled, enableMultiConnectionsFromSameIp, enableMultiConnectionsFromSamePeerId, validateHttpsTrackerCertificate, ssrfMitigation, blockPeersOnPrivilegedPorts, uploadSlotsBehavior, uploadChokingAlgorithm, announceToAllTrackers, announceToAllTiers, announceIp, announcePort, maxConcurrentHttpAnnounces, stopTrackerTimeout, peerTurnover, peerTurnoverCutoff, peerTurnoverInterval, requestQueueSize, maxOutstandingBlockRequests, dhtBootstrapNodes, webtorrentStunServer, pluginsEnabled
     }
 
     static var neoEmpty: AdvancedPrefs {
@@ -3684,6 +3890,7 @@ extension AdvancedPrefs: Codable {
         let v73: Int64 = try c.decodeIfPresent(Int64.self, forKey: .maxOutstandingBlockRequests) ?? 0
         let v74: String = try c.decodeIfPresent(String.self, forKey: .dhtBootstrapNodes) ?? ""
         let v75: String = try c.decodeIfPresent(String.self, forKey: .webtorrentStunServer) ?? ""
+        let v76: Bool = try c.decodeIfPresent(Bool.self, forKey: .pluginsEnabled) ?? false
         self.init(
             resumeDataStorageType: v0,
             torrentContentRemoveOption: v1,
@@ -3760,7 +3967,8 @@ extension AdvancedPrefs: Codable {
             requestQueueSize: v72,
             maxOutstandingBlockRequests: v73,
             dhtBootstrapNodes: v74,
-            webtorrentStunServer: v75
+            webtorrentStunServer: v75,
+            pluginsEnabled: v76
         )
     }
 }
@@ -4419,6 +4627,98 @@ extension PeerLogEntry: Codable {
             timestamp: v2,
             blocked: v3,
             reason: v4
+        )
+    }
+}
+
+extension PluginInfo: Codable {
+    enum CodingKeys: String, CodingKey {
+        case id, name, version, author, description, invocable, enabled, handlers, filePath, fileSize, sha256, programsRun, mailsSent, failures, lastError
+    }
+
+    static var neoEmpty: PluginInfo {
+        (try? JSONDecoder().decode(PluginInfo.self, from: Data("{}".utf8)))!
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let v0: String = try c.decodeIfPresent(String.self, forKey: .id) ?? ""
+        let v1: String = try c.decodeIfPresent(String.self, forKey: .name) ?? ""
+        let v2: String = try c.decodeIfPresent(String.self, forKey: .version) ?? ""
+        let v3: String = try c.decodeIfPresent(String.self, forKey: .author) ?? ""
+        let v4: String = try c.decodeIfPresent(String.self, forKey: .description) ?? ""
+        let v5: Bool = try c.decodeIfPresent(Bool.self, forKey: .invocable) ?? false
+        let v6: Bool = try c.decodeIfPresent(Bool.self, forKey: .enabled) ?? false
+        let v7: [String] = try c.decodeIfPresent([String].self, forKey: .handlers) ?? []
+        let v8: String = try c.decodeIfPresent(String.self, forKey: .filePath) ?? ""
+        let v9: Int64 = try c.decodeIfPresent(Int64.self, forKey: .fileSize) ?? 0
+        let v10: String = try c.decodeIfPresent(String.self, forKey: .sha256) ?? ""
+        let v11: Int64 = try c.decodeIfPresent(Int64.self, forKey: .programsRun) ?? 0
+        let v12: Int64 = try c.decodeIfPresent(Int64.self, forKey: .mailsSent) ?? 0
+        let v13: Int64 = try c.decodeIfPresent(Int64.self, forKey: .failures) ?? 0
+        let v14: String = try c.decodeIfPresent(String.self, forKey: .lastError) ?? ""
+        self.init(
+            id: v0,
+            name: v1,
+            version: v2,
+            author: v3,
+            description: v4,
+            invocable: v5,
+            enabled: v6,
+            handlers: v7,
+            filePath: v8,
+            fileSize: v9,
+            sha256: v10,
+            programsRun: v11,
+            mailsSent: v12,
+            failures: v13,
+            lastError: v14
+        )
+    }
+}
+
+extension PluginInstallResult: Codable {
+    enum CodingKeys: String, CodingKey {
+        case plugin, updated, previousVersion
+    }
+
+    static var neoEmpty: PluginInstallResult {
+        (try? JSONDecoder().decode(PluginInstallResult.self, from: Data("{}".utf8)))!
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let v0: PluginInfo = try c.decodeIfPresent(PluginInfo.self, forKey: .plugin) ?? PluginInfo.neoEmpty
+        let v1: Bool = try c.decodeIfPresent(Bool.self, forKey: .updated) ?? false
+        let v2: String = try c.decodeIfPresent(String.self, forKey: .previousVersion) ?? ""
+        self.init(
+            plugin: v0,
+            updated: v1,
+            previousVersion: v2
+        )
+    }
+}
+
+extension PluginsStatus: Codable {
+    enum CodingKeys: String, CodingKey {
+        case running, folder, plugins, problems
+    }
+
+    static var neoEmpty: PluginsStatus {
+        (try? JSONDecoder().decode(PluginsStatus.self, from: Data("{}".utf8)))!
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let v0: Bool = try c.decodeIfPresent(Bool.self, forKey: .running) ?? false
+        let v1: String = try c.decodeIfPresent(String.self, forKey: .folder) ?? ""
+        let v2: [PluginInfo] = try c.decodeIfPresent([PluginInfo].self, forKey: .plugins) ?? []
+        let v3: [String] = try c.decodeIfPresent([String].self, forKey: .problems) ?? []
+        self.init(
+            running: v0,
+            folder: v1,
+            plugins: v2,
+            problems: v3
         )
     }
 }

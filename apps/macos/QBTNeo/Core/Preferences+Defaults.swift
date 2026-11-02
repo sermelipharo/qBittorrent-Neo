@@ -126,6 +126,6 @@ extension AdvancedPrefs {
         peerTurnover: 4, peerTurnoverCutoff: 90, peerTurnoverInterval: 300, requestQueueSize: 500,
         maxOutstandingBlockRequests: 2000,
         dhtBootstrapNodes: "dht.libtorrent.org:25401, dht.transmissionbt.com:6881, router.bittorrent.com:6881",
-        webtorrentStunServer: "stun.l.google.com:19302"
+        webtorrentStunServer: "stun.l.google.com:19302", pluginsEnabled: false
     )
 }

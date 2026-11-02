@@ -19,7 +19,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
     // Network
     case connectionStatus, listeningPort, findingPeers, protocolLimits
     // Privacy
-    case encryption, vpn, proxy, ipFilter, appLock, downloadedFiles, i2p, protection
+    case encryption, vpn, proxy, ipFilter, appLock, downloadedFiles, i2p, protection, plugins
     // Remote
     case webUI, webUIAddress, signIn, https, accessRules, alternativeWebUI, webUISecurity, dynamicDNS
     // Transfers › Search & RSS
@@ -42,7 +42,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
              .search, .rss, .smartEpisodeFilter: .transfers
         case .globalLimits, .alternativeLimits, .schedule, .rateLimitSettings: .speed
         case .connectionStatus, .listeningPort, .findingPeers, .protocolLimits: .network
-        case .encryption, .vpn, .proxy, .ipFilter, .appLock, .downloadedFiles, .i2p, .protection: .privacy
+        case .encryption, .vpn, .proxy, .ipFilter, .appLock, .downloadedFiles, .i2p, .protection, .plugins: .privacy
         case .webUI, .webUIAddress, .signIn, .https, .accessRules, .alternativeWebUI, .webUISecurity, .dynamicDNS: .remote
         case .showAdvanced, .logs, .dataRecovery, .diskMemory, .networkTuning, .peersUploading, .trackersAnnouncing, .dht,
              .safetyLimits, .embeddedTracker: .advanced
@@ -119,6 +119,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .downloadedFiles: String(localized: "Downloaded Files")
         case .i2p: String(localized: "I2P (experimental)")
         case .protection: String(localized: "Protection")
+        case .plugins: String(localized: "Plugins")
         case .webUI: String(localized: "Web Interface")
         case .webUIAddress: String(localized: "Address")
         case .signIn: String(localized: "Sign-In")

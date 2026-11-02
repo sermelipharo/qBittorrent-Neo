@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Menu bar commands mirroring qBittorrent's File / Edit / View / Tools / Help.
+/// Menu bar commands mirroring qBittorrent's File / Edit / View / Tools / Plugins / Help.
 struct AppCommands: Commands {
     let model: AppModel
     @Environment(\.openWindow) private var openWindow
@@ -47,6 +47,24 @@ struct AppCommands: Commands {
                 Picker("On Downloads Done", selection: Bindable(model.gui).completionAction) {
                     ForEach(CompletionAction.allCases) { action in
                         Text(action.title).tag(action)
+                    }
+                }
+            }
+            .disabled(model.lock.isLocked)
+        }
+
+        // qBittorrent 5.3's Plugins menu (`MainWindow::populatePluginsMenu`):
+        // "Manage Plugins…", then the enabled plugins that can be invoked.
+        CommandMenu("Plugins") {
+            Group {
+                Button("Manage Plugins…", systemImage: Symbol.puzzlepieceExtension) {
+                    openWindow(id: FeatureWindowID.plugins.rawValue)
+                }
+                .help("Manage installed plugins")
+                if !model.invocablePlugins.isEmpty {
+                    Divider()
+                    ForEach(model.invocablePlugins) { plugin in
+                        Button(plugin.name) { model.invokePlugin(plugin.id) }
                     }
                 }
             }

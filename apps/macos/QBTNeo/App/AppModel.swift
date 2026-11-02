@@ -44,6 +44,8 @@ final class AppModel {
     var fileImport: FileImportRequest?
     /// A setting the Settings window should reveal when it appears (Command Palette).
     var pendingSettingReveal: String?
+    /// Enabled plugins with an `invoke` function (Plugins menu), see `refreshInvocablePlugins`.
+    var invocablePlugins: [PluginInfo] = []
     var isMainWindowVisible = true {
         didSet { if isMainWindowVisible, !oldValue { restartRefreshLoop() } }
     }
@@ -111,6 +113,7 @@ final class AppModel {
         log.append(contentsOf: client.mainLog(lastKnownId: -1, levels: []))
         phase = .running
         restartRefreshLoop()
+        refreshInvocablePlugins()
         if gui.notificationsEnabled, !launch.isSnapshot {
             Task { await notifications.requestAuthorization { [weak self] in self?.appendLocalLog($0) } }
         }
@@ -228,6 +231,8 @@ final class AppModel {
             log.append(message)
         case .preferencesChanged:
             if let client { corePreferences = client.preferences() }
+        case .pluginsChanged:
+            refreshInvocablePlugins()
         case .shutdownRequested:
             NSApp.terminate(nil)
         case .allTorrentsFinished:

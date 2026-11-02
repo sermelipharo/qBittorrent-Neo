@@ -12720,6 +12720,26 @@
         }
       }
     },
+    "Activity:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активность:"
+          }
+        }
+      }
+    },
+    "An enabled plugin can run programs and send e-mail as you. Install plugins only from people you trust.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включённый плагин может запускать программы и отправлять письма от вашего имени. Устанавливайте плагины только от тех, кому доверяете."
+          }
+        }
+      }
+    },
     "API key set": {
       "localizations": {
         "ru": {
@@ -74814,12 +74834,32 @@
         }
       }
     },
+    "Couldn't install plugin from file '%@'.\n%@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось установить плагин из файла «%1$@».\n%2$@"
+          }
+        }
+      }
+    },
     "Couldn't save the settings: %@": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Не удалось сохранить настройки: %@"
+          }
+        }
+      }
+    },
+    "Couldn't update plugin '%@' from file '%@'.\n%@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось обновить плагин «%1$@» из файла «%2$@».\n%3$@"
           }
         }
       }
@@ -78336,6 +78376,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Голубой"
+          }
+        }
+      }
+    },
+    "Description:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Описание:"
           }
         }
       }
@@ -101198,6 +101248,16 @@
         }
       }
     },
+    "Enable plugins": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включить плагины"
+          }
+        }
+      }
+    },
     "ETA": {
       "localizations": {
         "ar": {
@@ -114457,6 +114517,16 @@
         }
       }
     },
+    "Events:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "События:"
+          }
+        }
+      }
+    },
     "Every day": {
       "localizations": {
         "ar": {
@@ -120065,6 +120135,16 @@
         }
       }
     },
+    "Failed to uninstall plugin '%@'.\n%@": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось удалить плагин «%1$@».\n%2$@"
+          }
+        }
+      }
+    },
     "Fastest upload": {
       "localizations": {
         "ar": {
@@ -122867,6 +122947,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "檔案叢集大小"
+          }
+        }
+      }
+    },
+    "File:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файл:"
           }
         }
       }
@@ -126261,6 +126351,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сначала первые и последние части"
+          }
+        }
+      }
+    },
+    "Fix the permissions, then turn plugins off and on again.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исправьте права доступа, затем выключите и снова включите плагины."
           }
         }
       }
@@ -138660,6 +138760,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "I2P 傳出量"
+          }
+        }
+      }
+    },
+    "ID": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ID"
+          }
+        }
+      }
+    },
+    "Install/Update plugins": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Установить/обновить плагины"
+          }
+        }
+      }
+    },
+    "Installed plugins:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Установленные плагины:"
+          }
+        }
+      }
+    },
+    "Invocable": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вызываемый"
+          }
+        }
+      }
+    },
+    "Invoke": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вызвать"
           }
         }
       }
@@ -151991,6 +152141,16 @@
         }
       }
     },
+    "Last error:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последняя ошибка:"
+          }
+        }
+      }
+    },
     "Last Match: %lld days ago": {
       "localizations": {
         "ar": {
@@ -158433,6 +158593,16 @@
         }
       }
     },
+    "Lua plugins can react to torrent events and run programs. Turn them on in Settings › Privacy to manage them here.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагины на Lua могут реагировать на события торрентов и запускать программы. Включите их в Настройки › Конфиденциальность, чтобы управлять ими здесь."
+          }
+        }
+      }
+    },
     "Magnet Link": {
       "localizations": {
         "ar": {
@@ -159831,6 +160001,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "管理 cookie…"
+          }
+        }
+      }
+    },
+    "Manage installed plugins": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управление установленными плагинами"
+          }
+        }
+      }
+    },
+    "Manage Plugins…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управление плагинами…"
           }
         }
       }
@@ -190240,6 +190430,16 @@
         }
       }
     },
+    "Open Settings…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть настройки…"
+          }
+        }
+      }
+    },
     "Open torrent options dialog": {
       "localizations": {
         "az-Latn": {
@@ -194762,6 +194962,106 @@
           "stringUnit": {
             "state": "translated",
             "value": "經常消耗上傳"
+          }
+        }
+      }
+    },
+    "Plugin '%@' installed.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагин «%@» установлен."
+          }
+        }
+      }
+    },
+    "Plugin '%@' uninstalled.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагин «%@» удалён."
+          }
+        }
+      }
+    },
+    "Plugin '%@' updated to version %@.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагин «%1$@» обновлён до версии %2$@."
+          }
+        }
+      }
+    },
+    "Plugin install": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Установка плагина"
+          }
+        }
+      }
+    },
+    "Plugin provides 'invoke' function that is called when user triggers corresponding plugin action from 'Plugins' menu.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагин содержит функцию «invoke», которая вызывается, когда пользователь выбирает действие плагина в меню «Плагины»."
+          }
+        }
+      }
+    },
+    "Plugin uninstall": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удаление плагина"
+          }
+        }
+      }
+    },
+    "Plugin update": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновление плагина"
+          }
+        }
+      }
+    },
+    "Plugins are Lua programs that react to torrent events. An enabled plugin can run programs and send e-mail as you: install plugins only from people you trust.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагины — это программы на Lua, реагирующие на события торрентов. Включённый плагин может запускать программы и отправлять письма от вашего имени: устанавливайте плагины только от тех, кому доверяете."
+          }
+        }
+      }
+    },
+    "Plugins are turned off": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагины выключены"
+          }
+        }
+      }
+    },
+    "Plugins were not started": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плагины не запущены"
           }
         }
       }
@@ -213285,6 +213585,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "私人："
+          }
+        }
+      }
+    },
+    "Programs run: %lld, e-mails sent: %lld, failures: %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запущено программ: %1$lld, отправлено писем: %2$lld, сбоев: %3$lld"
           }
         }
       }
@@ -240973,6 +241283,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Компилятор Rust:"
+          }
+        }
+      }
+    },
+    "Select plugins": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите плагины"
+          }
+        }
+      }
+    },
+    "SHA-256:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SHA-256:"
           }
         }
       }

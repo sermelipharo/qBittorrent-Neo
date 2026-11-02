@@ -1,9 +1,10 @@
 import SwiftUI
 
-/// Settings › Privacy: encryption, VPN binding, proxy, IP blocking, app lock.
+/// Settings › Privacy: encryption, VPN binding, proxy, IP blocking, app lock, plugins.
 struct PrivacyPane: View {
     @Bindable var model: PreferencesModel
     @State private var network = NetworkInterfacesModel()
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         SettingsPaneView(.privacy, model: model) {
@@ -81,6 +82,21 @@ struct PrivacyPane: View {
                     }
                 }
                 .setting("ignore_ssl_errors", help: false)
+            }
+
+            SettingsGroup(.plugins) {
+                VStack(alignment: .leading, spacing: SettingsLayout.footnoteSpacing) {
+                    HStack(spacing: Design.Spacing.regular) {
+                        Toggle(SettingsCatalog.title("plugins_enabled"), isOn: $model.draft.advanced.pluginsEnabled)
+                        Button(String(localized: "Manage Plugins…")) { openWindow(id: FeatureWindowID.plugins.rawValue) }
+                    }
+                    if let help = SettingsCatalog.help("plugins_enabled") {
+                        SettingFootnote(text: help, style: model.draft.advanced.pluginsEnabled ? .warning : .secondary)
+                    }
+                }
+                .setting("plugins_enabled", help: false)
+            } content: {
+                EmptyView()
             }
         }
         .task(id: model.draft.advanced.currentNetworkInterface) {

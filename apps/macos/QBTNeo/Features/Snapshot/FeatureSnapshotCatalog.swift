@@ -29,6 +29,9 @@ enum FeatureSnapshotCatalog {
             Entry(name: "searchplugins", title: FeatureWindowID.searchPlugins.title, size: CGSize(width: 720, height: 460)) { _ in
                 AnyView(SearchPluginsWindow())
             },
+            Entry(name: "plugins", title: FeatureWindowID.plugins.title, size: CGSize(width: 720, height: 560)) { _ in
+                AnyView(PluginsWindow(initialSelection: "RunExternalProgram"))
+            },
             Entry(name: "rssdownloader", title: FeatureWindowID.rssDownloader.title, size: CGSize(width: 1_200, height: 900)) { _ in
                 AnyView(RSSDownloaderWindow())
             },

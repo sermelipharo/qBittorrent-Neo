@@ -60,6 +60,8 @@ enum SettingsCatalogCheck {
         "upload_choking_algorithm", "announce_to_all_trackers", "announce_to_all_tiers", "announce_ip", "announce_port",
         "max_concurrent_http_announces", "stop_tracker_timeout", "peer_turnover", "peer_turnover_cutoff", "peer_turnover_interval",
         "request_queue_size", "max_outstanding_block_requests", "dht_bootstrap_nodes",
+        // qBittorrent Neo, not in the WebAPI: the Lua plugins switch.
+        "plugins_enabled",
     ]
 
     /// GUI-only keys with a Settings control (settings-ia.md §8.2).

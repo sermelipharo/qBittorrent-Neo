@@ -56,6 +56,12 @@ struct AuxiliaryWindows: Scene {
         .restorationBehavior(.disabled)
         .defaultSize(width: 720, height: 460)
 
+        Window(FeatureWindowID.plugins.title, id: FeatureWindowID.plugins.rawValue) {
+            PluginsWindow().lockGated().environment(model)
+        }
+        .restorationBehavior(.disabled)
+        .defaultSize(width: 720, height: 520)
+
         Window(AppWindowID.about.title, id: AppWindowID.about.rawValue) {
             AboutWindow().lockGated().environment(model)
         }
