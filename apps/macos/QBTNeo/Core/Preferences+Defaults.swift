@@ -33,7 +33,7 @@ extension DownloadsPrefs {
         useCategoryPathsInManualMode: false, exportDir: "", exportDirFin: "", watchedFolders: [],
         excludedFileNamesEnabled: false, excludedFileNames: [], mailNotificationEnabled: false,
         mailNotificationSender: "qBittorrent_notification@example.com", mailNotificationEmail: "",
-        mailNotificationSmtp: "smtp.changeme.com", mailNotificationSslEnabled: false,
+        mailNotificationSmtp: "smtp.changeme.com", mailNotificationEncryptionType: .smtps,
         mailNotificationAuthEnabled: false, mailNotificationUsername: "", mailNotificationPassword: "",
         autorunOnTorrentAddedEnabled: false, autorunOnTorrentAddedProgram: "", autorunEnabled: false,
         autorunProgram: ""

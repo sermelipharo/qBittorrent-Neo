@@ -68,6 +68,11 @@ namespace
         }
     };
 
+    // SMTPS first: unknown names fall back to it, as toEnum(..., SMTPS).
+    const NameTable<Net::SMTPEncryptionType> SMTP_ENCRYPTION_TYPES {{
+        {Net::SMTPEncryptionType::SMTPS, u"smtps"_s}, {Net::SMTPEncryptionType::STARTTLS, u"starttls"_s},
+        {Net::SMTPEncryptionType::None, u"none"_s}}};
+
     const NameTable<int> FILE_LOG_AGE_TYPES {{{0, u"days"_s}, {1, u"months"_s}, {2, u"years"_s}}};
     const NameTable<TorrentFileGuard::AutoDeleteMode> AUTO_DELETE_MODES {{
         {TorrentFileGuard::Never, u"never"_s}, {TorrentFileGuard::IfAdded, u"ifAdded"_s}, {TorrentFileGuard::Always, u"always"_s}}};
@@ -229,7 +234,7 @@ namespace
             {u"mailNotificationSender"_s, pref->getMailNotificationSender()},
             {u"mailNotificationEmail"_s, pref->getMailNotificationEmail()},
             {u"mailNotificationSmtp"_s, pref->getMailNotificationSMTP()},
-            {u"mailNotificationSslEnabled"_s, pref->getMailNotificationSMTPEncryptionType() != Net::SMTPEncryptionType::None},
+            {u"mailNotificationEncryptionType"_s, SMTP_ENCRYPTION_TYPES.name(pref->getMailNotificationSMTPEncryptionType())},
             {u"mailNotificationAuthEnabled"_s, pref->getMailNotificationSMTPAuth()},
             {u"mailNotificationUsername"_s, pref->getMailNotificationSMTPUsername()},
             {u"mailNotificationPassword"_s, pref->getMailNotificationSMTPPassword()},
@@ -573,14 +578,9 @@ namespace
         s[u"downloads.mailNotificationSender"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSender(v.toString()); };
         s[u"downloads.mailNotificationEmail"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationEmail(v.toString()); };
         s[u"downloads.mailNotificationSmtp"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTP(v.toString()); };
-        // Turning encryption on keeps a chosen STARTTLS; otherwise SMTPS, as the old "SSL" box meant.
-        s[u"downloads.mailNotificationSslEnabled"_s] = [pref](const QJsonValue &v)
+        s[u"downloads.mailNotificationEncryptionType"_s] = [pref](const QJsonValue &v)
         {
-            const Net::SMTPEncryptionType current = pref->getMailNotificationSMTPEncryptionType();
-            if (!v.toBool())
-                pref->setMailNotificationSMTPEncryptionType(Net::SMTPEncryptionType::None);
-            else if (current == Net::SMTPEncryptionType::None)
-                pref->setMailNotificationSMTPEncryptionType(Net::SMTPEncryptionType::SMTPS);
+            pref->setMailNotificationSMTPEncryptionType(SMTP_ENCRYPTION_TYPES.value(v.toString()));
         };
         s[u"downloads.mailNotificationAuthEnabled"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPAuth(v.toBool()); };
         s[u"downloads.mailNotificationUsername"_s] = [pref](const QJsonValue &v) { pref->setMailNotificationSMTPUsername(v.toString()); };

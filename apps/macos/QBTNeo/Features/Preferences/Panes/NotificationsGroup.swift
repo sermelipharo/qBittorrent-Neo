@@ -44,8 +44,11 @@ struct NotificationsGroup: View {
                         text: $model.draft.downloads.mailNotificationSmtp, prompt: "smtp.example.com:465", trims: true)
             .help(Self.serverHelp)
             .setting("mail_notification_smtp")
-        Toggle(SettingsCatalog.title("mail_notification_ssl_enabled"), isOn: $model.draft.downloads.mailNotificationSslEnabled)
-            .setting("mail_notification_ssl_enabled")
+        Picker(SettingsCatalog.title("mail_notification_encryption_type"), selection: $model.draft.downloads.mailNotificationEncryptionType) {
+            ForEach(PreferenceChoices.smtpEncryptionTypes, id: \.self) { Text(PreferenceChoices.title($0)).tag($0) }
+        }
+        .help(Self.encryptionHelp)
+        .setting("mail_notification_encryption_type")
         Toggle(SettingsCatalog.title("mail_notification_auth_enabled"), isOn: $model.draft.downloads.mailNotificationAuthEnabled)
             .setting("mail_notification_auth_enabled")
         if model.draft.downloads.mailNotificationAuthEnabled {
@@ -86,6 +89,22 @@ struct NotificationsGroup: View {
             + String(localized: "To manually specify the server port, add a colon and then the port number to the end."),
          String(localized: "Example:") + "\n"
             + String(localized: "smtp.example.com:465 - connect to server smtp.example.com on port 465")]
+            .joined(separator: "\n\n")
+    }
+
+    /// qBittorrent 5.3's tooltip on "SMTP encryption", as plain text.
+    private static var encryptionHelp: String {
+        let defaultPort = String(localized: "Default port")
+        let entry = { (name: String, what: String, advice: String, port: Int) in
+            "\(name): \(what)\n\(advice) [\(defaultPort)] : [\(port)]"
+        }
+        return [String(localized: "Select the encryption type used when sending SMTP emails"),
+                entry(String(localized: "None"), String(localized: "no encryption used when sending emails"),
+                      String(localized: "(last choice if no other option)"), 25),
+                entry("STARTTLS", String(localized: "use STARTTLS encryption when sending emails"),
+                      String(localized: "(alternative choice if supported)"), 587),
+                entry("SMTPS", String(localized: "use SMTPS encryption when sending emails"),
+                      String(localized: "(best choice if supported)"), 465)]
             .joined(separator: "\n\n")
     }
 

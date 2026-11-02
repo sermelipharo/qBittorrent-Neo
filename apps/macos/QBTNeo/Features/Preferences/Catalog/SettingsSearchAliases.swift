@@ -54,7 +54,7 @@ enum SettingsSearchAliases {
         "mail_notification_sender": ["Preferences/MailNotification/sender", "Email notification upon download completion"],
         "mail_notification_email": ["Preferences/MailNotification/email", "Email notification upon download completion"],
         "mail_notification_smtp": ["Preferences/MailNotification/smtp_server", "Email notification upon download completion"],
-        "mail_notification_ssl_enabled": ["Preferences/MailNotification/req_ssl", "Email notification upon download completion"],
+        "mail_notification_encryption_type": ["Preferences/MailNotification/SMTPEncryptionType", "Email notification upon download completion"],
         "mail_notification_auth_enabled": ["Preferences/MailNotification/req_auth", "Email notification upon download completion"],
         "mail_notification_username": ["Preferences/MailNotification/username", "Email notification upon download completion"],
         "mail_notification_password": ["Preferences/MailNotification/password", "Email notification upon download completion"],

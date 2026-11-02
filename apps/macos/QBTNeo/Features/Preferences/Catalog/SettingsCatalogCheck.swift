@@ -15,7 +15,7 @@ enum SettingsCatalogCheck {
         "torrent_changed_tmm_enabled", "save_path_changed_tmm_enabled", "category_changed_tmm_enabled", "save_path", "temp_path_enabled",
         "temp_path", "use_category_paths_in_manual_mode", "export_dir", "export_dir_fin", "scan_dirs", "excluded_file_names_enabled",
         "excluded_file_names", "mail_notification_enabled", "mail_notification_sender", "mail_notification_email", "mail_notification_smtp",
-        "mail_notification_ssl_enabled", "mail_notification_auth_enabled", "mail_notification_username", "mail_notification_password",
+        "mail_notification_encryption_type", "mail_notification_auth_enabled", "mail_notification_username", "mail_notification_password",
         "autorun_on_torrent_added_enabled", "autorun_on_torrent_added_program", "autorun_enabled", "autorun_program", "listen_port",
         "ssl_enabled", "ssl_listen_port", "random_port", "upnp", "max_connec", "max_connec_per_torrent", "max_uploads",
         "max_uploads_per_torrent", "i2p_enabled", "i2p_address", "i2p_port", "i2p_mixed_mode", "i2p_inbound_quantity",

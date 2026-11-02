@@ -6759,6 +6759,504 @@
         }
       }
     },
+    "(alternative choice if supported)": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(другі варыянт, калі падтрымліваецца)"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternativna opcija ako je podržana)"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(opció alternativa si és compatible)"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternativní volba, pokud je podporována)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternative Wahl wenn unterstützt)"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternative choice if supported)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(opción alternativa si está disponible)"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternative choice if supported)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(choix alternatif si possible)"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(opción alternativa se é compatible)"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternativni izbor ako je podržan)"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternatív választás, ha támogatott)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(scelta alternativa se supportata)"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(지원되는 경우 대체 선택)"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(समर्थित भएमा वैकल्पिक विकल्प)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternatieve optie, indien ondersteund)"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternatywny wybór, jeśli obsługiwany)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(escolha alternativa se suportado)"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(opção alternativa, se suportada)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(альтернативный выбор, если поддерживается)"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternatívna voľba, ak je podporovaná)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(alternativt val om det stöds)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(destekleniyorsa alternatif seçim)"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(альтернативний варіант, якщо він підтримується)"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(lựa chọn thay thế nếu hỗ trợ)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（如果支持，可选此项）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（若支援，則為替代選項）"
+          }
+        }
+      }
+    },
+    "(best choice if supported)": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(найлепшы выбар, калі падтрымліваецца)"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(najbolja opcija ako je podržana)"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(millor opció si és compatible)"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(nejlepší volba, pokud je podporováno)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(beste Wahl wenn unterstützt)"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(best choice if supported)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(mejor opción si está disponible)"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(best choice if supported)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(meilleur choix si disponible)"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(mellor opción se é compatible)"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(najbolji izbor ako je podržan)"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(legjobb választás ha támogatott)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(scelta migliore se supportata)"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(지원되는 경우 최선의 선택)"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(समर्थित भएमा उत्तम विकल्प)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(de beste keuze, indien ondersteund)"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(najlepszy wybór, jeśli jest obsługiwany)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(melhor escolha se suportado)"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(melhor opção, se suportada)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(лучший выбор, если поддерживается)"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(najlepšia voľba, ak je podporovaná)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(bästa valet om det stöds)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(destekleniyorsa en iyi seçim)"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(найкращий варіант, якщо підтримується)"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(lựa chọn tốt nhất nếu hỗ trợ)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（如果支持，这是最佳选择）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（若支援，則為最佳選擇）"
+          }
+        }
+      }
+    },
+    "(last choice if no other option)": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(крайняя мера, калі няма іншага выбару)"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(posljednja opcija ako nema drugih izbora)"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(última opció si no n'hi ha cap altra)"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(poslední volba, pokud není jiná možnost)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(letzte Wahl wenn keine andere Option)"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(last choice if no other option)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(última opción si no hay otra alternativa)"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(last choice if no other option)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(dernier choix en l'absence d'autre option)"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(última opción se non hai outra dispoñible)"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(posljednji izbor, ako nema druge opcije)"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(utolsó választás, ha nincs más opció)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(ultima scelta se non c'è altra opzione)"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(다른 옵션이 없는 경우 마지막 선택)"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(अन्य विकल्प नभए अन्तिम विकल्प)"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(laatste optie als er geen andere mogelijkheid is)"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(ostatni wybór, jeśli nie ma innej opcji)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(última escolha se não houver outra opção)"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(última opção se nenhuma outra estiver disponível)"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(крайний вариант, если других нет)"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(posledná voľba, ak nie je žiadna iná)"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(sista valet om inget annat alternativ finns)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(başka seçenek yoksa son seçenek)"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(останній варіант, якщо інших немає)"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(lựa chọn cuối cùng nếu không còn lựa chọn nào khác)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（若无其他选项，则作为最终选择）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（若無其他選項，則作為最終選擇）"
+          }
+        }
+      }
+    },
     "--Currently used categories--": {
       "localizations": {
         "ru": {
@@ -79944,6 +80442,178 @@
           "stringUnit": {
             "state": "translated",
             "value": "Цвет по умолчанию"
+          }
+        }
+      }
+    },
+    "Default port": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прадвызначаны порт"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadani port"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port per defecte"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Výchozí port"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard-Port"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default port"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puerto por defecto"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oletusportti"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Port par défaut"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Porto predeterminado"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zadani port"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alapértelmezett port"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Porta predefinita"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기본 포트"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Numatytasis prievadas"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूर्वनिर्धारित पोर्ट"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standaardpoort"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Domyślny port"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Porta padrão"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Porta predefinida"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стандартный порт"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Predvolený port"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardport"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Varsayılan bağlantı noktası"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Порт за замовчуванням"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cổng mặc định"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "默认端口"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "預設連接埠"
           }
         }
       }
@@ -238301,6 +238971,172 @@
         }
       }
     },
+    "SMTP encryption:": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шыфраванне SMTP:"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP šifriranje:"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encriptació SMTP:"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP šifrování:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP-Verschlüsselung:"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP encryption:"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cifrado SMTP:"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP-salaus:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chiffrement SMTP :"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cifrado SMTP:"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP enkripcija:"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP titkosítás"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criptazione SMTP"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP 암호화:"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP इन्क्रिप्शन:"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP-versleuteling:"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Szyfrowanie SMTP:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Criptografia SMTP:"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encriptação SMTP:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шифрование SMTP:"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP šifrovanie:"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP-kryptering:"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP şifrelemesi:"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шифрування SMTP:"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mã hóa SMTP:"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP 加密："
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP 加密："
+          }
+        }
+      }
+    },
     "SMTP server:": {
       "localizations": {
         "ar": {
@@ -253387,6 +254223,166 @@
           "stringUnit": {
             "state": "translated",
             "value": "選擇搜尋附加元件"
+          }
+        }
+      }
+    },
+    "Select the encryption type used when sending SMTP emails": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберыце тып шыфравання для перадачы электронных лістоў праз SMTP"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odaberite vrstu šifriranja koja se koristi pri slanju SMTP e-mailova."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleccioneu el tipus d'encriptació que s'usarà en enviar correus electrònics SMTP"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vyberte typ šifrování, který má být použit při odesílání e-mailů pomocí SMTP"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wähle den Verschlüsselungstyp für das Senden von Emails"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select the encryption type used when sending SMTP emails"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleccione el tipo de encriptado que se usará al enviar correos electrónicos SMTP"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select the encryption type used when sending SMTP emails"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez le type de chiffrement utilisé lors de l'envoi de courriels SMTP."
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecciona o tipo de cifrado usado ao enviar correos SMTP"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odaberi vrstu enkripcije koja se koristi pri slanju SMTP e-mailova"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Válassza ki az SMTP emailek küldésekor használt titkosítás típusát"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seleziona il tipo di crittografia usato durante l'invio di email SMTP"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP 이메일을 보낼 때 사용할 암호화 유형 선택"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP इमेलहरू पठाउँदा प्रयोग गरिने इन्क्रिप्शन प्रकार चयन गर्नुहोस्"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecteer het versleutelingstype dat wordt gebruikt bij het verzenden van SMTP-e-mails"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wybierz typ szyfrowania używany podczas wysyłania wiadomości e-mail SMTP"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione o tipo de criptografia usado ao enviar e-mails SMTP"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecione o tipo de encriptação utilizado ao enviar e-mails por SMTP"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите тип шифрования, используемый при отправке электронных писем по SMTP"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj krypteringstyp som används när du skickar SMTP-e-postmeddelanden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTP e-postalarını gönderirken kullanılan şifreleme türünü seçin"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виберіть тип шифрування, що використовується під час надсилання листів через SMTP"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chọn loại mã hóa được sử dụng khi gửi email SMTP."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择发送 SMTP 电子邮件时使用的加密类型"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選取傳送 SMTP 電子郵件時使用的加密類型"
           }
         }
       }
@@ -288470,316 +289466,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Эта программа является свободным программным обеспечением: вы можете распространять и/или изменять её на условиях Стандартной общественной лицензии GNU, опубликованной Фондом свободного программного обеспечения, версии 3 либо (по вашему выбору) любой более поздней версии."
-          }
-        }
-      }
-    },
-    "This server requires a secure connection (SSL)": {
-      "localizations": {
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "يتطلب هذا الخادم اتصالًا آمنًا (SSL)"
-          }
-        },
-        "az-Latn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bu server təhlükəsiz bağlantı (SSL) tələb edir"
-          }
-        },
-        "be": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Гэты сервер патрабуе бяспечнага злучэння (SSL)"
-          }
-        },
-        "bg": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Този сървър изисква защитена връзка (SSL)"
-          }
-        },
-        "bs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ovaj server zahtijeva sigurnu vezu (SSL)"
-          }
-        },
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El servidor requereix una connexió segura (SSL)"
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tento server vyžaduje zabezpečené připojení (SSL)"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Denne server kræver en sikker forbindelse (SSL)"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dieser Server benötigt eine sichere Verbindung (SSL)"
-          }
-        },
-        "el": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Αυτός ο διακομιστής απαιτεί ασφαλή σύνδεση (SSL)"
-          }
-        },
-        "en-AU": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This server requires a secure connection (SSL)"
-          }
-        },
-        "en-GB": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This server requires a secure connection (SSL)"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El servidor requiere una conexión segura (SSL)"
-          }
-        },
-        "et": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "See server vajab turvalist ühendust (SSL)"
-          }
-        },
-        "eu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Zerbitzari honek elkarketa segurua behar du (SSL)"
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tämä palvelin vaatii suojatun yhteyden (SSL)"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nécessite une connexion sécurisée (SSL)"
-          }
-        },
-        "gl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Este servidor require unha conexión segura (SSL)"
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "שרת זה דורש חיבור מאובטח (SSL)"
-          }
-        },
-        "hi-IN": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "यह सर्वर एक सुरक्षित संपर्क (SSL) की अपेक्षा करता है"
-          }
-        },
-        "hr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ovaj poslužitelj zahtijeva sigurnu vezu (SSL)"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ez a szerver biztonságos kapcsolatot (SSL) igényel"
-          }
-        },
-        "hy": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Սպասարկիչը պահանջում է անվտանգ միացում (SSL)"
-          }
-        },
-        "id": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Server ini membutuhkan sambungan aman (SSL)"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Questo server richiede una connessione sicura (SSL)"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "このサーバーは安全な接続(SSL)を必要とする"
-          }
-        },
-        "ka": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ეს სერვერი საჭიროებს დაცულ კავშირს (SSL)"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "이 서버는 보안 연결(SSL)이 필요합니다"
-          }
-        },
-        "lt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Šis serveris reikalauja saugaus susijungimo (SSL)"
-          }
-        },
-        "lv-LV": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Šim serverim ir nepieciešams šifrēts savienojums (SSL)"
-          }
-        },
-        "mn-MN": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Энэ сервер хамгаалалттай холболт (SSL) шаардана"
-          }
-        },
-        "ms-MY": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pelayan ini memerlukan satu sambungan selamat (SSL)"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Denne tjeneren krever en sikker tilkobling (SSL)"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deze server vereist een veilige verbinding (SSL)"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ten serwer wymaga bezpiecznego połączenia (SSL)"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Este servidor requer uma conexão segura (SSL)"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Este servidor requer uma ligação segura (SSL)"
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Servitorul necesită o conexiune securizată (SSL)"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Этот сервер требует защищённого соединения (SSL)"
-          }
-        },
-        "sk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tento server vyžaduje zabezpečené pripojenie (SSL)"
-          }
-        },
-        "sl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ta strežnik  zahteva varno povezavo (SSL)"
-          }
-        },
-        "sq": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ky shërbyes kërkon një lidhje të sigurt (SSL)"
-          }
-        },
-        "sr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Овај сервер захтева безбедну конекцију (SSL)"
-          }
-        },
-        "sr-Latn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ovaj server zahteva bezbednu konekciju (SSL)"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Den här servern kräver en säker anslutning (SSL)"
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bu sunucu güvenli bir bağlantı gerektirir (SSL)"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Цей сервер вимагає безпечного з'єднання (SSL)"
-          }
-        },
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Máy chủ này yêu cầu kết nối an toàn (SSL)"
-          }
-        },
-        "zh-HK": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "此伺服器需要加密連接（SSL）"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "该服务器需要安全链接（SSL）"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "這個伺服器需要加密連線 (SSL)"
           }
         }
       }
@@ -338676,6 +339362,166 @@
         }
       }
     },
+    "no encryption used when sending emails": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "перадача электронных лістоў без шыфравання"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bez šifriranja pri slanju e-mailova"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no s'usa encriptació en enviar correus electrònics"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "není použito šifrování při odesílání e-mailů"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "keine Verschlüsselung beim Senden von Emails"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no encryption used when sending emails"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se usa encriptacion al enviar correos electrónicos"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no encryption used when sending emails"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun chiffrement n'est utilisé lors de l'envoi des courriels."
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sen cifrado ao enviar correos"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "bez enkripcije prilikom slanja e-mailova"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nincs titkosítás használatban emailek küldésekor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nessuna crittografia usata per l'invio dell'email"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이메일을 보낼 때 암호화가 사용되지 않음"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इमेल पठाउँदा कुनै इन्क्रिप्शन प्रयोग गरिएन"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "er wordt geen versleuteling gebruikt bij het verzenden van e-mails"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "brak szyfrowania podczas wysyłania wiadomości e-mail"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nenhuma criptografia usada ao enviar e-mails"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sem encriptação ao enviar e-mails"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "без шифрования при отправке электронных писем"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ingen kryptering används vid sändning av e-postmeddelanden"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e-posta gönderirken şifreleme kullanılmaz"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "під час надсилання електронних листів шифрування не використовується"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "không sử dụng mã hóa khi gửi email."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送电子邮件时不使用加密"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "寄送電子郵件時未使用加密"
+          }
+        }
+      }
+    },
     "off": {
       "localizations": {
         "ru": {
@@ -341433,6 +342279,332 @@
           "stringUnit": {
             "state": "translated",
             "value": "到"
+          }
+        }
+      }
+    },
+    "use SMTPS encryption when sending emails": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "перадача электронных лістоў з шыфраваннем SMTPS"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "koristi SMTPS šifriranje pri slanju e-mailova"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usa encriptació SMTPS quan s'enviïn correus electrònics"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "použít SMTPS šifrování při odesílání e-mailů"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwende SMTPS-Verschlüsselung beim Senden von Emails"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "use SMTPS encryption when sending emails"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use encriptacion SMTPS al enviar correos electrónicos"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "use SMTPS encryption when sending emails"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisez le chiffrement SMTPS lors de l'envoi de courriels."
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usar cifrado SMTPS ao enviar correos"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "koristite SMTPS enkripciju prilikom slanja e-mailova"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTPS titkosítás használata emailek küldésekor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nell'invio delle email usa la crittografia SMTPS"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이메일을 보낼 때 SMTPS 암호화 사용"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इमेल पठाउँदा SMTPS इन्क्रिप्शन प्रयोग गर्नुहोस्"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SMTPS-versleuteling gebruiken bij het versturen van e-mails"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "używaj szyfrowania SMTPS podczas wysyłania wiadomości e-mail"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usar criptografia SMTPS ao enviar e-mails"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "utilizar encriptação SMTPS ao enviar e-mails"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "использовать шифрование SMTPS при отправке электронных писем"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "použi SMTPS šifrovanie pri posielaní emailov"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "använd SMTPS-kryptering vid sändning av e-post"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e-posta gönderirken SMTPS şifrelemesi kullan"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "використовувати шифрування SMTPS під час надсилання електронних листів"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sử dụng mã hóa SMTPS khi gửi email"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送电子邮件时使用 SMTPS 加密"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "傳送電子郵件時使用 SMTPS 加密"
+          }
+        }
+      }
+    },
+    "use STARTTLS encryption when sending emails": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "перадача электронных лістоў з шыфраваннем STARTTLS"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "koristi STARTTLS šifriranje pri slanju e-mailova"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usa l'encriptació STARTTLS en enviar correus electrònics"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "použít STARTTLS šifrování při odesílání e-mailů"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwende STARTTLS-Verschlüsselung beim Senden von Emails"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "use STARTTLS encryption when sending emails"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar el encriptado STARTTLS al enviar correos electrónicos"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "use STARTTLS encryption when sending emails"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "utiliser le chiffrement STARTTLS lors de l'envoi de courriels"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usar cifrado STARTTLS ao enviar correos"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "koristite STARTTLS enkripciju prilikom slanja e-mailova"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STARTTLS titkosítás használata emailek küldésekor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nell'invio delle email usa la crittografia STARTTLS"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이메일을 보낼 때 STARTTLS 암호화 사용"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इमेल पठाउँदा STARTTLS इन्क्रिप्सन प्रयोग गर्नुहोस्"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "STARTTLS-versleuteling gebruiken bij het versturen van e-mails"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "używaj szyfrowania STARTTLS podczas wysyłania wiadomości e-mail"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "usar criptografia STARTTLS ao enviar e-mails"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "utilizar encriptação STARTTLS ao enviar e-mails"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "использовать шифрование STARTTLS при отправке электронных писем"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "använd STARTTLS-kryptering vid sändning av e-post"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e-posta gönderirken STARTTLS şifrelemesi kullan"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "використовувати шифрування STARTTLS під час надсилання електронних листів"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sử dụng mã hóa STARTTLS khi gửi email."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "发送电子邮件时使用 STARTTLS 加密"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "傳送電子郵件時使用 STARTTLS 加密"
           }
         }
       }

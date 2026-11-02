@@ -6,6 +6,7 @@ enum PreferenceChoices {
     static let contentLayouts: [ContentLayout] = [.original, .subfolder, .noSubfolder]
     static let stopConditions: [StopCondition] = [.none, .metadataReceived, .filesChecked]
     static let proxyTypes: [ProxyType] = [.none, .socks4, .socks5, .http]
+    static let smtpEncryptionTypes: [SmtpEncryptionType] = [.none, .starttls, .smtps]
     static let schedulerDays: [SchedulerDays] = [
         .everyDay, .weekday, .weekend, .monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday,
     ]
@@ -38,6 +39,14 @@ enum PreferenceChoices {
         case .socks4: "SOCKS4"
         case .socks5: "SOCKS5"
         case .http: "HTTP"
+        }
+    }
+
+    static func title(_ value: SmtpEncryptionType) -> String {
+        switch value {
+        case .none: String(localized: "None")
+        case .starttls: "STARTTLS"
+        case .smtps: "SMTPS"
         }
     }
 

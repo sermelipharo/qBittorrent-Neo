@@ -950,7 +950,12 @@ public struct DownloadsPrefs: Equatable, Hashable {
     public var mailNotificationSender: String
     public var mailNotificationEmail: String
     public var mailNotificationSmtp: String
-    public var mailNotificationSslEnabled: Bool
+    /**
+     * qBittorrent 5.3 replaced "requires a secure connection (SSL)" by an
+     * encryption type; old files are migrated on load
+     * (`PreferencesStore::load`).
+     */
+    public var mailNotificationEncryptionType: SmtpEncryptionType
     public var mailNotificationAuthEnabled: Bool
     public var mailNotificationUsername: String
     public var mailNotificationPassword: String
@@ -985,7 +990,12 @@ public struct DownloadsPrefs: Equatable, Hashable {
          */exportDir: String,
         /**
          * Copy .torrent files of finished downloads to ("" = off).
-         */exportDirFin: String, watchedFolders: [WatchedFolder], excludedFileNamesEnabled: Bool, excludedFileNames: [String], mailNotificationEnabled: Bool, mailNotificationSender: String, mailNotificationEmail: String, mailNotificationSmtp: String, mailNotificationSslEnabled: Bool, mailNotificationAuthEnabled: Bool, mailNotificationUsername: String, mailNotificationPassword: String, autorunOnTorrentAddedEnabled: Bool, autorunOnTorrentAddedProgram: String, autorunEnabled: Bool, autorunProgram: String) {
+         */exportDirFin: String, watchedFolders: [WatchedFolder], excludedFileNamesEnabled: Bool, excludedFileNames: [String], mailNotificationEnabled: Bool, mailNotificationSender: String, mailNotificationEmail: String, mailNotificationSmtp: String,
+        /**
+         * qBittorrent 5.3 replaced "requires a secure connection (SSL)" by an
+         * encryption type; old files are migrated on load
+         * (`PreferencesStore::load`).
+         */mailNotificationEncryptionType: SmtpEncryptionType, mailNotificationAuthEnabled: Bool, mailNotificationUsername: String, mailNotificationPassword: String, autorunOnTorrentAddedEnabled: Bool, autorunOnTorrentAddedProgram: String, autorunEnabled: Bool, autorunProgram: String) {
         self.torrentContentLayout = torrentContentLayout
         self.addToTopOfQueue = addToTopOfQueue
         self.addStoppedEnabled = addStoppedEnabled
@@ -1013,7 +1023,7 @@ public struct DownloadsPrefs: Equatable, Hashable {
         self.mailNotificationSender = mailNotificationSender
         self.mailNotificationEmail = mailNotificationEmail
         self.mailNotificationSmtp = mailNotificationSmtp
-        self.mailNotificationSslEnabled = mailNotificationSslEnabled
+        self.mailNotificationEncryptionType = mailNotificationEncryptionType
         self.mailNotificationAuthEnabled = mailNotificationAuthEnabled
         self.mailNotificationUsername = mailNotificationUsername
         self.mailNotificationPassword = mailNotificationPassword
@@ -3017,6 +3027,24 @@ public enum ProxyType: Equatable, Hashable {
 
 }
 
+public enum SmtpEncryptionType: Equatable, Hashable {
+
+    /**
+     * Plain SMTP, port 25 by default.
+     */
+    case none
+    /**
+     * STARTTLS, required (the mail is not sent if the server doesn't offer
+     * it), port 587 by default.
+     */
+    case starttls
+    /**
+     * Implicit TLS, port 465 by default.
+     */
+    case smtps
+
+}
+
 /**
  * Error type of every fallible core API call.
  */
@@ -3296,6 +3324,7 @@ extension FilePriority: Sendable {}
 extension LogLevel: Sendable {}
 extension PieceState: Sendable {}
 extension ProxyType: Sendable {}
+extension SmtpEncryptionType: Sendable {}
 extension QueueMove: Sendable {}
 extension ResumeDataStorageType: Sendable {}
 extension SchedulerDays: Sendable {}
@@ -3877,7 +3906,7 @@ extension CreatorTask: Codable {
 
 extension DownloadsPrefs: Codable {
     enum CodingKeys: String, CodingKey {
-        case torrentContentLayout, addToTopOfQueue, addStoppedEnabled, torrentStopCondition, mergeTrackers, autoDeleteMode, preallocateAll, incompleteFilesExt, useUnwantedFolder, autoTmmEnabled, torrentChangedTmmEnabled, savePathChangedTmmEnabled, categoryChangedTmmEnabled, useSubcategories, savePath, tempPathEnabled, tempPath, useCategoryPathsInManualMode, exportDir, exportDirFin, watchedFolders, excludedFileNamesEnabled, excludedFileNames, mailNotificationEnabled, mailNotificationSender, mailNotificationEmail, mailNotificationSmtp, mailNotificationSslEnabled, mailNotificationAuthEnabled, mailNotificationUsername, mailNotificationPassword, autorunOnTorrentAddedEnabled, autorunOnTorrentAddedProgram, autorunEnabled, autorunProgram
+        case torrentContentLayout, addToTopOfQueue, addStoppedEnabled, torrentStopCondition, mergeTrackers, autoDeleteMode, preallocateAll, incompleteFilesExt, useUnwantedFolder, autoTmmEnabled, torrentChangedTmmEnabled, savePathChangedTmmEnabled, categoryChangedTmmEnabled, useSubcategories, savePath, tempPathEnabled, tempPath, useCategoryPathsInManualMode, exportDir, exportDirFin, watchedFolders, excludedFileNamesEnabled, excludedFileNames, mailNotificationEnabled, mailNotificationSender, mailNotificationEmail, mailNotificationSmtp, mailNotificationEncryptionType, mailNotificationAuthEnabled, mailNotificationUsername, mailNotificationPassword, autorunOnTorrentAddedEnabled, autorunOnTorrentAddedProgram, autorunEnabled, autorunProgram
     }
 
     static var neoEmpty: DownloadsPrefs {
@@ -3913,7 +3942,7 @@ extension DownloadsPrefs: Codable {
         let v24: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSender) ?? ""
         let v25: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationEmail) ?? ""
         let v26: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationSmtp) ?? ""
-        let v27: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationSslEnabled) ?? false
+        let v27: SmtpEncryptionType = try c.decodeIfPresent(SmtpEncryptionType.self, forKey: .mailNotificationEncryptionType) ?? .none
         let v28: Bool = try c.decodeIfPresent(Bool.self, forKey: .mailNotificationAuthEnabled) ?? false
         let v29: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationUsername) ?? ""
         let v30: String = try c.decodeIfPresent(String.self, forKey: .mailNotificationPassword) ?? ""
@@ -3949,7 +3978,7 @@ extension DownloadsPrefs: Codable {
             mailNotificationSender: v24,
             mailNotificationEmail: v25,
             mailNotificationSmtp: v26,
-            mailNotificationSslEnabled: v27,
+            mailNotificationEncryptionType: v27,
             mailNotificationAuthEnabled: v28,
             mailNotificationUsername: v29,
             mailNotificationPassword: v30,
@@ -5771,6 +5800,27 @@ extension ProxyType: Codable {
         case .http: try c.encode("http")
         case .socks5: try c.encode("socks5")
         case .socks4: try c.encode("socks4")
+        }
+    }
+}
+
+extension SmtpEncryptionType: Codable {
+    public init(from decoder: any Decoder) throws {
+        let value = try decoder.singleValueContainer().decode(String.self)
+        switch value {
+        case "none": self = .none
+        case "starttls": self = .starttls
+        case "smtps": self = .smtps
+        default: throw DecodingError.dataCorrupted(.init(codingPath: decoder.codingPath, debugDescription: "Unknown SmtpEncryptionType \(value)"))
+        }
+    }
+
+    public func encode(to encoder: any Encoder) throws {
+        var c = encoder.singleValueContainer()
+        switch self {
+        case .none: try c.encode("none")
+        case .starttls: try c.encode("starttls")
+        case .smtps: try c.encode("smtps")
         }
     }
 }
