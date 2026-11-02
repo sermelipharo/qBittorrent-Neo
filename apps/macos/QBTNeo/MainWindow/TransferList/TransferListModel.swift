@@ -183,7 +183,12 @@ final class TransferListModel {
               matchesTrackerStatus(item)
         else { return false }
         guard let matcher else { return true }
-        return matcher.matches(searchScope == .name ? item.name : item.savePath)
+        return switch searchScope {
+        case .name: matcher.matches(item.name)
+        case .savePath: matcher.matches(item.savePath)
+        case .infohashV1: matcher.matches(item.infohashV1)
+        case .infohashV2: matcher.matches(item.infohashV2)
+        }
     }
 
     private func matchesTracker(_ item: TorrentItem) -> Bool {

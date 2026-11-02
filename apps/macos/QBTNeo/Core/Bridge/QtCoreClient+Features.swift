@@ -213,7 +213,9 @@ extension QtCoreClient: CreatorClient {
         bridge.value("creatorAutoPieceSize", ["totalSize": totalSize, "format": format], fallback: 0)
     }
 
-    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, format: TorrentFormat) async throws -> Int64 {
-        try await bridge.callAsync("creatorCalculatePieces", ["sourcePath": sourcePath, "pieceSize": pieceSize, "format": format])
+    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, ignoreDotfiles: Bool, format: TorrentFormat) async throws -> Int64 {
+        try await bridge.callAsync("creatorCalculatePieces", [
+            "sourcePath": sourcePath, "pieceSize": pieceSize, "ignoreDotfiles": ignoreDotfiles, "format": format,
+        ])
     }
 }

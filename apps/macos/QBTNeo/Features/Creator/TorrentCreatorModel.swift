@@ -12,6 +12,7 @@ final class TorrentCreatorModel {
     var sourcePath: String { didSet { if sourcePath != oldValue { progress = 0; pieceCount = nil; save() } } }
     var format: TorrentFormat { didSet { pieceCount = nil; save() } }
     var pieceSize: Int64 { didSet { pieceCount = nil; save() } }
+    var ignoreDotfiles: Bool { didSet { pieceCount = nil; save() } }
     var isPrivate: Bool { didSet { save() } }
     var startSeeding: Bool { didSet { save() } }
     var ignoreShareLimits: Bool { didSet { save() } }
@@ -39,6 +40,7 @@ final class TorrentCreatorModel {
         format = Self.formats.indices.contains(formatIndex) ? Self.formats[formatIndex] : .hybrid
         let stored = Int64(read.integer(forKey: FeatureDefaults.creatorPieceSize))
         pieceSize = Self.pieceSizes.contains(stored) ? stored : 0
+        ignoreDotfiles = read.object(forKey: FeatureDefaults.creatorIgnoreDotfiles) as? Bool ?? true
         isPrivate = read.bool(forKey: FeatureDefaults.creatorPrivate)
         startSeeding = read.bool(forKey: FeatureDefaults.creatorStartSeeding)
         ignoreShareLimits = read.bool(forKey: FeatureDefaults.creatorIgnoreRatio)
@@ -58,6 +60,7 @@ final class TorrentCreatorModel {
         defaults.set(sourcePath, forKey: FeatureDefaults.creatorLastAddPath)
         defaults.set(Self.formats.firstIndex(of: format) ?? 1, forKey: FeatureDefaults.creatorFormat)
         defaults.set(pieceSize, forKey: FeatureDefaults.creatorPieceSize)
+        defaults.set(ignoreDotfiles, forKey: FeatureDefaults.creatorIgnoreDotfiles)
         defaults.set(isPrivate, forKey: FeatureDefaults.creatorPrivate)
         defaults.set(startSeeding, forKey: FeatureDefaults.creatorStartSeeding)
         defaults.set(ignoreShareLimits, forKey: FeatureDefaults.creatorIgnoreRatio)
@@ -80,9 +83,10 @@ final class TorrentCreatorModel {
         guard let client else { return }
         isCounting = true
         defer { isCounting = false }
-        let (path, size, format) = (sourcePath, pieceSize, format)
+        let (path, size, ignoreDotfiles, format) = (sourcePath, pieceSize, ignoreDotfiles, format)
         do {
-            pieceCount = try await client.creatorCalculatePieces(sourcePath: path, pieceSize: size, format: format)
+            pieceCount = try await client.creatorCalculatePieces(sourcePath: path, pieceSize: size,
+                                                                 ignoreDotfiles: ignoreDotfiles, format: format)
         } catch {
             alert = RSSAlert(title: String(localized: "Torrent creation failed"), message: error.userMessage)
         }
@@ -120,6 +124,7 @@ final class TorrentCreatorModel {
         let params = TorrentCreatorParams(
             sourcePath: sourcePath, torrentFilePath: url.path(percentEncoded: false), format: format, pieceSize: pieceSize,
             optimizeAlignment: optimizeAlignment, paddingFileLimit: paddingLimitKiB < 0 ? -1 : paddingLimitKiB * 1_024,
+            ignoreDotfiles: ignoreDotfiles,
             private: isPrivate, startSeeding: startSeeding, ignoreShareLimits: startSeeding && ignoreShareLimits,
             trackers: trackerList, urlSeeds: PreferencesModel.lines(webSeeds),
             comment: comment, source: source.trimmingCharacters(in: .whitespaces)

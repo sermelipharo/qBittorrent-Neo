@@ -25,6 +25,7 @@
 #include "base/bittorrent/categoryoptions.h"
 #include "base/bittorrent/downloadpriority.h"
 #include "base/bittorrent/infohash.h"
+#include "base/bittorrent/lttypecast.h"
 #include "base/bittorrent/peeraddress.h"
 #include "base/bittorrent/peerinfo.h"
 #include "base/bittorrent/session.h"
@@ -223,12 +224,25 @@ namespace
         const std::optional<BitTorrent::TorrentInfo> &info = descriptor.info();
         if (info && info->isValid())
         {
+            // A magnet link's `so` leaves files out (libtorrent priorities in
+            // its file order, pad files included), as AddNewTorrentDialog.
+            const std::vector<lt::download_priority_t> &selected = descriptor.ltAddTorrentParams().file_priorities;
+            const QList<lt::file_index_t> nativeIndexes = info->nativeIndexes();
             for (int i = 0; i < info->filesCount(); ++i)
             {
+                auto priority = BitTorrent::DownloadPriority::Normal;
+                if (!selected.empty())
+                {
+                    priority = BitTorrent::DownloadPriority::Ignored;
+                    const auto ordIndex = static_cast<std::size_t>(BitTorrent::LT::toUnderlyingType(nativeIndexes.value(i)));
+                    if ((i < nativeIndexes.size()) && (ordIndex < selected.size()))
+                        priority = BitTorrent::LT::fromNative(selected[ordIndex]);
+                }
                 files.append(QJsonObject {
                     {u"index"_s, i},
                     {u"path"_s, info->filePath(i).data()},
-                    {u"size"_s, info->fileSize(i)}
+                    {u"size"_s, info->fileSize(i)},
+                    {u"priority"_s, priorityName(priority)}
                 });
             }
             totalSize = info->totalSize();
@@ -587,6 +601,18 @@ namespace
         };
     }
 
+    // "Contribution" (qBittorrent 5.3 PeerListWidget / sync/torrentPeers):
+    // how much of the peer's progress we uploaded.
+    double peerContribution(const BitTorrent::Torrent *torrent, const BitTorrent::PeerInfo &peer)
+    {
+        const qlonglong totalUpload = peer.totalUpload();
+        if (totalUpload <= 0)
+            return 0;
+        const qlonglong totalSize = (torrent->totalSize() <= 0) ? totalUpload : torrent->totalSize();
+        const qreal progressBytes = peer.progress() * totalSize;
+        return static_cast<qreal>(totalUpload) / ((progressBytes <= 0) ? totalSize : progressBytes);
+    }
+
     QJsonObject peerJson(const BitTorrent::Torrent *torrent, const BitTorrent::PeerInfo &peer
             , const bool resolveHostNames, const bool resolveCountries)
     {
@@ -600,6 +626,7 @@ namespace
             {u"uploaded"_s, peer.totalUpload()},
             {u"progress"_s, peer.progress()},
             {u"relevance"_s, peer.relevance()},
+            {u"contribution"_s, peerContribution(torrent, peer)},
             {u"flags"_s, peer.flags()},
             {u"flagsDescription"_s, peer.flagsDescription()}
         };

@@ -49,6 +49,8 @@ struct TorrentCreatorWindow: View {
                                 .disabled(model.isCounting)
                         }
                     }
+                    Toggle("Ignore dotfiles", isOn: $model.ignoreDotfiles)
+                        .help("If checked, filenames starting with a period punctuation mark `.` will not be added to the created torrent.")
                     Toggle("Private torrent (Won't distribute on DHT network)", isOn: $model.isPrivate)
                     Toggle("Start seeding immediately", isOn: $model.startSeeding)
                     Toggle("Ignore share ratio limits for this torrent", isOn: $model.ignoreShareLimits)

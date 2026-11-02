@@ -56,12 +56,13 @@ struct DemoCreatorState: Sendable {
     }
 
     /// Sizes of the files a torrent of `path` would contain (hidden files skipped).
-    static func fileSizes(at path: String) throws -> [Int64] {
+    static func fileSizes(at path: String, ignoreDotfiles: Bool) throws -> [Int64] {
         let url = URL(filePath: path)
         let keys: Set<URLResourceKey> = [.fileSizeKey, .isRegularFileKey]
         let values = try url.resourceValues(forKeys: keys)
         if values.isRegularFile == true { return [Int64(values.fileSize ?? 0)] }
-        guard let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: Array(keys), options: [.skipsHiddenFiles]) else {
+        let options: FileManager.DirectoryEnumerationOptions = ignoreDotfiles ? [.skipsHiddenFiles] : []
+        guard let enumerator = FileManager.default.enumerator(at: url, includingPropertiesForKeys: Array(keys), options: options) else {
             return []
         }
         var sizes: [Int64] = []

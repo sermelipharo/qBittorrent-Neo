@@ -264,7 +264,7 @@ extension DemoState {
             ("Extras/Behind the scenes.mp4", 0.44 * gib), ("Extras/Storyboards.pdf", 0.012 * gib), ("\(name).nfo", 0.000004 * gib),
         ]
         let metadataFiles = files.enumerated().map { index, file in
-            MetadataFile(index: Int64(index), path: "\(name)/\(file.0)", size: Int64(file.1))
+            MetadataFile(index: Int64(index), path: "\(name)/\(file.0)", size: Int64(file.1), priority: .normal)
         }
         return TorrentMetadataInfo(
             hash: hash, infohashV1: hash, infohashV2: DemoRandom.hex(name + "#v2", length: 64), name: name, hasMetadata: true,

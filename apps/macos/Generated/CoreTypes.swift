@@ -1099,13 +1099,23 @@ public struct MetadataFile: Equatable, Hashable {
     public var index: Int64
     public var path: String
     public var size: Int64
+    /**
+     * Initial priority in the Add dialog: Normal, or Do not download for a
+     * file the magnet link's `so` leaves out.
+     */
+    public var priority: FilePriority
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
-    public init(index: Int64, path: String, size: Int64) {
+    public init(index: Int64, path: String, size: Int64,
+        /**
+         * Initial priority in the Add dialog: Normal, or Do not download for a
+         * file the magnet link's `so` leaves out.
+         */priority: FilePriority) {
         self.index = index
         self.path = path
         self.size = size
+        self.priority = priority
     }
 
 }
@@ -1149,6 +1159,11 @@ public struct PeerInfo: Equatable, Hashable {
     public var progress: Double
     public var relevance: Double
     /**
+     * How much of the peer's progress we uploaded, as a fraction (can
+     * exceed 1 when it re-downloaded data); 0 when we sent it nothing.
+     */
+    public var contribution: Double
+    /**
      * qBittorrent flag letters separated by spaces, e.g. "D U H E".
      */
     public var flags: String
@@ -1168,6 +1183,10 @@ public struct PeerInfo: Equatable, Hashable {
         /**
          * "BT", "μTP", "Web", or with " (I2P)".
          */connectionType: String, country: String, countryCode: String, dlSpeed: Int64, upSpeed: Int64, downloaded: Int64, uploaded: Int64, progress: Double, relevance: Double,
+        /**
+         * How much of the peer's progress we uploaded, as a fraction (can
+         * exceed 1 when it re-downloaded data); 0 when we sent it nothing.
+         */contribution: Double,
         /**
          * qBittorrent flag letters separated by spaces, e.g. "D U H E".
          */flags: String,
@@ -1190,6 +1209,7 @@ public struct PeerInfo: Equatable, Hashable {
         self.uploaded = uploaded
         self.progress = progress
         self.relevance = relevance
+        self.contribution = contribution
         self.flags = flags
         self.flagsDescription = flagsDescription
         self.files = files
@@ -1793,6 +1813,11 @@ public struct TorrentCreatorParams: Equatable, Hashable {
      * -1 = disabled.
      */
     public var paddingFileLimit: Int64
+    /**
+     * Leave out files and folders whose names start with `.` (qBittorrent
+     * 5.3 "Ignore dotfiles", on by default).
+     */
+    public var ignoreDotfiles: Bool
     public var `private`: Bool
     public var startSeeding: Bool
     public var ignoreShareLimits: Bool
@@ -1815,7 +1840,11 @@ public struct TorrentCreatorParams: Equatable, Hashable {
          */pieceSize: Int64, optimizeAlignment: Bool,
         /**
          * -1 = disabled.
-         */paddingFileLimit: Int64, `private`: Bool, startSeeding: Bool, ignoreShareLimits: Bool,
+         */paddingFileLimit: Int64,
+        /**
+         * Leave out files and folders whose names start with `.` (qBittorrent
+         * 5.3 "Ignore dotfiles", on by default).
+         */ignoreDotfiles: Bool, `private`: Bool, startSeeding: Bool, ignoreShareLimits: Bool,
         /**
          * Tracker URLs; an empty string starts a new tier.
          */trackers: [String], urlSeeds: [String], comment: String, source: String) {
@@ -1825,6 +1854,7 @@ public struct TorrentCreatorParams: Equatable, Hashable {
         self.pieceSize = pieceSize
         self.optimizeAlignment = optimizeAlignment
         self.paddingFileLimit = paddingFileLimit
+        self.ignoreDotfiles = ignoreDotfiles
         self.`private` = `private`
         self.startSeeding = startSeeding
         self.ignoreShareLimits = ignoreShareLimits
@@ -3995,7 +4025,7 @@ extension MainDataUpdate: Codable {
 
 extension MetadataFile: Codable {
     enum CodingKeys: String, CodingKey {
-        case index, path, size
+        case index, path, size, priority
     }
 
     static var neoEmpty: MetadataFile {
@@ -4007,10 +4037,12 @@ extension MetadataFile: Codable {
         let v0: Int64 = try c.decodeIfPresent(Int64.self, forKey: .index) ?? 0
         let v1: String = try c.decodeIfPresent(String.self, forKey: .path) ?? ""
         let v2: Int64 = try c.decodeIfPresent(Int64.self, forKey: .size) ?? 0
+        let v3: FilePriority = try c.decodeIfPresent(FilePriority.self, forKey: .priority) ?? .ignored
         self.init(
             index: v0,
             path: v1,
-            size: v2
+            size: v2,
+            priority: v3
         )
     }
 }
@@ -4039,7 +4071,7 @@ extension NetworkInterface: Codable {
 
 extension PeerInfo: Codable {
     enum CodingKeys: String, CodingKey {
-        case ip, port, client, peerIdClient, connectionType, country, countryCode, dlSpeed, upSpeed, downloaded, uploaded, progress, relevance, flags, flagsDescription, files, hostName
+        case ip, port, client, peerIdClient, connectionType, country, countryCode, dlSpeed, upSpeed, downloaded, uploaded, progress, relevance, contribution, flags, flagsDescription, files, hostName
     }
 
     static var neoEmpty: PeerInfo {
@@ -4061,10 +4093,11 @@ extension PeerInfo: Codable {
         let v10: Int64 = try c.decodeIfPresent(Int64.self, forKey: .uploaded) ?? 0
         let v11: Double = try c.decodeIfPresent(Double.self, forKey: .progress) ?? 0
         let v12: Double = try c.decodeIfPresent(Double.self, forKey: .relevance) ?? 0
-        let v13: String = try c.decodeIfPresent(String.self, forKey: .flags) ?? ""
-        let v14: String = try c.decodeIfPresent(String.self, forKey: .flagsDescription) ?? ""
-        let v15: String = try c.decodeIfPresent(String.self, forKey: .files) ?? ""
-        let v16: String = try c.decodeIfPresent(String.self, forKey: .hostName) ?? ""
+        let v13: Double = try c.decodeIfPresent(Double.self, forKey: .contribution) ?? 0
+        let v14: String = try c.decodeIfPresent(String.self, forKey: .flags) ?? ""
+        let v15: String = try c.decodeIfPresent(String.self, forKey: .flagsDescription) ?? ""
+        let v16: String = try c.decodeIfPresent(String.self, forKey: .files) ?? ""
+        let v17: String = try c.decodeIfPresent(String.self, forKey: .hostName) ?? ""
         self.init(
             ip: v0,
             port: v1,
@@ -4079,10 +4112,11 @@ extension PeerInfo: Codable {
             uploaded: v10,
             progress: v11,
             relevance: v12,
-            flags: v13,
-            flagsDescription: v14,
-            files: v15,
-            hostName: v16
+            contribution: v13,
+            flags: v14,
+            flagsDescription: v15,
+            files: v16,
+            hostName: v17
         )
     }
 }
@@ -4641,7 +4675,7 @@ extension SpeedSample: Codable {
 
 extension TorrentCreatorParams: Codable {
     enum CodingKeys: String, CodingKey {
-        case sourcePath, torrentFilePath, format, pieceSize, optimizeAlignment, paddingFileLimit, `private`, startSeeding, ignoreShareLimits, trackers, urlSeeds, comment, source
+        case sourcePath, torrentFilePath, format, pieceSize, optimizeAlignment, paddingFileLimit, ignoreDotfiles, `private`, startSeeding, ignoreShareLimits, trackers, urlSeeds, comment, source
     }
 
     static var neoEmpty: TorrentCreatorParams {
@@ -4656,13 +4690,14 @@ extension TorrentCreatorParams: Codable {
         let v3: Int64 = try c.decodeIfPresent(Int64.self, forKey: .pieceSize) ?? 0
         let v4: Bool = try c.decodeIfPresent(Bool.self, forKey: .optimizeAlignment) ?? false
         let v5: Int64 = try c.decodeIfPresent(Int64.self, forKey: .paddingFileLimit) ?? 0
-        let v6: Bool = try c.decodeIfPresent(Bool.self, forKey: .`private`) ?? false
-        let v7: Bool = try c.decodeIfPresent(Bool.self, forKey: .startSeeding) ?? false
-        let v8: Bool = try c.decodeIfPresent(Bool.self, forKey: .ignoreShareLimits) ?? false
-        let v9: [String] = try c.decodeIfPresent([String].self, forKey: .trackers) ?? []
-        let v10: [String] = try c.decodeIfPresent([String].self, forKey: .urlSeeds) ?? []
-        let v11: String = try c.decodeIfPresent(String.self, forKey: .comment) ?? ""
-        let v12: String = try c.decodeIfPresent(String.self, forKey: .source) ?? ""
+        let v6: Bool = try c.decodeIfPresent(Bool.self, forKey: .ignoreDotfiles) ?? false
+        let v7: Bool = try c.decodeIfPresent(Bool.self, forKey: .`private`) ?? false
+        let v8: Bool = try c.decodeIfPresent(Bool.self, forKey: .startSeeding) ?? false
+        let v9: Bool = try c.decodeIfPresent(Bool.self, forKey: .ignoreShareLimits) ?? false
+        let v10: [String] = try c.decodeIfPresent([String].self, forKey: .trackers) ?? []
+        let v11: [String] = try c.decodeIfPresent([String].self, forKey: .urlSeeds) ?? []
+        let v12: String = try c.decodeIfPresent(String.self, forKey: .comment) ?? ""
+        let v13: String = try c.decodeIfPresent(String.self, forKey: .source) ?? ""
         self.init(
             sourcePath: v0,
             torrentFilePath: v1,
@@ -4670,13 +4705,14 @@ extension TorrentCreatorParams: Codable {
             pieceSize: v3,
             optimizeAlignment: v4,
             paddingFileLimit: v5,
-            private: v6,
-            startSeeding: v7,
-            ignoreShareLimits: v8,
-            trackers: v9,
-            urlSeeds: v10,
-            comment: v11,
-            source: v12
+            ignoreDotfiles: v6,
+            private: v7,
+            startSeeding: v8,
+            ignoreShareLimits: v9,
+            trackers: v10,
+            urlSeeds: v11,
+            comment: v12,
+            source: v13
         )
     }
 }

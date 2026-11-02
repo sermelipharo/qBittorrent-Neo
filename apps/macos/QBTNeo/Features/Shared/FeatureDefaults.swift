@@ -23,6 +23,7 @@ enum FeatureDefaults {
     static let creatorIgnoreRatio = "TorrentCreator/IgnoreRatio"
     static let creatorFormat = "TorrentCreator/TorrentFormat"
     static let creatorOptimizeAlignment = "TorrentCreator/OptimizeAlignment"
+    static let creatorIgnoreDotfiles = "TorrentCreator/IgnoreDotfiles"
     static let creatorPaddingLimit = "TorrentCreator/PaddedFileSizeLimit"
     static let creatorLastAddPath = "TorrentCreator/LastAddPath"
     static let creatorLastSavePath = "TorrentCreator/LastSavePath"

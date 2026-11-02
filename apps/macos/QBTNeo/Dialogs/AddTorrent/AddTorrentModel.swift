@@ -185,7 +185,8 @@ final class AddTorrentModel {
         let entries = metadata.files.map { file in
             let index = Int(file.index)
             let base = basePaths[index] ?? file.path
-            var priority = previous[index] ?? .normal
+            // Magnet `so` leaves files out up front.
+            var priority = previous[index] ?? file.priority
             let name = (base as NSString).lastPathComponent
             if applyExclusions, excluded.contains(where: { $0.matches(name) }) { priority = .ignored }
             return FileEntry(index: index, path: displayPath(base), size: file.size, priority: priority)

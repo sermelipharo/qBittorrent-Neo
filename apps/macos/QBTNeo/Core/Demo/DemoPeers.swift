@@ -71,14 +71,20 @@ enum DemoPeers {
             let down = downloading && isSeed ? Int64(torrent.baseDown * speedShare * 2 * wave) : 0
             let up = !isSeed ? Int64(torrent.baseUp * speedShare * 2 * (1 - wave)) : 0
             let peerProgress = isSeed ? 1 : random.unit()
+            // In argument order, so the demo's random sequence stays as it was.
+            let port = UInt16(random.int(1_025...65_000))
+            let downloaded = Int64(Double(info.size) * random.unit() * 0.05)
+            let uploaded = Int64(Double(info.size) * random.unit() * 0.03)
+            let peerBytes = peerProgress * Double(info.size)
             return PeerInfo(
-                ip: ip, port: UInt16(random.int(1_025...65_000)), client: client.name, peerIdClient: client.peerID,
+                ip: ip, port: port, client: client.name, peerIdClient: client.peerID,
                 connectionType: utp ? "μTP" : "BT", country: country.name, countryCode: country.code,
                 dlSpeed: down, upSpeed: up,
-                downloaded: Int64(Double(info.size) * random.unit() * 0.05),
-                uploaded: Int64(Double(info.size) * random.unit() * 0.03),
+                downloaded: downloaded,
+                uploaded: uploaded,
                 progress: peerProgress,
                 relevance: isSeed ? 1 : (downloading ? random.unit() * 0.6 : 0),
+                contribution: uploaded > 0 ? Double(uploaded) / (peerBytes > 0 ? peerBytes : Double(info.size)) : 0,
                 flags: ordered.map(String.init).joined(separator: " "),
                 flagsDescription: ordered.map { "\($0) = \(flagDescriptions[$0] ?? "")" }.joined(separator: "\n"),
                 files: down > 0 || up > 0 ? (fileNames.isEmpty ? "" : random.pick(fileNames)) : "",

@@ -10,5 +10,5 @@ protocol CreatorClient: AnyObject, Sendable {
     func creatorDeleteTask(id: String) throws
     func creatorAutoPieceSize(totalSize: Int64, format: TorrentFormat) -> Int64
     /// "Calculate number of pieces" (walks the source; piece size 0 = automatic).
-    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, format: TorrentFormat) async throws -> Int64
+    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, ignoreDotfiles: Bool, format: TorrentFormat) async throws -> Int64
 }

@@ -70,6 +70,10 @@ struct PeersTab: View {
             }
             .width(min: 60, ideal: 200)
             .customizationID("files")
+            TableColumn("Contribution", value: \PeerRow.info.contribution) { row in
+                Text(ValueFormatter.percent(row.info.contribution)).monospacedDigit()
+            }
+            .width(min: 44, ideal: 80).alignment(.trailing).customizationID("contribution")
             }
         } rows: {
             ForEach(properties.peers) { row in

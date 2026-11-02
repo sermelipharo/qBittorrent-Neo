@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// Main window toolbar (features.md §1.2): add, remove, start/stop, queue
+/// Main window toolbar (features.md §1.2): add, remove, start/stop, open
+/// destination folder (qBittorrent 5.3), queue
 /// (when queueing is enabled) and options; the filter field is `.searchable`.
 /// Buttons render from the command registry, like the menus.
 struct MainToolbar: ToolbarContent {
@@ -17,6 +18,9 @@ struct MainToolbar: ToolbarContent {
         ToolbarItemGroup {
             CommandToolbarButton(.start, model: model)
             CommandToolbarButton(.stop, model: model)
+        }
+        ToolbarItem {
+            CommandToolbarButton(.openDestination, model: model)
         }
         if model.queueingEnabled {
             ToolbarItemGroup {

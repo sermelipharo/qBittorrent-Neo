@@ -35,9 +35,9 @@ extension DemoClient: CreatorClient {
         DemoCreatorState.autoPieceSize(totalSize)
     }
 
-    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, format: TorrentFormat) async throws -> Int64 {
+    func creatorCalculatePieces(sourcePath: String, pieceSize: Int64, ignoreDotfiles: Bool, format: TorrentFormat) async throws -> Int64 {
         try await Task.sleep(for: .milliseconds(400))
-        let sizes = try DemoCreatorState.fileSizes(at: sourcePath)
+        let sizes = try DemoCreatorState.fileSizes(at: sourcePath, ignoreDotfiles: ignoreDotfiles)
         let total = sizes.reduce(0, +)
         let piece = pieceSize > 0 ? pieceSize : DemoCreatorState.autoPieceSize(total)
         guard piece > 0 else { return 0 }

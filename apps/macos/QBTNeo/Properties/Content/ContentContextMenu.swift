@@ -12,6 +12,9 @@ struct ContentContextMenu: View {
         if nodes.count == 1, let node = nodes.first {
             Button("Open", systemImage: Symbol.arrowUpForwardApp) { model.openContent(item, node) }
             Button("Open Containing Folder", systemImage: Symbol.folder) { model.revealContent(item, node) }
+            Button("Copy Path", systemImage: Symbol.docOnDoc) {
+                model.copyToPasteboard(model.contentURL(item, node).path(percentEncoded: false))
+            }
             Button("Rename…", systemImage: Symbol.pencil) { model.requestRenameContent(item, node) }
             Divider()
             Menu("Priority") {
