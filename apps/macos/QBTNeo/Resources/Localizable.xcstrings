@@ -190856,6 +190856,16 @@
         }
       }
     },
+    "Original qBittorrent": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оригинальный qBittorrent"
+          }
+        }
+      }
+    },
     "Other error": {
       "localizations": {
         "ru": {

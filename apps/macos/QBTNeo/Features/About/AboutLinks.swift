@@ -3,6 +3,7 @@ import Foundation
 /// External links shown in the About window.
 enum AboutLinks {
     // swiftlint:disable force_unwrapping
+    static let projectPage = URL(string: "https://neo.lex.mk")!
     static let homePage = URL(string: "https://www.qbittorrent.org")!
     static let forum = URL(string: "https://forum.qbittorrent.org")!
     static let bugTracker = URL(string: "https://bugs.qbittorrent.org")!

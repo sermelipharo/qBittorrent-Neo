@@ -13,6 +13,11 @@ struct AboutOverviewTab: View {
             }
             Section {
                 LabeledContent("Home Page:") {
+                    Link("https://neo.lex.mk", destination: AboutLinks.projectPage)
+                }
+            }
+            Section("Original qBittorrent") {
+                LabeledContent("Home Page:") {
                     Link("https://www.qbittorrent.org", destination: AboutLinks.homePage)
                 }
                 LabeledContent("Forum:") {
