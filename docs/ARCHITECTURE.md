@@ -9,7 +9,7 @@ app process; the SwiftUI code talks to it through a narrow C interface.
 │ apps/macos (SwiftUI, Swift 6, main thread / Swift concurrency)       │
 │  AppModel ─ stores ─ windows          DemoClient (previews, --demo)  │
 │        │ CoreClient / AppInfoClient / RSSClient / SearchClient /     │
-│        │ CreatorClient protocols                                     │
+│        │ CreatorClient / PluginsClient protocols                     │
 │  QtCoreClient ── CoreBridge (JSON <-> Codable records)               │
 └────────┬───────────────────────────────────────▲─────────────────────┘
          │ qbtn_core_call(method, json, reply)   │ reply / event callbacks
@@ -23,7 +23,8 @@ app process; the SwiftUI code talks to it through a narrow C interface.
 ├──────────────────────────────────────────────────────────────────────┤
 │ qbittorrent/src/base (qbt_base.a) + src/webui (qbt_webui.a), unmodified│
 │  BitTorrent::Session ─ Preferences ─ RSS ─ SearchPluginManager ─     │
-│  TorrentCreationManager ─ TorrentFilesWatcher ─ Net::* ─ WebUI       │
+│  TorrentCreationManager ─ TorrentFilesWatcher ─ Net::* ─ WebUI ─     │
+│  PluginsEngine (Lua 5.5, only while plugins are turned on)           │
 ├──────────────────────────────────────────────────────────────────────┤
 │ libtorrent-rasterbar 2.0 (static) ─ Boost.Asio ─ OpenSSL             │
 └──────────────────────────────────────────────────────────────────────┘
@@ -165,6 +166,37 @@ keys and enum case names instead of WebAPI strings/integers:
   every sample of the last 30 minutes and 30 s averages for 24 hours
   (~230 KB); replies are averaged to at most ~600 points (the app buckets
   by timestamp).
+
+## Lua plugins
+
+qBittorrent 5.3's plugins engine (`src/base/plugins`, #24485) is always
+compiled: `core/CMakeLists.txt` forces upstream's `PLUGINS` option, which
+builds Lua 5.5 and LuaBridge 3 from `src/base/3rdparty` into `qbt_base`
+(`ENABLE_PLUGINS`). It runs only while the app's **Enable plugins** setting
+(Settings › Privacy, `AdvancedPrefs.pluginsEnabled`, stored as
+`Neo/PluginsEnabled` in the profile's `qBittorrent.ini`, off by default) is
+on:
+
+* `NeoApplication` calls `PluginsEngine::initInstance()` at upstream's
+  point (in the `Session::restored` handler, right after the
+  AddTorrentManager) and `freeInstance()` in `cleanup()` after the WebUI,
+  as `src/app/application.cpp` does, but the init only when the switch is
+  on and the plugins folder passes the permission check (docs/SECURITY.md).
+  Changing the switch at run time (`setPreferences`) creates or frees the
+  engine on the core thread once the components are ready.
+* `api_plugins.cpp`: `pluginsStatus` (engine state, folder, plugins from
+  `allPlugins()` with file path, size and SHA-256, start-up problems),
+  `installPlugin` / `uninstallPlugin` (asynchronous: they wait for the
+  engine's signals for their file or ID and reply with upstream's
+  messages; failed updates are `Conflict`), `setPluginEnabled`,
+  `invokePlugin` (synchronous on the core thread, like the Plugins menu).
+* `EventHub` posts `pluginsChanged` when the engine starts or stops and on
+  its installed/updated/uninstalled/enabled signals.
+* App: `PluginsClient` (same signatures as the sibling's facade), the
+  Plugins window (`Features/Plugins`), the Plugins menu after Tools
+  (`AppCommands`; the invocable plugins are cached in
+  `AppModel.invocablePlugins`, refreshed on `pluginsChanged`) and the switch
+  in Settings › Privacy.
 
 ## Profiles and paths
 

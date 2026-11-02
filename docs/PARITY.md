@@ -27,6 +27,7 @@ only converts data. "Verified" means exercised against a real session
 | `AppInfoClient` | network interfaces / addresses, cookies get/set, test e-mail, WebUI password/username (`setPreferencesJson`), WebUI status, UI-lock PBKDF2 hash/verify, tracker favicons | Done |
 | `RSSClient` | tree (with/without articles), articles, add folder/feed, set URL, per-feed refresh interval, remove, move, mark read, refresh, rules CRUD/rename, matching articles, preview of unsaved rule, clear episode history, import (JSON or legacy) / export (JSON, legacy), expression and episode-filter validation | Done, verified (feed, rule, validation) |
 | `SearchClient` | Python status, plugins list, install (URL/path), uninstall, enable, update all, start (all / enabled / named plugins, max 5 concurrent), stop, status, paged results, delete, download through the plugin (nova2dl) then add | Done, verified (plugin install, search run) |
+| `PluginsClient` | Lua plugins (qBittorrent 5.3's `PluginsEngine`): status, install from a local file, uninstall, enable/disable, invoke; engine started/stopped by `AdvancedPrefs.pluginsEnabled` | Done, verified (smoke: install Invocable/RunExternalProgram, update, same/older version refused, enable, invoke, uninstall, switch on/off at run time, refusal while off and with group/world-writable files) |
 | `CreatorClient` | add task (v1/v2/hybrid, piece size, private, trackers, web seeds, comment, source, start seeding), list, task, .torrent bytes, delete, automatic piece size, piece count | Done, verified |
 
 ## Events (`CoreEvent`)
@@ -35,7 +36,7 @@ Emitted: torrentAdded, torrentFinished, torrentMetadataReceived,
 torrentRemoved, fullDiskError, addTorrentFailed, duplicateTorrent,
 allTorrentsFinished, rssUpdated (coalesced), searchUpdated,
 searchPluginsUpdated, creatorTaskUpdated (polled 1 s while tasks run), log,
-preferencesChanged.
+preferencesChanged, pluginsChanged.
 
 Not emitted (no qBittorrent signal): torrentError (I/O errors arrive as
 fullDiskError, as in qBittorrent's GUI), rssTorrentDownloaded,
@@ -50,7 +51,8 @@ and placeholders, no shell), e-mail notification on completion, WebUI
 (GUI-mode semantics: no temporary password; refuses logins until a password
 is set), RSS session and auto-downloader, watched folders, GeoIP, reverse
 DNS, AddTorrentManager (download of .torrent URLs, auto-deletion of added
-.torrent files).
+.torrent files), the Lua plugins engine (`PluginsEngine::initInstance` /
+`freeInstance` at upstream's points, only while plugins are turned on).
 
 Handled by the SwiftUI app instead (as in the sibling project): notifications,
 Dock badge/menu, menu bar extra, "On downloads done" actions with
@@ -110,6 +112,21 @@ confirmation, UI lock, GUI-only preferences (UserDefaults).
   AppKit table (double-click / Return to edit) and its
   `GUI/TorrentContentLayoutDialog/Columns` key are not ported; the
   `ContentLayoutEdits` unit tests are not ported (no unit-test target).
+* Lua plugins: the engine is upstream's, so `PluginInfo` has only what it
+  provides (ID, name, version, invocable, enabled) plus the file path, size
+  and SHA-256 read by the bridge; `author`, `description`, `handlers`, the
+  activity counters and `lastError` stay empty (the Plugins window hides
+  those rows). Failures of `invoke` and of event handlers are only in the
+  execution log, as in qBittorrent. Upstream has no enable switch (the
+  engine is a build option that always runs); qBittorrent Neo adds the
+  off-by-default switch, refuses to start the engine when the plugins
+  folder or a plugin file is owned by someone else or group/world-writable,
+  makes installed files 0600, refuses `.lua`-less names and files inside
+  the plugins folder, and creates the folder 0700. Upstream's engine has no
+  memory or enforceable time budget and runs plugins on the core thread
+  (docs/SECURITY.md); the sibling's sandbox limits, plugins thread and
+  logging of each program/e-mail are not available. The Plugins menu is a
+  SwiftUI `CommandMenu` (the sibling builds an `NSMenu` with a delegate).
 * App changes vs. the sibling project: `QtCoreClient` replaces the UniFFI
   `App`; About texts; speed graph buckets by timestamp; three table cells
   take their state as parameters instead of `@Environment` (accessibility

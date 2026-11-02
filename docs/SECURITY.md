@@ -52,6 +52,84 @@ upstream's security properties and fixes.
   (nova2dl, qBittorrent's code) only when the result belongs to an
   installed plugin; otherwise the URL is added like any other link.
 
+## Lua plugins (qBittorrent 5.3's `PluginsEngine`, `core/src/api_plugins.cpp`)
+
+qBittorrent 5.3 (#24485) runs user-installed Lua plugins on torrent events
+and from its Plugins menu. Their API includes `qBittorrent.exec` (start a
+program) and `qBittorrent.sendMail`, so an enabled plugin is code execution
+as the user. qBittorrent Neo uses upstream's engine unmodified
+(`qbittorrent/src/base/plugins`, Lua 5.5 and LuaBridge 3 from
+`src/base/3rdparty`); the aim is that only plugins the user chose can run
+and that they cannot be planted by others, not to make a hostile plugin
+safe.
+
+Threats: another local account or process planting or replacing plugin
+files; a remote party (WebAPI client, RSS feed, torrent, search plugin)
+getting a plugin installed or the engine switched on; a buggy or hostile
+plugin hanging or bloating the app.
+
+What upstream's engine does (unchanged):
+* Each plugin gets its own Lua state with only the base, string, table,
+  math, utf8 and coroutine libraries (no `io`, `os`, `debug`, `package`);
+  `load`, `loadfile`, `dofile`, `collectgarbage`, `getmetatable`,
+  `setmetatable`, `raw*`, `warn` and `string.dump` are removed. Files are
+  read up to 1 MiB.
+* A count hook (every 100 VM instructions) raises "Timed out." once a call
+  has run for 1 s.
+* `exec` splits the command line like "Run external program" and starts the
+  program detached without a shell; `sendMail` uses the e-mail notification
+  settings.
+* Installing needs an absolute local path; an update needs a higher
+  `VERSION`; new plugins are installed disabled. Installs, updates,
+  uninstalls, load failures and failed calls are logged.
+* qBittorrent 5.3's WebAPI and Web UI have no plugin endpoints.
+
+**Unlike the sibling qBit NeoRS, upstream's engine has no instruction or
+memory budget and no isolation from the core.** Plugins run synchronously
+on the core thread inside session signal handlers, so a slow plugin stalls
+the whole core (transfers, the app's requests) for up to its 1 s limit per
+event. The 1 s limit is a Lua error that the plugin can catch with `pcall`
+(which upstream leaves in place), and C functions such as string pattern
+matching are not interrupted, so a hostile plugin can hang the app
+indefinitely. Each Lua state uses the default allocator without a cap, so a
+plugin can exhaust memory. There are no per-call limits on log lines,
+programs or e-mails, and individual `exec`/`sendMail` calls are not logged.
+These cannot be fixed from the bridge without editing `qbittorrent/`.
+
+What qBittorrent Neo adds around it (no upstream change):
+* A global switch, Settings › Privacy › Plugins › **Enable plugins**
+  (`AdvancedPrefs.pluginsEnabled`), stored as `Neo/PluginsEnabled` in the
+  profile's `qBittorrent.ini`, off by default. It is not a WebAPI
+  preference, so a WebAPI client can neither read nor change it. While it
+  is off `PluginsEngine` is never constructed: no Lua state exists, no
+  plugin file is read and no session signal is connected; every plugin call
+  of the bridge is refused ("Plugins are turned off."). Turning it off at
+  run time frees the engine on the core thread between events (never from
+  inside a Lua call); pending install/uninstall requests then fail.
+* Before the engine starts, the plugins folder (`<profile>/qBittorrent/data/
+  plugins`, created 0700 when missing) and every `*.lua` file in it must be
+  owned by the user running the app and not group/world-writable, and the
+  files must be regular files. Otherwise the engine is not started, the
+  reasons are logged and shown in the Plugins window, and the user has to
+  fix the permissions and turn the switch off and on. The check uses
+  `stat` before upstream opens the files (a check-then-use window remains;
+  an attacker who can win it already owns files of the user).
+* Installation only from a local `.lua` file the user picks or drops in
+  the Plugins window: an absolute path (`://` refused), an existing regular
+  file, not a file inside the plugins folder itself (upstream would delete
+  it before copying). The installed copy is set to 0600, since `QFile::copy`
+  keeps the source's permissions. A second request for the same file or ID
+  while one is pending is refused (its failure signal would otherwise be
+  taken for the first request's).
+* The window warns, as the sibling does: "An enabled plugin can run
+  programs and send e-mail as you. Install plugins only from people you
+  trust."
+* The macOS app is not sandboxed (it already runs external programs for
+  "Run external program"), so `exec` adds no capability the user did not
+  already grant through that setting. `config/plugins.json` (enabled flags)
+  lives next to `qBittorrent.ini`, which already holds that program's
+  command line, so it is not checked separately.
+
 ## Secrets
 
 * WebUI password: `setPreferencesJson("web_ui_password")` hashes with
@@ -103,6 +181,9 @@ upstream's security properties and fixes.
 
 * Search plugins are Python scripts executed with the user's privileges
   (upstream design); installing one from a URL trusts that source.
+* Lua plugins, once enabled, can hang the core or exhaust memory (see the
+  Lua plugins section: upstream's engine has no enforceable time, instruction
+  or memory budget). The switch is off by default.
 * Homebrew Qt/OpenSSL/ICU builds are bundled as-is; security updates
   require rebuilding the app.
 * Images (tracker favicons, RSS icons) are decoded by AppKit; size is
