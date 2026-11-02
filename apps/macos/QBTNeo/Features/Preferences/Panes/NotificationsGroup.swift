@@ -32,13 +32,17 @@ struct NotificationsGroup: View {
 
     @ViewBuilder private var mailFields: some View {
         CommitTextField(title: SettingsCatalog.key("mail_notification_sender"),
-                        text: $model.draft.downloads.mailNotificationSender, trims: true)
+                        text: $model.draft.downloads.mailNotificationSender,
+                        prompt: "qBittorrent_notification@example.com", trims: true)
+            .help("Provide the sending email address.")
             .setting("mail_notification_sender")
         CommitTextField(title: SettingsCatalog.key("mail_notification_email"),
                         text: $model.draft.downloads.mailNotificationEmail, trims: true)
+            .help(Self.recipientHelp)
             .setting("mail_notification_email")
         CommitTextField(title: SettingsCatalog.key("mail_notification_smtp"),
-                        text: $model.draft.downloads.mailNotificationSmtp, prompt: "smtp.example.com:587", trims: true)
+                        text: $model.draft.downloads.mailNotificationSmtp, prompt: "smtp.example.com:465", trims: true)
+            .help(Self.serverHelp)
             .setting("mail_notification_smtp")
         Toggle(SettingsCatalog.title("mail_notification_ssl_enabled"), isOn: $model.draft.downloads.mailNotificationSslEnabled)
             .setting("mail_notification_ssl_enabled")
@@ -63,6 +67,26 @@ struct NotificationsGroup: View {
             }
         }
         .setting("system.testEmail")
+    }
+
+    // qBittorrent 5.3's tooltips on the e-mail fields, joined from its strings.
+    private static var recipientHelp: String {
+        [String(localized: "Provide the recipient email address or addresses."),
+         String(localized: "Separate multiple emails with a semicolon.") + "\n"
+            + String(localized: "Separate multiple email addresses within each email with a comma."),
+         String(localized: "Example:") + "\n"
+            + String(localized: "a@x.com;b@y.com,c@z.com - send two emails: the first to just a@x.com, the second to both b@y.com and c@z.com"),
+         String(localized: "Note: b@y.com & c@z.com will both see each other's email addresses, whereas a@x.com will not see them nor be seen.")]
+            .joined(separator: "\n\n")
+    }
+
+    private static var serverHelp: String {
+        [String(localized: "Provide the SMTP server address for sending email notifications."),
+         String(localized: "The server address can be entered either as a DNS name or an IP address (DNS name recommended).") + "\n"
+            + String(localized: "To manually specify the server port, add a colon and then the port number to the end."),
+         String(localized: "Example:") + "\n"
+            + String(localized: "smtp.example.com:465 - connect to server smtp.example.com on port 465")]
+            .joined(separator: "\n\n")
     }
 
     /// System Settings › Notifications › this app (HIG: respect system settings).

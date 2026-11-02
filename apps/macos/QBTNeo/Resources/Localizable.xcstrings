@@ -113599,6 +113599,334 @@
         }
       }
     },
+    "Example:": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المثال:"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nümunə:"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Узор:"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пример:"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primjer:"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemple:"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Příklad:"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eksempel:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beispiel: "
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Παράδειγμα:"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example:"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Example:"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ejemplo:"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Näidis:"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adibidea:"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مثال:"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esimerkki:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemple :"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemplo:"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דוגמה:"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उदाहरण :"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primjer:"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Példa:"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Օրինակ՝"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contoh:"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esempio:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "例:"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "მაგალითი:"
+          }
+        },
+        "kk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мысалы:"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "예시:"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pavyzdys:"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pīvadums:"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piemērs:"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contoh:"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eksempel:"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voorbeeld:"
+          }
+        },
+        "oc": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemple :"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Przykład:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemplo:"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemplo:"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exemplu: "
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пример:"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Príklad:"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primer:"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пример:"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Primer:"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exempel:"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ตัวอย่าง:"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Örnek:"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наприклад:"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ví dụ:"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "例子："
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "例如："
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "範例："
+          }
+        }
+      }
+    },
     "Example: 172.17.32.0/24, fdff:ffff:c8::/40": {
       "localizations": {
         "ar": {
@@ -182798,6 +183126,16 @@
         }
       }
     },
+    "Note: b@y.com & c@z.com will both see each other's email addresses, whereas a@x.com will not see them nor be seen.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Примечание: b@y.com и c@z.com увидят адреса друг друга, а a@x.com не увидит их и не будет виден им."
+          }
+        }
+      }
+    },
     "Note: the current defaults are displayed for reference.": {
       "localizations": {
         "ar": {
@@ -211451,6 +211789,36 @@
         }
       }
     },
+    "Provide the SMTP server address for sending email notifications.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Укажите адрес SMTP-сервера для отправки уведомлений."
+          }
+        }
+      }
+    },
+    "Provide the recipient email address or addresses.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Укажите адрес или адреса получателей."
+          }
+        }
+      }
+    },
+    "Provide the sending email address.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Укажите адрес отправителя."
+          }
+        }
+      }
+    },
     "Proxy Server": {
       "localizations": {
         "ar": {
@@ -230061,6 +230429,184 @@
           "stringUnit": {
             "state": "translated",
             "value": "移除 torrent"
+          }
+        }
+      }
+    },
+    "Remove torrent and content": {
+      "localizations": {
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выдаліць торэнт і яго змесціва"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uklonite torrent i sadržaj"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suprimeix el torrent i el contingut"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odebrat torrent a jeho obsah"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent und Inhalte entfernen"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove torrent and content"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar torrent y contenido"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poista Torrent and content"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le torrent et son contenu"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " \nEliminar torrent e contido"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ukloni torrent i sadržaj"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent és tartalmának eltávolítása"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rimuovi torrent e contenuti"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "토렌트 및 콘텐츠 제거"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pašalinti torentą ir turinį"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टोरेन्ट र सामग्री हटाउनुहोस्"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent en inhoud verwijderen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usuń torrent i zawartość"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover torrent e conteúdo"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover torrent e conteúdo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить торрент и содержимое"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odstrániť torrent a obsah"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort torrent och innehåll"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ลบไฟล์ทอร์เรนต์และเนื้อหา"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Torrent'i ve içeriği kaldır"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видалити торрент і вміст"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xóa torrent và nội dung"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除 torrent 和内容"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除 torrent 與內容"
           }
         }
       }
@@ -254761,6 +255307,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Отправляет ваш IP-адрес и порт прослушивания на portcheck.transmissionbt.com, который пробует подключиться в ответ. Пока вы не нажмете кнопку, ничего не отправляется."
+          }
+        }
+      }
+    },
+    "Separate multiple email addresses within each email with a comma.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Несколько адресов внутри одного письма разделяйте запятой."
+          }
+        }
+      }
+    },
+    "Separate multiple emails with a semicolon.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Несколько писем разделяйте точкой с запятой."
           }
         }
       }
@@ -285262,6 +285828,16 @@
         }
       }
     },
+    "The server address can be entered either as a DNS name or an IP address (DNS name recommended).": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Адрес сервера можно указать доменным именем или IP-адресом (лучше доменным именем)."
+          }
+        }
+      }
+    },
     "The start time and the end time can't be the same.": {
       "localizations": {
         "ar": {
@@ -290171,6 +290747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "下載時間"
+          }
+        }
+      }
+    },
+    "To manually specify the server port, add a colon and then the port number to the end.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтобы указать порт вручную, добавьте в конце двоеточие и номер порта."
           }
         }
       }
@@ -336093,6 +336679,16 @@
         }
       }
     },
+    "a@x.com;b@y.com,c@z.com - send two emails: the first to just a@x.com, the second to both b@y.com and c@z.com": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a@x.com;b@y.com,c@z.com — отправить два письма: первое только на a@x.com, второе сразу на b@y.com и c@z.com"
+          }
+        }
+      }
+    },
     "allowed": {
       "localizations": {
         "ru": {
@@ -339979,6 +340575,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "一般"
+          }
+        }
+      }
+    },
+    "smtp.example.com:465 - connect to server smtp.example.com on port 465": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "smtp.example.com:465 — подключиться к серверу smtp.example.com на порт 465"
           }
         }
       }

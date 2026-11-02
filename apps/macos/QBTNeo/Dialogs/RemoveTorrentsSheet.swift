@@ -15,7 +15,9 @@ struct RemoveTorrentsSheet: View {
 
     var body: some View {
         let stored = model.corePreferences.behavior.deleteTorrentContentFiles
-        DialogContainer(title: "Remove torrent(s)", confirmTitle: "Remove", confirmRole: .destructive, cancelIsDefault: true) {
+        // The button says what it removes, as in qBittorrent 5.3.
+        DialogContainer(title: "Remove torrent(s)", confirmTitle: deleteFiles ? "Remove torrent and content" : "Remove torrent",
+                        confirmRole: .destructive, cancelIsDefault: true) {
             model.remove(ids, deleteFiles: deleteFiles)
             dismiss()
         } content: {

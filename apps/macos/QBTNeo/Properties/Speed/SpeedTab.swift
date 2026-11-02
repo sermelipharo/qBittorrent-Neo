@@ -26,8 +26,13 @@ struct SpeedTab: View {
             }
             .padding(Design.Spacing.medium)
         } else {
-            ContentUnavailableView("Speed graphs are disabled", systemImage: Symbol.chartXyaxisLine,
-                                   description: Text("You can enable it in Advanced Options"))
+            // The hint opens the setting, as qBittorrent 5.3's link does.
+            ContentUnavailableView {
+                Label("Speed graphs are disabled", systemImage: Symbol.chartXyaxisLine)
+            } actions: {
+                Button("You can enable it in Advanced Options") { model.revealSetting("SpeedWidget/Enabled") }
+                    .buttonStyle(.link)
+            }
         }
     }
 }
