@@ -9,6 +9,7 @@
  */
 
 #include <algorithm>
+#include <chrono>
 #include <climits>
 
 #include <QBitArray>
@@ -19,6 +20,8 @@
 #include <QNetworkCookie>
 #include <QPointer>
 #include <QRegularExpression>
+#include <QSet>
+#include <QTimer>
 #include <QUrl>
 
 #include "base/bittorrent/addtorrentparams.h"
@@ -56,6 +59,9 @@ using namespace Neo;
 
 namespace
 {
+    // How long renameFiles waits for libtorrent to report the renames.
+    const auto RENAME_FILES_TIMEOUT = std::chrono::seconds(5);
+
     // Runs a continuation with errors turned into replies.
     template <typename Fn>
     void guarded(const Reply &reply, Fn &&fn)
@@ -1073,6 +1079,66 @@ void Neo::registerTorrentsApi(Registry &registry)
     };
     registry.add(u"renameFile"_s, renameHandler(false));
     registry.add(u"renameFolder"_s, renameHandler(true));
+
+    // "Manage Torrent Content" (qBittorrent 5.3), Apply: what
+    // TorrentContentLayoutModel::applyChangedFilePaths does, i.e.
+    // TorrentContentHandler::renameFile(current path, new path) for each
+    // changed file, one at a time, collecting the error messages. The renames
+    // are validated against the paths the torrent has before the batch (they
+    // change when libtorrent reports them, as upstream). The reply waits for
+    // those reports (at most RENAME_FILES_TIMEOUT), so a file list fetched
+    // afterwards shows the new paths, then lists the failures in request order.
+    registry.addAsync(u"renameFiles"_s, [](const QJsonObject &args, const Reply &reply)
+    {
+        BitTorrent::Torrent *torrent = requireTorrent(argString(args, u"hash"_s));
+        if (!torrent->hasMetadata())
+            throwConflict(QCoreApplication::translate("TorrentsController", "Torrent's metadata has not yet downloaded"));
+
+        QJsonArray failures;
+        auto pending = std::make_shared<QSet<int>>();
+        for (const QJsonValue &value : asConst(args.value(u"renames"_s).toArray()))
+        {
+            const QJsonObject rename = value.toObject();
+            const qint64 index = argInt(rename, u"index"_s, -1);
+            const Path newPath {argString(rename, u"newPath"_s)};
+            try
+            {
+                if ((index < 0) || (index >= torrent->filesCount()))
+                    throw RuntimeError(BitTorrent::TorrentContentHandler::tr("No such file: '%1'.").arg(index));
+
+                const Path currentFilePath = torrent->filePath(static_cast<int>(index));
+                torrent->renameFile(currentFilePath, newPath);
+                if (currentFilePath != newPath)
+                    pending->insert(static_cast<int>(index));
+            }
+            catch (const RuntimeError &error)
+            {
+                failures.append(QJsonObject {
+                    {u"index"_s, ((index < 0) || (index >= torrent->filesCount())) ? -1 : index},
+                    {u"message"_s, error.message()}
+                });
+            }
+        }
+
+        if (pending->isEmpty())
+            return reply.ok(failures);
+
+        auto *context = new QObject(CoreHost::instance());
+        const auto finish = [context, reply, failures]
+        {
+            reply.ok(failures);
+            context->deleteLater();
+        };
+        QObject::connect(torrent, &BitTorrent::TorrentContentHandler::fileRenamed, context
+                , [pending, finish](const int index, [[maybe_unused]] const Path &oldFilePath)
+        {
+            if (pending->remove(index) && pending->isEmpty())
+                finish();
+        });
+        QObject::connect(torrent, &QObject::destroyed, context, finish);
+        QTimer::singleShot(RENAME_FILES_TIMEOUT, context, finish);
+        reply.setCancelHandler([context] { context->deleteLater(); });
+    });
 
     registry.add(u"setFilePriority"_s, [](const QJsonObject &args)
     {
