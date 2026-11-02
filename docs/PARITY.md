@@ -84,7 +84,10 @@ confirmation, UI lock, GUI-only preferences (UserDefaults).
 * Single-instance handling and command-line torrent arguments of
   qBittorrent (ApplicationInstanceManager) are not used; macOS delivers
   files and magnet links to the running app.
-* Manage Torrent Content (5.3, #24266): `renameFiles` does what upstream's
+* Manage Torrent Content (5.3, #24266): new paths with a `.` or `..`
+  component are refused ("The new path is invalid: '%1'."); upstream
+  accepts `../x` and moves the file out of the save path. Otherwise
+  `renameFiles` does what upstream's
   `TorrentContentLayoutModel::applyChangedFilePaths` does on Apply:
   `TorrentContentHandler::renameFile(current path, new path)` for each
   changed file, one at a time, returning every thrown message (the dialog

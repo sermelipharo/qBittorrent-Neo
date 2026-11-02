@@ -31,7 +31,7 @@ extension ServerState {
         refreshInterval: 1500, freeSpaceOnDisk: -1, lastExternalAddressV4: "", lastExternalAddressV6: "",
         alltimeDownload: 0, alltimeUpload: 0, totalWastedSession: 0, globalRatio: 0, totalPeerConnections: 0,
         readCacheHits: 0, totalBuffersSize: 0, writeCacheOverload: 0, readCacheOverload: 0, queuedIoJobs: 0,
-        averageTimeQueue: 0, totalQueuedSize: 0
+        averageTimeQueue: 0, totalQueuedSize: 0, queuedTrackerAnnounces: 0
     )
 }
 

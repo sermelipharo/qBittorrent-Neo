@@ -307,7 +307,8 @@ namespace Neo
             {u"readCacheOverload"_s, readOverload},
             {u"queuedIoJobs"_s, cache.jobQueueLength},
             {u"averageTimeQueue"_s, cache.averageJobTime},
-            {u"totalQueuedSize"_s, cache.queuedBytes}
+            {u"totalQueuedSize"_s, cache.queuedBytes},
+            {u"queuedTrackerAnnounces"_s, status.queuedTrackerAnnounces}
         };
     }
 

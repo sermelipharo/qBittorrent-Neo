@@ -24,6 +24,9 @@ struct StatisticsWindow: View {
                 StatisticRow(title: "Average time in queue:", value: model.averageTimeInQueue)
                 StatisticRow(title: "Total queued size:", value: model.totalQueuedSize)
             }
+            Section("Tracker statistics") {
+                StatisticRow(title: "Queued tracker announces:", value: model.queuedTrackerAnnounces)
+            }
         }
         .formStyle(.grouped)
         .frame(minWidth: FeatureDesign.Window.statisticsMin.width, minHeight: FeatureDesign.Window.statisticsMin.height)

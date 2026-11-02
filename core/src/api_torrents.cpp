@@ -1106,6 +1106,15 @@ void Neo::registerTorrentsApi(Registry &registry)
                 if ((index < 0) || (index >= torrent->filesCount()))
                     throw RuntimeError(BitTorrent::TorrentContentHandler::tr("No such file: '%1'.").arg(index));
 
+                // Unlike qBittorrent 5.3 (Path::isValid skips them), `.` and `..`
+                // are refused: a rename must not move a file out of the
+                // torrent's folder.
+                for (const QStringView component : QStringView(newPath.data()).split(u'/'))
+                {
+                    if ((component == u".") || (component == u".."))
+                        throw RuntimeError(BitTorrent::TorrentContentHandler::tr("The new path is invalid: '%1'.").arg(newPath.toString()));
+                }
+
                 const Path currentFilePath = torrent->filePath(static_cast<int>(index));
                 torrent->renameFile(currentFilePath, newPath);
                 if (currentFilePath != newPath)

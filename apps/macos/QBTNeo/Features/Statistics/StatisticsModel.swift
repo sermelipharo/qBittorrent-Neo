@@ -38,6 +38,7 @@ final class StatisticsModel {
     var queuedIOJobs: String { state.queuedIoJobs.formatted() }
     var averageTimeInQueue: String { String(localized: "\(state.averageTimeQueue.formatted()) ms") }
     var totalQueuedSize: String { UnitFormatter.size(state.totalQueuedSize) }
+    var queuedTrackerAnnounces: String { state.queuedTrackerAnnounces.formatted() }
 
     private static func percent(_ value: Double) -> String {
         guard value > 0 else { return "0%" }

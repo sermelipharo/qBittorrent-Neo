@@ -1804,13 +1804,24 @@ public struct ServerState: Equatable, Hashable {
     public var queuedIoJobs: Int64
     public var averageTimeQueue: Int64
     public var totalQueuedSize: Int64
+    /**
+     * HTTP tracker announces waiting for a free slot under "Max concurrent
+     * HTTP announces" (qBittorrent 5.3, statistics "Queued tracker
+     * announces").
+     */
+    public var queuedTrackerAnnounces: Int64
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
     public init(dlSpeed: Int64, dlSessionData: Int64, upSpeed: Int64, upSessionData: Int64,
         /**
          * Effective global limits (alt limits when enabled), 0 = unlimited.
-         */dlRateLimit: Int64, upRateLimit: Int64, dhtNodes: Int64, connectionStatus: ConnectionStatus, queueing: Bool, useAltSpeedLimits: Bool, useSubcategories: Bool, refreshInterval: Int64, freeSpaceOnDisk: Int64, lastExternalAddressV4: String, lastExternalAddressV6: String, alltimeDownload: Int64, alltimeUpload: Int64, totalWastedSession: Int64, globalRatio: Double, totalPeerConnections: Int64, readCacheHits: Double, totalBuffersSize: Int64, writeCacheOverload: Double, readCacheOverload: Double, queuedIoJobs: Int64, averageTimeQueue: Int64, totalQueuedSize: Int64) {
+         */dlRateLimit: Int64, upRateLimit: Int64, dhtNodes: Int64, connectionStatus: ConnectionStatus, queueing: Bool, useAltSpeedLimits: Bool, useSubcategories: Bool, refreshInterval: Int64, freeSpaceOnDisk: Int64, lastExternalAddressV4: String, lastExternalAddressV6: String, alltimeDownload: Int64, alltimeUpload: Int64, totalWastedSession: Int64, globalRatio: Double, totalPeerConnections: Int64, readCacheHits: Double, totalBuffersSize: Int64, writeCacheOverload: Double, readCacheOverload: Double, queuedIoJobs: Int64, averageTimeQueue: Int64, totalQueuedSize: Int64,
+        /**
+         * HTTP tracker announces waiting for a free slot under "Max concurrent
+         * HTTP announces" (qBittorrent 5.3, statistics "Queued tracker
+         * announces").
+         */queuedTrackerAnnounces: Int64) {
         self.dlSpeed = dlSpeed
         self.dlSessionData = dlSessionData
         self.upSpeed = upSpeed
@@ -1838,6 +1849,7 @@ public struct ServerState: Equatable, Hashable {
         self.queuedIoJobs = queuedIoJobs
         self.averageTimeQueue = averageTimeQueue
         self.totalQueuedSize = totalQueuedSize
+        self.queuedTrackerAnnounces = queuedTrackerAnnounces
     }
 
 }
@@ -4745,7 +4757,7 @@ extension SearchResultsPage: Codable {
 
 extension ServerState: Codable {
     enum CodingKeys: String, CodingKey {
-        case dlSpeed, dlSessionData, upSpeed, upSessionData, dlRateLimit, upRateLimit, dhtNodes, connectionStatus, queueing, useAltSpeedLimits, useSubcategories, refreshInterval, freeSpaceOnDisk, lastExternalAddressV4, lastExternalAddressV6, alltimeDownload, alltimeUpload, totalWastedSession, globalRatio, totalPeerConnections, readCacheHits, totalBuffersSize, writeCacheOverload, readCacheOverload, queuedIoJobs, averageTimeQueue, totalQueuedSize
+        case dlSpeed, dlSessionData, upSpeed, upSessionData, dlRateLimit, upRateLimit, dhtNodes, connectionStatus, queueing, useAltSpeedLimits, useSubcategories, refreshInterval, freeSpaceOnDisk, lastExternalAddressV4, lastExternalAddressV6, alltimeDownload, alltimeUpload, totalWastedSession, globalRatio, totalPeerConnections, readCacheHits, totalBuffersSize, writeCacheOverload, readCacheOverload, queuedIoJobs, averageTimeQueue, totalQueuedSize, queuedTrackerAnnounces
     }
 
     static var neoEmpty: ServerState {
@@ -4781,6 +4793,7 @@ extension ServerState: Codable {
         let v24: Int64 = try c.decodeIfPresent(Int64.self, forKey: .queuedIoJobs) ?? 0
         let v25: Int64 = try c.decodeIfPresent(Int64.self, forKey: .averageTimeQueue) ?? 0
         let v26: Int64 = try c.decodeIfPresent(Int64.self, forKey: .totalQueuedSize) ?? 0
+        let v27: Int64 = try c.decodeIfPresent(Int64.self, forKey: .queuedTrackerAnnounces) ?? 0
         self.init(
             dlSpeed: v0,
             dlSessionData: v1,
@@ -4808,7 +4821,8 @@ extension ServerState: Codable {
             readCacheOverload: v23,
             queuedIoJobs: v24,
             averageTimeQueue: v25,
-            totalQueuedSize: v26
+            totalQueuedSize: v26,
+            queuedTrackerAnnounces: v27
         )
     }
 }
