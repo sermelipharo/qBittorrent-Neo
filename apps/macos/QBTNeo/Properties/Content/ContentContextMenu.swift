@@ -16,6 +16,7 @@ struct ContentContextMenu: View {
                 model.copyToPasteboard(model.contentURL(item, node).path(percentEncoded: false))
             }
             Button("Rename…", systemImage: Symbol.pencil) { model.requestRenameContent(item, node) }
+            Button("Batch Rename…", systemImage: Symbol.pencil) { batchRename(tree) }
             Divider()
             Menu("Priority") {
                 ForEach(FilePriorityChoice.selectable) { choice in
@@ -25,11 +26,19 @@ struct ContentContextMenu: View {
                 Button("By Shown File Order") { apply(tree.prioritizeByShownOrder(nodes)) }
             }
         } else if nodes.count > 1 {
+            Button("Batch Rename…", systemImage: Symbol.pencil) { batchRename(tree) }
+            Divider()
             ForEach(FilePriorityChoice.selectable) { choice in
                 Button(choice.menuTitle) { apply(tree.setPriority(choice, for: nodes)) }
             }
             Divider()
             Button("Priority by Shown File Order") { apply(tree.prioritizeByShownOrder(nodes)) }
         }
+    }
+
+    /// "Batch rename..." (qBittorrent 5.3): the Manage Torrent Content dialog
+    /// with the files of the selected rows (folders: every file under them).
+    private func batchRename(_ tree: FileTreeModel) {
+        model.requestManageContent(item.id, selecting: nodes.flatMap { tree.files(under: $0) }.map { Int64($0.fileIndex) })
     }
 }

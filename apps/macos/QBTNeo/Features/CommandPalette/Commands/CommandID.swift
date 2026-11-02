@@ -6,7 +6,7 @@ enum CommandID: String, CaseIterable, Sendable {
     case addTorrentFile, addTorrentLink
     // Torrents
     case start, stop, forceStart, remove, forceRecheck, forceReannounce
-    case setLocation, rename, editTrackers, setCategory, editTags, torrentOptions
+    case setLocation, rename, manageContent, editTrackers, setCategory, editTags, torrentOptions
     case previewFile, openDestination, exportTorrent
     case queueTop, queueUp, queueDown, queueBottom
     case startAll, stopAll

@@ -12,6 +12,7 @@ enum MainSheet: Identifiable {
     case category(CategoryEditorRequest)
     case tagEditor(TagEditorRequest)
     case textPrompt(TextPromptRequest)
+    case manageContent(ManageContentModel)
     case preview(id: String)
     case lockPassword(lockAfterSaving: Bool)
 
@@ -27,6 +28,7 @@ enum MainSheet: Identifiable {
         case .category(let request): "category-\(request.id)"
         case .tagEditor(let request): "tag-\(request.id)"
         case .textPrompt(let request): "prompt-\(request.id)"
+        case .manageContent(let dialog): "manageContent-\(dialog.id)"
         case .preview(let id): "preview-\(id)"
         case .lockPassword: "lockPassword"
         }

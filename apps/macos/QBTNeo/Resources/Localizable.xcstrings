@@ -34605,6 +34605,16 @@
         }
       }
     },
+    "Apply": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Применить"
+          }
+        }
+      }
+    },
     "Apply Rule to Feeds:": {
       "localizations": {
         "ar": {
@@ -47314,6 +47324,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "永遠封鎖下載者"
+          }
+        }
+      }
+    },
+    "Batch Rename…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пакетное переименование…"
           }
         }
       }
@@ -65522,6 +65542,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "註解："
+          }
+        }
+      }
+    },
+    "Common path:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий путь:"
           }
         }
       }
@@ -143520,6 +143550,16 @@
         }
       }
     },
+    "Index": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Индекс"
+          }
+        }
+      }
+    },
     "Indigo": {
       "localizations": {
         "ru": {
@@ -159099,6 +159139,16 @@
         }
       }
     },
+    "Manage Content…": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управление содержимым…"
+          }
+        }
+      }
+    },
     "Manage Cookies": {
       "localizations": {
         "ar": {
@@ -159751,6 +159801,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "管理 cookie…"
+          }
+        }
+      }
+    },
+    "Manage Torrent Content": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управление содержимым торрента"
           }
         }
       }
@@ -233947,6 +234007,334 @@
         }
       }
     },
+    "Rename error": {
+      "localizations": {
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في إعادة التسمية"
+          }
+        },
+        "az-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ad dəyişmədə xəta"
+          }
+        },
+        "be": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Памылка перайменавання"
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грешка при преименуване"
+          }
+        },
+        "bs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Greška u preimenovanju"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error de canvi de nom"
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chyba přejmenování"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fejl ved omdøbning"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fehler beim Umbenennen"
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Σφάλμα μετονομασίας"
+          }
+        },
+        "en-AU": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename error"
+          }
+        },
+        "en-GB": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename error"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error al renombrar"
+          }
+        },
+        "et": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viga ümbernimetamisel"
+          }
+        },
+        "eu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berrizendatze akatsa"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطا در تغییر نام"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Virhe nimettäessä uudelleen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erreur de renommage"
+          }
+        },
+        "gl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erro ao cambiar o nome"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שגיאת שינוי שם"
+          }
+        },
+        "hi-IN": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नाम बदलनें में त्रुटि"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pogreška preimenovanja"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Átnevezés hiba"
+          }
+        },
+        "hy": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Անվանափոխման սխալ"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Galat rubah nama"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errore di ridenominazione"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前変更のエラー"
+          }
+        },
+        "ka": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ფაილის გადარქმევის შეცდომა"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이름 바꾸기 오류"
+          }
+        },
+        "lt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pervadinimo klaida"
+          }
+        },
+        "ltg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klaida puorsaukšonā"
+          }
+        },
+        "lv-LV": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kļūda pārdēvēšanā"
+          }
+        },
+        "ms-MY": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ralat nama semula"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klarte ikke endre navn"
+          }
+        },
+        "ne-NP": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पुनर्नामाकरण गर्दा त्रुटी"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fout bij naam wijzigen"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Błąd zmiany nazwy"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erro ao renomear"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erro ao renomear"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eroare la redenumire"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка переименования"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chyba premenovania"
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Napaka pri preimenovanju"
+          }
+        },
+        "sq": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gabim riemertimi"
+          }
+        },
+        "sr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грешка у преименовању"
+          }
+        },
+        "sr-Latn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Greška u preimenovanju"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fel vid namnändring"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "การเปลี่ยนชื่อผิดพลาด"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeniden adlandırma hatası"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помилка перейменування"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lỗi đổi tên"
+          }
+        },
+        "zh-HK": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新命名錯誤"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重命名出错"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重新命名錯誤"
+          }
+        }
+      }
+    },
     "Rename failed": {
       "localizations": {
         "ar": {
@@ -290528,6 +290916,59 @@
         }
       }
     },
+    "There are %lld more renaming error(s).": {
+      "comment": "There are 5 more renaming errors.",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "There is %lld more renaming error."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "There are %lld more renaming errors."
+                }
+              }
+            }
+          }
+        },
+        "ru": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ещё %lld ошибки переименования."
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ещё %lld ошибок переименования."
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ещё %lld ошибка переименования."
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ещё %lld ошибки переименования."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "There are %lld more results with the same issue.": {
       "localizations": {
         "az-Latn": {
@@ -341546,6 +341987,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "пароль, блокировка, password, privacy"
+          }
+        }
+      }
+    },
+    "palette.keywords.manageContent": {
+      "comment": "Command Palette search words, comma-separated",
+      "extractionState": "extracted_with_value",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "batch rename, files, paths"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "пакетное переименование, файлы, пути, batch rename, files, paths"
           }
         }
       }

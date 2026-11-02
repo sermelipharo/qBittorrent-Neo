@@ -16,6 +16,7 @@ struct MainSheetContent: View {
         case .category(let request): CategoryEditorSheet(request: request)
         case .tagEditor(let request): TagEditorSheet(request: request)
         case .textPrompt(let request): TextPromptSheet(request: request)
+        case .manageContent(let dialog): ManageContentSheet(dialog: dialog)
         case .preview(let id): PreviewSheet(id: id)
         case .lockPassword(let lockAfterSaving): LockPasswordSheet(lockAfterSaving: lockAfterSaving)
         }

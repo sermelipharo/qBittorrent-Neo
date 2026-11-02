@@ -52,6 +52,10 @@ extension QtCoreClient {
         try await bridge.callAsyncVoid("renameFolder", ["hash": hash, "oldPath": oldPath, "newPath": newPath])
     }
 
+    func renameFiles(hash: String, renames: [FileRename]) async throws -> [FileRenameFailure] {
+        try await bridge.callAsync("renameFiles", ["hash": hash, "renames": renames])
+    }
+
     func setFilePriority(hash: String, indexes: [Int64], priority: FilePriority) throws {
         try bridge.callVoid("setFilePriority", ["hash": hash, "indexes": indexes, "priority": priority])
     }

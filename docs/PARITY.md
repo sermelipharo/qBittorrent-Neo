@@ -13,7 +13,7 @@ only converts data. "Verified" means exercised against a real session
 | Transfer list | syncMainData (record diffs: torrents, categories, tags, trackers, server state), resetMainData | Done, verified |
 | Properties | properties, trackers (+ DHT/PeX/LSD rows, endpoints), webSeeds, files (+ availability), pieceStates, pieceAvailability, peers (+ host names, countries), exportTorrent | Done, verified (General, Trackers, Peers, HTTP Sources, Content, Speed tabs) |
 | Adding | addTorrent (magnet / hash / http(s) URL / file / bytes, all options, extra trackers and web seeds, cookie), fetchMetadata (+ cancel), saveFetchedMetadata, duplicate handling (merge trackers) | Done, verified (Sintel magnet through the add dialog) |
-| Torrent actions | start, stop, force start, remove (+ content: delete or trash per setting), recheck, reannounce, set location / save path / download path, rename torrent / file / folder, file priority, auto TMM, per-torrent limits, share limits (with the 5.3 match any / all mode), super seeding, sequential, first/last piece, DHT/PeX/LSD per torrent, queue up/down/top/bottom | Done (stop / remove-with-files verified) |
+| Torrent actions | start, stop, force start, remove (+ content: delete or trash per setting), recheck, reannounce, set location / save path / download path, rename torrent / file / folder, batch file rename (renameFiles, Manage Torrent Content), file priority, auto TMM, per-torrent limits, share limits (with the 5.3 match any / all mode), super seeding, sequential, first/last piece, DHT/PeX/LSD per torrent, queue up/down/top/bottom | Done (stop / remove-with-files verified) |
 | Trackers, peers, web seeds | add / edit / remove / replace trackers, add peers, ban peers, add / edit / remove web seeds | Done |
 | Categories, tags | list, create, edit (save/download paths, share limits and mode), remove, set; tags list/create/delete/add/remove | Done |
 | Global transfer | server state, alternative limits, global limits, speed history | Done, verified |
@@ -84,6 +84,29 @@ confirmation, UI lock, GUI-only preferences (UserDefaults).
 * Single-instance handling and command-line torrent arguments of
   qBittorrent (ApplicationInstanceManager) are not used; macOS delivers
   files and magnet links to the running app.
+* Manage Torrent Content (5.3, #24266): `renameFiles` does what upstream's
+  `TorrentContentLayoutModel::applyChangedFilePaths` does on Apply:
+  `TorrentContentHandler::renameFile(current path, new path)` for each
+  changed file, one at a time, returning every thrown message (the dialog
+  shows the first and "There are %n more renaming error(s)."). Each rename
+  is checked against the paths before the batch (they change when
+  libtorrent reports them), so a swap (`a` ↔ `b`) or a chain (`a → b`,
+  `b → c`) fails with "The file already exists", as in qBittorrent. The
+  sibling's batch planner (validation against the final layout, collision-
+  free ordering through temporary names) is a qBit NeoRS improvement and
+  is not ported. Differences: renames run in request order (file index
+  order) where upstream iterates a `QHash` (unspecified order); the reply
+  waits up to 5 s for libtorrent's rename reports so the refreshed list
+  shows the new paths; an unknown file index reports "No such file" with
+  index -1. Like upstream, paths with `..` components are accepted
+  (`Path::isValid` skips `.`/`..`), so a file can be moved outside the
+  save path (e.g. `../x`); qBit NeoRS refuses them.
+* Manage Torrent Content UI: the Path column is a SwiftUI `Table` with a
+  text field per row (click a path to edit; Escape reverts the edit);
+  column layout in scene storage like the other tables. The sibling's
+  AppKit table (double-click / Return to edit) and its
+  `GUI/TorrentContentLayoutDialog/Columns` key are not ported; the
+  `ContentLayoutEdits` unit tests are not ported (no unit-test target).
 * App changes vs. the sibling project: `QtCoreClient` replaces the UniFFI
   `App`; About texts; speed graph buckets by timestamp; three table cells
   take their state as parameters instead of `@Environment` (accessibility

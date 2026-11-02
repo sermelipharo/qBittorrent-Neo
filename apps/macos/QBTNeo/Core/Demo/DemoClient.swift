@@ -197,6 +197,10 @@ final class DemoClient: CoreClient {
         try mutate { try $0.renameFile(hash, old: oldPath, new: newPath, folder: true) }
     }
 
+    func renameFiles(hash: String, renames: [FileRename]) async throws -> [FileRenameFailure] {
+        try mutate { try $0.renameFiles(hash, renames) }
+    }
+
     func setFilePriority(hash: String, indexes: [Int64], priority: FilePriority) throws {
         let wanted = Set(indexes)
         mutate { state in

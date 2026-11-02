@@ -41,6 +41,11 @@ extension CommandRegistry {
             AppCommand(.rename, String(localized: "Rename…"), symbol: Symbol.pencil,
                        needsTargets: true) { $0.model.requestRename($0.ids[0]) }
                 .available { $0.ids.count == 1 },
+            AppCommand(.manageContent, String(localized: "Manage Content…"), symbol: Symbol.pencil,
+                       keywords: words(String(localized: "palette.keywords.manageContent", defaultValue: "batch rename, files, paths",
+                                              comment: "Command Palette search words, comma-separated")),
+                       needsTargets: true) { $0.model.requestManageContent($0.ids[0]) }
+                .available { $0.ids.count == 1 && $0.selection.hasMetadata },
             AppCommand(.editTrackers, String(localized: "Edit Trackers…"), symbol: Symbol.antennaRadiowavesLeftAndRight,
                        needsTargets: true) { $0.model.sheet = .editTrackers(ids: $0.ids) },
             AppCommand(.setCategory, String(localized: "Category"), symbol: Symbol.folder, needsTargets: true, follow: .categories) { _ in },

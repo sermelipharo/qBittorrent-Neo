@@ -1102,6 +1102,56 @@ public struct DownloadsPrefs: Equatable, Hashable {
 }
 
 /**
+ * One changed path of the "Manage Torrent Content" dialog.
+ */
+public struct FileRename: Equatable, Hashable {
+    /**
+     * File index (`TorrentFile::index`).
+     */
+    public var index: Int64
+    /**
+     * New relative path with `/` separators; it may move the file to another folder.
+     */
+    public var newPath: String
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(
+        /**
+         * File index (`TorrentFile::index`).
+         */index: Int64,
+        /**
+         * New relative path with `/` separators; it may move the file to another folder.
+         */newPath: String) {
+        self.index = index
+        self.newPath = newPath
+    }
+
+}
+
+/**
+ * A rename of a batch that did not happen, with qBittorrent's message.
+ */
+public struct FileRenameFailure: Equatable, Hashable {
+    /**
+     * File index, -1 when the request named no file of the torrent.
+     */
+    public var index: Int64
+    public var message: String
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(
+        /**
+         * File index, -1 when the request named no file of the torrent.
+         */index: Int64, message: String) {
+        self.index = index
+        self.message = message
+    }
+
+}
+
+/**
  * Execution log "General" entry / `/api/v2/log/main` item.
  */
 public struct LogMessage: Equatable, Hashable {
@@ -3350,6 +3400,8 @@ extension ConnectionPrefs: Sendable {}
 extension Cookie: Sendable {}
 extension CreatorTask: Sendable {}
 extension DownloadsPrefs: Sendable {}
+extension FileRename: Sendable {}
+extension FileRenameFailure: Sendable {}
 extension LogMessage: Sendable {}
 extension MainDataUpdate: Sendable {}
 extension MetadataFile: Sendable {}
@@ -4085,6 +4137,46 @@ extension DownloadsPrefs: Codable {
             autorunOnTorrentAddedProgram: v35,
             autorunEnabled: v36,
             autorunProgram: v37
+        )
+    }
+}
+
+extension FileRename: Codable {
+    enum CodingKeys: String, CodingKey {
+        case index, newPath
+    }
+
+    static var neoEmpty: FileRename {
+        (try? JSONDecoder().decode(FileRename.self, from: Data("{}".utf8)))!
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let v0: Int64 = try c.decodeIfPresent(Int64.self, forKey: .index) ?? 0
+        let v1: String = try c.decodeIfPresent(String.self, forKey: .newPath) ?? ""
+        self.init(
+            index: v0,
+            newPath: v1
+        )
+    }
+}
+
+extension FileRenameFailure: Codable {
+    enum CodingKeys: String, CodingKey {
+        case index, message
+    }
+
+    static var neoEmpty: FileRenameFailure {
+        (try? JSONDecoder().decode(FileRenameFailure.self, from: Data("{}".utf8)))!
+    }
+
+    public init(from decoder: any Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let v0: Int64 = try c.decodeIfPresent(Int64.self, forKey: .index) ?? 0
+        let v1: String = try c.decodeIfPresent(String.self, forKey: .message) ?? ""
+        self.init(
+            index: v0,
+            message: v1
         )
     }
 }

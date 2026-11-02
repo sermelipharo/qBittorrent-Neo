@@ -23,6 +23,8 @@ struct TransferContextMenu: View {
         Button("Set Location…", systemImage: Symbol.folder) { model.requestSetLocation(ids) }
         if ids.count == 1 {
             Button("Rename…", systemImage: Symbol.pencil) { model.requestRename(ids[0]) }
+            Button("Manage Content…", systemImage: Symbol.pencil) { model.requestManageContent(ids[0]) }
+                .disabled(!selection.hasMetadata)
         }
         Button("Edit Trackers…", systemImage: Symbol.antennaRadiowavesLeftAndRight) { model.sheet = .editTrackers(ids: ids) }
         TransferCategoryMenu(selection: selection)

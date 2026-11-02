@@ -50,6 +50,9 @@ enum FeatureSnapshotCatalog {
             Entry(name: "cookies", title: AppWindowID.cookies.title, size: CGSize(width: 760, height: 420)) { _ in
                 AnyView(CookiesWindow())
             },
+            Entry(name: "manage-content", title: AppWindowID.main.title, size: CGSize(width: 760, height: 520)) { model in
+                AnyView(ManageContentSnapshot(model: model))
+            },
             Entry(name: "palette-empty", title: AppWindowID.main.title, size: paletteSize) { model in
                 AnyView(PaletteSnapshot(model: model, query: ""))
             },

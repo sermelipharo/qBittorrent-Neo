@@ -194,6 +194,40 @@ extension DemoState {
         torrents[hash] = torrent
     }
 
+    /// `Utils::Fs::isValidName` (non-Windows rules).
+    private static func isValidName(_ name: Substring) -> Bool {
+        guard !name.isEmpty, name != ".", name != "..", name.utf8.count <= 255 else { return false }
+        return !name.unicodeScalars.contains { $0.value < 32 || $0.value == 127 || $0 == ":" }
+    }
+
+    /// The batch of the Manage Torrent Content dialog, checked against the resulting layout.
+    mutating func renameFiles(_ hash: String, _ renames: [FileRename]) throws -> [FileRenameFailure] {
+        guard var torrent = torrents[hash] else { throw QbtError.NotFound(message: hash) }
+        var finals = torrent.files.map(\.name)
+        var positions: [Int64: Int] = [:]
+        for (position, file) in torrent.files.enumerated() { positions[file.index] = position }
+        var failures: [FileRenameFailure] = []
+        for rename in renames {
+            guard let position = positions[rename.index] else {
+                failures.append(FileRenameFailure(index: -1, message: "No such file: '\(rename.index)'."))
+                continue
+            }
+            let path = rename.newPath.trimmingCharacters(in: .whitespaces)
+            if path.hasPrefix("/") {
+                failures.append(FileRenameFailure(index: rename.index, message: "Absolute path isn't allowed: '\(path)'."))
+            } else if !path.split(separator: "/", omittingEmptySubsequences: false).allSatisfy(Self.isValidName) {
+                failures.append(FileRenameFailure(index: rename.index, message: "The new path is invalid: '\(path)'."))
+            } else if finals.indices.contains(where: { $0 != position && finals[$0] == path }) {
+                failures.append(FileRenameFailure(index: rename.index, message: "The file already exists: '\(path)'."))
+            } else {
+                finals[position] = path
+            }
+        }
+        for position in torrent.files.indices { torrent.files[position].name = finals[position] }
+        torrents[hash] = torrent
+        return failures
+    }
+
     mutating func addTorrent(_ source: TorrentSource, params: AddTorrentParams) throws -> String {
         var metadata = Self.sampleMetadata(for: source, existing: torrents)
         if let fetched = fetched[metadata.hash] { metadata = fetched }

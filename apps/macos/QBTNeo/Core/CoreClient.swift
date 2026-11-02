@@ -53,6 +53,7 @@ protocol CoreClient: AnyObject, Sendable {
     func renameTorrent(hash: String, name: String) throws
     func renameFile(hash: String, oldPath: String, newPath: String) async throws
     func renameFolder(hash: String, oldPath: String, newPath: String) async throws
+    func renameFiles(hash: String, renames: [FileRename]) async throws -> [FileRenameFailure]
     func setFilePriority(hash: String, indexes: [Int64], priority: FilePriority) throws
     func setAutoManagement(hashes: [String], enabled: Bool) throws
     func setDownloadLimit(hashes: [String], limit: Int64) throws

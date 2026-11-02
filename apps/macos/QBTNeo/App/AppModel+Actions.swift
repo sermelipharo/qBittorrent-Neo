@@ -145,6 +145,13 @@ extension AppModel {
         ))
     }
 
+    /// "Manage Content…" / "Batch Rename…" (qBittorrent 5.3): the Manage
+    /// Torrent Content dialog with `files` selected (none: the first file).
+    func requestManageContent(_ id: String, selecting files: [Int64] = []) {
+        guard let item = transfers.item(id), item.hasMetadata else { return }
+        sheet = .manageContent(ManageContentModel(app: self, id: id, torrentName: item.name, selectedFiles: files))
+    }
+
     // MARK: Categories and tags
 
     func setCategory(_ ids: [String], _ category: String) {
