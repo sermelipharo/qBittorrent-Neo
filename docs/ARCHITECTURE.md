@@ -136,7 +136,11 @@ void       qbtn_core_shutdown(core);   // saves resume data, joins the thread
 
 * Core thread: Qt event loop, all qBittorrent objects. libtorrent runs its
   own network/disk threads; qBittorrent's resume-data storage and search
-  processes run on their own threads/processes as upstream.
+  processes run on their own threads/processes as upstream. Search runs
+  on the Python 3.13 bundled in `Contents/Resources/python`
+  (`scripts/embed-python.sh`): `qbtn_core_start` puts its `bin` folder first
+  on `PATH`, so qBittorrent's own detection finds it without changes to
+  `qbittorrent/`; a path set in Settings still wins.
 * The main thread only blocks for synchronous calls, which the core answers
   between events (microseconds when idle). Long operations (adding from a
   URL, metadata, peer lists, piece states, file availability, plugin

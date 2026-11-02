@@ -61,6 +61,8 @@ jobs:
           codesign --verify --deep --strict "$APP"
           codesign -dv "$APP" 2>&1 | grep -q '^Signature=adhoc$'
           test -d "$APP/Contents/Frameworks/Sparkle.framework"
+          # Search runs on the bundled Python.
+          "$APP/Contents/Resources/python/bin/python3.13" -I -B -c 'import concurrent.futures, html.parser, json, ssl, typing, urllib.request; typing.NotRequired'
           # No home folders but the runner's and the demo mode's made-up ones.
           if find "$APP" -type f -print0 | xargs -0 strings -a | grep -oE '/Users/[^/ ]+' | sort -u | grep -vE '^/Users/(runner|demo)$' | grep .; then
             echo "::error::a home folder path in the bundle"

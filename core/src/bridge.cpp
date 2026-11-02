@@ -14,8 +14,10 @@
 #include <future>
 #include <mutex>
 
+#include <dlfcn.h>
 #include <pthread.h>
 
+#include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMetaObject>
@@ -42,6 +44,18 @@ struct qbtn_core
 
 namespace
 {
+    // `Contents/Resources/python/bin` of the app bundle that holds this
+    // library (`Contents/Frameworks`), when the bundled Python is there.
+    QByteArray bundledPythonDir()
+    {
+        Dl_info info {};
+        if ((dladdr(reinterpret_cast<const void *>(&bundledPythonDir), &info) == 0) || !info.dli_fname)
+            return {};
+        const QString dir = QFileInfo(QString::fromUtf8(info.dli_fname)).absolutePath() + u"/../Resources/python/bin"_s;
+        const QFileInfo python {dir + u"/python3"_s};
+        return python.isExecutable() ? QFileInfo(dir).canonicalFilePath().toUtf8() : QByteArray();
+    }
+
     // QCoreApplication keeps references to these for its whole lifetime.
     int g_argc = 1;
     char g_arg0[] = "qBittorrent Neo";
@@ -112,7 +126,11 @@ qbtn_core *qbtn_core_start(const char *configJson, const size_t configLength
     std::signal(SIGPIPE, SIG_IGN);
 
     // Like qBittorrent's main(): let the search engine find a Homebrew Python.
-    const QByteArray path = "/opt/homebrew/bin:/usr/local/bin:" + qgetenv("PATH");
+    // The bundled Python 3.13 comes first: qBittorrent 5.3 needs 3.13 and
+    // macOS's own is 3.9. A path set in Settings still wins.
+    QByteArray path = "/opt/homebrew/bin:/usr/local/bin:" + qgetenv("PATH");
+    if (const QByteArray bundled = bundledPythonDir(); !bundled.isEmpty())
+        path = bundled + ':' + path;
     qputenv("PATH", path);
 
     const QJsonObject config = QJsonDocument::fromJson(QByteArray(configJson, static_cast<qsizetype>(configLength))).object();

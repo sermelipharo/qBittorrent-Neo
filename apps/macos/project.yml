@@ -147,6 +147,12 @@ targets:
             "$TARGET_BUILD_DIR/$WRAPPER_NAME" "$SRCROOT/../../build/core/libqbtneocore.dylib" \
             "${EXPANDED_CODE_SIGN_IDENTITY:--}"
         basedOnDependencyAnalysis: false
+      - name: Embed Python
+        script: |
+          # Search plugins run on the bundled Python 3.13 (scripts/embed-python.sh).
+          "$SRCROOT/../../scripts/embed-python.sh" \
+            "$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/python" "${EXPANDED_CODE_SIGN_IDENTITY:--}"
+        basedOnDependencyAnalysis: false
     settings:
       base:
         PRODUCT_NAME: qBittorrent Neo

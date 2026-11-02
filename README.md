@@ -46,7 +46,7 @@ matching, target category and folder).
 
 **Search.** Search torrent sites with qBittorrent's search plugins: install, enable
 and update plugins, filter results by seeds and size, and download from the results.
-Search plugins need Python 3, as in qBittorrent.
+Search plugins run on a bundled Python 3.13; a Python set in Settings takes precedence.
 
 **Torrent creator.** Create v1, v2 or hybrid torrents from a file or folder, with
 trackers, web seeds, piece size and private flag.

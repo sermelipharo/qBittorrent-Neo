@@ -53,6 +53,14 @@ Third-party components linked into the application:
 * zlib (https://zlib.net), zlib License.
 * ICU, GLib, PCRE2, zstd, Brotli, double-conversion, libb2 (dependencies of
   the Homebrew Qt build), under their respective open-source licenses.
+* Python 3.13 (https://www.python.org), Python Software Foundation License,
+  a trimmed python-build-standalone build
+  (https://github.com/astral-sh/python-build-standalone) bundled to run
+  search plugins (Contents/Resources/python). It links OpenSSL (Apache
+  License 2.0), libffi (MIT), SQLite (public domain), XZ Utils (0BSD), bzip2
+  (bzip2 license), mpdecimal (BSD-2-Clause), Expat (MIT) and libuuid
+  (BSD-3-Clause); their license texts ship in Contents/Resources/python/licenses
+  (scripts/python-licenses in the sources).
 * The free IP to Country Lite database by DB-IP (https://db-ip.com),
   Creative Commons Attribution 4.0 International License, downloaded at run
   time by qBittorrent's GeoIP manager.

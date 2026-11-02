@@ -36,6 +36,10 @@ jobs:
           path: ~/.ccache
           key: ccache-ci-${{ github.run_id }}
           restore-keys: ccache-
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/qbt-neors-python
+          key: python-${{ hashFiles('scripts/embed-python.sh') }}
       - name: SwiftLint
         working-directory: apps/macos
         run: swiftlint lint --strict --quiet
@@ -57,3 +61,7 @@ jobs:
           xcodebuild build -project QBTNeo.xcodeproj -scheme QBTNeo -configuration Release \
             -derivedDataPath "$RUNNER_TEMP/dd" \
             CODE_SIGN_IDENTITY=- DEVELOPMENT_TEAM= CODE_SIGN_INJECT_BASE_ENTITLEMENTS=NO -quiet
+      - name: Bundled Python
+        run: |
+          PY="$RUNNER_TEMP/dd/Build/Products/Release/qBittorrent Neo.app/Contents/Resources/python/bin/python3.13"
+          "$PY" -I -B -c 'import concurrent.futures, html.parser, json, ssl, typing, urllib.request; typing.NotRequired'
