@@ -26,6 +26,8 @@ struct TransfersSearchRSSSegment: View {
                 Toggle(SettingsCatalog.title("store_search_job_results"), isOn: $model.draft.behavior.storeSearchJobResults)
                     .disabled(!model.draft.behavior.storeSearchJobs)
                     .setting("store_search_job_results", indented: true)
+                Toggle(SettingsCatalog.title("Search/CloseSearchTabWithMiddleClick"), isOn: $gui.closeSearchTabWithMiddleClick)
+                    .setting("Search/CloseSearchTabWithMiddleClick")
                 LabeledContent(SettingsCatalog.key("Search/HistoryLength")) {
                     HStack(spacing: Design.Spacing.tight) {
                         TextField(SettingsCatalog.title("Search/HistoryLength"), value: $historyLength, format: .number)

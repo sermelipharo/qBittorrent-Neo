@@ -80,6 +80,8 @@ final class GUIPreferences {
     var speedInTitleBar: Bool { didSet { set(speedInTitleBar, .speedInTitleBar) } }
     var rssEnabled: Bool { didSet { set(rssEnabled, .rssEnabled) } }
     var searchEnabled: Bool { didSet { set(searchEnabled, .searchEnabled) } }
+    /// qBittorrent 5.3 (#24776): a middle click closes a search tab.
+    var closeSearchTabWithMiddleClick: Bool { didSet { set(closeSearchTabWithMiddleClick, .closeSearchTabWithMiddleClick) } }
     var logEnabled: Bool { didSet { set(logEnabled, .logEnabled) } }
     /// `Log::MsgTypes` flags (NORMAL 0x1, INFO 0x2, WARNING 0x4, CRITICAL 0x8; -1 = all).
     var logTypes: Int { didSet { set(logTypes, .logTypes) } }
@@ -169,6 +171,7 @@ final class GUIPreferences {
         speedInTitleBar = read.bool(.speedInTitleBar, false)
         rssEnabled = read.bool(.rssEnabled, false)
         searchEnabled = read.bool(.searchEnabled, false)
+        closeSearchTabWithMiddleClick = read.bool(.closeSearchTabWithMiddleClick, true)
         logEnabled = read.bool(.logEnabled, false)
         logTypes = read.int(.logTypes, -1)
         completionAction = Self.loadCompletionAction(read)

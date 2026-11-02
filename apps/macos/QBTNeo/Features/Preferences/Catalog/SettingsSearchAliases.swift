@@ -307,6 +307,7 @@ enum SettingsSearchAliases {
         "store_search_jobs": ["Search/StoreSearchJobs", "Search/StoreOpenedSearchTabs", "Search UI", "Store opened tabs"],
         "store_search_job_results": ["Search/StoreSearchJobResults", "Search/StoreOpenedSearchTabResults", "Search UI", "Store opened tabs"],
         "Search/HistoryLength": ["Search UI"],
+        "Search/CloseSearchTabWithMiddleClick": ["Search UI", "middle mouse button"],
         "Preferences/WebUI/Enabled": ["Web User Interface (Remote control)"],
         "Application/GUI/Notifications/TorrentAdded": ["Display notifications for added torrents"],
         "confirm_remove_all_tags": ["Confirm removal of all tags"],

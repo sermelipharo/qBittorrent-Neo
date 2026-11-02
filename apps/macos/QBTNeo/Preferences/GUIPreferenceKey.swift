@@ -60,6 +60,7 @@ enum GUIPreferenceKey: String, CaseIterable {
     case speedInTitleBar = "Preferences/General/SpeedInTitleBar"
     case rssEnabled = "GUI/RSSWidget/Enabled"
     case searchEnabled = "Preferences/Search/SearchEnabled"
+    case closeSearchTabWithMiddleClick = "Search/CloseSearchTabWithMiddleClick"
     case logEnabled = "GUI/Log/Enabled"
     case logTypes = "GUI/Log/Types"
     case autoExitOnCompletion = "Preferences/Downloads/AutoShutDownqBTOnCompletion"

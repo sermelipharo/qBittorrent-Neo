@@ -28104,6 +28104,16 @@
         }
       }
     },
+    "Allow closing tabs with middle-click": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрывать вкладки средней кнопкой мыши"
+          }
+        }
+      }
+    },
     "Allow control from a web browser": {
       "localizations": {
         "ru": {

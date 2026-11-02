@@ -3,6 +3,7 @@ import SwiftUI
 /// One closable chip per search tab, with the status icon and a context menu.
 struct SearchTabStrip: View {
     let model: SearchModel
+    @Environment(GUIPreferences.self) private var gui
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -13,6 +14,12 @@ struct SearchTabStrip: View {
                         model.pattern = tab.pattern
                     } close: {
                         model.close(tab)
+                    }
+                    // qBittorrent 5.3 (#24776): optional.
+                    .overlay {
+                        if gui.closeSearchTabWithMiddleClick {
+                            MiddleClickCatcher { model.close(tab) }
+                        }
                     }
                     .contextMenu {
                         if tab.status == .ongoing {
