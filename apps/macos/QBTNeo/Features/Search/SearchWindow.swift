@@ -51,12 +51,23 @@ struct SearchWindow: View {
 
     @ViewBuilder private var content: some View {
         if let status = model.engineStatus, !status.pythonFound {
+            let usesCustomPath = !app.corePreferences.advanced.pythonExecutablePath.isEmpty
             ContentUnavailableView {
-                Label("Missing Python Runtime", systemImage: Symbol.exclamationmarkTriangle)
+                Label(status.pythonVersion.isEmpty ? "Missing Python Runtime" : "Outdated Python Runtime",
+                      systemImage: Symbol.exclamationmarkTriangle)
             } description: {
-                Text("Python is required to use the search engine but it does not seem to be installed.")
                 Text(status.message)
-                Text("Clear the Python path in Settings › Advanced to use the bundled Python, or set it to Python 3.13 or later.")
+                if usesCustomPath {
+                    Text("Click Fix to clear the Python path and use the bundled Python.")
+                } else {
+                    Text("Set the Python path in Settings › Transfers › Search & RSS to Python 3.13 or later.")
+                }
+            } actions: {
+                if usesCustomPath {
+                    Button("Fix", action: useBundledPython)
+                        .buttonStyle(.borderedProminent)
+                }
+                Button("Open Settings…") { app.revealSetting("python_executable_path") }
             }
         } else if model.engineStatus != nil, model.plugins.isEmpty {
             ContentUnavailableView {
@@ -75,4 +86,15 @@ struct SearchWindow: View {
             }
         }
     }
-}
+
+    /// "Fix": clears the custom Python path so the bundled Python is used,
+    /// then checks again once the core has re-detected it.
+    private func useBundledPython() {
+        var prefs = app.corePreferences
+        prefs.advanced.pythonExecutablePath = ""
+        app.savePreferences(prefs)
+        Task {
+            try? await Task.sleep(for: .seconds(1.5))
+            await model.reloadPlugins()
+        }
+    }}

@@ -16,9 +16,21 @@ struct TransfersSearchRSSSegment: View {
                 Toggle(SettingsCatalog.title("Preferences/Search/SearchEnabled"), isOn: $gui.searchEnabled)
                     .setting("Preferences/Search/SearchEnabled")
             } content: {
-                HStack(spacing: Design.Spacing.regular) {
-                    Button(SettingsCatalog.title("system.searchPlugins")) { openWindow(id: FeatureWindowID.searchPlugins.rawValue) }
-                    pythonStatus
+                VStack(alignment: .leading, spacing: Design.Spacing.small) {
+                    HStack(spacing: Design.Spacing.regular) {
+                        Button(SettingsCatalog.title("system.searchPlugins")) { openWindow(id: FeatureWindowID.searchPlugins.rawValue) }
+                        if let status, status.pythonFound {
+                            Text("Python \(status.pythonVersion)")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                                .help(status.pythonPath)
+                        }
+                    }
+                    if let status, !status.pythonFound {
+                        PythonProblemRow(status: status, usesCustomPath: !model.draft.advanced.pythonExecutablePath.isEmpty) {
+                            Task { await model.applyImmediately { $0.advanced.pythonExecutablePath = "" } }
+                        }
+                    }
                 }
                 .setting("system.searchPlugins")
                 Toggle(SettingsCatalog.title("store_search_jobs"), isOn: $model.draft.behavior.storeSearchJobs)
@@ -40,8 +52,7 @@ struct TransfersSearchRSSSegment: View {
                 }
                 .onChange(of: historyLength) { historyLength = min(max(historyLength, 0), 99) }
                 .setting("Search/HistoryLength")
-                CommitTextField(title: SettingsCatalog.key("python_executable_path"), text: $model.draft.advanced.pythonExecutablePath,
-                                prompt: String(localized: "(Auto detect if empty)"), trims: true)
+                PythonPathField(path: $model.draft.advanced.pythonExecutablePath)
                     .onChange(of: model.draft.advanced.pythonExecutablePath) { _, path in
                         // A path pasted in quotes (qBittorrent 5.3 refuses those) works without them.
                         for quote in ["\"", "'"] where path.count > 1 && path.hasPrefix(quote) && path.hasSuffix(quote) {
@@ -89,18 +100,23 @@ struct TransfersSearchRSSSegment: View {
             }
         }
         .task(id: app.phase) {
-            guard let client = app.client as? any SearchClient else { return }
-            status = await CoreCall.run { client.searchEngineStatus() }
+            await refreshStatus()
+            // The core re-detects Python when the path changes and reports it
+            // with the plugins event.
+            for await event in app.events() {
+                if case .searchPluginsUpdated = event { await refreshStatus() }
+            }
+        }
+        .task(id: model.draft.advanced.pythonExecutablePath) {
+            // A changed path: check again once it is applied and Python is re-detected.
+            guard status != nil else { return }
+            try? await Task.sleep(for: .seconds(1.5))
+            await refreshStatus()
         }
     }
 
-    @ViewBuilder private var pythonStatus: some View {
-        if let status {
-            Text(status.pythonFound ? "Python \(status.pythonVersion)" : status.message)
-                .font(.callout)
-                .foregroundStyle(status.pythonFound ? AnyShapeStyle(.secondary) : AnyShapeStyle(Color.red))
-                .lineLimit(1)
-                .help(status.pythonPath)
-        }
+    private func refreshStatus() async {
+        guard let client = app.client as? any SearchClient else { return }
+        status = await CoreCall.run { client.searchEngineStatus() }
     }
 }

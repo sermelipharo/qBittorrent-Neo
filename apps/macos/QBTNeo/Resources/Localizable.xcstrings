@@ -61124,6 +61124,16 @@
         }
       }
     },
+    "Clear the Python path to use the bundled Python": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очистить путь к Python и использовать встроенный Python"
+          }
+        }
+      }
+    },
     "Clear the password": {
       "localizations": {
         "ar": {
@@ -61482,6 +61492,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нажмите +, чтобы добавить cookie для трекера или сайта."
+          }
+        }
+      }
+    },
+    "Click Fix to clear the Python path and use the bundled Python.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите «Исправить», чтобы очистить путь к Python и использовать встроенный Python."
           }
         }
       }
@@ -126355,6 +126375,16 @@
         }
       }
     },
+    "Fix": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исправить"
+          }
+        }
+      }
+    },
     "Fix the permissions, then turn plugins off and on again.": {
       "localizations": {
         "ru": {
@@ -147022,16 +147052,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Установить"
-          }
-        }
-      }
-    },
-    "Clear the Python path in Settings › Advanced to use the bundled Python, or set it to Python 3.13 or later.": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Очистите путь к Python в «Настройки › Расширенные», чтобы использовать встроенный Python, или укажите Python 3.13 или новее."
           }
         }
       }
@@ -193234,6 +193254,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "除此之外，代理伺服器僅用於追蹤者連線"
+          }
+        }
+      }
+    },
+    "Outdated Python Runtime": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Устаревшая среда Python"
           }
         }
       }
@@ -262517,6 +262547,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "設定最小與最大允許的 torrent 大小"
+          }
+        }
+      }
+    },
+    "Set the Python path in Settings › Transfers › Search & RSS to Python 3.13 or later.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Укажите в Настройках › Торренты › Поиск и RSS путь к Python 3.13 или новее."
           }
         }
       }
