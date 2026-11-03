@@ -9,6 +9,9 @@ struct SearchResultsView: View {
     var body: some View {
         VStack(spacing: 0) {
             SearchFilterBar(tab: tab)
+            if !tab.engineWarnings.isEmpty, !tab.rows.isEmpty {
+                SearchEngineWarningView(warnings: tab.engineWarnings)
+            }
             Table(tab.visibleRows, selection: $tab.selection, sortOrder: $tab.sortOrder) {
                 TableColumn("Name", value: \.name) { row in
                     Text(row.name)
@@ -52,7 +55,9 @@ struct SearchResultsView: View {
                 model.download(tab.rows.filter { ids.contains($0.id) }, in: tab, app: app, skipDialog: false)
             }
             .overlay {
-                if tab.rows.isEmpty, tab.status != .ongoing {
+                if tab.rows.isEmpty, !tab.engineWarnings.isEmpty {
+                    SearchNoResultsView(tab: tab)
+                } else if tab.rows.isEmpty, tab.status != .ongoing {
                     ContentUnavailableView(tab.status.text, systemImage: tab.status.symbol)
                 } else if !tab.rows.isEmpty, tab.visibleRows.isEmpty {
                     SearchFilteredOutView(tab: tab)

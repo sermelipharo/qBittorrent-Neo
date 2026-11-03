@@ -26,6 +26,12 @@ enum FeatureSnapshotCatalog {
             Entry(name: "search", title: AppWindowID.search.title, size: CGSize(width: 1_180, height: 640)) { _ in
                 AnyView(SearchWindow(initialPattern: "night of the living dead"))
             },
+            Entry(name: "search-warning", title: AppWindowID.search.title, size: CGSize(width: 1_180, height: 640)) { _ in
+                AnyView(SearchWindow(initialPattern: "night of the living dead", initialPlugins: "all"))
+            },
+            Entry(name: "search-warning-empty", title: AppWindowID.search.title, size: CGSize(width: 1_180, height: 640)) { _ in
+                AnyView(SearchWindow(initialPattern: "zzz", initialPlugins: "all"))
+            },
             Entry(name: "searchplugins", title: FeatureWindowID.searchPlugins.title, size: CGSize(width: 720, height: 460)) { _ in
                 AnyView(SearchPluginsWindow())
             },

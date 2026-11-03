@@ -10,6 +10,10 @@ enum DemoSearchCatalog {
         plugin("etree", "etree.org", "0.9", "https://bt.etree.org", false, ["music"]),
     ]
 
+    /// Plugins whose site refuses the demo's requests (HTTP 403): they find
+    /// nothing and print "Connection error: Forbidden", as `retrieve_url` does.
+    static let refusingPlugins: Set<String> = ["publicdomaintorrents"]
+
     private static let categoryNames = [
         "anime": "Anime", "books": "Books", "games": "Games", "movies": "Movies", "music": "Music",
         "pictures": "Pictures", "software": "Software", "tv": "TV shows",

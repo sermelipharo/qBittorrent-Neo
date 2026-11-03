@@ -1894,6 +1894,12 @@ public struct SearchJobInfo: Equatable, Hashable {
      * Not part of the WebAPI JSON.
      */
     public var error: String
+    /**
+     * What the search engines wrote to stderr (capped, trimmed) when the
+     * search finished normally, e.g. a plugin's "Connection error:
+     * Forbidden"; empty otherwise. Not part of the WebAPI JSON.
+     */
+    public var warning: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1904,13 +1910,19 @@ public struct SearchJobInfo: Equatable, Hashable {
         /**
          * Error text (search engine stderr) when `outcome` is `Error`.
          * Not part of the WebAPI JSON.
-         */error: String) {
+         */error: String,
+        /**
+         * What the search engines wrote to stderr (capped, trimmed) when the
+         * search finished normally, e.g. a plugin's "Connection error:
+         * Forbidden"; empty otherwise. Not part of the WebAPI JSON.
+         */warning: String) {
         self.id = id
         self.pattern = pattern
         self.status = status
         self.total = total
         self.outcome = outcome
         self.error = error
+        self.warning = warning
     }
 
 }
@@ -4987,7 +4999,7 @@ extension SearchEngineStatus: Codable {
 
 extension SearchJobInfo: Codable {
     enum CodingKeys: String, CodingKey {
-        case id, pattern, status, total, outcome, error
+        case id, pattern, status, total, outcome, error, warning
     }
 
     static var neoEmpty: SearchJobInfo {
@@ -5002,13 +5014,15 @@ extension SearchJobInfo: Codable {
         let v3: Int64 = try c.decodeIfPresent(Int64.self, forKey: .total) ?? 0
         let v4: SearchJobOutcome = try c.decodeIfPresent(SearchJobOutcome.self, forKey: .outcome) ?? .ongoing
         let v5: String = try c.decodeIfPresent(String.self, forKey: .error) ?? ""
+        let v6: String = try c.decodeIfPresent(String.self, forKey: .warning) ?? ""
         self.init(
             id: v0,
             pattern: v1,
             status: v2,
             total: v3,
             outcome: v4,
-            error: v5
+            error: v5,
+            warning: v6
         )
     }
 }

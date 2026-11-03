@@ -241875,6 +241875,16 @@
         }
       }
     },
+    "Some search engines reported errors:": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Некоторые поисковики сообщили об ошибках:"
+          }
+        }
+      }
+    },
     "SQLite database (experimental)": {
       "localizations": {
         "ar": {

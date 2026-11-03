@@ -37,6 +37,10 @@ final class SearchTabModel: Identifiable {
     private(set) var jobID: Int64
     private(set) var pattern: String
     private(set) var status = Status.ongoing
+    /// What the search engines reported on stderr although the search
+    /// finished (e.g. "Connection error: Forbidden"), one line per distinct
+    /// message; empty when none.
+    private(set) var engineWarnings: [String] = []
     private(set) var rows: [SearchResultRow] = []
     private(set) var visibleRows: [SearchResultRow] = []
     var visited: Set<SearchResultRow.ID> = []
@@ -99,6 +103,7 @@ final class SearchTabModel: Identifiable {
         visited = []
         selection = []
         status = .ongoing
+        engineWarnings = []
         applyFilters()
         startPolling()
     }
@@ -137,7 +142,24 @@ final class SearchTabModel: Identifiable {
         case .noResults: status = .noResults
         default: status = rows.isEmpty ? .noResults : .finished
         }
+        if status == .finished || status == .noResults {
+            engineWarnings = Self.distinctLines(info?.warning ?? "")
+        }
         didStop?(self)
+    }
+
+    /// The non-empty lines of `text`, trimmed, each kept once in order.
+    static func distinctLines(_ text: String) -> [String] {
+        var seen = Set<String>()
+        return text.split(whereSeparator: \.isNewline)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty && seen.insert($0).inserted }
+    }
+
+    /// The tab's tooltip: the status text, plus a note when engines reported errors.
+    var statusHelp: String {
+        guard !engineWarnings.isEmpty else { return status.text }
+        return status.text + "\n" + String(localized: "Some search engines reported errors:") + "\n" + engineWarnings.joined(separator: "\n")
     }
 
     func stop() {

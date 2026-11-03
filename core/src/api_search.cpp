@@ -9,12 +9,14 @@
  */
 
 #include <memory>
+#include <utility>
 
 #include <QJsonArray>
 #include <QPointer>
 #include <QTimer>
 
 #include "base/global.h"
+#include "base/logger.h"
 #include "base/search/searchdownloadhandler.h"
 #include "base/search/searchhandler.h"
 #include "base/search/searchpluginmanager.h"
@@ -30,6 +32,8 @@ using namespace Neo;
 namespace
 {
     const int MAX_CONCURRENT_SEARCHES = 5;
+    // Length of the engine stderr kept as a job's warning (as in qBit NeoRS).
+    const int MAX_WARNING_LENGTH = 4096;
 
     // The plugin manager is created on first use (as in qBittorrent, where
     // the Search tab creates it); its changes are announced as events.
@@ -71,15 +75,41 @@ namespace
     {
         std::shared_ptr<SearchHandler> handler;
         QString pattern;
+        QString category;
+        QStringList plugins;
         QString outcome = u"ongoing"_s;
         QString error;
+        // What the engines wrote to stderr although the search finished
+        // normally (e.g. a plugin's "Connection error: Forbidden").
+        QString warning;
     };
 
     // Search jobs of this session, by id (deleted with the core host).
     class SearchJobs final : public QObject
     {
     public:
-        using QObject::QObject;
+        // SearchHandler::processFinished() reads the engine's stderr and only
+        // logs it, as the WARNING "Error occurred in search engine. Search
+        // query: ... Error: "<stderr>".", right before it emits
+        // searchFinished(false). Without touching qBittorrent's code the text
+        // is recovered from that log line: the last message logged is kept,
+        // and when a job finishes normally, a last message that is this
+        // job's line (same translated text with its pattern, category and
+        // engines) gives the job's warning. Nothing can be logged between the
+        // two calls, so a message from an earlier search is never taken.
+        explicit SearchJobs(QObject *parent)
+            : QObject(parent)
+        {
+            connect(Logger::instance(), &Logger::newLogMessage, this, [this](const Log::Msg &msg)
+            {
+                m_lastMessageId = msg.id;
+                if (msg.type == Log::WARNING)
+                {
+                    m_lastWarning = msg.message;
+                    m_lastWarningId = msg.id;
+                }
+            });
+        }
 
         static SearchJobs *instance()
         {
@@ -100,6 +130,8 @@ namespace
             const qint64 id = ++m_lastId;
             SearchJob job;
             job.pattern = pattern;
+            job.category = category;
+            job.plugins = plugins;
             job.handler.reset(pluginManager()->startSearch(pattern, category, plugins));
             SearchHandler *handler = job.handler.get();
             m_jobs.insert(id, job);
@@ -109,7 +141,11 @@ namespace
             connect(handler, &SearchHandler::searchFinished, this, [this, id, notify](const bool cancelled)
             {
                 if (auto it = m_jobs.find(id); it != m_jobs.end())
+                {
                     it->outcome = cancelled ? u"aborted"_s : (it->handler->results().isEmpty() ? u"noResults"_s : u"finished"_s);
+                    if (!cancelled)
+                        it->warning = takeEngineError(*it);
+                }
                 notify();
             });
             connect(handler, &SearchHandler::searchFailed, this, [this, id, notify](const QString &message)
@@ -141,8 +177,39 @@ namespace
         }
 
     private:
+        // The stderr text of `job`'s "Error occurred in search engine" log
+        // line if it is the last message logged; empty otherwise.
+        QString takeEngineError(const SearchJob &job)
+        {
+            if ((m_lastWarningId < 0) || (m_lastWarningId != m_lastMessageId))
+                return {};
+            const QString message = std::exchange(m_lastWarning, {});
+            m_lastWarningId = -1;
+
+            // The same text as SearchHandler::processFinished(), with a marker
+            // in place of the error; one multi-argument arg() call, so a "%4"
+            // in the pattern is not replaced.
+            const QString marker = u"\x01"_s;
+            const QString expected = SearchHandler::tr("Error occurred in search engine. Search query: \"%1\". Category: \"%2\". Engines: \"%3\". Error: \"%4\".")
+                .arg(job.pattern, job.category, job.plugins.join(u", "), marker);
+            const qsizetype at = expected.indexOf(marker);
+            if (at < 0)
+                return {};
+            const QStringView prefix = QStringView(expected).left(at);
+            const QStringView suffix = QStringView(expected).mid(at + marker.size());
+            if ((message.size() < (prefix.size() + suffix.size())) || !message.startsWith(prefix) || !message.endsWith(suffix))
+                return {};
+            QString error = message.mid(prefix.size(), message.size() - prefix.size() - suffix.size()).trimmed();
+            if (error.size() > MAX_WARNING_LENGTH)
+                error = error.left(MAX_WARNING_LENGTH) + u'…';
+            return error;
+        }
+
         qint64 m_lastId = 0;
         QHash<qint64, SearchJob> m_jobs;
+        int m_lastMessageId = -1;
+        int m_lastWarningId = -1;
+        QString m_lastWarning;
     };
 
     QJsonObject jobInfo(const qint64 id, const SearchJob &job)
@@ -153,7 +220,8 @@ namespace
             {u"status"_s, job.handler->isActive() ? u"running"_s : u"stopped"_s},
             {u"total"_s, job.handler->results().size()},
             {u"outcome"_s, job.outcome},
-            {u"error"_s, job.error}
+            {u"error"_s, job.error},
+            {u"warning"_s, job.warning}
         };
     }
 

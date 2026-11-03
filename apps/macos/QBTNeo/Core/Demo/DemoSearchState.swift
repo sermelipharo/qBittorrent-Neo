@@ -8,6 +8,8 @@ struct DemoSearchState: Sendable {
         let pattern: String
         let start: Date
         let results: [SearchResult]
+        /// What failing plugins print to stderr (see `DemoSearchCatalog.refusingPlugins`).
+        let warning: String
         var stoppedAfter: Double?
     }
 
@@ -28,7 +30,12 @@ struct DemoSearchState: Sendable {
         }
         let id = nextID
         nextID += 1
-        jobs[id] = Job(id: id, pattern: pattern, start: .now, results: DemoSearchCatalog.results(pattern: pattern, plugins: selected))
+        let refusing = selected.filter { DemoSearchCatalog.refusingPlugins.contains($0.name) }
+        let working = selected.filter { !DemoSearchCatalog.refusingPlugins.contains($0.name) }
+        jobs[id] = Job(
+            id: id, pattern: pattern, start: .now, results: DemoSearchCatalog.results(pattern: pattern, plugins: working),
+            warning: refusing.map { _ in "Connection error: Forbidden" }.joined(separator: "\n")
+        )
         return id
     }
 
@@ -54,8 +61,10 @@ struct DemoSearchState: Sendable {
         } else {
             count == 0 ? .noResults : .finished
         }
+        let finished = outcome == .finished || outcome == .noResults
         return SearchJobInfo(
-            id: job.id, pattern: job.pattern, status: running ? .running : .stopped, total: Int64(count), outcome: outcome, error: ""
+            id: job.id, pattern: job.pattern, status: running ? .running : .stopped, total: Int64(count), outcome: outcome, error: "",
+            warning: finished ? job.warning : ""
         )
     }
 }
