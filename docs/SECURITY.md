@@ -84,19 +84,24 @@ What upstream's engine does (unchanged):
   uninstalls, load failures and failed calls are logged.
 * qBittorrent 5.3's WebAPI and Web UI have no plugin endpoints.
 
-**Unlike the sibling qBit NeoRS, upstream's engine has no instruction or
-memory budget and no isolation from the core.** Plugins run synchronously
-on the core thread inside session signal handlers, so a slow plugin stalls
-the whole core (transfers, the app's requests) for up to its 1 s limit per
-event. The 1 s limit is a Lua error that the plugin can catch with `pcall`
-(which upstream leaves in place), and C functions such as string pattern
-matching are not interrupted, so a hostile plugin can hang the app
-indefinitely. Each Lua state uses the default allocator without a cap, so a
-plugin can exhaust memory. There are no per-call limits on log lines,
-programs or e-mails, and individual `exec`/`sendMail` calls are not logged.
-These cannot be fixed from the bridge without editing `qbittorrent/`.
+**Unlike the sibling qBit NeoRS, upstream's engine has no instruction
+budget and no isolation from the core.** Plugins run synchronously on the
+core thread inside session signal handlers, so a slow plugin stalls the whole
+core (transfers, the app's requests) for up to its 1 s limit per event. Once
+the limit has passed, the hook raises "Timed out." again every 100
+instructions, so `pcall` cannot keep a plugin running; but C functions such
+as string pattern matching are not interrupted, so a pathological pattern can
+still hang the app. There are no per-call limits on log lines, programs or
+e-mails, and individual `exec`/`sendMail` calls are not logged. These cannot
+be fixed without editing `qbittorrent/`.
 
 What qBittorrent Neo adds around it (no upstream change):
+* A memory cap of 16 MiB per plugin state, as in qBit NeoRS.
+  `core/CMakeLists.txt` compiles upstream's `plugin.cpp` with `luaL_newstate`
+  renamed to `qbtneo_luaL_newstate` (`core/src/lualimits.cpp`), which puts a
+  counting allocator on Lua's state. Past the cap an allocation fails, Lua
+  raises "not enough memory" inside the plugin, and upstream logs the failed
+  call.
 * A global switch, Settings › Privacy › Plugins › **Enable plugins**
   (`AdvancedPrefs.pluginsEnabled`), stored as `Neo/PluginsEnabled` in the
   profile's `qBittorrent.ini`, off by default. It is not a WebAPI

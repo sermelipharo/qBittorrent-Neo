@@ -26,7 +26,11 @@ Widgets graphical interface is replaced by a native SwiftUI macOS interface.
   percentage beside it, and the filters sidebar starts collapsed on
   phone-width screens (private/scripts/client.js); markup is unchanged.
   Most icons in private/images are redrawn as a line set (same file names);
-  some of them are based on Lucide icons, see below.
+  some of them are based on Lucide icons, see below. One upstream file is
+  built differently without being edited: core/CMakeLists.txt compiles
+  qbittorrent/src/base/plugins/plugin.cpp with `luaL_newstate` renamed to
+  core/src/lualimits.cpp's `qbtneo_luaL_newstate`, which caps each Lua
+  plugin state at 16 MiB.
 
 * core/ hosts qBittorrent's application core (src/base, src/webui) inside
   the app. core/src/neoapplication.cpp and core/src/addmanager.cpp contain

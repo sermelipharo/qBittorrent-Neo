@@ -90,6 +90,7 @@ add_library(qbtneocore SHARED
     src/api_creator.cpp
     src/api_log.cpp
     src/api_plugins.cpp
+    src/lualimits.cpp
     src/api_preferences.cpp
     src/api_rss.cpp
     src/api_search.cpp
@@ -117,6 +118,13 @@ target_include_directories(qbtneocore
     PRIVATE "${QBT_ROOT}/src/app"
 )
 target_link_libraries(qbtneocore PRIVATE qbt_base)
+# Upstream's Plugin::load() gets a memory-capped Lua state from
+# src/lualimits.cpp instead of luaL_newstate(); qbittorrent/ stays unedited.
+target_include_directories(qbtneocore SYSTEM PRIVATE $<TARGET_PROPERTY:qbt_lua,INTERFACE_INCLUDE_DIRECTORIES>)
+set_source_files_properties("${QBT_ROOT}/src/base/plugins/plugin.cpp"
+    DIRECTORY "${QBT_ROOT}/src/base"
+    PROPERTIES COMPILE_DEFINITIONS "luaL_newstate=qbtneo_luaL_newstate"
+)
 target_compile_definitions(qbtneocore PRIVATE QBTNEO_BUILDING_CORE)
 if (WEBUI)
     target_sources(qbtneocore PRIVATE
