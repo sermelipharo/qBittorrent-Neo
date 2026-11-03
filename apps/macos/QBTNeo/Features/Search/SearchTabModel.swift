@@ -52,6 +52,20 @@ final class SearchTabModel: Identifiable {
     var maxSize = 0.0 { didSet { applyFilters() } }
     var maxSizeUnit = SearchSizeUnit.gib { didSet { applyFilters() } }
 
+    /// The filter text, seeds or size bounds narrow the results.
+    var hasNarrowingFilters: Bool {
+        !filterText.isEmpty || minSeeds > 0 || maxSeeds > 0 || minSize > 0 || maxSize > 0
+    }
+
+    /// Clears the filter text and the seeds and size bounds.
+    func resetFilters() {
+        filterText = ""
+        minSeeds = 0
+        maxSeeds = 0
+        minSize = 0
+        maxSize = 0
+    }
+
     @ObservationIgnored private var client: (any SearchClient)?
     @ObservationIgnored private var pollTask: Task<Void, Never>?
 

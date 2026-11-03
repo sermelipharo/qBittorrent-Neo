@@ -238347,6 +238347,16 @@
         }
       }
     },
+    "Results hidden by the filters: %lld": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыто фильтрами: %lld"
+          }
+        }
+      }
+    },
     "Resume data storage type (requires restart)": {
       "localizations": {
         "ar": {
@@ -241313,6 +241323,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Компилятор Rust:"
+          }
+        }
+      }
+    },
+    "Search Everywhere": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Искать везде"
           }
         }
       }
@@ -346253,6 +346273,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Алгоритм смешанного режима μTP-TCP"
+          }
+        }
+      }
+    },
+    "“Torrent names only” hides results whose names don't contain every word you searched for.": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "«В имени торрентов» скрывает результаты, в имени которых нет всех слов запроса."
           }
         }
       }
