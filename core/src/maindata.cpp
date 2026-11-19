@@ -328,6 +328,9 @@ namespace Neo
         connect(session, &BitTorrent::Session::torrentsLoaded, this, markTrackers);
         connect(session, &BitTorrent::Session::torrentAboutToBeRemoved, this, markTrackers);
         connect(session, &BitTorrent::Session::torrentMetadataReceived, this, markTrackers);
+        // A hybrid torrent's ID can change once its metadata arrives: the tracker map
+        // is keyed by ID (the torrent list itself is diffed against the session).
+        connect(session, &BitTorrent::Session::torrentInfoHashChanged, this, markTrackers);
     }
 
     QHash<QString, QStringList> MainDataTracker::trackerMap()
