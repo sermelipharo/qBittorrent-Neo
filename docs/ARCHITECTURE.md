@@ -33,8 +33,8 @@ app process; the SwiftUI code talks to it through a narrow C interface.
 ## Repository layout
 
 * `qbittorrent/` — qBittorrent 5.3.0, imported with `git subtree` (full
-  history; the `upstream` branch is `release-5.2.4`, `release-5.3.0` is
-  merged in). Never edited. Upstream
+  history; the `upstream` branch is `release-5.2.4`, `release-5.3.0` and
+  the `v5_3_x` fixes up to fcba910d3 (5.3.1) are merged in). Never edited. Upstream
   updates: `git fetch https://github.com/qbittorrent/qBittorrent.git
   refs/tags/release-X:refs/tags/release-X` then `git subtree merge
   --prefix=qbittorrent release-X`.

@@ -123,6 +123,7 @@ extension AdvancedPrefs {
         blockPeersOnPrivilegedPorts: false, uploadSlotsBehavior: .fixedSlots,
         uploadChokingAlgorithm: .fastestUpload, announceToAllTrackers: false, announceToAllTiers: true,
         announceIp: "", announcePort: 0, maxConcurrentHttpAnnounces: 50, stopTrackerTimeout: 2,
+        // requestQueueSize: 500 with the bundled libtorrent 2.0.x; qBittorrent uses 1500 with 2.1.3+.
         peerTurnover: 4, peerTurnoverCutoff: 90, peerTurnoverInterval: 300, requestQueueSize: 500,
         maxOutstandingBlockRequests: 2000,
         dhtBootstrapNodes: "dht.libtorrent.org:25401, dht.transmissionbt.com:6881, router.bittorrent.com:6881",

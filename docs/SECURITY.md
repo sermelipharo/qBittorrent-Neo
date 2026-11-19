@@ -164,7 +164,14 @@ What qBittorrent Neo adds around it (no upstream change):
   `private/images` are static SVGs loaded through `<img>` and CSS
   backgrounds (where scripts never run): only paths, shapes and a `<style>`
   block with colors, no scripts, event attributes, links, `<image>` or
-  `url()` references.
+  `url()` references. Upstream's 5.3.1 fix that inserts translated strings
+  as text (#25145, watched folders, test e-mail and RSS clone alerts) applies
+  unchanged: the restyle touches none of those views, and its two scripts
+  only use `textContent` and style properties.
+* Web UI search downloads go through the result's plugin (`downloader`,
+  5.3.1, #25107), as the app's `searchDownloadTorrent` already does. The
+  WebAPI parameter predates 5.3.1 and accepts only installed plugin names
+  (`torrents/add` checks them), so no new capability for API clients.
 * External programs run on torrent added/finished use qBittorrent's
   argument splitting with per-argument placeholder substitution and no
   shell, so torrent names cannot inject commands.
