@@ -57,6 +57,9 @@ final class AppModel {
         didSet { flushPendingWindows() }
     }
     @ObservationIgnored var pendingAddDialogs: [UUID] = []
+    /// Torrents opened before the core was up (a .torrent double-clicked while the
+    /// app was not running); added once it is.
+    @ObservationIgnored var pendingSources: [TorrentSource] = []
     /// Set by the main window so models can open Settings.
     @ObservationIgnored var openSettings: OpenSettingsAction?
 
@@ -113,6 +116,9 @@ final class AppModel {
         log.append(contentsOf: client.mainLog(lastKnownId: -1, levels: []))
         phase = .running
         restartRefreshLoop()
+        let pending = pendingSources
+        pendingSources.removeAll()
+        pending.forEach(add)
         refreshInvocablePlugins()
         if gui.notificationsEnabled, !launch.isSnapshot {
             Task { await notifications.requestAuthorization { [weak self] in self?.appendLocalLog($0) } }

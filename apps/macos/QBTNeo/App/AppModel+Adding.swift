@@ -6,7 +6,10 @@ extension AppModel {
     /// Adds a torrent through the "Add new torrent" dialog when it is enabled
     /// (`AddNewTorrentDialog/Enabled`), otherwise directly with the defaults.
     func add(_ source: TorrentSource) {
-        guard let client else { return }
+        guard let client else {
+            pendingSources.append(source)
+            return
+        }
         guard gui.addTorrentDialogEnabled else {
             performAsync { _ = try await $0.addTorrent(source: source, params: .sessionDefaults) }
             return
